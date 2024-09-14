@@ -30,7 +30,8 @@ export default function NG_Scorecard() {
 
         <ScoreCard_VREC/>
         <ScoreCard_Otsuka/>
-
+        <br />
+        <br />
     </div>
   
   )

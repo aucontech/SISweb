@@ -31,7 +31,6 @@ import { readToken } from "@/service/localStorage";
 import { httpApi } from "@/api/http.api";
 import { Toast } from "primereact/toast";
 
-import AlarmPRU from "@/layout/AlarmBell/AlarmPRU";
 import { Button } from "primereact/button";
 
 interface StateMap {
@@ -95,6 +94,10 @@ export default function GraphicPRU() {
     const [alarmMessage, setAlarmMessage] = useState<string | null>(null);
 
     useEffect(() => {
+
+        const connectWebSocket = () => {
+            const token = localStorage.getItem('accessToken');
+            const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
         ws.current = new WebSocket(url);
 
         const obj1 = {
@@ -229,18 +232,33 @@ export default function GraphicPRU() {
                 setTimeout(() => {
                     ws.current?.send(JSON.stringify(obj1));
                     ws.current?.send(JSON.stringify(obj_PCV_PSV));
-                });
+
+                }); 
             };
 
             ws.current.onclose = () => {
-                console.log("WebSocket connection closed.");
-            };
-
-            return () => {
-                console.log("Cleaning up WebSocket connection.");
-                ws.current?.close();
+                console.log("WebSocket connection closed. Reconnecting in 10 seconds...");
+                setTimeout(() => {
+                    connectWebSocket(); 
+                }, 10000);
             };
         }
+
+    }
+    connectWebSocket(); 
+    
+    const interval = setInterval(() => {
+        console.log("Resetting WebSocket connection...");
+
+        ws.current?.close(); 
+        connectWebSocket();  
+    }, 60000); 
+
+    return () => {
+        clearInterval(interval); 
+        ws.current?.close(); 
+    };
+
     }, []);
 
     useEffect(() => {
@@ -248,16 +266,9 @@ export default function GraphicPRU() {
             ws.current.onmessage = (event) => {
                 let dataReceived = JSON.parse(event.data);
                 if (dataReceived.update !== null) {
-                    setData([...data, dataReceived]);
-                    const formatValue = (value:any) => {
-                        return value !== null
-                            ? new Intl.NumberFormat('en-US', {
-                                  minimumFractionDigits: 2, // Đảm bảo có 2 chữ số sau dấu thập phân
-                                  maximumFractionDigits: 2, // Không nhiều hơn 2 chữ số thập phân
-                                  useGrouping: true, // Phân cách phần ngàn bằng dấu phẩy
-                              }).format(parseFloat(value))
-                            : "";
-                    };
+                    setData(prevData => [...prevData, dataReceived]);
+
+              
                     const keys = Object?.keys(dataReceived.data);
                     const stateMap: StateMap = {
                         EVC_01_Flow_at_Base_Condition: setEVC_01_Flow_at_Base_Condition,
@@ -327,7 +338,12 @@ export default function GraphicPRU() {
 
                         PUMP_3: setPUMP_3,
                         SDV_6003: setSDV_6003,
-
+                        SDV_6001A: setSDV_6001A,
+                        SDV_6001B: setSDV_6001B,
+                        SDV_6002: setSDV_6002,
+                        PLC_Conn_STT: setPLC_Conn_STT,
+                        EVC_01_Conn_STT: setEVC_01_Conn_STT,
+                        EVC_02_Conn_STT: setEVC_02_Conn_STT,
 
                     
                     };
@@ -336,24 +352,12 @@ export default function GraphicPRU() {
                         EVC_02_Conn_STT: setEVC_02_Conn_STTValue,
                     };
 
-                    const stateMap2: StateMap2 = {
-                        SDV_6001A: setSDV_6001A,
-                        SDV_6001B: setSDV_6001B,
-                        SDV_6002: setSDV_6002,
-                        PLC_Conn_STT: setPLC_Conn_STT,
-                        EVC_01_Conn_STT: setEVC_01_Conn_STT,
-                        EVC_02_Conn_STT: setEVC_02_Conn_STT,
-                    };
                     keys.forEach((key) => {
+                      
                         if (stateMap[key]) {
                             const value = dataReceived.data[key][0][1];
-                            const formattedValue = formatValue(value);
-                            stateMap[key]?.(formattedValue); // Áp dụng định dạng giá trị
-                        }
-                        if (stateMap2[key]) {
-                            const value = dataReceived.data[key][0][1];
                             const slicedValue = value;
-                            stateMap2[key]?.(slicedValue);
+                            stateMap[key]?.(slicedValue);
                         }
                         if (valueStateMap[key]) {
                             const value = dataReceived.data[key][0][0];
@@ -450,6 +454,39 @@ export default function GraphicPRU() {
             };
         }
     }, [data]);
+
+    const [resetKey, setResetKey] = useState(0);
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
+    const [wasOffline, setWasOffline] = useState(false); // Theo dõi trạng thái offline trước đó
+
+    useEffect(() => {
+        // Hàm cập nhật trạng thái online/offline
+        const handleOnlineStatus = () => {
+            const currentStatus = navigator.onLine;
+            setIsOnline(currentStatus);
+
+            if (!currentStatus) {
+                // Khi mất kết nối, đặt trạng thái offline
+                console.log("Mất kết nối internet.");
+                setWasOffline(true);
+            } else if (currentStatus && wasOffline) {
+                // Khi có lại kết nối và trước đó là offline, reset component
+                console.log("Kết nối internet được khôi phục. Reset component...");
+                setResetKey(prevKey => prevKey + 1); // Reset component
+                setWasOffline(false); // Reset lại để chỉ reset 1 lần khi online trở lại
+            }
+        };
+
+        // Lắng nghe sự kiện thay đổi trạng thái online/offline
+        window.addEventListener('online', handleOnlineStatus);
+        window.addEventListener('offline', handleOnlineStatus);
+
+        return () => {
+            // Dọn dẹp sự kiện khi component unmount
+            window.removeEventListener('online', handleOnlineStatus);
+            window.removeEventListener('offline', handleOnlineStatus);
+        };
+    }, [wasOffline]);
 
 
     const fetchData = async () => {
@@ -884,6 +921,8 @@ export default function GraphicPRU() {
                 (item: any) => item.key === "PLC_Conn_STT_Maintain"
             );
 
+        
+            
  // =================================================================================================================== 
 
 
@@ -2163,6 +2202,15 @@ export default function GraphicPRU() {
                        // =================================================================================================================== 
     //====================================================================
 
+    const formatValue = (value:any) => {
+        return value !== null
+            ? new Intl.NumberFormat('en-US', {
+                  maximumFractionDigits: 2,
+                  useGrouping: true, 
+              }).format(parseFloat(value))
+            : "";
+    };
+
     useEffect(() => {
         const updatedNodes = nodes.map((node) => {
             if (node.id === "EVC_01_Flow_at_Base_Condition") {
@@ -2211,7 +2259,7 @@ export default function GraphicPRU() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_01_Flow_at_Base_Condition}
+                                        {formatValue(EVC_01_Flow_at_Base_Condition)}
                                     </p>
                                 </div>
                                 <p
@@ -2280,7 +2328,7 @@ export default function GraphicPRU() {
                                         }}
                                     >
                                         {
-                                            EVC_01_Flow_at_Measurement_Condition
+                                            formatValue(EVC_01_Flow_at_Measurement_Condition)
                                         }
                                     </p>
                                 </div>
@@ -2346,7 +2394,7 @@ export default function GraphicPRU() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_01_Volume_at_Base_Condition}
+                                        {formatValue(EVC_01_Volume_at_Base_Condition)}
                                     </p>
                                 </div>
                                 <p
@@ -2416,7 +2464,7 @@ export default function GraphicPRU() {
                                         }}
                                     >
                                         {
-                                            EVC_01_Volume_at_Measurement_Condition
+                                            formatValue(EVC_01_Volume_at_Measurement_Condition)
                                         }
                                     </p>
                                 </div>
@@ -2483,7 +2531,7 @@ export default function GraphicPRU() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_02_Flow_at_Base_Condition}
+                                        {formatValue(EVC_02_Flow_at_Base_Condition)}
                                     </p>
                                 </div>
                                 <p
@@ -2552,7 +2600,7 @@ export default function GraphicPRU() {
                                         }}
                                     >
                                         {
-                                            EVC_02_Flow_at_Measurement_Condition
+                                            formatValue(EVC_02_Flow_at_Measurement_Condition)
                                         }
                                     </p>
                                 </div>
@@ -2619,7 +2667,7 @@ export default function GraphicPRU() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_02_Volume_at_Base_Condition}
+                                        {formatValue(EVC_02_Volume_at_Base_Condition)}
                                     </p>
                                 </div>
                                 <p
@@ -2688,7 +2736,7 @@ export default function GraphicPRU() {
                                         }}
                                     >
                                         {
-                                            EVC_02_Volume_at_Measurement_Condition
+                                            formatValue(EVC_02_Volume_at_Measurement_Condition)
                                         }
                                     </p>
                                 </div>
@@ -2752,7 +2800,7 @@ export default function GraphicPRU() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {PIT_6001A}
+                                        {formatValue(PIT_6001A)}
                                     </p>
                                 </div>
                                 <p
@@ -2815,7 +2863,7 @@ export default function GraphicPRU() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {PIT_6001B}
+                                        {formatValue(PIT_6001B)}
                                     </p>
                                 </div>
                                 <p
@@ -2879,7 +2927,7 @@ export default function GraphicPRU() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {PIT_6002A}
+                                        {formatValue(PIT_6002A)}
                                     </p>
                                 </div>
                                 <p
@@ -2942,7 +2990,7 @@ export default function GraphicPRU() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {PIT_6002B}
+                                        {formatValue(PIT_6002B)}
                                     </p>
                                 </div>
                                 <p
@@ -3007,7 +3055,7 @@ export default function GraphicPRU() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_02_Pressure}
+                                        {formatValue(EVC_02_Pressure)}
                                     </p>
                                 </div>
                                 <p
@@ -3073,7 +3121,7 @@ export default function GraphicPRU() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_01_Pressure}
+                                        {formatValue(EVC_01_Pressure)}
                                     </p>
                                 </div>
                                 <p
@@ -3139,7 +3187,7 @@ export default function GraphicPRU() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_01_Temperature}
+                                        {formatValue(EVC_01_Temperature)}
                                     </p>
                                 </div>
                                 <p
@@ -3204,7 +3252,7 @@ export default function GraphicPRU() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_02_Temperature}
+                                        {formatValue(EVC_02_Temperature)}
                                     </p>
                                 </div>
                                 <p
@@ -3239,7 +3287,7 @@ export default function GraphicPRU() {
                                 }}
                             >
                                 <p style={{ color: "black", marginLeft: 10 }}>
-                                    PCV-6001A: {PCV_6001A} BarG
+                                    PCV-6001A: {formatValue(PCV_6001A)} BarG
                                 </p>
                             </div>
                         ),
@@ -3263,7 +3311,7 @@ export default function GraphicPRU() {
                                 }}
                             >
                                 <p style={{ color: "black", marginLeft: 10 }}>
-                                    PCV-6001B: {PCV_6001B} BarG
+                                    PCV-6001B: {formatValue(PCV_6001B)} BarG
                                 </p>
                             </div>
                         ),
@@ -3285,7 +3333,7 @@ export default function GraphicPRU() {
                                 }}
                             >
                                 <p style={{ color: "black" }}>
-                                    PCV-6002A: {PCV_6002A} BarG
+                                    PCV-6002A: {formatValue(PCV_6002A)} BarG
                                 </p>
                             </div>
                         ),
@@ -3307,7 +3355,7 @@ export default function GraphicPRU() {
                                 }}
                             >
                                 <p style={{ color: "black" }}>
-                                    PCV-6002B: {PCV_6002B} BarG
+                                    PCV-6002B: {formatValue(PCV_6002B)} BarG
                                 </p>
                             </div>
                         ),
@@ -3420,7 +3468,7 @@ export default function GraphicPRU() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {formatValue(TIT_6001A)}
                                     </p>
                                 </div>
                                 <p
@@ -3484,7 +3532,7 @@ export default function GraphicPRU() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {formatValue(PIT_6003A)}
                                     </p>
                                 </div>
                                 <p
@@ -3548,7 +3596,7 @@ export default function GraphicPRU() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {formatValue(GD_6001)}
                                     </p>
                                 </div>
                                 <p
@@ -3584,7 +3632,7 @@ export default function GraphicPRU() {
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
-                                    PSV-6001A: {PSV_6001A} BarG
+                                    PSV-6001A: {formatValue(PSV_6001A)} BarG
                                 </p>
                             </div>
                         ),
@@ -3608,7 +3656,7 @@ export default function GraphicPRU() {
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
-                                    PSV-6002A: {PSV_6002A} BarG
+                                    PSV-6002A: {formatValue(PSV_6002A)} BarG
                                 </p>
                             </div>
                         ),
@@ -3632,7 +3680,7 @@ export default function GraphicPRU() {
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
-                                    PSV-6001B: {PSV_6001B} BarG
+                                    PSV-6001B: {formatValue(PSV_6001B)} BarG
                                 </p>
                             </div>
                         ),
@@ -3656,7 +3704,7 @@ export default function GraphicPRU() {
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
-                                    PSV-6002B: {PSV_6002B} BarG
+                                    PSV-6002B: {formatValue(PSV_6002B)} BarG
                                 </p>
                             </div>
                         ),
@@ -7210,7 +7258,6 @@ export default function GraphicPRU() {
             data: {
                 label: (
                     <div>
-                        <AlarmPRU />
                     </div>
                 ),
             },
@@ -7970,6 +8017,7 @@ export default function GraphicPRU() {
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
             </Button> */}
             <div
+            key={resetKey}
                 style={{
                     // width: "100%",
                     height: "100%",

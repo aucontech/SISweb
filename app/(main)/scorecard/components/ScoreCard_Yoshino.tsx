@@ -9,6 +9,7 @@ import { httpApi } from "@/api/http.api";
 import { DotGreen, DotRed } from "./SVG_Scorecard";
 
 import "./ScoreCard.css"
+import { Down, Up } from "../SVG_Scorecard";
 
 interface StateMap {
     [key: string]:
@@ -16,6 +17,12 @@ interface StateMap {
         | undefined;
 }
 interface ValueStateMap {
+    [key: string]:
+        | React.Dispatch<React.SetStateAction<string | null>>
+        | undefined;
+}
+
+interface StateMap2 {
     [key: string]:
         | React.Dispatch<React.SetStateAction<string | null>>
         | undefined;
@@ -82,11 +89,10 @@ export default function ScoreCard_Yoshino() {
                 let dataReceived = JSON.parse(evt.data);
                 if (dataReceived.update !== null) {
                     setData([...data, dataReceived]);
-
+                  
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
 
-                        FC_Lithium_Battery_Status: setFC_Lithium_Battery_Status,
                         FC_Battery_Voltage: setFC_Battery_Voltage,
                         FC_System_Voltage: setFC_System_Voltage,
                         FC_Charger_Voltage: setFC_Charger_Voltage,
@@ -120,8 +126,11 @@ export default function ScoreCard_Yoshino() {
                         GD1: setGD1,
                         GD2: setGD2,
                         PT1: setPT1,
+                     
+
                         DI_ZSO_1: setDI_ZSO_1,
                         DI_ZSC_1: setDI_ZSC_1,
+                        FC_Lithium_Battery_Status: setFC_Lithium_Battery_Status,
 
                         DI_UPS_BATTERY: setDI_UPS_BATTERY,
                         DI_UPS_CHARGING: setDI_UPS_CHARGING,
@@ -138,22 +147,25 @@ export default function ScoreCard_Yoshino() {
                         DO_BC_01: setDO_BC_01,
                         DO_SV_01: setDO_SV_01,
 
-
+                     
                         FC_Conn_STT: setFC_STT01,
                         PLC_Conn_STT: setPLC_Conn_STT,
+                   
 
                     };
+
                     const valueStateMap: ValueStateMap = {
                         FC_Conn_STT: setFC_Conn_STTValue,
                         PLC_Conn_STT: setConn_STTValue,
                     };
                     keys.forEach((key) => {
+                      
+
                         if (stateMap[key]) {
                             const value = dataReceived.data[key][0][1];
                             const slicedValue = value;
                             stateMap[key]?.(slicedValue);
                         }
-
                         if (valueStateMap[key]) {
                             const value = dataReceived.data[key][0][0];
 
@@ -2435,7 +2447,15 @@ const DataDI_SD_1 = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Detec
         
           };
 
-
+          const formatValue = (value:any) => {
+            return value !== null
+                ? new Intl.NumberFormat('en-US', {
+                      maximumFractionDigits: 2,
+                      useGrouping: true, 
+                  }).format(parseFloat(value))
+                : "";
+        };
+      
           const dataFC1 = [
             {
                 name: <span>{tagNameFC.FC_Lithium_Battery_Status}</span>,
@@ -2444,107 +2464,87 @@ const DataDI_SD_1 = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Detec
             },
             {
                 name: <span>{tagNameFC.Battery_Voltage}</span>,
-                FC1: <span style={combineCss.CSSFC_Battery_Voltage}>{FC_Battery_Voltage}</span>,
+                FC1: <span style={combineCss.CSSFC_Battery_Voltage}>{formatValue(FC_Battery_Voltage)}</span>,
     
             },
             {
                 name: <span>{tagNameFC.System_Voltage}</span>,
-                FC1: <span style={combineCss.CSSFC_System_Voltage}>{FC_System_Voltage}</span>,
+                FC1: <span style={combineCss.CSSFC_System_Voltage}>{formatValue(FC_System_Voltage)}</span>,
     
             },
             {
                 name: <span>{tagNameFC.Charger_Voltage}</span>,
-                FC1: <span style={combineCss.CSSFC_Charger_Voltage}>{FC_Charger_Voltage}</span>,
+                FC1: <span style={combineCss.CSSFC_Charger_Voltage}>{formatValue(FC_Charger_Voltage)}</span>,
     
             },
-            
-          
         ];
 
-    const dataFC = [
-        {
-            name: <span>{tagNameFC.InputPressure}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure}>{FC_01_Current_Values_Static_Pressure}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure}>{FC_02_Current_Values_Static_Pressure}</span>,
-
-        },
-        {
-            name: <span>{tagNameFC.Temperature}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Current_Values_Temperature}>{FC_01_Current_Values_Temperature}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Current_Values_Temperature}>{FC_02_Current_Values_Temperature}</span>,
-
-        },
-        {
-            name: <span>{tagNameFC.SVF}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate}>{FC_01_Current_Values_Flow_Rate}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate}>{FC_02_Current_Values_Flow_Rate}</span>,
-
-        },
-        {
-            name: <span>{tagNameFC.GVF}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>{FC_01_Current_Values_Uncorrected_Flow_Rate}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}>{FC_02_Current_Values_Uncorrected_Flow_Rate}</span>,
-
-        },
-        {
-            name: <span>{tagNameFC.SVA}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>{FC_01_Accumulated_Values_Uncorrected_Volume}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}>{FC_02_Accumulated_Values_Uncorrected_Volume}</span>,
-
-        },
-        {
-            name: <span>{tagNameFC.GVA}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume}>{FC_01_Accumulated_Values_Volume}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume}>{FC_02_Accumulated_Values_Volume}</span>,
-
-        },
-     
-        {
-            name: <span>{tagNameFC.VbToday}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Today_Values_Volume}>{FC_01_Today_Values_Volume}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Today_Values_Volume}>{FC_02_Today_Values_Volume}</span>,
-
-        },
-        {
-            name: <span>{tagNameFC.VbLastDay}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume}>{FC_01_Yesterday_Values_Volume}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume}>{FC_02_Yesterday_Values_Volume}</span>,
-
-        },
-        {
-            name: <span>{tagNameFC.VmToday}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}>{FC_01_Today_Values_Uncorrected_Volume}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}>{FC_02_Today_Values_Uncorrected_Volume}</span>,
-
-        },
-        {
-            name: <span>{tagNameFC.VmLastDay}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}>{FC_01_Yesterday_Values_Uncorrected_Volume}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}>{FC_02_Yesterday_Values_Uncorrected_Volume}</span>,
-
-        },
-      
-    ];
+        const dataFC = [
+            {
+                name: <span>{tagNameFC.InputPressure}</span>,
+                FC1901: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure}>{formatValue(FC_01_Current_Values_Static_Pressure)}</span>,
+                FC1902: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure}>{formatValue(FC_02_Current_Values_Static_Pressure)}</span>,
+            },
+            {
+                name: <span>{tagNameFC.Temperature}</span>,
+                FC1901: <span style={combineCss.CSSFC_01_Current_Values_Temperature}>{formatValue(FC_01_Current_Values_Temperature)}</span>,
+                FC1902: <span style={combineCss.CSSFC_02_Current_Values_Temperature}>{formatValue(FC_02_Current_Values_Temperature)}</span>,
+            },
+            {
+                name: <span>{tagNameFC.SVF}</span>,
+                FC1901: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate}>{formatValue(FC_01_Current_Values_Flow_Rate)}</span>,
+                FC1902: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate}>{formatValue(FC_02_Current_Values_Flow_Rate)}</span>,
+            },
+            {
+                name: <span>{tagNameFC.GVF}</span>,
+                FC1901: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>{formatValue(FC_01_Current_Values_Uncorrected_Flow_Rate)}</span>,
+                FC1902: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}>{formatValue(FC_02_Current_Values_Uncorrected_Flow_Rate)}</span>,
+            },
+            {
+                name: <span>{tagNameFC.SVA}</span>,
+                FC1901: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>{formatValue(FC_01_Accumulated_Values_Uncorrected_Volume)}</span>,
+                FC1902: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}>{formatValue(FC_02_Accumulated_Values_Uncorrected_Volume)}</span>,
+            },
+            {
+                name: <span>{tagNameFC.GVA}</span>,
+                FC1901: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume}>{formatValue(FC_01_Accumulated_Values_Volume)}</span>,
+                FC1902: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume}>{formatValue(FC_02_Accumulated_Values_Volume)}</span>,
+            },
+            {
+                name: <span>{tagNameFC.VbToday}</span>,
+                FC1901: <span style={combineCss.CSSFC_01_Today_Values_Volume}>{formatValue(FC_01_Today_Values_Volume)}</span>,
+                FC1902: <span style={combineCss.CSSFC_02_Today_Values_Volume}>{formatValue(FC_02_Today_Values_Volume)}</span>,
+            },
+            {
+                name: <span>{tagNameFC.VmToday}</span>,
+                FC1901: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}>{formatValue(FC_01_Today_Values_Uncorrected_Volume)}</span>,
+                FC1902: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}>{formatValue(FC_02_Today_Values_Uncorrected_Volume)}</span>,
+            },
+            {
+                name: <span>{tagNameFC.VbLastDay}</span>,
+                FC1901: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume}>{formatValue(FC_01_Yesterday_Values_Volume)}</span>,
+                FC1902: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume}>{formatValue(FC_02_Yesterday_Values_Volume)}</span>,
+            },
+            {
+                name: <span>{tagNameFC.VmLastDay}</span>,
+                FC1901: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}>{formatValue(FC_01_Yesterday_Values_Uncorrected_Volume)}</span>,
+                FC1902: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}>{formatValue(FC_02_Yesterday_Values_Uncorrected_Volume)}</span>,
+            },
+        ];
 
     const dataPLC = [
         {
-            name: <span>{tagNamePLC.PT01}</span>,
-            PLC: <span style={combineCss.CSSPT1}> {PT1}</span>,
-        },
-        {
             name: <span>{tagNamePLC.GD1}</span>,
-            PLC: <span style={combineCss.CSSGD1}>{} {GD1}</span>,
+            PLC: <span style={combineCss.CSSGD1}> {formatValue(GD1)}</span>,
         },
         {
             name: <span>{tagNamePLC.GD2}</span>,
-            PLC: <span style={combineCss.CSSGD2}> {GD2}</span>,
+            PLC: <span style={combineCss.CSSGD2}> {formatValue(GD2)}</span>,
         },
         {
-            name: <span>{tagNamePLC.DO_SV_01}</span>,
-            PLC: <span style={combineCss.CSSDO_SV_01}> {DO_SV_01} {DataDO_SV_01}</span>,
+            name: <span>{tagNamePLC.PT01}</span>,
+            PLC: <span style={combineCss.CSSPT1}> {formatValue(PT1)}</span>,
         },
-      
-
         {
             name: <span>{tagNamePLC.ZSO}</span>,
             PLC: <span style={combineCss.CSSDI_ZSO_1}>{DI_ZSO_1} {DataZSO_1}</span>,
@@ -2554,7 +2554,11 @@ const DataDI_SD_1 = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Detec
             name: <span>{tagNamePLC.ZSC}</span>,
             PLC: <span style={combineCss.CSSDI_ZSC_1}>{DI_ZSC_1} {DataZSC_1}</span>,
         },
-      
+        
+        {
+            name: <span>{tagNamePLC.MAP}</span>,
+            PLC: <span style={combineCss.CSSDI_MAP_1}> {DI_MAP_1} {DataMap1}</span>,
+        },
         {
             name: <span>{tagNamePLC.UPS_BATTERY}</span>,
             PLC: <span style={combineCss.CSSDI_UPS_BATTERY}> {DI_UPS_BATTERY} {DataBattery}</span>,
@@ -2563,8 +2567,6 @@ const DataDI_SD_1 = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Detec
             name: <span>{tagNamePLC.UPS_CHARGING}</span>,
             PLC: <span style={combineCss.CSSDI_UPS_CHARGING}> {DI_UPS_CHARGING} {DataCharging}</span>,
         },
-
-     
         {
             name: <span>{tagNamePLC.UPS_ALARM}</span>,
             PLC: <span style={combineCss.CSSDI_UPS_ALARM}>{DI_UPS_ALARM} {DataAlarm}</span>,
@@ -2573,13 +2575,6 @@ const DataDI_SD_1 = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Detec
             name: <span>{tagNamePLC.Smoker_Detected}</span>,
             PLC: <span style={combineCss.DataSmoker_Detected}>{DI_SD_1} {DataDI_SD_1}</span>,
         },
-     
-        {
-            name: <span>{tagNamePLC.UPS_MODE}</span>,
-            PLC: <span style={combineCss.CSSUPS_Mode}> {UPS_Mode} {DataMode}</span>,
-        },
-
-
         {
             name: <span>{tagNamePLC.SELECT_SW}</span>,
             PLC: <span style={combineCss.CSSDI_SELECT_SW}>{DI_SELECT_SW} {DataDI_SELECT_SW}</span>,
@@ -2597,8 +2592,10 @@ const DataDI_SD_1 = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Detec
             name: <span>{tagNamePLC.EmergencyNC}</span>,
             PLC: <span style={combineCss.CSSEmergency_NC}>{Emergency_NC} {DataEmergency_NC}</span>,
         },
-     
-
+        {
+            name: <span>{tagNamePLC.UPS_MODE}</span>,
+            PLC: <span style={combineCss.CSSUPS_Mode}> {UPS_Mode} {DataMode}</span>,
+        },
         {
             name: <span>{tagNamePLC.HORN}</span>,
             PLC: <span style={combineCss.CSSDO_HR_01}>{DO_HR_01} {DataHorn}</span>,
@@ -2607,15 +2604,19 @@ const DataDI_SD_1 = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Detec
             name: <span>{tagNamePLC.BEACON}</span>,
             PLC: <span style={combineCss.CSSDO_BC_01}> {DO_BC_01} {DataBeacon}</span>,
         },
-   
 
-    
         {
-            name: <span>{tagNamePLC.MAP}</span>,
-            PLC: <span style={combineCss.CSSDI_MAP_1}> {DI_MAP_1} {DataMap1}</span>,
+            name: <span>{tagNamePLC.DO_SV_01}</span>,
+            PLC: <span style={combineCss.CSSDO_SV_01}> {DO_SV_01} {DataDO_SV_01}</span>,
         },
+
     ];
 
+    const [ShowMore,setShowMore] = useState(false)
+
+    const handleShowMore = () => {
+        setShowMore(!ShowMore)
+    }
     return (
         <div >
             <div  >
@@ -2656,13 +2657,15 @@ const DataDI_SD_1 = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Detec
                         <div style={{  fontWeight: 500,display:'flex' }}>
                           {FC_Conn_STTValue}
                         </div>
-                    
+                        <div  onClick={handleShowMore} >
+                    {ShowMore ? <span style={{cursor:"pointer",  }}>{Up}</span>  : <span style={{cursor:"pointer"}}>{Down}</span>}
+                    </div>
                     </div>
                     
                 </div>
 
 
-
+                {ShowMore ?    <div > 
 
 
 
@@ -2746,6 +2749,53 @@ const DataDI_SD_1 = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Detec
 
                     
                     </DataTable>
+
+                    </div> 
+                
+                : 
+                <div>
+
+
+                <DataTable value={dataFC} size="small" selectionMode="single"> 
+                    <Column field="name" header="FC Parameter"></Column>
+
+     
+                    <Column
+                            field="FC1901"
+                            header={FC_STT01 === "1" ? (
+
+                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center',  position:'relative', right:30}}>
+                                {DotGreen} <p style={{marginLeft:5}}>FC-1401</p>
+   
+                               </div>
+                               
+                            ) : (
+                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center' , position:'relative', right:30}}>
+                                {DotRed}  <p style={{marginLeft:5}}>FC-1401</p>
+                             </div>
+                            )}
+                        ></Column>
+                    <Column
+                        style={{display:'flex', justifyContent:'flex-end'}}
+
+                            field="FC1902"
+                            header={FC_STT01 === "1" ? (
+                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                                {DotGreen} <p style={{marginLeft:5}}>FC-1402</p>
+   
+                               </div>
+                                
+                            ) : (
+                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
+                                {DotRed}  <p style={{marginLeft:5}}>FC-1402</p>
+                             </div>
+                            )}
+                        ></Column>
+
+                </DataTable>
+            </div>
+
+                }
 
             </div>
 

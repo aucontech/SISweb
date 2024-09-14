@@ -21,6 +21,12 @@ interface ValueStateMap {
         | React.Dispatch<React.SetStateAction<string | null>>
         | undefined;
 }
+
+interface StateMap2 {
+    [key: string]:
+        | React.Dispatch<React.SetStateAction<string | null>>
+        | undefined;
+}
 export default function ScoreCard_SNG_HUNGYEN() {
     const [data, setData] = useState<any[]>([]);
 
@@ -82,7 +88,15 @@ export default function ScoreCard_SNG_HUNGYEN() {
                 let dataReceived = JSON.parse(evt.data);
                 if (dataReceived.update !== null) {
                     setData([...data, dataReceived]);
-
+                    const formatValue = (value: any) => {
+                        return value !== null
+                            ? new Intl.NumberFormat("en-US", {
+                                  minimumFractionDigits: 2, // Đảm bảo có 2 chữ số sau dấu thập phân
+                                  maximumFractionDigits: 2, // Không nhiều hơn 2 chữ số thập phân
+                                  useGrouping: true, // Phân cách phần ngàn bằng dấu phẩy
+                              }).format(parseFloat(value))
+                            : "";
+                    };
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
                   
@@ -110,39 +124,18 @@ export default function ScoreCard_SNG_HUNGYEN() {
 
 
                         TOTAL_SNG: setTOTAL_SNG,
-                        SDV_3004: setSDV_3004,
-
-
-
-
-                        SDV_3003: setSDV_3003,
+            
                         
-                        GD1_STATUS: setGD1_STATUS,
-                        GD2_STATUS: setGD2_STATUS,
-                        GD3_STATUS: setGD3_STATUS,
-                        GD4_STATUS: setGD4_STATUS,
-                        GD5_STATUS: setGD5_STATUS,
-
-
-                        ESD: setESD,
-                        HR_BC: setHR_BC,
-                        SD: setSD,
-                        VAPORIZER_1: setVAPORIZER_1,
-                        VAPORIZER_2: setVAPORIZER_2,
-                        VAPORIZER_3: setVAPORIZER_3,
-
-                        VAPORIZER_4: setVAPORIZER_4,
-                        COOLING_V: setCOOLING_V,
-                        FCV_3001: setFCV_3001,
+                  
 
 
 
 
-                        PERCENT_LPG: setPERCENT_LPG,
-                        PERCENT_AIR: setPERCENT_AIR,
+
+
+                      
                         HV_3001: setHV_3001,
-                        RATIO_MODE: setRATIO_MODE,
-                        FCV_MODE: setFCV_MODE,
+                    
                         TOTAL_CNG: setTOTAL_CNG,
 
                         TM_3002_CNG: setTM_3002_CNG,
@@ -154,12 +147,41 @@ export default function ScoreCard_SNG_HUNGYEN() {
                         SG_Calorimeter: setSG_Calorimeter,
 
                         
+                    
+
+
+
+
+                    };
+                    const stateMap2: StateMap2 = {
+                      
+                        ESD: setESD,
+                        HR_BC: setHR_BC,
+                        SD: setSD,
+                        VAPORIZER_1: setVAPORIZER_1,
+                        VAPORIZER_2: setVAPORIZER_2,
+                        VAPORIZER_3: setVAPORIZER_3,
+
+                        VAPORIZER_4: setVAPORIZER_4,
+                        COOLING_V: setCOOLING_V,
+                        FCV_3001: setFCV_3001,
+                        SDV_3004: setSDV_3004,
+
+                        SDV_3003: setSDV_3003,
+
+
+                        GD1_STATUS: setGD1_STATUS,
+                        GD2_STATUS: setGD2_STATUS,
+                        GD3_STATUS: setGD3_STATUS,
+                        GD4_STATUS: setGD4_STATUS,
+                        GD5_STATUS: setGD5_STATUS,
                         TD_4072_Conn_STT: setTD_4072_Conn_STT,
                         PLC_Conn_STT: setPLC_Conn_STT,
 
-
-
-
+                        RATIO_MODE: setRATIO_MODE,
+                        FCV_MODE: setFCV_MODE,
+                        PERCENT_LPG: setPERCENT_LPG,
+                        PERCENT_AIR: setPERCENT_AIR,
                     };
                     const valueStateMap: ValueStateMap = {
                         TD_4072_Conn_STT: setFC_Conn_STTValue,
@@ -168,8 +190,13 @@ export default function ScoreCard_SNG_HUNGYEN() {
                     keys.forEach((key) => {
                         if (stateMap[key]) {
                             const value = dataReceived.data[key][0][1];
+                            const formattedValue = formatValue(value);
+                            stateMap[key]?.(formattedValue);
+                        }
+                        if (stateMap2[key]) {
+                            const value = dataReceived.data[key][0][1];
                             const slicedValue = value;
-                            stateMap[key]?.(slicedValue);
+                            stateMap2[key]?.(slicedValue);
                         }
 
                         if (valueStateMap[key]) {
@@ -1875,8 +1902,8 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
         GD_3005: `Gas Detector GD-3005 (%LEL)`,
         GD_3006: `Gas Detector GD-3006 (%LEL)`,
 
-        TM_3002_SNG:`Tubine Meter TM_3002-SNG${nameValue.Sm3h}`,
-        TM_3003_SNG:`Tubine Meter TM_3003-SNG${nameValue.Sm3h}`,
+        TM_3002_SNG:`Tubine Meter TM3002-SNG${nameValue.Sm3h}`,
+        TM_3003_SNG:`Tubine Meter TM3003-SNG${nameValue.Sm3h}`,
         TOTAL_SNG: `Total SNG ${nameValue.Sm3}`,
 
         SDV_3004:"Shutdown Valve SDV-3004 (0: Close - 1: Open)",

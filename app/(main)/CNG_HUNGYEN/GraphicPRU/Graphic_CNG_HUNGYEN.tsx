@@ -29,7 +29,6 @@ import { id_CNG_HungYen } from "../../data-table-device/ID-DEVICE/IdDevice";
 import { readToken } from "@/service/localStorage";
 import { httpApi } from "@/api/http.api";
 import { Toast } from "primereact/toast";
-import AlarmCNG_HUNGYEN from "@/layout/AlarmBell/AlarmCNG_HUNGYEN";
 import { nameValue } from "../../SetupData/namValue";
 import "./ForCssGraphic.css";
 
@@ -91,6 +90,10 @@ export default function Graphic_CNG_HUNGYEN() {
     const [alarmMessage, setAlarmMessage] = useState<string | null>(null);
 
     useEffect(() => {
+
+        const connectWebSocket = () => {
+            const token = localStorage.getItem('accessToken');
+            const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
         ws.current = new WebSocket(url);
 
         const obj1 = {
@@ -218,25 +221,36 @@ export default function Graphic_CNG_HUNGYEN() {
                 },
             ],
         };
-
         if (ws.current) {
             ws.current.onopen = () => {
                 console.log("WebSocket connected");
                 setTimeout(() => {
                     ws.current?.send(JSON.stringify(obj1));
-                    ws.current?.send(JSON.stringify(obj_PCV_PSV));
-                });
+                }); 
             };
 
             ws.current.onclose = () => {
-                console.log("WebSocket connection closed.");
-            };
-
-            return () => {
-                console.log("Cleaning up WebSocket connection.");
-                ws.current?.close();
+                console.log("WebSocket connection closed. Reconnecting in 10 seconds...");
+                setTimeout(() => {
+                    connectWebSocket(); 
+                }, 10000);
             };
         }
+    }
+
+    connectWebSocket(); 
+    
+    const interval = setInterval(() => {
+        console.log("Resetting WebSocket connection...");
+
+        ws.current?.close(); 
+        connectWebSocket();  
+    }, 60000); 
+
+    return () => {
+        clearInterval(interval); 
+        ws.current?.close(); 
+    };
     }, []);
 
     useEffect(() => {
@@ -244,16 +258,9 @@ export default function Graphic_CNG_HUNGYEN() {
             ws.current.onmessage = (event) => {
                 let dataReceived = JSON.parse(event.data);
                 if (dataReceived.update !== null) {
-                    setData([...data, dataReceived]);
-                    const formatValue = (value: any) => {
-                        return value !== null
-                            ? new Intl.NumberFormat("en-US", {
-                                  minimumFractionDigits: 2, // Đảm bảo có 2 chữ số sau dấu thập phân
-                                  maximumFractionDigits: 2, // Không nhiều hơn 2 chữ số thập phân
-                                  useGrouping: true, // Phân cách phần ngàn bằng dấu phẩy
-                              }).format(parseFloat(value))
-                            : "";
-                    };
+                    setData(prevData => [...prevData, dataReceived]);
+
+                    
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
                         EVC_01_Flow_at_Base_Condition:
@@ -321,12 +328,6 @@ export default function Graphic_CNG_HUNGYEN() {
                         ESD_3001: setESD_3001,
                         SD_3001: setSD_3001,
                         SD_3002: setSD_3002,
-                    };
-                    const valueStateMap: ValueStateMap = {
-                        EVC_01_Conn_STT: setEVC_01_Conn_STTValue,
-                       
-                    };
-                    const stateMap2: StateMap2 = {
                         SDV_3001A: setSDV_3001A,
                         SDV_3001B: setSDV_3001B,
                         SDV_3002: setSDV_3002,
@@ -334,16 +335,17 @@ export default function Graphic_CNG_HUNGYEN() {
                         EVC_01_Conn_STT: setEVC_01_Conn_STT,
                         EVC_02_Conn_STT: setEVC_02_Conn_STT,
                     };
+                    const valueStateMap: ValueStateMap = {
+                        EVC_01_Conn_STT: setEVC_01_Conn_STTValue,
+                       
+                    };
+                    
                     keys.forEach((key) => {
+                      
                         if (stateMap[key]) {
                             const value = dataReceived.data[key][0][1];
-                            const formattedValue = formatValue(value);
-                            stateMap[key]?.(formattedValue);
-                        }
-                        if (stateMap2[key]) {
-                            const value = dataReceived.data[key][0][1];
                             const slicedValue = value;
-                            stateMap2[key]?.(slicedValue);
+                            stateMap[key]?.(slicedValue);
                         }
                         if (valueStateMap[key]) {
                             const value = dataReceived.data[key][0][0];
@@ -440,6 +442,40 @@ export default function Graphic_CNG_HUNGYEN() {
             };
         }
     }, [data]);
+
+
+    const [resetKey, setResetKey] = useState(0);
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
+    const [wasOffline, setWasOffline] = useState(false); // Theo dõi trạng thái offline trước đó
+
+    useEffect(() => {
+        // Hàm cập nhật trạng thái online/offline
+        const handleOnlineStatus = () => {
+            const currentStatus = navigator.onLine;
+            setIsOnline(currentStatus);
+
+            if (!currentStatus) {
+                // Khi mất kết nối, đặt trạng thái offline
+                console.log("Mất kết nối internet.");
+                setWasOffline(true);
+            } else if (currentStatus && wasOffline) {
+                // Khi có lại kết nối và trước đó là offline, reset component
+                console.log("Kết nối internet được khôi phục. Reset component...");
+                setResetKey(prevKey => prevKey + 1); // Reset component
+                setWasOffline(false); // Reset lại để chỉ reset 1 lần khi online trở lại
+            }
+        };
+
+        // Lắng nghe sự kiện thay đổi trạng thái online/offline
+        window.addEventListener('online', handleOnlineStatus);
+        window.addEventListener('offline', handleOnlineStatus);
+
+        return () => {
+            // Dọn dẹp sự kiện khi component unmount
+            window.removeEventListener('online', handleOnlineStatus);
+            window.removeEventListener('offline', handleOnlineStatus);
+        };
+    }, [wasOffline]);
 
     const fetchData = async () => {
         try {
@@ -1123,7 +1159,10 @@ export default function Graphic_CNG_HUNGYEN() {
             const PLC_Conn_STT_Maintain = res.data.find(
                 (item: any) => item.key === "PLC_Conn_STT_Maintain"
             );
+ 
 
+       
+            
             // ===================================================================================================================
 
             setmaintainEVC_01_Conn_STT(
@@ -3009,6 +3048,16 @@ export default function Graphic_CNG_HUNGYEN() {
     // ===================================================================================================================
     //====================================================================
 
+
+    const formatValue = (value:any) => {
+        return value !== null
+            ? new Intl.NumberFormat('en-US', {
+                  maximumFractionDigits: 2,
+                  useGrouping: true, 
+              }).format(parseFloat(value))
+            : "";
+    };
+
     useEffect(() => {
         const updatedNodes = nodes.map((node) => {
             if (node.id === "EVC_01_Flow_at_Base_Condition") {
@@ -3057,7 +3106,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_01_Flow_at_Base_Condition}
+                                        {formatValue(EVC_01_Flow_at_Base_Condition)}
                                     </p>
                                 </div>
                                 <p
@@ -3124,7 +3173,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_01_Flow_at_Measurement_Condition}
+                                        {formatValue(EVC_01_Flow_at_Measurement_Condition)}
                                     </p>
                                 </div>
                                 <p
@@ -3188,7 +3237,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_01_Volume_at_Base_Condition}
+                                        {formatValue(EVC_01_Volume_at_Base_Condition)}
                                     </p>
                                 </div>
                                 <p
@@ -3256,7 +3305,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_01_Volume_at_Measurement_Condition}
+                                        {formatValue(EVC_01_Volume_at_Measurement_Condition)}
                                     </p>
                                 </div>
                                 <p
@@ -3321,7 +3370,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_02_Flow_at_Base_Condition}
+                                        {formatValue(EVC_02_Flow_at_Base_Condition)}
                                     </p>
                                 </div>
                                 <p
@@ -3388,7 +3437,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_02_Flow_at_Measurement_Condition}
+                                        {formatValue(EVC_02_Flow_at_Measurement_Condition)}
                                     </p>
                                 </div>
                                 <p
@@ -3453,7 +3502,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_02_Volume_at_Base_Condition}
+                                        {formatValue(EVC_02_Volume_at_Base_Condition)}
                                     </p>
                                 </div>
                                 <p
@@ -3520,7 +3569,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_02_Volume_at_Measurement_Condition}
+                                        {formatValue(EVC_02_Volume_at_Measurement_Condition)}
                                     </p>
                                 </div>
                                 <p
@@ -3583,7 +3632,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {PIT_3001A}
+                                        {formatValue(PIT_3001A)}
                                     </p>
                                 </div>
                                 <p
@@ -3646,7 +3695,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {PIT_3001B}
+                                        {formatValue(PIT_3001B)}
                                     </p>
                                 </div>
                                 <p
@@ -3710,7 +3759,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {PT_3001}
+                                        {formatValue(PT_3001)}
                                     </p>
                                 </div>
                                 <p
@@ -3773,7 +3822,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {PT_3002}
+                                        {formatValue(PT_3002)}
                                     </p>
                                 </div>
                                 <p
@@ -3838,7 +3887,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_02_Pressure}
+                                        {formatValue(EVC_02_Pressure)}
                                     </p>
                                 </div>
                                 <p
@@ -3904,7 +3953,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_01_Pressure}
+                                        {formatValue(EVC_01_Pressure)}
                                     </p>
                                 </div>
                                 <p
@@ -3970,7 +4019,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_01_Temperature}
+                                        {formatValue(EVC_01_Temperature)}
                                     </p>
                                 </div>
                                 <p
@@ -4035,7 +4084,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_02_Temperature}
+                                        {formatValue(EVC_02_Temperature)}
                                     </p>
                                 </div>
                                 <p
@@ -4070,7 +4119,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                 }}
                             >
                                 <p style={{ color: "black", marginLeft: 10 }}>
-                                    PCV-3001A: {PCV_3001A} BarG
+                                    PCV-3001A: {formatValue(PCV_3001A)} BarG
                                 </p>
                             </div>
                         ),
@@ -4094,7 +4143,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                 }}
                             >
                                 <p style={{ color: "black", marginLeft: 10 }}>
-                                    PCV-3001B: {PCV_3001B} BarG
+                                    PCV-3001B: {formatValue(PCV_3001B)} BarG
                                 </p>
                             </div>
                         ),
@@ -4116,7 +4165,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                 }}
                             >
                                 <p style={{ color: "black" }}>
-                                    PCV-3002A: {PCV_3002A} BarG
+                                    PCV-3002A: {formatValue(PCV_3002A)} BarG
                                 </p>
                             </div>
                         ),
@@ -4138,7 +4187,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                 }}
                             >
                                 <p style={{ color: "black" }}>
-                                    PCV-3002B: {PCV_3002B} BarG
+                                    PCV-3002B: {formatValue(PCV_3002B)} BarG
                                 </p>
                             </div>
                         ),
@@ -4251,7 +4300,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {formatValue(TT_3001)}
                                     </p>
                                 </div>
                                 <p
@@ -4315,7 +4364,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {formatValue(PT_3003)}
                                     </p>
                                 </div>
                                 <p
@@ -4379,7 +4428,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {formatValue(GD_3001)}
                                     </p>
                                 </div>
                                 <p
@@ -4415,7 +4464,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
-                                    PSV-3001A: {PSV_3001A} BarG
+                                    PSV-3001A: {formatValue(PSV_3001A)} BarG
                                 </p>
                             </div>
                         ),
@@ -4439,7 +4488,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
-                                    PSV-3002A: {PSV_3002A} BarG
+                                    PSV-3002A: {formatValue(PSV_3002A)} BarG
                                 </p>
                             </div>
                         ),
@@ -4463,7 +4512,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
-                                    PSV-3001B: {PSV_3001B} BarG
+                                    PSV-3001B: {formatValue(PSV_3001B)} BarG
                                 </p>
                             </div>
                         ),
@@ -4487,7 +4536,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
-                                    PSV-3002B: {PSV_3002B} BarG
+                                    PSV-3002B: {formatValue(PSV_3002B)} BarG
                                 </p>
                             </div>
                         ),
@@ -8041,7 +8090,6 @@ export default function Graphic_CNG_HUNGYEN() {
             data: {
                 label: (
                     <div>
-                        <AlarmCNG_HUNGYEN />
                     </div>
                 ),
             },
@@ -8801,6 +8849,7 @@ export default function Graphic_CNG_HUNGYEN() {
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
             </Button> */}
             <div
+            key={resetKey}
                 style={{
                     // width: "100%",
                     height: "100%",

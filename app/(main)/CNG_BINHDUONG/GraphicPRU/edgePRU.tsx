@@ -8,11 +8,11 @@ const styleLine1 = {
 
 const styleLine2 = {
     strokeWidth: 14,
-    stroke: "#ffaa00",
+    stroke: "orange",
 };
 const styleLine3 = {
     strokeWidth: 14,
-    stroke: "#ffe900",
+    stroke: "yellow",
 };
 
 export const edgePRU = [

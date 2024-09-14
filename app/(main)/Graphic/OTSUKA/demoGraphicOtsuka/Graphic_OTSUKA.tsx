@@ -51,7 +51,7 @@ import { httpApi } from "@/api/http.api";
 import BallVavlePSV from "../ReactFlow/BallVavlePSV";
 import { Toast } from "primereact/toast";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
-import AlarmOTSUKA from "@/layout/AlarmBell/AlarmOTSUKA";
+
 import BallValueFirst from "../ReactFlow/BallValueFirst";
 import BallValueLast from "../ReactFlow/BallValueLast";
 import { id_OTSUKA } from "@/app/(main)/data-table-device/ID-DEVICE/IdDevice";
@@ -1621,6 +1621,8 @@ export default function Graphic_OTSUKA() {
                 (item: any) => item.key === "FIQ1902_LineDuty"
             );
             setLineduty1902(LineDuty1902?.value || false);
+
+
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -5489,7 +5491,6 @@ export default function Graphic_OTSUKA() {
             data: {
                 label: (
                     <div>
-                        <AlarmOTSUKA />
                     </div>
                 ),
             },

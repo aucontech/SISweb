@@ -37,6 +37,7 @@ import {
     BlackTriangleRight,
     FIQ,
     GD,
+    PCV,
     PTV,
     SVD_NC,
     SVD_NO,
@@ -52,10 +53,8 @@ import { httpApi } from "@/api/http.api";
 import BallVavlePSV from "../ReactFlow/BallVavlePSV";
 import { Toast } from "primereact/toast";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
-import AlarmOTSUKA from "@/layout/AlarmBell/AlarmOTSUKA";
 import BallValueFirst from "../ReactFlow/BallValueFirst";
 import BallValueLast from "../ReactFlow/BallValueLast";
-import AlarmARAKAWA from "@/layout/AlarmBell/AlarmARAKAWA";
 interface StateMap {
     [key: string]:
         | React.Dispatch<React.SetStateAction<string | null>>
@@ -106,10 +105,19 @@ export default function GraphicARAKAWA() {
     const [alarmMessage, setAlarmMessage] = useState<string | null>(null);
 
     const toast = useRef<Toast>(null);
+    const ws = useRef<WebSocket | null>(null);
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+    const [resetKey, setResetKey] = useState(0);
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
+    const [wasOffline, setWasOffline] = useState(false); // Theo dõi trạng thái offline trước đó
 
     useEffect(() => {
-        ws.current = new WebSocket(url);
 
+        const connectWebSocket = () => {
+
+        const token = localStorage.getItem('accessToken');
+                const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+        ws.current = new WebSocket(url);
         const obj1 = {
             attrSubCmds: [],
             tsSubCmds: [
@@ -122,99 +130,61 @@ export default function GraphicARAKAWA() {
             ],
         };
 
-        const obj_PCV_PSV = {
-            entityDataCmds: [
-                {
-                    cmdId: 1,
-                    latestCmd: {
-                        keys: [
-                            {
-                                type: "ATTRIBUTE",
-                                key: "active",
-                            },
-                        ],
-                    },
-                    query: {
-                        entityFilter: {
-                            type: "singleEntity",
-                            singleEntity: {
-                                entityType: "DEVICE",
-                                id: id_ARAKAWA,
-                            },
-                        },
-                        pageLink: {
-                            pageSize: 1,
-                            page: 0,
-                            sortOrder: {
-                                key: {
-                                    type: "ENTITY_FIELD",
-                                    key: "createdTime",
-                                },
-                                direction: "DESC",
-                            },
-                        },
-                        entityFields: [
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "name",
-                            },
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "label",
-                            },
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "additionalInfo",
-                            },
-                        ],
-                        latestValues: [
-                            {
-                                type: "ATTRIBUTE",
-                                key: "active",
-                            },
-                        ],
-                    },
-                },
-            ],
-        };
-
         if (ws.current) {
             ws.current.onopen = () => {
                 console.log("WebSocket connected");
-                setCheckConnectData(true);
                 setTimeout(() => {
                     ws.current?.send(JSON.stringify(obj1));
-                    ws.current?.send(JSON.stringify(obj_PCV_PSV));
+             
+
                 });
             };
-
             ws.current.onclose = () => {
-                console.log("WebSocket connection closed.");
-                setCheckConnectData(false);
-            };
-
+                                setTimeout(() => {
+                                    connectWebSocket(); 
+                                }, 10000);
+                            };
             return () => {
                 console.log("Cleaning up WebSocket connection.");
                 ws.current?.close();
             };
         }
-    }, []);
+        };
+       
+        connectWebSocket()
+        
+    }, [isOnline]);
+
+    useEffect(() => {
+        const handleOnlineStatus = () => {
+            const currentStatus = navigator.onLine;
+            setIsOnline(currentStatus);
+
+            if (!currentStatus) {
+                setWasOffline(true);
+            } else if (currentStatus && wasOffline) {
+                setResetKey(prevKey => prevKey + 1); 
+                setWasOffline(false); 
+            }
+        };
+
+        window.addEventListener('online', handleOnlineStatus);
+        window.addEventListener('offline', handleOnlineStatus);
+
+        return () => {
+            window.removeEventListener('online', handleOnlineStatus);
+            window.removeEventListener('offline', handleOnlineStatus);
+        };
+    }, [wasOffline]);
 
     useEffect(() => {
         if (ws.current) {
             ws.current.onmessage = (evt) => {
                 let dataReceived = JSON.parse(evt.data);
                 if (dataReceived.update !== null) {
-                    setData([...data, dataReceived]);
-                    const formatValue = (value:any) => {
-                        return value !== null
-                            ? new Intl.NumberFormat('en-US', {
-                                  minimumFractionDigits: 2, // Đảm bảo có 2 chữ số sau dấu thập phân
-                                  maximumFractionDigits: 2, // Không nhiều hơn 2 chữ số thập phân
-                                  useGrouping: true, // Phân cách phần ngàn bằng dấu phẩy
-                              }).format(parseFloat(value))
-                            : "";
-                    };
+                    setData(prevData => [...prevData, dataReceived]);
+
+                
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
                         EVC_01_Flow_at_Base_Condition: setEVC_01_Flow_at_Base_Condition,
@@ -253,7 +223,10 @@ export default function GraphicARAKAWA() {
                         DO_BC_01: setDO_BC_01,
                         DO_SV_01: setDO_SV_01,
 
-
+                        DI_ZSO_1: setDI_ZSO_1,
+                        DI_ZSC_1: setDI_ZSC_1,
+                        EVC_01_Conn_STT: setEVC_01_Conn_STT,
+                        PLC_Conn_STT: setPLC_Conn_STT,
                     
                     };
                     const valueStateMap: ValueStateMap = {
@@ -261,22 +234,13 @@ export default function GraphicARAKAWA() {
                     };
 
 
-                    const stateMap2: StateMap2 = { 
-                        DI_ZSO_1: setDI_ZSO_1,
-                        DI_ZSC_1: setDI_ZSC_1,
-                        EVC_01_Conn_STT: setEVC_01_Conn_STT,
-                        PLC_Conn_STT: setPLC_Conn_STT,
-                    }
+                  
                     keys.forEach((key) => {
+                      
                         if (stateMap[key]) {
                             const value = dataReceived.data[key][0][1];
-                            const formattedValue = formatValue(value);
-                            stateMap[key]?.(formattedValue); // Áp dụng định dạng giá trị
-                        }
-                        if (stateMap2[key]) {
-                            const value = dataReceived.data[key][0][1];
                             const slicedValue = value;
-                            stateMap2[key]?.(slicedValue);
+                            stateMap[key]?.(slicedValue);
                         }
                         if (valueStateMap[key]) {
                             const value = dataReceived.data[key][0][0];
@@ -318,8 +282,7 @@ export default function GraphicARAKAWA() {
             };
         }
     }, [data]);
-    const ws = useRef<WebSocket | null>(null);
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+
     //============================GD =============================
 
     const [EVC_01_Remain_Battery_Service_Life, setEVC_01_Remain_Battery_Service_Life] = useState<string | null>(null);
@@ -1567,6 +1530,12 @@ export default function GraphicARAKAWA() {
             const PLC_Conn_STT_Maintain = res.data.find(
                 (item: any) => item.key === "PLC_Conn_STT_Maintain"
             );
+
+
+ const Active = res.data.find(
+    (item: any) => item.key === "active"
+);
+setActive(Active?.value || false);
  // =================================================================================================================== 
 
 
@@ -1698,6 +1667,14 @@ export default function GraphicARAKAWA() {
         SSV: "Slam Shut Off Valve",
         SDV: "Shutdown valve",
     };
+    const formatValue = (value:any) => {
+        return value !== null
+            ? new Intl.NumberFormat('en-US', {
+                  maximumFractionDigits: 2,
+                  useGrouping: true, 
+              }).format(parseFloat(value))
+            : "";
+    };
 
     useEffect(() => {
         const updatedNodes = nodes.map((node) => {
@@ -1747,7 +1724,7 @@ export default function GraphicARAKAWA() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_01_Flow_at_Base_Condition}
+                                        {formatValue(EVC_01_Flow_at_Base_Condition)}
                                     </p>
                                 </div>
                                 <p
@@ -1813,7 +1790,7 @@ export default function GraphicARAKAWA() {
                                         }}
                                     >
                                         {
-                                            EVC_01_Flow_at_Measurement_Condition
+                                            formatValue(EVC_01_Flow_at_Measurement_Condition)
                                         }
                                     </p>
                                 </div>
@@ -1877,7 +1854,7 @@ export default function GraphicARAKAWA() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_01_Volume_at_Base_Condition}
+                                        {formatValue(EVC_01_Volume_at_Base_Condition)}
                                     </p>
                                 </div>
                                 <p
@@ -1945,7 +1922,7 @@ export default function GraphicARAKAWA() {
                                         }}
                                     >
                                         {
-                                            EVC_01_Volume_at_Measurement_Condition
+                                            formatValue(EVC_01_Volume_at_Measurement_Condition)
                                         }
                                     </p>
                                 </div>
@@ -2250,7 +2227,7 @@ export default function GraphicARAKAWA() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {PT1}
+                                        {formatValue(PT1)}
                                     </p>
                                 </div>
                                 <p
@@ -2309,7 +2286,7 @@ export default function GraphicARAKAWA() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {EVC_01_Pressure}
+                                        {formatValue(EVC_01_Pressure)}
                                     </p>
                                 </div>
                                 <p
@@ -2580,7 +2557,7 @@ export default function GraphicARAKAWA() {
                                 }}
                                 // onClick={() => confirmGD_1901()}
                             >
-                                <p>{GD1} %LEL</p>
+                                <p>{formatValue(GD1)} %LEL</p>
                             </div>
                         ),
                     },
@@ -2615,7 +2592,7 @@ export default function GraphicARAKAWA() {
                                 }}
                                 // onClick={() => confirmGD_1902()}
                             >
-                                <p>{GD2} %LEL</p>
+                                <p>{formatValue(GD2)} %LEL</p>
                             </div>
                         ),
                     },
@@ -3026,10 +3003,10 @@ export default function GraphicARAKAWA() {
               Line2_NONE: { x: -884.3336203769039, y: 1046.3496174211396 },
               Line2_NONE1: { x: -779.4885863058424, y: 1046.3496174211396 },
               LineBall_1_1: { x: -1372.5317402818896, y: 1045.9869361614612 },
-              PCV01: { x: -689.7970151337088, y: 879.00632918006 },
-              PCV02: { x: -692.1078758499317, y: 1120.7254019726813 },
-              PCV_NUM01: { x: -753.1197637959665, y: 828.7379359721325 },
-              PCV_NUM02: { x: -754.9807048889562, y: 1181.3618221440458 },
+              PCV01: { x: -647.1303484670418, y: 867.3396625133937 },
+              PCV02: { x: -647.9515684919996, y: 1107.3332427411806 },
+              PCV_NUM01: { x: -722.277268509522, y: 825.133480346991 },
+              PCV_NUM02: { x: -720.3461627186664, y: 1180.832086256927 },
               PCV_ballVavle_Small1: {
                   x: -597.4113415337335,
                   y: 882.8095517403245,
@@ -4065,12 +4042,13 @@ export default function GraphicARAKAWA() {
             data: {
                 label: (
                     <div>
-                        <Image
+                        {/* <Image
                             src="/layout/imgGraphic/PVC.png"
                             width={60}
                             height={60}
                             alt="Picture of the author"
-                        />
+                        /> */}
+                        {PCV}
                     </div>
                 ),
             },
@@ -4092,12 +4070,13 @@ export default function GraphicARAKAWA() {
             data: {
                 label: (
                     <div>
-                        <Image
+                        {/* <Image
                             src="/layout/imgGraphic/PVC.png"
                             width={60}
                             height={60}
                             alt="Picture of the author"
-                        />
+                        /> */}
+                        {PCV}
                     </div>
                 ),
             },
@@ -4113,129 +4092,129 @@ export default function GraphicARAKAWA() {
             zIndex: 9999,
         },
 
-        {
-            id: "PCV_ballVavle_Small1",
-            position: positions.PCV_ballVavle_Small1,
-            type: "custom",
-            data: {
-                label: (
-                    <div>
-                        <Image
-                            src="/layout/imgGraphic/BallValueRight.png"
-                            width={30}
-                            height={30}
-                            alt="Picture of the author"
-                        />
-                    </div>
-                ),
-            },
+        // {
+        //     id: "PCV_ballVavle_Small1",
+        //     position: positions.PCV_ballVavle_Small1,
+        //     type: "custom",
+        //     data: {
+        //         label: (
+        //             <div>
+        //                 <Image
+        //                     src="/layout/imgGraphic/BallValueRight.png"
+        //                     width={30}
+        //                     height={30}
+        //                     alt="Picture of the author"
+        //                 />
+        //             </div>
+        //         ),
+        //     },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: {
-                border: "#333333",
-                background: background,
-                width: 1,
-                height: 1,
-            },
-            zIndex: 9999,
-        },
-        {
-            id: "PCV_ballVavle_Small2",
-            position: positions.PCV_ballVavle_Small2,
-            type: "custom",
-            data: {
-                label: (
-                    <div>
-                        <Image
-                            src="/layout/imgGraphic/BallValueRight.png"
-                            width={30}
-                            height={30}
-                            alt="Picture of the author"
-                        />
-                    </div>
-                ),
-            },
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Left,
+        //     style: {
+        //         border: "#333333",
+        //         background: background,
+        //         width: 1,
+        //         height: 1,
+        //     },
+        //     zIndex: 9999,
+        // },
+        // {
+        //     id: "PCV_ballVavle_Small2",
+        //     position: positions.PCV_ballVavle_Small2,
+        //     type: "custom",
+        //     data: {
+        //         label: (
+        //             <div>
+        //                 <Image
+        //                     src="/layout/imgGraphic/BallValueRight.png"
+        //                     width={30}
+        //                     height={30}
+        //                     alt="Picture of the author"
+        //                 />
+        //             </div>
+        //         ),
+        //     },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: {
-                border: "#333333",
-                background: background,
-                width: 1,
-                height: 1,
-            },
-            zIndex: 9999,
-        },
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Left,
+        //     style: {
+        //         border: "#333333",
+        //         background: background,
+        //         width: 1,
+        //         height: 1,
+        //     },
+        //     zIndex: 9999,
+        // },
 
-        {
-            id: "PCV_ballVavle_Small1_none1",
-            position: positions.PCV_ballVavle_Small1_none1,
-            type: "custom",
-            data: {
-                label: <div> </div>,
-            },
+        // {
+        //     id: "PCV_ballVavle_Small1_none1",
+        //     position: positions.PCV_ballVavle_Small1_none1,
+        //     type: "custom",
+        //     data: {
+        //         label: <div> </div>,
+        //     },
 
-            sourcePosition: Position.Top,
-            targetPosition: Position.Right,
-            style: {
-                border: "#333333",
-                background: background,
-                width: 30,
-                height: 1,
-            },
-        },
-        {
-            id: "PCV_ballVavle_Small2_none1",
-            position: positions.PCV_ballVavle_Small2_none1,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
+        //     sourcePosition: Position.Top,
+        //     targetPosition: Position.Right,
+        //     style: {
+        //         border: "#333333",
+        //         background: background,
+        //         width: 30,
+        //         height: 1,
+        //     },
+        // },
+        // {
+        //     id: "PCV_ballVavle_Small2_none1",
+        //     position: positions.PCV_ballVavle_Small2_none1,
+        //     type: "custom",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            sourcePosition: Position.Left,
-            targetPosition: Position.Top,
-            style: {
-                border: "#333333",
-                background: "none",
-                width: 30,
-                height: 1,
-            },
-        },
-        {
-            id: "PCV_ballVavle_Small1_none2",
-            position: positions.PCV_ballVavle_Small1_none2,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
+        //     sourcePosition: Position.Left,
+        //     targetPosition: Position.Top,
+        //     style: {
+        //         border: "#333333",
+        //         background: "none",
+        //         width: 30,
+        //         height: 1,
+        //     },
+        // },
+        // {
+        //     id: "PCV_ballVavle_Small1_none2",
+        //     position: positions.PCV_ballVavle_Small1_none2,
+        //     type: "custom",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            sourcePosition: Position.Top,
-            targetPosition: Position.Right,
-            style: {
-                border: "#333333",
-                background: "none",
-                width: 30,
-                height: 1,
-            },
-        },
-        {
-            id: "PCV_ballVavle_Small2_none2",
-            position: positions.PCV_ballVavle_Small2_none2,
-            type: "custom",
-            data: {
-                label: <div> </div>,
-            },
+        //     sourcePosition: Position.Top,
+        //     targetPosition: Position.Right,
+        //     style: {
+        //         border: "#333333",
+        //         background: "none",
+        //         width: 30,
+        //         height: 1,
+        //     },
+        // },
+        // {
+        //     id: "PCV_ballVavle_Small2_none2",
+        //     position: positions.PCV_ballVavle_Small2_none2,
+        //     type: "custom",
+        //     data: {
+        //         label: <div> </div>,
+        //     },
 
-            sourcePosition: Position.Left,
-            targetPosition: Position.Top,
-            style: {
-                border: "#333333",
-                background: "none",
-                width: 30,
-                height: 1,
-            },
-        },
+        //     sourcePosition: Position.Left,
+        //     targetPosition: Position.Top,
+        //     style: {
+        //         border: "#333333",
+        //         background: "none",
+        //         width: 30,
+        //         height: 1,
+        //     },
+        // },
 
         {
             id: "PCV_NUM01",
@@ -4280,36 +4259,36 @@ export default function GraphicARAKAWA() {
                 // Thêm box shadow với màu (0, 255, 255)
             },
         },
-        {
-            id: "PCV_none1",
-            position: positions.PCV_none1,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
+        // {
+        //     id: "PCV_none1",
+        //     position: positions.PCV_none1,
+        //     type: "custom",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            sourcePosition: Position.Top,
-            targetPosition: Position.Left,
-            style: {
-                height: 1,
-                width: 1,
-            },
-        },
-        {
-            id: "PCV_none2",
-            position: positions.PCV_none2,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
+        //     sourcePosition: Position.Top,
+        //     targetPosition: Position.Left,
+        //     style: {
+        //         height: 1,
+        //         width: 1,
+        //     },
+        // },
+        // {
+        //     id: "PCV_none2",
+        //     position: positions.PCV_none2,
+        //     type: "custom",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            sourcePosition: Position.Bottom,
-            targetPosition: Position.Left,
-            style: {
-                height: 1,
-                width: 1,
-            },
-        },
+        //     sourcePosition: Position.Bottom,
+        //     targetPosition: Position.Left,
+        //     style: {
+        //         height: 1,
+        //         width: 1,
+        //     },
+        // },
 
         // ==================== FIQ =============================
         {
@@ -5752,7 +5731,6 @@ export default function GraphicARAKAWA() {
             data: {
                 label: (
                     <div>
-                        <AlarmARAKAWA />
                     </div>
                 ),
             },
@@ -6594,6 +6572,7 @@ export default function GraphicARAKAWA() {
                 )}
             </Dialog>
             <div
+            key={resetKey}
                 style={{
                     borderRadius: 5,
                     //width: "auto",
