@@ -14,7 +14,6 @@ import { Utils } from "@/service/Utils";
 import { Chart } from "primereact/chart";
 import dynamic from "next/dynamic";
 import { Card } from "primereact/card";
-import { set } from "lodash";
 
 interface Props {
     filters: any;
@@ -127,7 +126,7 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
             };
             if (tags && tags.length === 0) {
                 setLoading(false);
-                setChartData({});
+                setChartData({ labels: [], datasets: [] });
                 return;
             }
 
