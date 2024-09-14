@@ -66,11 +66,14 @@ export default function Alarmbell() {
             setCurrentUser(user);
         }
     }, []);
+    
     const sendData = useCallback((data: any) => {
         if (ws.current && ws.current.readyState === WebSocket.OPEN) {
             ws.current.send(data);
         }
     }, []);
+
+
     const _fetchAttributeData = useCallback(
         async (deviceId: string, key: string) => {
             return getSeverAttributesByDeviceandKeys(deviceId, key).then(

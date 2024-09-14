@@ -33,6 +33,7 @@ export default function GraphicSogec() {
 
   const [searchItem,setSearchItem] = useState<any>()
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
+  const [isFirstRender, setIsFirstRender] = useState(true); // Track the first render
 
   useEffect(() => {
     if (timeoutId) {
@@ -71,7 +72,16 @@ export default function GraphicSogec() {
     };
     const newTimeoutId = setTimeout(() => {
       const normalizedSearchTerm = searchItem?.replace(/\s+/g, '').toUpperCase();
-    
+      if (isFirstRender) {
+        setActiveComponent(<SetUpdata_LGDS />);
+        setNG("LGDS")
+
+        setLPG("LPG");
+        setCNG("CNG");
+        setSNG("SNG");
+        setIsFirstRender(false); 
+        return; 
+      }
       const filteredList = Object.keys(stationList).filter(key => {
         const normalizedKey = key.replace(/\s+/g, '').toUpperCase();
         return normalizedKey.includes(normalizedSearchTerm);
@@ -79,7 +89,8 @@ export default function GraphicSogec() {
     
       if (searchItem === '') {
         setActiveComponent(<SetUpdata_LGDS />);
-        setNG('LGDS');
+        setNG("LGDS")
+
         setLPG("LPG")
         setCNG("CNG")
         setSNG("SNG")
@@ -117,13 +128,20 @@ export default function GraphicSogec() {
           setCNG('CNG');
           setSNG("SNG");
         } 
-      } else if (normalizedSearchTerm === 'SNG' || normalizedSearchTerm === "SNG ") {
+      }
+    
+      
+      else if (normalizedSearchTerm === 'SNG' || normalizedSearchTerm === "SNG ") {
         setActiveComponent(stationList['SNG']);
         setSNG('SNG');
-      } else if (filteredList.length === 0) {
-        setActiveComponent(<h2 style={{ textAlign: 'center' }}>No matching component found.</h2>);
-      } else {
+      }  else {
         setActiveComponent(<h2 style={{ textAlign: 'center' }}>Multiple matches found. Refine your search.</h2>);
+        setNG("NG")
+
+        setLPG("LPG")
+        setCNG("CNG")
+        setSNG("SNG")
+     
       }
     }, 1000);
     
@@ -306,7 +324,6 @@ const InputSearch = () => {
       ]
     },
   ];
-
 
 
   return (

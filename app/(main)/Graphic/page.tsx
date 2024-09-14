@@ -4,7 +4,6 @@ import DemoFlowOTS from "../OTSUKA/demoGraphicOtsuka/demoFlowOTS";
 import { MegaMenu } from "primereact/megamenu";
 import GraphicPRU from "../PRU/GraphicPRU/GraphicPRU";
 import GraphicZOCV from "../ZOVC/GraphicZOVC/graphicZOVC";
-import AlarmOTSUKA from "@/layout/AlarmBell/AlarmOTSUKA";
 import GraphicARAKAWA from "../ARAKAWA/GraphicArakawa/graphicARAKAWA";
 import GraphicSPMCV from "../SPMCV/GraphicSPMCV/graphicSPMCV";
 import SetUpdata_Meiko from "../SetupData/Meiko/SetUpdata_Meiko";
@@ -25,6 +24,8 @@ import GraphicIGUACU from "../IGUACU/GraphicIGUACU/graphicIGUACU";
 import Graphic_SNG_BINHDUONG from "../SNG/SNG_BINHDUONG/Graphic_SNG_BINHDUONG/Graphic_SNG_BINHDUONG";
 import Graphic_SNG_HUNGYEN from "../SNG/SNG_HUNGYEN/Graphic_SNG_HUNGYEN/Graphic_SNG_HUNGYEN";
 import TestGraphicSogec from "./TestGraphicSogec";
+import BallVavle_Line2_Bottom from "../CNG_HUNGYEN/BallVavlePRU/BallVavle_Line2_Bottom";
+import VrecTest from "../VREC/GraphicVREC/VrecTest";
 
 export default function GraphicSogec() {
     const [isFullscreen, setIsFullscreen] = useState(false);
@@ -52,9 +53,9 @@ export default function GraphicSogec() {
     }, [isFullscreen]);
 
     const [activeComponent, setActiveComponent] = useState<React.ReactNode>(
-        <GraphicLGDS />
+        <VrecTest />
     );
-    const [NG, setNG] = useState<string>("LGDS");
+    const [NG, setNG] = useState<string>("Test111");
     const [SNG, setSNG] = useState<string>("SNG");
 
     const [CNG, setCNG] = useState<string>("CNG");
@@ -137,7 +138,11 @@ export default function GraphicSogec() {
                         label: stationList.stationList,
                         items: [
                             // { label: 'Test', command: () => handleItemClick(<AlarmOTSUKA />, 'Test') },
-
+                            // {
+                            //     label: "Test111",
+                            //     command: () =>
+                            //         NG_Click(<VrecTest />, "Test111"),
+                            // },
                             {
                                 label: "LGDS",
                                 command: () =>
@@ -187,6 +192,12 @@ export default function GraphicSogec() {
                                 command: () =>
                                     NG_Click(<DemoFlowOTS />, "OTSUKA"),
                             },
+                            // {
+                            //     label: "TestMEIKO",
+                            //     command: () =>
+                            //         NG_Click(<BallVavle_Line2_Bottom />, "TestMEIKO"),
+                            // },
+                            
                         ],
                     },
                 ],

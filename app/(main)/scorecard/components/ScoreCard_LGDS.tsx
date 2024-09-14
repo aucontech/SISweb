@@ -9,6 +9,7 @@ import { httpApi } from "@/api/http.api";
 import { DotGreen, DotRed } from "./SVG_Scorecard";
 
 import "./ScoreCard.css"
+import { Down, Up } from "../SVG_Scorecard";
 
 interface StateMap {
     [key: string]:
@@ -20,22 +21,28 @@ interface ValueStateMap {
         | React.Dispatch<React.SetStateAction<string | null>>
         | undefined;
 }
+
+interface StateMap2 {
+    [key: string]:
+        | React.Dispatch<React.SetStateAction<string | null>>
+        | undefined;
+}
 export default function ScoreCard_LGDS() {
     const [data, setData] = useState<any[]>([]);
 
     const token = readToken();
-    const [timeUpdate, setTimeUpdate] = useState<string | null>(null);
+    const [timeUpdate, setTimeUpdate] = useState<any | null>(null);
     const [isVisible, setIsVisible] = useState(false);
 
 
     const [FC_STT01, setFC_STT01] = useState<any | null>(null);
     const [PLC_Conn_STT, setPLC_Conn_STT] = useState<any | null>(null);
 
-    const [FC_Conn_STTValue, setFC_Conn_STTValue] = useState<string | null>(
+    const [FC_Conn_STTValue, setFC_Conn_STTValue] = useState<any | null>(
         null
     );
-    const [Conn_STTValue, setConn_STTValue] = useState<string | null>(null);
-    const [alarmMessage, setAlarmMessage] = useState<string | null>(null);
+    const [Conn_STTValue, setConn_STTValue] = useState<any | null>(null);
+    const [alarmMessage, setAlarmMessage] = useState<any | null>(null);
 
     const ws = useRef<WebSocket | null>(null);
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
@@ -44,50 +51,69 @@ export default function ScoreCard_LGDS() {
     };
 
     useEffect(() => {
-        ws.current = new WebSocket(url);
-
-        const obj1 = {
-            attrSubCmds: [],
-            tsSubCmds: [
-                {
-                    entityType: "DEVICE",
-                    entityId: id_LGDS,
-                    scope: "LATEST_TELEMETRY",
-                    cmdId: 1,
-                },
-            ],
+        const connectWebSocket = () => {
+            // Fetch the latest access token from localStorage
+            const token = localStorage.getItem('accessToken');
+            const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+            
+            ws.current = new WebSocket(url);
+    
+            const obj1 = {
+                attrSubCmds: [],
+                tsSubCmds: [
+                    {
+                        entityType: "DEVICE",
+                        entityId: id_LGDS,
+                        scope: "LATEST_TELEMETRY",
+                        cmdId: 1,
+                    },
+                ],
+            };
+    
+            if (ws.current) {
+                ws.current.onopen = () => {
+                    console.log("WebSocket connected");
+                    setTimeout(() => {
+                        ws.current?.send(JSON.stringify(obj1));
+                    }, 1000); // Slight delay to ensure WebSocket is fully ready
+                };
+    
+                ws.current.onclose = () => {
+                    console.log("WebSocket connection closed. Reconnecting in 10 seconds...");
+                    setTimeout(() => {
+                        connectWebSocket(); // Reconnect using the latest token
+                    }, 10000);
+                };
+            }
         };
-
-        if (ws.current) {
-            ws.current.onopen = () => {
-                console.log("WebSocket connected");
-                setTimeout(() => {
-                    ws.current?.send(JSON.stringify(obj1));
-                });
-            };
-
-            ws.current.onclose = () => {
-                console.log("WebSocket connection closed.");
-            };
-
-            return () => {
-                console.log("Cleaning up WebSocket connection.");
-                ws.current?.close();
-            };
-        }
-    }, []);
+    
+        connectWebSocket(); // Initial connection
+    
+        const interval = setInterval(() => {
+            console.log("Resetting WebSocket connection...");
+    
+            ws.current?.close(); // Close the current WebSocket connection
+            connectWebSocket();  // Reconnect the WebSocket and resend subscription with the latest token
+        }, 60000); // Reset every 60,000 milliseconds (1 minute)
+    
+        return () => {
+            clearInterval(interval);  // Cleanup on component unmount
+            ws.current?.close(); // Close WebSocket connection when component is unmounted
+        };
+    }, []); // Empty dependency array means this will only run once
+    
 
     useEffect(() => {
         if (ws.current) {
             ws.current.onmessage = (evt) => {
                 let dataReceived = JSON.parse(evt.data);
                 if (dataReceived.update !== null) {
-                    setData([...data, dataReceived]);
+                    setData(prevData => [...prevData, dataReceived]);
 
+                  
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
 
-                        FC_Lithium_Battery_Status: setFC_Lithium_Battery_Status,
                         FC_Battery_Voltage: setFC_Battery_Voltage,
                         FC_System_Voltage: setFC_System_Voltage,
                         FC_Charger_Voltage: setFC_Charger_Voltage,
@@ -146,21 +172,24 @@ export default function ScoreCard_LGDS() {
                         DO_SV_01: setDO_SV_01,
                         DO_SV_02: setDO_SV_02,
 
+                      
+                        FC_Lithium_Battery_Status: setFC_Lithium_Battery_Status,
+
                         FC_Conn_STT: setFC_STT01,
                         PLC_Conn_STT: setPLC_Conn_STT,
-
                     };
                     const valueStateMap: ValueStateMap = {
                         FC_Conn_STT: setFC_Conn_STTValue,
                         PLC_Conn_STT: setConn_STTValue,
                     };
+
                     keys.forEach((key) => {
                         if (stateMap[key]) {
                             const value = dataReceived.data[key][0][1];
                             const slicedValue = value;
                             stateMap[key]?.(slicedValue);
                         }
-
+                     
                         if (valueStateMap[key]) {
                             const value = dataReceived.data[key][0][0];
 
@@ -740,7 +769,7 @@ export default function ScoreCard_LGDS() {
 
 // =================================================================================================================== 
 
-const [FC_Lithium_Battery_Status, setFC_Lithium_Battery_Status] = useState<string | null>(null);
+const [FC_Lithium_Battery_Status, setFC_Lithium_Battery_Status] = useState<any | null>(null);
 
 const [FC_Lithium_Battery_Status_High, setFC_Lithium_Battery_Status_High] = useState<number | null>(null);
 const [FC_Lithium_Battery_Status_Low, setFC_Lithium_Battery_Status_Low] = useState<number | null>(null);
@@ -765,7 +794,7 @@ useEffect(() => {
 
      // =================================================================================================================== 
 
-     const [FC_Battery_Voltage, setFC_Battery_Voltage] = useState<string | null>(null);
+     const [FC_Battery_Voltage, setFC_Battery_Voltage] = useState<any | null>(null);
      const [FC_Battery_Voltage_High, setFC_Battery_Voltage_High] = useState<number | null>(null);
      const [FC_Battery_Voltage_Low, setFC_Battery_Voltage_Low] = useState<number | null>(null);
      const [exceedThresholdFC_Battery_Voltage, setExceedThresholdFC_Battery_Voltage] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
@@ -788,7 +817,7 @@ useEffect(() => {
      // =================================================================================================================== 
 
 
-     const [FC_System_Voltage, setFC_System_Voltage] = useState<string | null>(null);
+     const [FC_System_Voltage, setFC_System_Voltage] = useState<any | null>(null);
 
      const [FC_System_Voltage_High, setFC_System_Voltage_High] = useState<number | null>(null);
      const [FC_System_Voltage_Low, setFC_System_Voltage_Low] = useState<number | null>(null);
@@ -813,7 +842,7 @@ useEffect(() => {
 
 
 
-          const [FC_Charger_Voltage, setFC_Charger_Voltage] = useState<string | null>(null);
+          const [FC_Charger_Voltage, setFC_Charger_Voltage] = useState<any | null>(null);
           const [FC_Charger_Voltage_High, setFC_Charger_Voltage_High] = useState<number | null>(null);
           const [FC_Charger_Voltage_Low, setFC_Charger_Voltage_Low] = useState<number | null>(null);
           const [exceedThresholdFC_Charger_Voltage, setExceedThresholdFC_Charger_Voltage] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
@@ -836,7 +865,7 @@ useEffect(() => {
 
 
 
-     const [FC_02_Current_Values_Temperature, setFC_02_Current_Values_Temperature] = useState<string | null>(null);
+     const [FC_02_Current_Values_Temperature, setFC_02_Current_Values_Temperature] = useState<any | null>(null);
 
      const [FC_02_Current_Values_Temperature_High, setFC_02_Current_Values_Temperature_High] = useState<number | null>(null);
      const [FC_02_Current_Values_Temperature_Low, setFC_02_Current_Values_Temperature_Low] = useState<number | null>(null);
@@ -859,7 +888,7 @@ useEffect(() => {
      // =================================================================================================================== 
 
 
-     const [FC_02_Current_Values_Static_Pressure, setFC_02_Current_Values_Static_Pressure] = useState<string | null>(null);
+     const [FC_02_Current_Values_Static_Pressure, setFC_02_Current_Values_Static_Pressure] = useState<any | null>(null);
 
      const [FC_02_Current_Values_Static_Pressure_High, setFC_02_Current_Values_Static_Pressure_High] = useState<number | null>(null);
      const [FC_02_Current_Values_Static_Pressure_Low, setFC_02_Current_Values_Static_Pressure_Low] = useState<number | null>(null);
@@ -884,7 +913,7 @@ useEffect(() => {
 
 
 
-          const [FC_02_Accumulated_Values_Uncorrected_Volume, setFC_02_Accumulated_Values_Uncorrected_Volume] = useState<string | null>(null);
+          const [FC_02_Accumulated_Values_Uncorrected_Volume, setFC_02_Accumulated_Values_Uncorrected_Volume] = useState<any | null>(null);
 
           const [FC_02_Accumulated_Values_Uncorrected_Volume_High, setFC_02_Accumulated_Values_Uncorrected_Volume_High] = useState<number | null>(null);
           const [FC_02_Accumulated_Values_Uncorrected_Volume_Low, setFC_02_Accumulated_Values_Uncorrected_Volume_Low] = useState<number | null>(null);
@@ -906,7 +935,7 @@ useEffect(() => {
           // =================================================================================================================== 
 
 
-          const [FC_02_Accumulated_Values_Volume, setFC_02_Accumulated_Values_Volume] = useState<string | null>(null);
+          const [FC_02_Accumulated_Values_Volume, setFC_02_Accumulated_Values_Volume] = useState<any | null>(null);
           const [FC_02_Accumulated_Values_Volume_High, setFC_02_Accumulated_Values_Volume_High] = useState<number | null>(null);
           const [FC_02_Accumulated_Values_Volume_Low, setFC_02_Accumulated_Values_Volume_Low] = useState<number | null>(null);
           const [exceedThresholdFC_02_Accumulated_Values_Volume, setExceedThresholdFC_02_Accumulated_Values_Volume] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
@@ -926,7 +955,7 @@ useEffect(() => {
      
           // =================================================================================================================== 
 
-          const [FC_02_Current_Values_Flow_Rate, setFC_02_Current_Values_Flow_Rate] = useState<string | null>(null);
+          const [FC_02_Current_Values_Flow_Rate, setFC_02_Current_Values_Flow_Rate] = useState<any | null>(null);
  
           const [FC_02_Current_Values_Flow_Rate_High, setFC_02_Current_Values_Flow_Rate_High] = useState<number | null>(null);
           const [FC_02_Current_Values_Flow_Rate_Low, setFC_02_Current_Values_Flow_Rate_Low] = useState<number | null>(null);
@@ -949,7 +978,7 @@ useEffect(() => {
               // =================================================================================================================== 
           
 
-              const [FC_02_Current_Values_Uncorrected_Flow_Rate, setFC_02_Current_Values_Uncorrected_Flow_Rate] = useState<string | null>(null);
+              const [FC_02_Current_Values_Uncorrected_Flow_Rate, setFC_02_Current_Values_Uncorrected_Flow_Rate] = useState<any | null>(null);
    
               const [FC_02_Current_Values_Uncorrected_Flow_Rate_High, setFC_02_Current_Values_Uncorrected_Flow_Rate_High] = useState<number | null>(null);
               const [FC_02_Current_Values_Uncorrected_Flow_Rate_Low, setFC_02_Current_Values_Uncorrected_Flow_Rate_Low] = useState<number | null>(null);
@@ -973,7 +1002,7 @@ useEffect(() => {
           // =================================================================================================================== 
 
 
-          const [FC_02_Today_Values_Uncorrected_Volume, setFC_02_Today_Values_Uncorrected_Volume] = useState<string | null>(null);
+          const [FC_02_Today_Values_Uncorrected_Volume, setFC_02_Today_Values_Uncorrected_Volume] = useState<any | null>(null);
           const [FC_02_Today_Values_Uncorrected_Volume_High, setFC_02_Today_Values_Uncorrected_Volume_High] = useState<number | null>(null);
           const [FC_02_Today_Values_Uncorrected_Volume_Low, setFC_02_Today_Values_Uncorrected_Volume_Low] = useState<number | null>(null);
           const [exceedThresholdFC_02_Today_Values_Uncorrected_Volume, setExceedThresholdFC_02_Today_Values_Uncorrected_Volume] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
@@ -994,7 +1023,7 @@ useEffect(() => {
      
           // =================================================================================================================== 
 
-          const [FC_02_Today_Values_Volume, setFC_02_Today_Values_Volume] = useState<string | null>(null);
+          const [FC_02_Today_Values_Volume, setFC_02_Today_Values_Volume] = useState<any | null>(null);
           const [FC_02_Today_Values_Volume_High, setFC_02_Today_Values_Volume_High] = useState<number | null>(null);
           const [FC_02_Today_Values_Volume_Low, setFC_02_Today_Values_Volume_Low] = useState<number | null>(null);
           const [exceedThresholdFC_02_Today_Values_Volume, setExceedThresholdFC_02_Today_Values_Volume] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
@@ -1016,7 +1045,7 @@ useEffect(() => {
 
         
 
-          const [FC_02_Yesterday_Values_Volume, setFC_02_Yesterday_Values_Volume] = useState<string | null>(null);
+          const [FC_02_Yesterday_Values_Volume, setFC_02_Yesterday_Values_Volume] = useState<any | null>(null);
           const [FC_02_Yesterday_Values_Volume_High, setFC_02_Yesterday_Values_Volume_High] = useState<number | null>(null);
           const [FC_02_Yesterday_Values_Volume_Low, setFC_02_Yesterday_Values_Volume_Low] = useState<number | null>(null);
           const [exceedThresholdFC_02_Yesterday_Values_Volume, setExceedThresholdFC_02_Yesterday_Values_Volume] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
@@ -1037,7 +1066,7 @@ useEffect(() => {
 
     // =================================================================================================================== 
 
-    const [FC_02_Yesterday_Values_Uncorrected_Volume, setFC_02_Yesterday_Values_Uncorrected_Volume] = useState<string | null>(null);
+    const [FC_02_Yesterday_Values_Uncorrected_Volume, setFC_02_Yesterday_Values_Uncorrected_Volume] = useState<any | null>(null);
 
     const [FC_02_Yesterday_Values_Uncorrected_Volume_High, setFC_02_Yesterday_Values_Uncorrected_Volume_High] = useState<number | null>(null);
     const [FC_02_Yesterday_Values_Uncorrected_Volume_Low, setFC_02_Yesterday_Values_Uncorrected_Volume_Low] = useState<number | null>(null);
@@ -1068,7 +1097,7 @@ useEffect(() => {
   // =================================================================================================================== 
  
  
-  const [GD1, setGD1] = useState<string | null>(null);
+  const [GD1, setGD1] = useState<any | null>(null);
   const [GD1_High, setGD1_High] = useState<number | null>(null);
   const [GD1_Low, setGD1_Low] = useState<number | null>(null);
   const [exceedThresholdGD1, setExceedThresholdGD1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
@@ -1097,7 +1126,7 @@ useEffect(() => {
 
 
 
-       const [GD2, setGD2] = useState<string | null>(null);
+       const [GD2, setGD2] = useState<any | null>(null);
        const [GD2_High, setGD2_High] = useState<number | null>(null);
        const [GD2_Low, setGD2_Low] = useState<number | null>(null);
        const [exceedThresholdGD2, setExceedThresholdGD2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
@@ -1126,7 +1155,7 @@ useEffect(() => {
        // =================================================================================================================== 
 
 
-       const [PT1, setPT1] = useState<string | null>(null);
+       const [PT1, setPT1] = useState<any | null>(null);
 
        const [PT1_High, setPT1_High] = useState<number | null>(null);
        const [PT1_Low, setPT1_Low] = useState<number | null>(null);
@@ -1156,7 +1185,7 @@ useEffect(() => {
   
        // =================================================================================================================== 
 
-       const [DI_ZSO_1, setDI_ZSO_1] = useState<string | null>(null);
+       const [DI_ZSO_1, setDI_ZSO_1] = useState<any | null>(null);
        const [DI_ZSO_1_High, setDI_ZSO_1_High] = useState<number | null>(null);
        const [DI_ZSO_1_Low, setDI_ZSO_1_Low] = useState<number | null>(null);
        const [exceedThresholdDI_ZSO_1, setExceedThresholdDI_ZSO_1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
@@ -1185,7 +1214,7 @@ useEffect(() => {
   
        // =================================================================================================================== 
 
-       const [DI_ZSC_1, setDI_ZSC_1] = useState<string | null>(null);
+       const [DI_ZSC_1, setDI_ZSC_1] = useState<any | null>(null);
        const [DI_ZSC_1_High, setDI_ZSC_1_High] = useState<number | null>(null);
        const [DI_ZSC_1_Low, setDI_ZSC_1_Low] = useState<number | null>(null);
        const [exceedThresholdDI_ZSC_1, setExceedThresholdDI_ZSC_1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
@@ -1216,7 +1245,7 @@ useEffect(() => {
 
               // =================================================================================================================== 
 
-              const [DI_ZSO_2, setDI_ZSO_2] = useState<string | null>(null);
+              const [DI_ZSO_2, setDI_ZSO_2] = useState<any | null>(null);
               const [DI_ZSO_2_High, setDI_ZSO_2_High] = useState<number | null>(null);
               const [DI_ZSO_2_Low, setDI_ZSO_2_Low] = useState<number | null>(null);
               const [exceedThresholdDI_ZSO_2, setExceedThresholdDI_ZSO_2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
@@ -1245,7 +1274,7 @@ useEffect(() => {
          
               // =================================================================================================================== 
        
-              const [DI_ZSC_2, setDI_ZSC_2] = useState<string | null>(null);
+              const [DI_ZSC_2, setDI_ZSC_2] = useState<any | null>(null);
               const [DI_ZSC_2_High, setDI_ZSC_2_High] = useState<number | null>(null);
               const [DI_ZSC_2_Low, setDI_ZSC_2_Low] = useState<number | null>(null);
               const [exceedThresholdDI_ZSC_2, setExceedThresholdDI_ZSC_2] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
@@ -1278,7 +1307,7 @@ useEffect(() => {
 
  // =================================================================================================================== 
 
- const [DI_MAP_1, setDI_MAP_1] = useState<string | null>(null);
+ const [DI_MAP_1, setDI_MAP_1] = useState<any | null>(null);
  const [DI_MAP_1_High, setDI_MAP_1_High] = useState<number | null>(null);
  const [DI_MAP_1_Low, setDI_MAP_1_Low] = useState<number | null>(null);
  const [exceedThresholdDI_MAP_1, setExceedThresholdDI_MAP_1] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
@@ -1308,7 +1337,7 @@ useEffect(() => {
 
      // =================================================================================================================== 
 
-     const [DI_UPS_CHARGING, setDI_UPS_CHARGING] = useState<string | null>(null);
+     const [DI_UPS_CHARGING, setDI_UPS_CHARGING] = useState<any | null>(null);
      const [DI_UPS_CHARGING_High, setDI_UPS_CHARGING_High] = useState<number | null>(null);
      const [DI_UPS_CHARGING_Low, setDI_UPS_CHARGING_Low] = useState<number | null>(null);
      const [exceedThresholdDI_UPS_CHARGING, setExceedThresholdDI_UPS_CHARGING] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
@@ -1338,7 +1367,7 @@ useEffect(() => {
 
          // =================================================================================================================== 
 
- const [DI_UPS_ALARM, setDI_UPS_ALARM] = useState<string | null>(null);
+ const [DI_UPS_ALARM, setDI_UPS_ALARM] = useState<any | null>(null);
 
  const [DI_UPS_ALARM_High, setDI_UPS_ALARM_High] = useState<number | null>(null);
  const [DI_UPS_ALARM_Low, setDI_UPS_ALARM_Low] = useState<number | null>(null);
@@ -1371,7 +1400,7 @@ useEffect(() => {
 
      // =================================================================================================================== 
 
-const [DI_SELECT_SW, setDI_SELECT_SW] = useState<string | null>(null);
+const [DI_SELECT_SW, setDI_SELECT_SW] = useState<any | null>(null);
 
 const [DI_SELECT_SW_High, setDI_SELECT_SW_High] = useState<number | null>(null);
 const [DI_SELECT_SW_Low, setDI_SELECT_SW_Low] = useState<number | null>(null);
@@ -1408,7 +1437,7 @@ const [maintainDI_SELECT_SW, setMaintainDI_SELECT_SW] = useState<boolean>(false)
 
  // =================================================================================================================== 
 
-const [Emergency_NC, setEmergency_NC] = useState<string | null>(null);
+const [Emergency_NC, setEmergency_NC] = useState<any | null>(null);
 
 const [Emergency_NC_High, setEmergency_NC_High] = useState<number | null>(null);
 const [Emergency_NC_Low, setEmergency_NC_Low] = useState<number | null>(null);
@@ -1441,7 +1470,7 @@ useEffect(() => {
 
      // =================================================================================================================== 
 
-     const [DI_UPS_BATTERY, setDI_UPS_BATTERY] = useState<string | null>(null);
+     const [DI_UPS_BATTERY, setDI_UPS_BATTERY] = useState<any | null>(null);
     
      const [DI_UPS_BATTERY_High, setDI_UPS_BATTERY_High] = useState<number | null>(null);
      const [DI_UPS_BATTERY_Low, setDI_UPS_BATTERY_Low] = useState<number | null>(null);
@@ -1473,7 +1502,7 @@ useEffect(() => {
      // =================================================================================================================== 
      
      
-     const [Emergency_NO, setEmergency_NO] = useState<string | null>(null);
+     const [Emergency_NO, setEmergency_NO] = useState<any | null>(null);
      const [Emergency_NO_High, setEmergency_NO_High] = useState<number | null>(null);
      const [Emergency_NO_Low, setEmergency_NO_Low] = useState<number | null>(null);
      const [exceedThresholdEmergency_NO, setExceedThresholdEmergency_NO] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
@@ -1505,7 +1534,7 @@ useEffect(() => {
      
          // =================================================================================================================== 
      
-     const [UPS_Mode, setUPS_Mode] = useState<string | null>(null);
+     const [UPS_Mode, setUPS_Mode] = useState<any | null>(null);
      const [UPS_Mode_High, setUPS_Mode_High] = useState<number | null>(null);
      const [UPS_Mode_Low, setUPS_Mode_Low] = useState<number | null>(null);
      const [exceedThresholdUPS_Mode, setExceedThresholdUPS_Mode] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
@@ -1534,7 +1563,7 @@ useEffect(() => {
       // =================================================================================================================== 
 
 
-     const [DO_HR_01, setDO_HR_01] = useState<string | null>(null);
+     const [DO_HR_01, setDO_HR_01] = useState<any | null>(null);
 
      const [DO_HR_01_High, setDO_HR_01_High] = useState<number | null>(null);
      const [DO_HR_01_Low, setDO_HR_01_Low] = useState<number | null>(null);
@@ -1565,7 +1594,7 @@ useEffect(() => {
      // =================================================================================================================== 
 
 
-     const [DI_RESET, setDI_RESET] = useState<string | null>(null);
+     const [DI_RESET, setDI_RESET] = useState<any | null>(null);
 
      const [DI_RESET_High, setDI_RESET_High] = useState<number | null>(null);
      const [DI_RESET_Low, setDI_RESET_Low] = useState<number | null>(null);
@@ -1600,7 +1629,7 @@ useEffect(() => {
 
 
 
-          const [DO_BC_01, setDO_BC_01] = useState<string | null>(null);
+          const [DO_BC_01, setDO_BC_01] = useState<any | null>(null);
   
           const [DO_BC_01_High, setDO_BC_01_High] = useState<number | null>(null);
           const [DO_BC_01_Low, setDO_BC_01_Low] = useState<number | null>(null);
@@ -1630,7 +1659,7 @@ useEffect(() => {
           // =================================================================================================================== 
 
 
-          const [DO_SV_01, setDO_SV_01] = useState<string | null>(null);
+          const [DO_SV_01, setDO_SV_01] = useState<any | null>(null);
  
           const [DO_SV_01_High, setDO_SV_01_High] = useState<number | null>(null);
           const [DO_SV_01_Low, setDO_SV_01_Low] = useState<number | null>(null);
@@ -1664,7 +1693,7 @@ useEffect(() => {
                    // =================================================================================================================== 
 
 
-                   const [DO_SV_02, setDO_SV_02] = useState<string | null>(null);
+                   const [DO_SV_02, setDO_SV_02] = useState<any | null>(null);
  
                    const [DO_SV_02_High, setDO_SV_02_High] = useState<number | null>(null);
                    const [DO_SV_02_Low, setDO_SV_02_Low] = useState<number | null>(null);
@@ -1695,7 +1724,7 @@ useEffect(() => {
                   
                   // =================================================================================================================== 
 
-         const [DI_SD_1, setDI_SD_1] = useState<string | null>(null);
+         const [DI_SD_1, setDI_SD_1] = useState<any | null>(null);
 
         const [DI_SD_1_High, setDI_SD_1_High] = useState<number | null>(null);
         const [DI_SD_1_Low, setDI_SD_1_Low] = useState<number | null>(null);
@@ -1730,7 +1759,7 @@ useEffect(() => {
 
 
 
-     const [FC_01_Current_Values_Temperature, setFC_01_Current_Values_Temperature] = useState<string | null>(null);
+     const [FC_01_Current_Values_Temperature, setFC_01_Current_Values_Temperature] = useState<any | null>(null);
 
      const [FC_01_Current_Values_Temperature_High, setFC_01_Current_Values_Temperature_High] = useState<number | null>(null);
      const [FC_01_Current_Values_Temperature_Low, setFC_01_Current_Values_Temperature_Low] = useState<number | null>(null);
@@ -1753,7 +1782,7 @@ useEffect(() => {
      // =================================================================================================================== 
 
 
-     const [FC_01_Current_Values_Static_Pressure, setFC_01_Current_Values_Static_Pressure] = useState<string | null>(null);
+     const [FC_01_Current_Values_Static_Pressure, setFC_01_Current_Values_Static_Pressure] = useState<any | null>(null);
 
      const [FC_01_Current_Values_Static_Pressure_High, setFC_01_Current_Values_Static_Pressure_High] = useState<number | null>(null);
      const [FC_01_Current_Values_Static_Pressure_Low, setFC_01_Current_Values_Static_Pressure_Low] = useState<number | null>(null);
@@ -1779,7 +1808,7 @@ useEffect(() => {
 
 
 
-          const [FC_01_Accumulated_Values_Uncorrected_Volume, setFC_01_Accumulated_Values_Uncorrected_Volume] = useState<string | null>(null);
+          const [FC_01_Accumulated_Values_Uncorrected_Volume, setFC_01_Accumulated_Values_Uncorrected_Volume] = useState<any | null>(null);
 
           const [FC_01_Accumulated_Values_Uncorrected_Volume_High, setFC_01_Accumulated_Values_Uncorrected_Volume_High] = useState<number | null>(null);
           const [FC_01_Accumulated_Values_Uncorrected_Volume_Low, setFC_01_Accumulated_Values_Uncorrected_Volume_Low] = useState<number | null>(null);
@@ -1802,7 +1831,7 @@ useEffect(() => {
           // =================================================================================================================== 
 
 
-          const [FC_01_Accumulated_Values_Volume, setFC_01_Accumulated_Values_Volume] = useState<string | null>(null);
+          const [FC_01_Accumulated_Values_Volume, setFC_01_Accumulated_Values_Volume] = useState<any | null>(null);
           const [FC_01_Accumulated_Values_Volume_High, setFC_01_Accumulated_Values_Volume_High] = useState<number | null>(null);
           const [FC_01_Accumulated_Values_Volume_Low, setFC_01_Accumulated_Values_Volume_Low] = useState<number | null>(null);
           const [exceedThresholdFC_01_Accumulated_Values_Volume, setExceedThresholdFC_01_Accumulated_Values_Volume] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
@@ -1822,7 +1851,7 @@ useEffect(() => {
      
           // =================================================================================================================== 
 
-          const [FC_01_Current_Values_Flow_Rate, setFC_01_Current_Values_Flow_Rate] = useState<string | null>(null);
+          const [FC_01_Current_Values_Flow_Rate, setFC_01_Current_Values_Flow_Rate] = useState<any | null>(null);
  
           const [FC_01_Current_Values_Flow_Rate_High, setFC_01_Current_Values_Flow_Rate_High] = useState<number | null>(null);
           const [FC_01_Current_Values_Flow_Rate_Low, setFC_01_Current_Values_Flow_Rate_Low] = useState<number | null>(null);
@@ -1845,7 +1874,7 @@ useEffect(() => {
               // =================================================================================================================== 
           
 
-              const [FC_01_Current_Values_Uncorrected_Flow_Rate, setFC_01_Current_Values_Uncorrected_Flow_Rate] = useState<string | null>(null);
+              const [FC_01_Current_Values_Uncorrected_Flow_Rate, setFC_01_Current_Values_Uncorrected_Flow_Rate] = useState<any | null>(null);
    
               const [FC_01_Current_Values_Uncorrected_Flow_Rate_High, setFC_01_Current_Values_Uncorrected_Flow_Rate_High] = useState<number | null>(null);
               const [FC_01_Current_Values_Uncorrected_Flow_Rate_Low, setFC_01_Current_Values_Uncorrected_Flow_Rate_Low] = useState<number | null>(null);
@@ -1868,7 +1897,7 @@ useEffect(() => {
           // =================================================================================================================== 
 
 
-          const [FC_01_Today_Values_Uncorrected_Volume, setFC_01_Today_Values_Uncorrected_Volume] = useState<string | null>(null);
+          const [FC_01_Today_Values_Uncorrected_Volume, setFC_01_Today_Values_Uncorrected_Volume] = useState<any | null>(null);
           const [FC_01_Today_Values_Uncorrected_Volume_High, setFC_01_Today_Values_Uncorrected_Volume_High] = useState<number | null>(null);
           const [FC_01_Today_Values_Uncorrected_Volume_Low, setFC_01_Today_Values_Uncorrected_Volume_Low] = useState<number | null>(null);
           const [exceedThresholdFC_01_Today_Values_Uncorrected_Volume, setExceedThresholdFC_01_Today_Values_Uncorrected_Volume] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
@@ -1890,7 +1919,7 @@ useEffect(() => {
      
           // =================================================================================================================== 
 
-          const [FC_01_Today_Values_Volume, setFC_01_Today_Values_Volume] = useState<string | null>(null);
+          const [FC_01_Today_Values_Volume, setFC_01_Today_Values_Volume] = useState<any | null>(null);
           const [FC_01_Today_Values_Volume_High, setFC_01_Today_Values_Volume_High] = useState<number | null>(null);
           const [FC_01_Today_Values_Volume_Low, setFC_01_Today_Values_Volume_Low] = useState<number | null>(null);
           const [exceedThresholdFC_01_Today_Values_Volume, setExceedThresholdFC_01_Today_Values_Volume] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
@@ -1912,7 +1941,7 @@ useEffect(() => {
 
         
 
-          const [FC_01_Yesterday_Values_Volume, setFC_01_Yesterday_Values_Volume] = useState<string | null>(null);
+          const [FC_01_Yesterday_Values_Volume, setFC_01_Yesterday_Values_Volume] = useState<any | null>(null);
     
           const [FC_01_Yesterday_Values_Volume_High, setFC_01_Yesterday_Values_Volume_High] = useState<number | null>(null);
           const [FC_01_Yesterday_Values_Volume_Low, setFC_01_Yesterday_Values_Volume_Low] = useState<number | null>(null);
@@ -1937,7 +1966,7 @@ useEffect(() => {
 
     // =================================================================================================================== 
 
-    const [FC_01_Yesterday_Values_Uncorrected_Volume, setFC_01_Yesterday_Values_Uncorrected_Volume] = useState<string | null>(null);
+    const [FC_01_Yesterday_Values_Uncorrected_Volume, setFC_01_Yesterday_Values_Uncorrected_Volume] = useState<any | null>(null);
 
     const [FC_01_Yesterday_Values_Uncorrected_Volume_High, setFC_01_Yesterday_Values_Uncorrected_Volume_High] = useState<number | null>(null);
     const [FC_01_Yesterday_Values_Uncorrected_Volume_Low, setFC_01_Yesterday_Values_Uncorrected_Volume_Low] = useState<number | null>(null);
@@ -1960,7 +1989,7 @@ useEffect(() => {
     // =================================================================================================================== 
 
 
-    const [PT_1003, setPT_1003] = useState<string | null>(null);
+    const [PT_1003, setPT_1003] = useState<any | null>(null);
 
     const [PT_1003_High, setPT_1003_High] = useState<number | null>(null);
     const [PT_1003_Low, setPT_1003_Low] = useState<number | null>(null);
@@ -1981,7 +2010,7 @@ useEffect(() => {
     // =================================================================================================================== 
  
 
-    const [FC_Conn_STT, setFC_Conn_STT] = useState<string | null>(null);
+    const [FC_Conn_STT, setFC_Conn_STT] = useState<any | null>(null);
 
     const [FC_Conn_STT_High, setFC_Conn_STT_High] = useState<number | null>(null);
     const [FC_Conn_STT_Low, setFC_Conn_STT_Low] = useState<number | null>(null);
@@ -2198,7 +2227,7 @@ useEffect(() => {
             ? " Normal"
             : null;
 
-
+         
 
             const combineCss = {
 
@@ -2970,7 +2999,15 @@ useEffect(() => {
         
           };
 
-
+          const formatValue = (value:any) => {
+            return value !== null
+                ? new Intl.NumberFormat('en-US', {
+                      maximumFractionDigits: 2,
+                      useGrouping: true, 
+                  }).format(parseFloat(value))
+                : "";
+        };
+        
           const dataFC1 = [
             {
                 name: <span>{tagNameFC.FC_Lithium_Battery_Status}</span>,
@@ -2979,17 +3016,17 @@ useEffect(() => {
             },
             {
                 name: <span>{tagNameFC.Battery_Voltage}</span>,
-                FC1: <span style={combineCss.CSSFC_Battery_Voltage}>{FC_Battery_Voltage}</span>,
+                FC1: <span style={combineCss.CSSFC_Battery_Voltage}>{formatValue(FC_Battery_Voltage)}</span>,
     
             },
             {
                 name: <span>{tagNameFC.System_Voltage}</span>,
-                FC1: <span style={combineCss.CSSFC_System_Voltage}>{FC_System_Voltage}</span>,
+                FC1: <span style={combineCss.CSSFC_System_Voltage}>{formatValue(FC_System_Voltage)}</span>,
     
             },
             {
                 name: <span>{tagNameFC.Charger_Voltage}</span>,
-                FC1: <span style={combineCss.CSSFC_Charger_Voltage}>{FC_Charger_Voltage}</span>,
+                FC1: <span style={combineCss.CSSFC_Charger_Voltage}>{formatValue(FC_Charger_Voltage)}</span>,
     
             },
             
@@ -2997,80 +3034,65 @@ useEffect(() => {
         ];
 //=================================================================================
 
-    const dataFC = [
-        {
-            name: <span>{tagNameFC.InputPressure}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure}>{FC_01_Current_Values_Static_Pressure}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure}>{FC_02_Current_Values_Static_Pressure}</span>,
+const dataFC = [
+    {
+        name: <span>{tagNameFC.InputPressure}</span>,
+        FC1901: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure}>{formatValue(FC_01_Current_Values_Static_Pressure)}</span>,
+        FC1902: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure}>{formatValue(FC_02_Current_Values_Static_Pressure)}</span>,
+    },
+    {
+        name: <span>{tagNameFC.Temperature}</span>,
+        FC1901: <span style={combineCss.CSSFC_01_Current_Values_Temperature}>{formatValue(FC_01_Current_Values_Temperature)}</span>,
+        FC1902: <span style={combineCss.CSSFC_02_Current_Values_Temperature}>{formatValue(FC_02_Current_Values_Temperature)}</span>,
+    },
+    {
+        name: <span>{tagNameFC.SVF}</span>,
+        FC1901: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate}>{formatValue(FC_01_Current_Values_Flow_Rate)}</span>,
+        FC1902: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate}>{formatValue(FC_02_Current_Values_Flow_Rate)}</span>,
+    },
+    {
+        name: <span>{tagNameFC.GVF}</span>,
+        FC1901: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>{formatValue(FC_01_Current_Values_Uncorrected_Flow_Rate)}</span>,
+        FC1902: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}>{formatValue(FC_02_Current_Values_Uncorrected_Flow_Rate)}</span>,
+    },
+    {
+        name: <span>{tagNameFC.SVA}</span>,
+        FC1901: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume}>{formatValue(FC_01_Accumulated_Values_Volume)}</span>,
+        FC1902: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume}>{formatValue(FC_02_Accumulated_Values_Volume)}</span>,
+    },
+    {
+        name: <span>{tagNameFC.GVA}</span>,
+        FC1901: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>{formatValue(FC_01_Accumulated_Values_Uncorrected_Volume)}</span>,
+        FC1902: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}>{formatValue(FC_02_Accumulated_Values_Uncorrected_Volume)}</span>,
+    },
+    {
+        name: <span>{tagNameFC.VbToday}</span>,
+        FC1901: <span style={combineCss.CSSFC_01_Today_Values_Volume}>{formatValue(FC_01_Today_Values_Volume)}</span>,
+        FC1902: <span style={combineCss.CSSFC_02_Today_Values_Volume}>{formatValue(FC_02_Today_Values_Volume)}</span>,
+    },
+    {
+        name: <span>{tagNameFC.VmToday}</span>,
+        FC1901: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}>{formatValue(FC_01_Today_Values_Uncorrected_Volume)}</span>,
+        FC1902: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}>{formatValue(FC_02_Today_Values_Uncorrected_Volume)}</span>,
+    },
+    {
+        name: <span>{tagNameFC.VbLastDay}</span>,
+        FC1901: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume}>{formatValue(FC_01_Yesterday_Values_Volume)}</span>,
+        FC1902: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume}>{formatValue(FC_02_Yesterday_Values_Volume)}</span>,
+    },
+    {
+        name: <span>{tagNameFC.VmLastDay}</span>,
+        FC1901: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}>{formatValue(FC_01_Yesterday_Values_Uncorrected_Volume)}</span>,
+        FC1902: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}>{formatValue(FC_02_Yesterday_Values_Uncorrected_Volume)}</span>,
+    },
+];
 
-        },
-        {
-            name: <span>{tagNameFC.Temperature}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Current_Values_Temperature}>{FC_01_Current_Values_Temperature}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Current_Values_Temperature}>{FC_02_Current_Values_Temperature}</span>,
-
-        },
-        {
-            name: <span>{tagNameFC.SVF}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate}>{FC_01_Current_Values_Flow_Rate}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate}>{FC_02_Current_Values_Flow_Rate}</span>,
-
-        },
-        {
-            name: <span>{tagNameFC.GVF}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>{FC_01_Current_Values_Uncorrected_Flow_Rate}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}>{FC_02_Current_Values_Uncorrected_Flow_Rate}</span>,
-
-        },
-        {
-            name: <span>{tagNameFC.SVA}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume}>{FC_01_Accumulated_Values_Volume}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume}>{FC_02_Accumulated_Values_Volume}</span>,
-
-        },
-        
-        {
-            name: <span>{tagNameFC.GVA}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>{FC_01_Accumulated_Values_Uncorrected_Volume}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}>{FC_02_Accumulated_Values_Uncorrected_Volume}</span>,
-
-        },
-       
-       
-     
-        {
-            name: <span>{tagNameFC.VbToday}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Today_Values_Volume}>{FC_01_Today_Values_Volume}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Today_Values_Volume}>{FC_02_Today_Values_Volume}</span>,
-
-        },
-        {
-            name: <span>{tagNameFC.VmToday}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}>{FC_01_Today_Values_Uncorrected_Volume}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}>{FC_02_Today_Values_Uncorrected_Volume}</span>,
-
-        },
-        {
-            name: <span>{tagNameFC.VbLastDay}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume}>{FC_01_Yesterday_Values_Volume}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume}>{FC_02_Yesterday_Values_Volume}</span>,
-
-        },
-       
-        {
-            name: <span>{tagNameFC.VmLastDay}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}>{FC_01_Yesterday_Values_Uncorrected_Volume}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}>{FC_02_Yesterday_Values_Uncorrected_Volume}</span>,
-
-        },
-      
-    ];
     const dataPT = [
 
 
         {
             name: <span>Output Pressure PT-1103 (BarG)</span>,
-            FC1901: <span style={combineCss.CSSPT_1003}>{PT_1003}</span>,
+            FC1901: <span style={combineCss.CSSPT_1003}>{formatValue(PT_1003)}</span>,
     
         },
     ];
@@ -3224,9 +3246,9 @@ useEffect(() => {
                         <div style={{  fontWeight: 500,display:'flex',paddingRight:20 }}>
                            {FC_Conn_STTValue}
                         </div>
-                        <button onClick={handleShowMore} >
-                    {ShowMore ? <i  style={{fontSize:'1.5rem', cursor:'pointer'}} className="pi pi-arrow-up"></i>  : <i style={{fontSize:'1.5rem',cursor:'pointer'}} className="pi pi-arrow-down"></i>}
-                    </button>
+                        <div  onClick={handleShowMore} >
+                    {ShowMore ? <span style={{cursor:"pointer",  }}>{Up}</span>  : <span style={{cursor:"pointer",  }}>{Down}</span>}
+                    </div>
                     </div>
                     
                 </div>

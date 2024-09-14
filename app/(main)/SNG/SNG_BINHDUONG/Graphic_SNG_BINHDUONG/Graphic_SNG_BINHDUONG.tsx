@@ -44,9 +44,7 @@ import { httpApi } from "@/api/http.api";
 import { Toast } from "primereact/toast";
 import { id_SNG_BinhDuong } from "@/app/(main)/data-table-device/ID-DEVICE/IdDevice";
 import { BlackTriangleRight } from "@/app/(main)/PRU/GraphicPRU/iconSVG";
-import AlarmMeiko from "@/layout/AlarmBell/AlarmMeiko";
 
-import AlarmSNG_HUNGYEN from "@/layout/AlarmBell/AlarmSNG_HUNGYEN";
 import { nameValue } from "@/app/(main)/SetupData/namValue";
 import BallValue02 from "../BallValueSNG_BINHDUONG/BallValue02";
 import BallValue03 from "../BallValueSNG_BINHDUONG/BallValue03";
@@ -100,6 +98,10 @@ export default function Graphic_SNG_BD() {
 
 
     useEffect(() => {
+
+        const connectWebSocket = () => {
+            const token = localStorage.getItem('accessToken');
+            const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
         ws.current = new WebSocket(url);
 
         const obj1 = {
@@ -174,19 +176,31 @@ export default function Graphic_SNG_BD() {
                 console.log("WebSocket connected");
                 setTimeout(() => {
                     ws.current?.send(JSON.stringify(obj1));
-                    ws.current?.send(JSON.stringify(obj_PCV_PSV));
-                });
+                }); 
             };
 
             ws.current.onclose = () => {
-                console.log("WebSocket connection closed.");
-            };
-
-            return () => {
-                console.log("Cleaning up WebSocket connection.");
-                ws.current?.close();
+                console.log("WebSocket connection closed. Reconnecting in 10 seconds...");
+                setTimeout(() => {
+                    connectWebSocket(); 
+                }, 10000);
             };
         }
+    }
+
+    connectWebSocket(); 
+    
+    const interval = setInterval(() => {
+        console.log("Resetting WebSocket connection...");
+
+        ws.current?.close(); 
+        connectWebSocket();  
+    }, 60000); 
+
+    return () => {
+        clearInterval(interval); 
+        ws.current?.close(); 
+    };
     }, []);
 
     useEffect(() => {
@@ -194,16 +208,8 @@ export default function Graphic_SNG_BD() {
             ws.current.onmessage = (event) => {
                 let dataReceived = JSON.parse(event.data);
                 if (dataReceived.update !== null) {
-                    setData([...data, dataReceived]);
-                    const formatValue = (value:any) => {
-                        return value !== null
-                            ? new Intl.NumberFormat('en-US', {
-                                  minimumFractionDigits: 2, // Đảm bảo có 2 chữ số sau dấu thập phân
-                                  maximumFractionDigits: 2, // Không nhiều hơn 2 chữ số thập phân
-                                  useGrouping: true, // Phân cách phần ngàn bằng dấu phẩy
-                              }).format(parseFloat(value))
-                            : "";
-                    };
+                    setData(prevData => [...prevData, dataReceived]);
+                   
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
                   
@@ -266,30 +272,24 @@ export default function Graphic_SNG_BD() {
                         SG_Calorimeter: setSG_Calorimeter,
 
                
-
-                    };
-                    const valueStateMap: ValueStateMap = {
-                        PLC_Conn_STT: setPLC_STTValue,
-                    };
-
-                    const stateMap2: StateMap2 = { 
                         SDV_2004: setSDV_2004,
                         SDV_2003: setSDV_2003,
                         TD_4072_Conn_STT: setTD_4072_Conn_STT,
                         PLC_Conn_STT: setPLC_Conn_STT,
                         PERCENT_LPG: setPERCENT_LPG,
                         PERCENT_AIR: setPERCENT_AIR,
-                    }
+                    };
+                    const valueStateMap: ValueStateMap = {
+                        PLC_Conn_STT: setPLC_STTValue,
+                    };
+
+                  
                     keys.forEach((key) => {
+                     
                         if (stateMap[key]) {
                             const value = dataReceived.data[key][0][1];
-                            const formattedValue = formatValue(value);
-                            stateMap[key]?.(formattedValue); 
-                        }
-                        if (stateMap2[key]) {
-                            const value = dataReceived.data[key][0][1];
                             const slicedValue = value;
-                            stateMap2[key]?.(slicedValue);
+                            stateMap[key]?.(slicedValue);
                         }
                         if (valueStateMap[key]) {
                             const value = dataReceived.data[key][0][0];
@@ -331,6 +331,40 @@ export default function Graphic_SNG_BD() {
             };
         }
     }, [data]);
+
+
+    const [resetKey, setResetKey] = useState(0);
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
+    const [wasOffline, setWasOffline] = useState(false); // Theo dõi trạng thái offline trước đó
+
+    useEffect(() => {
+        // Hàm cập nhật trạng thái online/offline
+        const handleOnlineStatus = () => {
+            const currentStatus = navigator.onLine;
+            setIsOnline(currentStatus);
+
+            if (!currentStatus) {
+                // Khi mất kết nối, đặt trạng thái offline
+                console.log("Mất kết nối internet.");
+                setWasOffline(true);
+            } else if (currentStatus && wasOffline) {
+                // Khi có lại kết nối và trước đó là offline, reset component
+                console.log("Kết nối internet được khôi phục. Reset component...");
+                setResetKey(prevKey => prevKey + 1); // Reset component
+                setWasOffline(false); // Reset lại để chỉ reset 1 lần khi online trở lại
+            }
+        };
+
+        // Lắng nghe sự kiện thay đổi trạng thái online/offline
+        window.addEventListener('online', handleOnlineStatus);
+        window.addEventListener('offline', handleOnlineStatus);
+
+        return () => {
+            // Dọn dẹp sự kiện khi component unmount
+            window.removeEventListener('online', handleOnlineStatus);
+            window.removeEventListener('offline', handleOnlineStatus);
+        };
+    }, [wasOffline]);
 
     const ValueGas = {
         SVF: "SVF",
@@ -747,7 +781,10 @@ export default function Graphic_SNG_BD() {
                 (item: any) => item.key === "TD_4072_Conn_STT_Maintain"
             );
 
-
+            const Active = res.data.find(
+                (item: any) => item.key === "active"
+            );
+            setActive(Active?.value || false);
  // =================================================================================================================== 
 
 
@@ -2005,7 +2042,19 @@ export default function Graphic_SNG_BD() {
         
                         
                              // =================================================================================================================== 
-    useEffect(() => {
+ 
+ 
+                             const formatValue = (value:any) => {
+                                return value !== null
+                                    ? new Intl.NumberFormat('en-US', {
+                                          maximumFractionDigits: 2,
+                                          useGrouping: true, 
+                                      }).format(parseFloat(value))
+                                    : "";
+                            };
+                        
+ 
+                             useEffect(() => {
         const updatedNodes = nodes.map((node) => {
             // if (node.id === "timeUpdate3") {
             //     return {
@@ -2117,7 +2166,7 @@ export default function Graphic_SNG_BD() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {formatValue(PT_2004)}
                                     </p>
                                 </div>
                                 <p
@@ -2180,7 +2229,7 @@ export default function Graphic_SNG_BD() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {formatValue(PT_2005)}
                                     </p>
                                 </div>
                                 <p
@@ -2245,7 +2294,7 @@ export default function Graphic_SNG_BD() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {formatValue(TM_2002_SNG)}
                                     </p>
                                 </div>
                                 <p
@@ -2310,7 +2359,7 @@ export default function Graphic_SNG_BD() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {formatValue(TM_2003_SNG)}
                                     </p>
                                 </div>
                                 <p
@@ -2373,7 +2422,7 @@ export default function Graphic_SNG_BD() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {formatValue(TT_2003)}
                                     </p>
                                 </div>
                                 <p
@@ -2436,7 +2485,7 @@ export default function Graphic_SNG_BD() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {formatValue(TT_2004)}
                                     </p>
                                 </div>
                                 <p
@@ -2517,7 +2566,7 @@ export default function Graphic_SNG_BD() {
                                             marginLeft: 5,
                                         }}
                                     >
-                                        {FCV_2001}
+                                        {formatValue(FCV_2001)}
                                     </p>
                                 </div>
                                 <p
@@ -2581,7 +2630,7 @@ export default function Graphic_SNG_BD() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {formatValue(WB_1001)}
                                     </p>
                                 </div>
                                 <p
@@ -2654,7 +2703,7 @@ export default function Graphic_SNG_BD() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {TOTAL_SNG}
+                                        {formatValue(TOTAL_SNG)}
                                     </p>
                                     <p
                                         style={{
@@ -2726,7 +2775,7 @@ export default function Graphic_SNG_BD() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {formatValue(WB_Setpoint)}
                                     </p>
                                     <p
                                         style={{
@@ -2796,7 +2845,7 @@ export default function Graphic_SNG_BD() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {formatValue(HV_1001)}
                                     </p>
                                     <p
                                         style={{
@@ -4741,7 +4790,6 @@ export default function Graphic_SNG_BD() {
             data: {
                 label: (
                     <div>
-                        <AlarmSNG_HUNGYEN />
                     </div>
                 ),
             },
@@ -5113,6 +5161,7 @@ export default function Graphic_SNG_BD() {
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
             </Button> */}
             <div
+            key={resetKey}
                 style={{
                     // width: "100%",
                     height: "100%",

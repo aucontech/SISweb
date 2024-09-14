@@ -55,7 +55,6 @@ import { httpApi } from "@/api/http.api";
 import BallVavlePSV from "../ReactFlow/BallVavlePSV";
 import { Toast } from "primereact/toast";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
-import AlarmOTSUKA from "@/layout/AlarmBell/AlarmOTSUKA";
 import BallValueFirst from "../ReactFlow/BallValueFirst";
 import BallValueLast from "../ReactFlow/BallValueLast";
 interface StateMap {
@@ -107,8 +106,17 @@ export default function DemoFlowOTS() {
     const [PLC_STT, setPLC_STT] = useState<string | null>(null);
     const toast = useRef<Toast>(null);
     const [alarmMessage, setAlarmMessage] = useState<string | null>(null);
+    const ws = useRef<WebSocket | null>(null);
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
 
+    const [resetKey, setResetKey] = useState(0);
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
+    const [wasOffline, setWasOffline] = useState(false); // Theo dõi trạng thái offline trước đó
     useEffect(() => {
+
+        const connectWebSocket = () => {
+            const token = localStorage.getItem('accessToken');
+            const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
         ws.current = new WebSocket(url);
 
         const obj1 = {
@@ -179,32 +187,45 @@ export default function DemoFlowOTS() {
             ],
         };
 
+      
         if (ws.current) {
             ws.current.onopen = () => {
-                console.log("WebSocket CONNECTED");
+                console.log("WebSocket connected");
                 setTimeout(() => {
                     ws.current?.send(JSON.stringify(obj1));
-                    ws.current?.send(JSON.stringify(obj_PCV_PSV));
-                });
+                }); 
             };
 
             ws.current.onclose = () => {
-                console.log("WebSocket connection closed.");
-            };
-
-            return () => {
-                console.log("Cleaning up WebSocket connection.");
-                ws.current?.close();
+                console.log("WebSocket connection closed. Reconnecting in 10 seconds...");
+                setTimeout(() => {
+                    connectWebSocket(); 
+                }, 10000);
             };
         }
-    }, []);
+    }
+    connectWebSocket(); 
+    
+    const interval = setInterval(() => {
+        console.log("Resetting WebSocket connection...");
+
+        ws.current?.close(); 
+        connectWebSocket();  
+    }, 60000); 
+
+    return () => {
+        clearInterval(interval); 
+        ws.current?.close(); 
+    };
+    }, [isOnline]);
 
     useEffect(() => {
         if (ws.current) {
             ws.current.onmessage = (evt) => {
                 let dataReceived = JSON.parse(evt.data);
                 if (dataReceived.update !== null) {
-                    setData([...data, dataReceived]);
+                    setData(prevData => [...prevData, dataReceived]);
+
 
                     const keys = Object?.keys(dataReceived.data);
                     const stateMap: StateMap = {
@@ -271,15 +292,14 @@ export default function DemoFlowOTS() {
 
                         DO_SV1: setDO_SV1,
                         DO_BC_01: setDO_BC_01,
-                    };
-
-                    const stateMap2: StateMap2 = {
                         DI_ZSC_1: setDI_ZSC_1,
                         DI_ZSO_1: setDI_ZSO_1,
                         EVC_01_Conn_STT: setEVC_01_Conn_STT,
                         EVC_02_Conn_STT: setEVC_02_Conn_STT,
                         PLC_Conn_STT: setPLC_Conn_STT,
                     };
+
+                   
                     const valueStateMap: ValueStateMap = {
                         EVC_01_Conn_STT: setEVC_01_Conn_STTValue,
                     };
@@ -289,11 +309,7 @@ export default function DemoFlowOTS() {
                             const slicedValue = value;
                             stateMap[key]?.(slicedValue);
                         }
-                        if (stateMap2[key]) {
-                            const value = dataReceived.data[key][0][1];
-                            const slicedValue = value;
-                            stateMap2[key]?.(slicedValue);
-                        }
+                      
                         if (valueStateMap[key]) {
                             const value = dataReceived.data[key][0][0];
 
@@ -334,8 +350,37 @@ export default function DemoFlowOTS() {
             };
         }
     }, [data]);
-    const ws = useRef<WebSocket | null>(null);
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+
+
+
+    useEffect(() => {
+        // Hàm cập nhật trạng thái online/offline
+        const handleOnlineStatus = () => {
+            const currentStatus = navigator.onLine;
+            setIsOnline(currentStatus);
+
+            if (!currentStatus) {
+                // Khi mất kết nối, đặt trạng thái offline
+                console.log("Mất kết nối internet.");
+                setWasOffline(true);
+            } else if (currentStatus && wasOffline) {
+                // Khi có lại kết nối và trước đó là offline, reset component
+                console.log("Kết nối internet được khôi phục. Reset component...");
+                setResetKey(prevKey => prevKey + 1); // Reset component
+                setWasOffline(false); // Reset lại để chỉ reset 1 lần khi online trở lại
+            }
+        };
+
+        // Lắng nghe sự kiện thay đổi trạng thái online/offline
+        window.addEventListener('online', handleOnlineStatus);
+        window.addEventListener('offline', handleOnlineStatus);
+
+        return () => {
+            // Dọn dẹp sự kiện khi component unmount
+            window.removeEventListener('online', handleOnlineStatus);
+            window.removeEventListener('offline', handleOnlineStatus);
+        };
+    }, [wasOffline]);
     //============================GD =============================
 
     const [
@@ -4281,159 +4326,207 @@ export default function DemoFlowOTS() {
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
     //     : {
-    const initialPositions = {
-        AlarmCenter: { x: 283.59624370081974, y: 372.1544066615297 },
-        ArrowRight: { x: 407.4256642678949, y: 1019.0985886548262 },
-        ArrowRight1: { x: -1377.765238350283, y: 1029.2839122667642 },
-        BallValue01: { x: -1108.440790541049, y: 1131.119650683875 },
-        BallValue02: { x: -941.3988306125451, y: 1132.519440708925 },
-        BallValue03: { x: -774.8687072979039, y: 894.71316658712 },
-        BallValue04: { x: -774.5658025383268, y: 1135.4678560265843 },
-        BallValue05: { x: -508.91484275338644, y: 893.4111362238439 },
-        BallValue06: { x: -513.2960507700657, y: 1135.5047245440524 },
-        BallValue07: { x: -391.21326336183927, y: 814.8244470890327 },
-        BallValue08: { x: 46.78642344526514, y: 814.45781638628 },
-        BallValue09: { x: -390.7347918738091, y: 1204.6166524541484 },
-        BallValue10: { x: 45.36832776035493, y: 1204.8259588420058 },
-        BallValueCenter: { x: -167.30710887361258, y: 1007.8595594996316 },
-        BallValueCenter_Check: { x: 90.96636981528951, y: 1084.2937921267353 },
-        BallValueCenter_None: { x: -148.86672654059413, y: 1039.286470841561 },
-        BallValueCenter_None2: {
-            x: -136.78263324371193,
-            y: 1039.1243048935844,
-        },
-        BallValueFirst: { x: 325.65262421132076, y: 1005.5430441067174 },
-        BallValueLast: { x: -1321.6123824708486, y: 1014.0668924353204 },
-        BallValuePSV: { x: 210.72148707331525, y: 958.6157106130481 },
-        BallValuePSVNone: { x: 228.65438036310263, y: 974.0164290314665 },
-        ConnectData: { x: -1224.1375965271236, y: 779.7488024784055 },
-        EVC_01_Temperature: { x: -1397.4430569167453, y: 1160.0348765205 },
-        EVC_02_Temperature: { x: -508.4032164626999, y: 1502.617581291104 },
-        FIQ_1901: { x: -376.7990973971664, y: 361.591656819135 },
-        FIQ_1902: { x: -378.87479945539656, y: 1289.7747070359603 },
-        FIQ_none: { x: -216.373913367841, y: 798.1456910291513 },
-        FIQ_none2: { x: -219.38711961000132, y: 1187.2683013135133 },
-        FIQ_none11: { x: -187.27078106781747, y: 837.68091951101 },
-        FIQ_none22: { x: -189.44080519906746, y: 1231.3610095531735 },
-        Flow1: { x: -853.4576431348205, y: 1498.5512757003828 },
-        Flow2: { x: -444.10018252327654, y: 1498.2070645557653 },
-        FullScreen: { x: 359.3312960971492, y: 1036.9713896720348 },
-        GD1: { x: -706.3301306692865, y: 1034.6537686321053 },
-        GD1_Name1901: { x: -735.9500671990377, y: 963.4268072979715 },
-        GD1_Value1901: { x: -735.7622248938596, y: 998.7992472458197 },
-        GD2: { x: -340.2800293943576, y: 1036.2021439643406 },
-        GD2_Name1902: { x: -369.7973952262454, y: 962.8403828448106 },
-        GD2_Value1902: { x: -369.7416469139345, y: 997.1904549653616 },
-        GD3: { x: 13.374675095116203, y: 1037.243511740587 },
-        GD3_Name1903: { x: -16.079104275602333, y: 963.1634625787311 },
-        GD3_Value1903: { x: -16.401337483820626, y: 998.7295202130439 },
-        GD_none1: { x: -680.8408824721303, y: 1053.7496989003014 },
-        GD_none2: { x: -314.7114440042691, y: 1057.0316583224167 },
-        GD_none3: { x: 38.597337515296346, y: 1056.6594300401225 },
-        HELP: { x: 750.7851455025582, y: 336.66019515746984 },
-        Header: { x: -1198.0252315688263, y: 405.3003492753461 },
-        Line2_NONE: { x: -884.3336203769039, y: 1046.3496174211396 },
-        Line2_NONE1: { x: -779.4885863058424, y: 1046.3496174211396 },
-        LineBall_1_1: { x: -1372.5317402818896, y: 1045.9869361614612 },
-        PCV01: { x: -634.7970151337086, y: 881.0063291800602 },
-        PCV02: { x: -634.4402550398315, y: 1122.434122481839 },
-        PCV_NONE1: { x: -654.1969317908449, y: 1051.7346262200558 },
-        PCV_NONE2: { x: -656.1497174830974, y: 1051.41928588474 },
-        PCV_NUM01: { x: -716.6106018428552, y: 841.4668136803242 },
-        PCV_NUM02: { x: -716.6624605157225, y: 1183.2878877255564 },
-        PCV_ballVavle_Small1: { x: -597.4113415337335, y: 882.8095517403245 },
-        PCV_ballVavle_Small1_none1: {
-            x: -665.0629396476888,
-            y: 902.0359579483519,
-        },
-        PCV_ballVavle_Small1_none2: {
-            x: -667.1691720404733,
-            y: 1141.0987492112777,
-        },
-        PCV_ballVavle_Small2: { x: -597.5196697396369, y: 1124.7706207942995 },
-        PCV_ballVavle_Small2_none1: {
-            x: -591.5512215024908,
-            y: 932.0283184188106,
-        },
-        PCV_ballVavle_Small2_none2: {
-            x: -591.3659180111881,
-            y: 1172.918606583641,
-        },
-        PCV_none1: { x: -660.6947202927415, y: 923.80189117024 },
-        PCV_none2: { x: -661.9127246926923, y: 1165.3911488680144 },
-        PSV01: { x: 213.77852426794328, y: 808.706711387803 },
-        PSV_01: { x: 207.36093454652644, y: 894.8194564074687 },
-        PSV_02: { x: 186.61559387183382, y: 874.8453736745709 },
-        PSV_03: { x: 179.24045238769793, y: 807.8513210996118 },
-        PSV_None01: { x: 264.6066519200614, y: 1036.7984512500655 },
-        PSV_None02: { x: 229.41484444700808, y: 920.3475775498915 },
-        PSV_None03: { x: 205.13413659641662, y: 897.6667259680172 },
-        PSV_None04: { x: 202.2501602840781, y: 827.0933030066423 },
-        PT1: { x: -1248.552773720958, y: 969.1291015417314 },
-        PT2: { x: -0.8878436466131916, y: 1153.060016586797 },
-        PT3: { x: -1.361413707790149, y: 762.4414610609027 },
-        PT_col1: { x: -1216.2184970277972, y: 1031.4628364925754 },
-        PT_col2: { x: 31.255842776130976, y: 825.1751567166594 },
-        PT_col3: { x: 31.542019688165198, y: 1216.1843897830795 },
-        PT_none1: { x: -1215.33217151093, y: 1005.9301182806702 },
-        PT_none2: { x: 30.727111036710014, y: 792.2682647427301 },
-        PT_none3: { x: 30.869967141627455, y: 1184.3070444322354 },
-        PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
-        PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
-        Pressure_Trans01: { x: -1370.178598844617, y: 809.4634279335849 },
-        Pressure_Trans02: { x: 115.09741172932343, y: 656.4198989710571 },
-        Pressure_Trans03: { x: 116.12349758016171, y: 1288.418537187422 },
-        SDV: { x: -1140.086396422953, y: 946.7196538271689 },
-        SDV_Ball: { x: -1091.1806472239737, y: 1162.1857429302347 },
-        SDV_IMG: { x: -1115.4963861998212, y: 994.274284574213 },
-        SDV_Name_none: { x: -1249.6461839977737, y: 902.8410000476873 },
-        SDV_None: { x: -1089.720700971003, y: 1046.083325698294 },
-        T_juntion_11: { x: -71.03198916443257, y: 826.6284580114444 },
-        T_juntion_14: { x: -289.03721709708736, y: 1184.5034182177258 },
-        Tank: { x: -961.1373095989246, y: 977.5992617936554 },
-        Tank_Ball: { x: -923.9708216841641, y: 1163.4131295204752 },
-        Tank_None: { x: -933.6419103358979, y: 1047.4663129728283 },
-        Temperature_Trans01: { x: -607.828356494313, y: 562.8487535527242 },
-        Temperature_Trans02: { x: -796.1166124474211, y: 1445.5258186779024 },
-        VavleWay: { x: -224.78705778398276, y: 1015.8472031854426 },
-        animation_line7: { x: -359.940697041692, y: 845.650011090059 },
-        animation_line8: { x: 64.61285378247803, y: 845.7339111102631 },
-        animation_line9: { x: -367.83294526673615, y: 1235.2489576729074 },
-        animation_line10: { x: 58.79445151290554, y: 1235.4134977535994 },
-        animation_line11: { x: -35.76111225621217, y: 845.5377293237694 },
-        animation_line12: { x: -134.7992075354374, y: 1038.0566391817506 },
-        animation_line13: { x: -149.50201219483813, y: 1038.8111762620706 },
-        animation_line14: { x: -253.98006830837323, y: 1235.4034694811062 },
-        animation_line15: { x: 61.881522019472186, y: 1235.5350090951665 },
-        borderWhite: { x: -1370.4376313140192, y: 389.9536467433811 },
-        data1: { x: -376.5135698793857, y: 659.5115253024958 },
-        data2: { x: -376.7902338698629, y: 578.7562142826833 },
-        data3: { x: -377.2199453794234, y: 497.87274583044757 },
-        data4: { x: -376.97542980491426, y: 417.24652675562265 },
-        data5: { x: -378.8925103452375, y: 1345.6321747105403 },
-        data6: { x: -378.5744303511996, y: 1426.4830888584006 },
-        data7: { x: -378.13724965362826, y: 1507.423813422966 },
-        data8: { x: -377.54215501476085, y: 1588.4049539814343 },
-        line1: { x: -1304.5570414051474, y: 1045.8299743897232 },
-        line2: { x: -842.576582460349, y: 1046.3496174211396 },
-        line3: { x: -757.3073258645178, y: 924.8718460504479 },
-        line4: { x: -757.4999146099806, y: 1165.8382016355595 },
-        line5: { x: -491.51843245307396, y: 924.6826669400624 },
-        line6: { x: -495.2528544333276, y: 1165.9228054364569 },
-        line7: { x: -460.3340758870887, y: 1039.7355815474468 },
-        line8: { x: -374.1947990352617, y: 845.1255935069244 },
-        line9: { x: -373.5456900377612, y: 1234.7053320346292 },
-        line10: { x: 64.88186817663268, y: 845.1595827580492 },
-        line11: { x: 62.86985056843554, y: 1234.683954724923 },
-        line12: { x: 95.31983107856911, y: 1035.9323508670825 },
-        line13: { x: 343.3312960971492, y: 1036.9713896720348 },
-        lineBall_13_1: { x: 429.8312960971493, y: 1036.9713896720348 },
-        overlay_SmallVavle1: { x: -863.2358516386571, y: 1208.6706191298017 },
-        overlay_SmallVavle2: { x: -434.80044580641925, y: 1046.4815751188462 },
-        overlay_line7: { x: -582.1247334784416, y: 1178.3156819743556 },
-        overlay_line13: { x: 134.32824796850616, y: 1034.2196427442032 },
-        timeUpdate3: { x: -1324.5654610976844, y: 503.3924695552174 },
-    };
+              const initialPositions = {
+              AlarmCenter: { x: 283.59624370081974, y: 372.1544066615297 },
+              ArrowRight: { x: 407.4256642678949, y: 1019.0985886548262 },
+              ArrowRight1: { x: -1377.765238350283, y: 1029.2839122667642 },
+              BallValue01: { x: -1108.440790541049, y: 1131.119650683875 },
+              BallValue02: { x: -941.3988306125451, y: 1132.519440708925 },
+              BallValue03: { x: -774.8687072979039, y: 894.71316658712 },
+              BallValue04: { x: -774.5658025383268, y: 1135.4678560265843 },
+              BallValue05: { x: -508.91484275338644, y: 893.4111362238439 },
+              BallValue06: { x: -513.2960507700657, y: 1135.5047245440524 },
+              BallValue07: { x: -391.21326336183927, y: 814.8244470890327 },
+              BallValue08: { x: 46.78642344526514, y: 814.45781638628 },
+              BallValue09: { x: -390.7347918738091, y: 1204.6166524541484 },
+              BallValue10: { x: 45.36832776035493, y: 1204.8259588420058 },
+              BallValueCenter: {
+                  x: -167.30710887361258,
+                  y: 1007.8595594996316,
+              },
+              BallValueCenter_Check: {
+                  x: 90.96636981528951,
+                  y: 1084.2937921267353,
+              },
+              BallValueCenter_None: {
+                  x: -148.86672654059413,
+                  y: 1039.286470841561,
+              },
+              BallValueCenter_None2: {
+                  x: -136.78263324371193,
+                  y: 1039.1243048935844,
+              },
+              BallValueFirst: { x: 325.65262421132076, y: 1005.5430441067174 },
+              BallValueLast: { x: -1321.6123824708486, y: 1014.0668924353204 },
+              BallValuePSV: { x: 210.72148707331525, y: 958.6157106130481 },
+              BallValuePSVNone: { x: 228.65438036310263, y: 974.0164290314665 },
+              ConnectData: { x: -1224.1375965271236, y: 779.7488024784055 },
+              EVC_01_Temperature: {
+                  x: -1397.4430569167453,
+                  y: 1160.0348765205,
+              },
+              EVC_02_Temperature: {
+                  x: -508.4032164626999,
+                  y: 1502.617581291104,
+              },
+              FIQ_1901: { x: -376.7990973971664, y: 361.591656819135 },
+              FIQ_1902: { x: -378.87479945539656, y: 1289.7747070359603 },
+              FIQ_none: { x: -216.373913367841, y: 798.1456910291513 },
+              FIQ_none2: { x: -219.38711961000132, y: 1187.2683013135133 },
+              FIQ_none11: { x: -187.27078106781747, y: 837.68091951101 },
+              FIQ_none22: { x: -189.44080519906746, y: 1231.3610095531735 },
+              Flow1: { x: -853.4576431348205, y: 1498.5512757003828 },
+              Flow2: { x: -444.10018252327654, y: 1498.2070645557653 },
+              FullScreen: { x: 359.3312960971492, y: 1036.9713896720348 },
+              GD1: { x: -706.3301306692865, y: 1034.6537686321053 },
+              GD1_Name1901: { x: -735.9500671990377, y: 963.4268072979715 },
+              GD1_Value1901: { x: -735.7622248938596, y: 998.7992472458197 },
+              GD2: { x: -340.2800293943576, y: 1036.2021439643406 },
+              GD2_Name1902: { x: -369.7973952262454, y: 962.8403828448106 },
+              GD2_Value1902: { x: -369.7416469139345, y: 997.1904549653616 },
+              GD3: { x: 13.374675095116203, y: 1037.243511740587 },
+              GD3_Name1903: { x: -16.079104275602333, y: 963.1634625787311 },
+              GD3_Value1903: { x: -16.401337483820626, y: 998.7295202130439 },
+              GD_none1: { x: -680.8408824721303, y: 1053.7496989003014 },
+              GD_none2: { x: -314.7114440042691, y: 1057.0316583224167 },
+              GD_none3: { x: 38.597337515296346, y: 1056.6594300401225 },
+              HELP: { x: 750.7851455025582, y: 336.66019515746984 },
+              Header: { x: -1198.0252315688263, y: 405.3003492753461 },
+              Line2_NONE: { x: -884.3336203769039, y: 1046.3496174211396 },
+              Line2_NONE1: { x: -779.4885863058424, y: 1046.3496174211396 },
+              LineBall_1_1: { x: -1372.5317402818896, y: 1045.9869361614612 },
+              PCV01: { x: -647.1303484670418, y: 867.3396625133937 },
+              PCV02: { x: -647.9515684919996, y: 1107.3332427411806 },
+              PCV_NONE1: { x: -654.1969317908449, y: 1051.7346262200558 },
+              PCV_NONE2: { x: -656.1497174830974, y: 1051.41928588474 },
+              PCV_NUM01: { x: -722.277268509522, y: 825.133480346991 },
+              PCV_NUM02: { x: -720.3461627186664, y: 1180.832086256927 },
+              PCV_ballVavle_Small1: {
+                  x: -597.4113415337335,
+                  y: 882.8095517403245,
+              },
+              PCV_ballVavle_Small1_none1: {
+                  x: -665.0629396476888,
+                  y: 902.0359579483519,
+              },
+              PCV_ballVavle_Small1_none2: {
+                  x: -667.1691720404733,
+                  y: 1141.0987492112777,
+              },
+              PCV_ballVavle_Small2: {
+                  x: -597.5196697396369,
+                  y: 1124.7706207942995,
+              },
+              PCV_ballVavle_Small2_none1: {
+                  x: -591.5512215024908,
+                  y: 932.0283184188106,
+              },
+              PCV_ballVavle_Small2_none2: {
+                  x: -591.3659180111881,
+                  y: 1172.918606583641,
+              },
+              PCV_none1: { x: -660.6947202927415, y: 923.80189117024 },
+              PCV_none2: { x: -661.9127246926923, y: 1165.3911488680144 },
+              PSV01: { x: 213.77852426794328, y: 808.706711387803 },
+              PSV_01: { x: 207.36093454652644, y: 894.8194564074687 },
+              PSV_02: { x: 186.61559387183382, y: 874.8453736745709 },
+              PSV_03: { x: 179.24045238769793, y: 807.8513210996118 },
+              PSV_None01: { x: 264.6066519200614, y: 1036.7984512500655 },
+              PSV_None02: { x: 229.41484444700808, y: 920.3475775498915 },
+              PSV_None03: { x: 205.13413659641662, y: 897.6667259680172 },
+              PSV_None04: { x: 202.2501602840781, y: 827.0933030066423 },
+              PT1: { x: -1248.552773720958, y: 969.1291015417314 },
+              PT2: { x: -0.8878436466131916, y: 1153.060016586797 },
+              PT3: { x: -1.361413707790149, y: 762.4414610609027 },
+              PT_col1: { x: -1216.2184970277972, y: 1031.4628364925754 },
+              PT_col2: { x: 31.255842776130976, y: 825.1751567166594 },
+              PT_col3: { x: 31.542019688165198, y: 1216.1843897830795 },
+              PT_none1: { x: -1215.33217151093, y: 1005.9301182806702 },
+              PT_none2: { x: 30.727111036710014, y: 792.2682647427301 },
+              PT_none3: { x: 30.869967141627455, y: 1184.3070444322354 },
+              PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
+              PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
+              Pressure_Trans01: { x: -1370.178598844617, y: 809.4634279335849 },
+              Pressure_Trans02: { x: 115.09741172932343, y: 656.4198989710571 },
+              Pressure_Trans03: { x: 116.12349758016171, y: 1288.418537187422 },
+              SDV: { x: -1140.086396422953, y: 946.7196538271689 },
+              SDV_Ball: { x: -1091.1806472239737, y: 1162.1857429302347 },
+              SDV_IMG: { x: -1115.4963861998212, y: 994.274284574213 },
+              SDV_Name_none: { x: -1249.6461839977737, y: 902.8410000476873 },
+              SDV_None: { x: -1089.720700971003, y: 1046.083325698294 },
+              T_juntion_11: { x: -71.03198916443257, y: 826.6284580114444 },
+              T_juntion_14: { x: -289.03721709708736, y: 1184.5034182177258 },
+              Tank: { x: -961.1373095989246, y: 977.5992617936554 },
+              Tank_Ball: { x: -923.9708216841641, y: 1163.4131295204752 },
+              Tank_None: { x: -933.6419103358979, y: 1047.4663129728283 },
+              Temperature_Trans01: {
+                  x: -607.828356494313,
+                  y: 562.8487535527242,
+              },
+              Temperature_Trans02: {
+                  x: -796.1166124474211,
+                  y: 1445.5258186779024,
+              },
+              VavleWay: { x: -224.78705778398276, y: 1015.8472031854426 },
+              animation_line7: { x: -359.940697041692, y: 845.650011090059 },
+              animation_line8: { x: 64.61285378247803, y: 845.7339111102631 },
+              animation_line9: {
+                  x: -367.83294526673615,
+                  y: 1235.2489576729074,
+              },
+              animation_line10: { x: 58.79445151290554, y: 1235.4134977535994 },
+              animation_line11: { x: -35.76111225621217, y: 845.5377293237694 },
+              animation_line12: {
+                  x: -134.7992075354374,
+                  y: 1038.0566391817506,
+              },
+              animation_line13: {
+                  x: -149.50201219483813,
+                  y: 1038.8111762620706,
+              },
+              animation_line14: {
+                  x: -253.98006830837323,
+                  y: 1235.4034694811062,
+              },
+              animation_line15: {
+                  x: 61.881522019472186,
+                  y: 1235.5350090951665,
+              },
+              borderWhite: { x: -1370.4376313140192, y: 389.9536467433811 },
+              data1: { x: -376.5135698793857, y: 659.5115253024958 },
+              data2: { x: -376.7902338698629, y: 578.7562142826833 },
+              data3: { x: -377.2199453794234, y: 497.87274583044757 },
+              data4: { x: -376.97542980491426, y: 417.24652675562265 },
+              data5: { x: -378.8925103452375, y: 1345.6321747105403 },
+              data6: { x: -378.5744303511996, y: 1426.4830888584006 },
+              data7: { x: -378.13724965362826, y: 1507.423813422966 },
+              data8: { x: -377.54215501476085, y: 1588.4049539814343 },
+              line1: { x: -1304.5570414051474, y: 1045.8299743897232 },
+              line2: { x: -842.576582460349, y: 1046.3496174211396 },
+              line3: { x: -757.3073258645178, y: 924.8718460504479 },
+              line4: { x: -757.4999146099806, y: 1165.8382016355595 },
+              line5: { x: -491.51843245307396, y: 924.6826669400624 },
+              line6: { x: -495.2528544333276, y: 1165.9228054364569 },
+              line7: { x: -460.3340758870887, y: 1039.7355815474468 },
+              line8: { x: -374.1947990352617, y: 845.1255935069244 },
+              line9: { x: -373.5456900377612, y: 1234.7053320346292 },
+              line10: { x: 64.88186817663268, y: 845.1595827580492 },
+              line11: { x: 62.86985056843554, y: 1234.683954724923 },
+              line12: { x: 95.31983107856911, y: 1035.9323508670825 },
+              line13: { x: 343.3312960971492, y: 1036.9713896720348 },
+              lineBall_13_1: { x: 429.8312960971493, y: 1036.9713896720348 },
+              overlay_SmallVavle1: {
+                  x: -863.2358516386571,
+                  y: 1208.6706191298017,
+              },
+              overlay_SmallVavle2: {
+                  x: -434.80044580641925,
+                  y: 1046.4815751188462,
+              },
+              overlay_line7: { x: -582.1247334784416, y: 1178.3156819743556 },
+              overlay_line13: { x: 134.32824796850616, y: 1034.2196427442032 },
+              timeUpdate3: { x: -1324.5654610976844, y: 503.3924695552174 },
+          };
     const [positions, setPositions] = useState(initialPositions);
     const [editingEnabled, seteditingEnabled] = useState(false);
 
@@ -7296,7 +7389,6 @@ export default function DemoFlowOTS() {
             data: {
                 label: (
                     <div>
-                        <AlarmOTSUKA />
                     </div>
                 ),
             },
@@ -8199,6 +8291,7 @@ export default function DemoFlowOTS() {
                 )}
             </Dialog>
             <div
+            key={resetKey}
                 style={{
                     borderRadius: 5,
                     //width: "auto",

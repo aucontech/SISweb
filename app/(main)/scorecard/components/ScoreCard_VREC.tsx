@@ -9,6 +9,7 @@ import { httpApi } from "@/api/http.api";
 import { DotGreen, DotRed } from "./SVG_Scorecard";
 
 import "./ScoreCard.css"
+import { Down, Up } from "../SVG_Scorecard";
 
 interface StateMap {
     [key: string]:
@@ -16,6 +17,12 @@ interface StateMap {
         | undefined;
 }
 interface ValueStateMap {
+    [key: string]:
+        | React.Dispatch<React.SetStateAction<string | null>>
+        | undefined;
+}
+
+interface StateMap2 {
     [key: string]:
         | React.Dispatch<React.SetStateAction<string | null>>
         | undefined;
@@ -82,11 +89,18 @@ export default function ScoreCard_VREC() {
                 let dataReceived = JSON.parse(evt.data);
                 if (dataReceived.update !== null) {
                     setData([...data, dataReceived]);
-
+                    const formatValue = (value: any) => {
+                        return value !== null
+                            ? new Intl.NumberFormat("en-US", {
+                                  minimumFractionDigits: 2, // Đảm bảo có 2 chữ số sau dấu thập phân
+                                  maximumFractionDigits: 2, // Không nhiều hơn 2 chữ số thập phân
+                                  useGrouping: true, // Phân cách phần ngàn bằng dấu phẩy
+                              }).format(parseFloat(value))
+                            : "";
+                    };
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
 
-                        FC_Lithium_Battery_Status: setFC_Lithium_Battery_Status,
                         FC_Battery_Voltage: setFC_Battery_Voltage,
                         FC_System_Voltage: setFC_System_Voltage,
                         FC_Charger_Voltage: setFC_Charger_Voltage,
@@ -120,8 +134,18 @@ export default function ScoreCard_VREC() {
                         GD1: setGD1,
                         GD2: setGD2,
                         PT1: setPT1,
+                   
+
+                    };
+                    const valueStateMap: ValueStateMap = {
+                        FC_Conn_STT: setFC_Conn_STTValue,
+                        PLC_Conn_STT: setConn_STTValue,
+                    };
+
+                    const stateMap2: StateMap2 = {
                         DI_ZSO_1: setDI_ZSO_1,
                         DI_ZSC_1: setDI_ZSC_1,
+                        FC_Lithium_Battery_Status: setFC_Lithium_Battery_Status,
 
                         DI_UPS_BATTERY: setDI_UPS_BATTERY,
                         DI_UPS_CHARGING: setDI_UPS_CHARGING,
@@ -141,17 +165,17 @@ export default function ScoreCard_VREC() {
 
                         FC_Conn_STT: setFC_STT01,
                         PLC_Conn_STT: setPLC_Conn_STT,
-
-                    };
-                    const valueStateMap: ValueStateMap = {
-                        FC_Conn_STT: setFC_Conn_STTValue,
-                        PLC_Conn_STT: setConn_STTValue,
                     };
                     keys.forEach((key) => {
                         if (stateMap[key]) {
                             const value = dataReceived.data[key][0][1];
+                            const formattedValue = formatValue(value);
+                            stateMap[key]?.(formattedValue);
+                        }
+                        if (stateMap2[key]) {
+                            const value = dataReceived.data[key][0][1];
                             const slicedValue = value;
-                            stateMap[key]?.(slicedValue);
+                            stateMap2[key]?.(slicedValue);
                         }
 
                         if (valueStateMap[key]) {
@@ -2471,8 +2495,6 @@ useEffect(() => {
                 FC1: <span style={combineCss.CSSFC_Charger_Voltage}>{FC_Charger_Voltage}</span>,
     
             },
-            
-          
         ];
 
     const dataFC = [
@@ -2520,15 +2542,15 @@ useEffect(() => {
 
         },
         {
-            name: <span>{tagNameFC.VbLastDay}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume}>{FC_01_Yesterday_Values_Volume}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume}>{FC_02_Yesterday_Values_Volume}</span>,
-
-        },
-        {
             name: <span>{tagNameFC.VmToday}</span>,
             FC1901: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}>{FC_01_Today_Values_Uncorrected_Volume}</span>,
             FC1902: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}>{FC_02_Today_Values_Uncorrected_Volume}</span>,
+
+        },
+        {
+            name: <span>{tagNameFC.VbLastDay}</span>,
+            FC1901: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume}>{FC_01_Yesterday_Values_Volume}</span>,
+            FC1902: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume}>{FC_02_Yesterday_Values_Volume}</span>,
 
         },
         {
@@ -2554,12 +2576,6 @@ useEffect(() => {
             PLC: <span style={combineCss.CSSGD2}> {GD2}</span>,
         },
         {
-            name: <span>{tagNamePLC.DO_SV_01}</span>,
-            PLC: <span style={combineCss.CSSDO_SV_01}> {DO_SV_01} {DataDO_SV_01}</span>,
-        },
-      
-
-        {
             name: <span>{tagNamePLC.ZSO}</span>,
             PLC: <span style={combineCss.CSSDI_ZSO_1}>{DI_ZSO_1} {DataZSO_1}</span>,
         },
@@ -2567,6 +2583,10 @@ useEffect(() => {
         {
             name: <span>{tagNamePLC.ZSC}</span>,
             PLC: <span style={combineCss.CSSDI_ZSC_1}>{DI_ZSC_1} {DataZSC_1}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.MAP}</span>,
+            PLC: <span style={combineCss.CSSDI_MAP_1}> {DI_MAP_1} {DataMap1}</span>,
         },
       
         {
@@ -2621,10 +2641,16 @@ useEffect(() => {
             PLC: <span style={combineCss.CSSDO_BC_01}> {DO_BC_01} {DataBeacon}</span>,
         },
         {
-            name: <span>{tagNamePLC.MAP}</span>,
-            PLC: <span style={combineCss.CSSDI_MAP_1}> {DI_MAP_1} {DataMap1}</span>,
+            name: <span>{tagNamePLC.DO_SV_01}</span>,
+            PLC: <span style={combineCss.CSSDO_SV_01}> {DO_SV_01} {DataDO_SV_01}</span>,
         },
     ];
+
+    const [ShowMore,setShowMore] = useState(false)
+
+    const handleShowMore = () => {
+        setShowMore(!ShowMore)
+    }
 
     return (
         <div >
@@ -2666,14 +2692,16 @@ display:'flex'
                         <div style={{  fontWeight: 500,display:'flex' }}>
                            {FC_Conn_STTValue}
                         </div>
-              
+                        <div  onClick={handleShowMore} >
+                    {ShowMore ? <span style={{cursor:"pointer",  }}>{Up}</span>  : <span style={{cursor:"pointer"}}>{Down}</span>}
+                    </div>
                     </div>
                     
                 </div>
 
 
 
-
+                {ShowMore ?    <div > 
 
 
                 <DataTable value={dataFC} size="small" selectionMode="single"> 
@@ -2757,9 +2785,53 @@ display:'flex'
                     
                     </DataTable>
 
+
+                    </div> 
+                
+                : 
+                <div>
+                    <DataTable value={dataFC} size="small" selectionMode="single"> 
+                    <Column field="name" header="FC Parameter"></Column>
+
+     
+                    <Column
+                            field="FC1901"
+                            header={FC_STT01 === "1" ? (
+
+                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center',  position:'relative', right:30}}>
+                                {DotGreen} <p style={{marginLeft:5}}>FC-1801</p>
+   
+                               </div>
+                               
+                            ) : (
+                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center' , position:'relative', right:30}}>
+                                {DotRed}  <p style={{marginLeft:5}}>FC-1801</p>
+                             </div>
+                            )}
+                        ></Column>
+                    <Column
+                        style={{display:'flex', justifyContent:'flex-end'}}
+
+                            field="FC1902"
+                            header={FC_STT01 === "1" ? (
+                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                                {DotGreen} <p style={{marginLeft:5}}>FC-1802</p>
+   
+                               </div>
+                                
+                            ) : (
+                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
+                                {DotRed}  <p style={{marginLeft:5}}>FC-1802</p>
+                             </div>
+                            )}
+                        ></Column>
+
+                </DataTable>
             </div>
+}
 
         
+            </div>
 
         </div>
     );

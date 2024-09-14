@@ -13,7 +13,7 @@ export default function CNG_Scorecard() {
       <ScoreCard_CNG_BINHDUONG/>
 
       <ScoreCard_CNG_HUNGYEN/>
-
+    
     </div>
   )
 

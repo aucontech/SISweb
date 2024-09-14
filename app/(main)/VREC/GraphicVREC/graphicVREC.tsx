@@ -38,6 +38,7 @@ import {
     BlackTriangleRight,
     FIQ,
     GD,
+    PCV,
     PTV,
     SVD_NC,
     SVD_NO,
@@ -53,13 +54,11 @@ import { httpApi } from "@/api/http.api";
 import BallVavlePSV from "../ReactFlow/BallVavlePSV";
 import { Toast } from "primereact/toast";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
-import AlarmOTSUKA from "@/layout/AlarmBell/AlarmOTSUKA";
 import BallValueFirst from "../ReactFlow/BallValueFirst";
 import BallValueLast from "../ReactFlow/BallValueLast";
 import { edgePRU } from "../../PRU/GraphicPRU/edgePRU";
 import { edgeZOVC } from "./edgeZOVC";
 import { GetTelemetry_id_VREC,  } from "./Api_ZOVC";
-import AlarmVREC from "@/layout/AlarmBell/AlarmVREC";
 interface StateMap {
     [key: string]:
         | React.Dispatch<React.SetStateAction<string | null>>
@@ -109,10 +108,21 @@ export default function GraphicVREC() {
 
     const toast = useRef<Toast>(null);
     const [alarmMessage, setAlarmMessage] = useState<string | null>(null);
+    const ws = useRef<WebSocket | null>(null);
+
+
+    const [resetKey, setResetKey] = useState(0);
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
+    const [wasOffline, setWasOffline] = useState(false); // Theo dõi trạng thái offline trước đó
 
     useEffect(() => {
-        ws.current = new WebSocket(url);
 
+        const connectWebSocket = () => {
+
+        const token = localStorage.getItem('accessToken');
+                const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+        ws.current = new WebSocket(url);
+       
         const obj1 = {
             attrSubCmds: [],
             tsSubCmds: [
@@ -184,40 +194,58 @@ export default function GraphicVREC() {
         if (ws.current) {
             ws.current.onopen = () => {
                 console.log("WebSocket connected");
-                setCheckConnectData(true);
                 setTimeout(() => {
                     ws.current?.send(JSON.stringify(obj1));
                     ws.current?.send(JSON.stringify(obj_PCV_PSV));
+             
+
                 });
             };
-
             ws.current.onclose = () => {
-                console.log("WebSocket connection closed.");
-                setCheckConnectData(false);
-            };
-
+                                setTimeout(() => {
+                                    connectWebSocket(); 
+                                }, 10000);
+                            };
             return () => {
                 console.log("Cleaning up WebSocket connection.");
                 ws.current?.close();
             };
         }
-    }, []);
+        };
+       
+        connectWebSocket()
+        
+    }, [isOnline]);
+
+    useEffect(() => {
+        const handleOnlineStatus = () => {
+            const currentStatus = navigator.onLine;
+            setIsOnline(currentStatus);
+
+            if (!currentStatus) {
+                setWasOffline(true);
+            } else if (currentStatus && wasOffline) {
+                setResetKey(prevKey => prevKey + 1); 
+                setWasOffline(false); 
+            }
+        };
+
+        window.addEventListener('online', handleOnlineStatus);
+        window.addEventListener('offline', handleOnlineStatus);
+
+        return () => {
+            window.removeEventListener('online', handleOnlineStatus);
+            window.removeEventListener('offline', handleOnlineStatus);
+        };
+    }, [wasOffline]);
+
 
     useEffect(() => {
         if (ws.current) {
             ws.current.onmessage = (evt) => {
                 let dataReceived = JSON.parse(evt.data);
                 if (dataReceived.update !== null) {
-                    setData([...data, dataReceived]);
-                    const formatValue = (value:any) => {
-                        return value !== null
-                            ? new Intl.NumberFormat('en-US', {
-                                  minimumFractionDigits: 2, // Đảm bảo có 2 chữ số sau dấu thập phân
-                                  maximumFractionDigits: 2, // Không nhiều hơn 2 chữ số thập phân
-                                  useGrouping: true, // Phân cách phần ngàn bằng dấu phẩy
-                              }).format(parseFloat(value))
-                            : "";
-                    };
+                    setData(prevData => [...prevData, dataReceived]);
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
                      
@@ -272,31 +300,25 @@ export default function GraphicVREC() {
                         DO_BC_01: setDO_BC_01,
                         DO_SV_01: setDO_SV_01,
 
-
-                    };
-
-                    const valueStateMap: ValueStateMap = {
-                        FC_Conn_STT: setFC_Conn_STTValue,
-                        PLC_Conn_STT: setConn_STTValue,
-                    };
-                    const stateMap2: StateMap2 = { 
                         DI_ZSC_1: setDI_ZSC_1,
                         DI_ZSO_1: setDI_ZSO_1,
                        
                         FC_Conn_STT: setFC_Conn_STT,
 
                         PLC_Conn_STT: setPLC_Conn_STT,
-                    }
+                    };
+
+                    const valueStateMap: ValueStateMap = {
+                        FC_Conn_STT: setFC_Conn_STTValue,
+                        PLC_Conn_STT: setConn_STTValue,
+                    };
+                   
                     keys.forEach((key) => {
+                       
                         if (stateMap[key]) {
                             const value = dataReceived.data[key][0][1];
-                            const formattedValue = formatValue(value);
-                            stateMap[key]?.(formattedValue); // Áp dụng định dạng giá trị
-                        }
-                        if (stateMap2[key]) {
-                            const value = dataReceived.data[key][0][1];
                             const slicedValue = value;
-                            stateMap2[key]?.(slicedValue);
+                            stateMap[key]?.(slicedValue);
                         }
                         if (valueStateMap[key]) {
                             const value = dataReceived.data[key][0][0];
@@ -338,8 +360,8 @@ export default function GraphicVREC() {
             };
         }
     }, [data]);
-    const ws = useRef<WebSocket | null>(null);
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+
+
    // =================================================================================================================== 
 
 const [FC_Lithium_Battery_Status, setFC_Lithium_Battery_Status] = useState<string | null>(null);
@@ -1756,7 +1778,10 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
             const DI_SD_1_Maintain = res.data.find(
                 (item: any) => item.key === "DI_SD_1_Maintain"
             );
-
+            const Active = res.data.find(
+                (item: any) => item.key === "active"
+            );
+            setActive(Active?.value || false);
  // =================================================================================================================== 
 
 
@@ -1919,6 +1944,14 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
         SDV: "Shutdown valve",
     };
 
+    const formatValue = (value:any) => {
+        return value !== null
+            ? new Intl.NumberFormat('en-US', {
+                  maximumFractionDigits: 2,
+                  useGrouping: true, 
+              }).format(parseFloat(value))
+            : "";
+    };
     useEffect(() => {
         const updatedNodes = nodes.map((node) => {
             if (node.id === "data4") {
@@ -1965,7 +1998,7 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {FC_01_Current_Values_Flow_Rate}
+                                        {formatValue(FC_01_Current_Values_Flow_Rate)}
                                     </p>
                                 </div>
                                 <p
@@ -2026,7 +2059,7 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {FC_01_Current_Values_Uncorrected_Flow_Rate}
+                                        {formatValue(FC_01_Current_Values_Uncorrected_Flow_Rate)}
                                     </p>
                                 </div>
                                 <p
@@ -2087,7 +2120,7 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {FC_01_Accumulated_Values_Volume}
+                                        {formatValue(FC_01_Accumulated_Values_Volume)}
                                     </p>
                                 </div>
                                 <p
@@ -2150,7 +2183,7 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {FC_01_Accumulated_Values_Uncorrected_Volume}
+                                        {formatValue(FC_01_Accumulated_Values_Uncorrected_Volume)}
                                     </p>
                                 </div>
                                 <p
@@ -2212,7 +2245,7 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {FC_02_Current_Values_Flow_Rate}
+                                        {formatValue(FC_02_Current_Values_Flow_Rate)}
                                     </p>
                                 </div>
                                 <p
@@ -2274,7 +2307,7 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {FC_02_Current_Values_Uncorrected_Flow_Rate}
+                                        {formatValue(FC_02_Current_Values_Uncorrected_Flow_Rate)}
                                     </p>
                                 </div>
                                 <p
@@ -2336,7 +2369,7 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {FC_02_Accumulated_Values_Volume}
+                                        {formatValue(FC_02_Accumulated_Values_Volume)}
                                     </p>
                                 </div>
                                 <p
@@ -2398,7 +2431,7 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {FC_02_Accumulated_Values_Uncorrected_Volume}
+                                        {formatValue(FC_02_Accumulated_Values_Uncorrected_Volume)}
                                     </p>
                                 </div>
                                 <p
@@ -2459,7 +2492,7 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedPT1}
+                                        {formatValue(PT1)}
                                     </p>
                                 </div>
                                 <p
@@ -2521,7 +2554,7 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
                                         }}
                                     >
                                         {/* {roundedFC_01_Current_Values_Static_Pressure} */}
-                                        {roundedFC_01_Current_Values_Static_Pressure}
+                                        {formatValue(FC_01_Current_Values_Static_Pressure)}
                                     </p>
                                 </div>
                                 <p
@@ -2583,7 +2616,7 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedFC_02_Current_Values_Static_Pressure}
+                                        {formatValue(FC_02_Current_Values_Static_Pressure)}
                                     </p>
                                 </div>
                                 <p
@@ -2803,7 +2836,7 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
                                 }}
                                 // onClick={() => confirmGD_1901()}
                             >
-                                <p>{roundedGD1} %LEL</p>
+                                <p>{formatValue(GD1)} %LEL</p>
                             </div>
                         ),
                     },
@@ -2839,7 +2872,7 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
                                 }}
                                 // onClick={() => confirmGD_1902()}
                             >
-                                <p>{roundedGD2} %LEL</p>
+                                <p>{formatValue(GD2)} %LEL</p>
                             </div>
                         ),
                     },
@@ -3277,10 +3310,10 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
         Line2_NONE: { x: -884.3336203769039, y: 1046.097424130381 },
         Line2_NONE1: { x: -771.9885863058424, y: 1046.097424130381 },
         LineBall_1_1: { x: -1308.5317402818896, y: 1046.4869361614612 },
-        PCV01: { x: -111.50890549579239, y: 883.8137375633868 },
-        PCV02: { x: -111.53560759935901, y: 1115.2398542513167 },
-        PCV_NUM01: { x: -170.86428983603884, y: 814.1809328156613 },
-        PCV_NUM02: { x: -182.4241890018547, y: 1192.3540390642565 },
+        PCV01: { x: -71.72419522919697, y: 872.1992339822971 },
+              PCV02: { x: -70.59914284418218, y: 1102.7742211636619 },
+              PCV_NUM01: { x: -150.01994102955004, y: 822.7337186204609 },
+              PCV_NUM02: { x: -152.59143023214534, y: 1177.587987672237 },
         PCV_ballVavle_Small1: {
             x: -9.97812688216436,
             y: 890.3528829879407,
@@ -4333,12 +4366,13 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
             data: {
                 label: (
                     <div>
-                        <Image
+                        {/* <Image
                             src="/layout/imgGraphic/PVC.png"
                             width={60}
                             height={60}
                             alt="Picture of the author"
-                        />
+                        /> */}
+                        {PCV}
                     </div>
                 ),
             },
@@ -4360,12 +4394,13 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
             data: {
                 label: (
                     <div>
-                        <Image
+                        {/* <Image
                             src="/layout/imgGraphic/PVC.png"
                             width={60}
                             height={60}
                             alt="Picture of the author"
-                        />
+                        /> */}
+                        {PCV}
                     </div>
                 ),
             },
@@ -4381,129 +4416,129 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
             zIndex: 9999,
         },
 
-        {
-            id: "PCV_ballVavle_Small1",
-            position: positions.PCV_ballVavle_Small1,
-            type: "custom",
-            data: {
-                label: (
-                    <div>
-                        <Image
-                            src="/layout/imgGraphic/BallValueRight.png"
-                            width={30}
-                            height={30}
-                            alt="Picture of the author"
-                        />
-                    </div>
-                ),
-            },
+        // {
+        //     id: "PCV_ballVavle_Small1",
+        //     position: positions.PCV_ballVavle_Small1,
+        //     type: "custom",
+        //     data: {
+        //         label: (
+        //             <div>
+        //                 <Image
+        //                     src="/layout/imgGraphic/BallValueRight.png"
+        //                     width={30}
+        //                     height={30}
+        //                     alt="Picture of the author"
+        //                 />
+        //             </div>
+        //         ),
+        //     },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: {
-                border: "#333333",
-                background: background,
-                width: 1,
-                height: 1,
-            },
-            zIndex: 9999,
-        },
-        {
-            id: "PCV_ballVavle_Small2",
-            position: positions.PCV_ballVavle_Small2,
-            type: "custom",
-            data: {
-                label: (
-                    <div>
-                        <Image
-                            src="/layout/imgGraphic/BallValueRight.png"
-                            width={30}
-                            height={30}
-                            alt="Picture of the author"
-                        />
-                    </div>
-                ),
-            },
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Left,
+        //     style: {
+        //         border: "#333333",
+        //         background: background,
+        //         width: 1,
+        //         height: 1,
+        //     },
+        //     zIndex: 9999,
+        // },
+        // {
+        //     id: "PCV_ballVavle_Small2",
+        //     position: positions.PCV_ballVavle_Small2,
+        //     type: "custom",
+        //     data: {
+        //         label: (
+        //             <div>
+        //                 <Image
+        //                     src="/layout/imgGraphic/BallValueRight.png"
+        //                     width={30}
+        //                     height={30}
+        //                     alt="Picture of the author"
+        //                 />
+        //             </div>
+        //         ),
+        //     },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: {
-                border: "#333333",
-                background: background,
-                width: 1,
-                height: 1,
-            },
-            zIndex: 9999,
-        },
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Left,
+        //     style: {
+        //         border: "#333333",
+        //         background: background,
+        //         width: 1,
+        //         height: 1,
+        //     },
+        //     zIndex: 9999,
+        // },
 
-        {
-            id: "PCV_ballVavle_Small1_none1",
-            position: positions.PCV_ballVavle_Small1_none1,
-            type: "custom",
-            data: {
-                label: <div> </div>,
-            },
+        // {
+        //     id: "PCV_ballVavle_Small1_none1",
+        //     position: positions.PCV_ballVavle_Small1_none1,
+        //     type: "custom",
+        //     data: {
+        //         label: <div> </div>,
+        //     },
 
-            sourcePosition: Position.Top,
-            targetPosition: Position.Right,
-            style: {
-                border: "#333333",
-                background: background,
-                width: 30,
-                height: 1,
-            },
-        },
-        {
-            id: "PCV_ballVavle_Small2_none1",
-            position: positions.PCV_ballVavle_Small2_none1,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
+        //     sourcePosition: Position.Top,
+        //     targetPosition: Position.Right,
+        //     style: {
+        //         border: "#333333",
+        //         background: background,
+        //         width: 30,
+        //         height: 1,
+        //     },
+        // },
+        // {
+        //     id: "PCV_ballVavle_Small2_none1",
+        //     position: positions.PCV_ballVavle_Small2_none1,
+        //     type: "custom",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            sourcePosition: Position.Left,
-            targetPosition: Position.Top,
-            style: {
-                border: "#333333",
-                background: "none",
-                width: 30,
-                height: 1,
-            },
-        },
-        {
-            id: "PCV_ballVavle_Small1_none2",
-            position: positions.PCV_ballVavle_Small1_none2,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
+        //     sourcePosition: Position.Left,
+        //     targetPosition: Position.Top,
+        //     style: {
+        //         border: "#333333",
+        //         background: "none",
+        //         width: 30,
+        //         height: 1,
+        //     },
+        // },
+        // {
+        //     id: "PCV_ballVavle_Small1_none2",
+        //     position: positions.PCV_ballVavle_Small1_none2,
+        //     type: "custom",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            sourcePosition: Position.Top,
-            targetPosition: Position.Right,
-            style: {
-                border: "#333333",
-                background: background,
-                width: 30,
-                height: 1,
-            },
-        },
-        {
-            id: "PCV_ballVavle_Small2_none2",
-            position: positions.PCV_ballVavle_Small2_none2,
-            type: "custom",
-            data: {
-                label: <div> </div>,
-            },
+        //     sourcePosition: Position.Top,
+        //     targetPosition: Position.Right,
+        //     style: {
+        //         border: "#333333",
+        //         background: background,
+        //         width: 30,
+        //         height: 1,
+        //     },
+        // },
+        // {
+        //     id: "PCV_ballVavle_Small2_none2",
+        //     position: positions.PCV_ballVavle_Small2_none2,
+        //     type: "custom",
+        //     data: {
+        //         label: <div> </div>,
+        //     },
 
-            sourcePosition: Position.Left,
-            targetPosition: Position.Top,
-            style: {
-                border: "#333333",
-                background: "none",
-                width: 30,
-                height: 1,
-            },
-        },
+        //     sourcePosition: Position.Left,
+        //     targetPosition: Position.Top,
+        //     style: {
+        //         border: "#333333",
+        //         background: "none",
+        //         width: 30,
+        //         height: 1,
+        //     },
+        // },
 
         {
             id: "PCV_NUM01",
@@ -4548,36 +4583,36 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
                 // Thêm box shadow với màu (0, 255, 255)
             },
         },
-        {
-            id: "PCV_none1",
-            position: positions.PCV_none1,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
+        // {
+        //     id: "PCV_none1",
+        //     position: positions.PCV_none1,
+        //     type: "custom",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            sourcePosition: Position.Top,
-            targetPosition: Position.Left,
-            style: {
-                height: 1,
-                width: 1,
-            },
-        },
-        {
-            id: "PCV_none2",
-            position: positions.PCV_none2,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
+        //     sourcePosition: Position.Top,
+        //     targetPosition: Position.Left,
+        //     style: {
+        //         height: 1,
+        //         width: 1,
+        //     },
+        // },
+        // {
+        //     id: "PCV_none2",
+        //     position: positions.PCV_none2,
+        //     type: "custom",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            sourcePosition: Position.Bottom,
-            targetPosition: Position.Left,
-            style: {
-                height: 1,
-                width: 1,
-            },
-        },
+        //     sourcePosition: Position.Bottom,
+        //     targetPosition: Position.Left,
+        //     style: {
+        //         height: 1,
+        //         width: 1,
+        //     },
+        // },
 
         // ==================== FIQ =============================
         {
@@ -6776,6 +6811,7 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
                 )}
             </Dialog>
             <div
+            key={resetKey}
                 style={{
                     borderRadius: 5,
                     //width: "auto",

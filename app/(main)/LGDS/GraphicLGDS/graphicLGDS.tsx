@@ -25,7 +25,7 @@ import BallValue10 from "../ReactFlow/BallValue10";
 import PCV_01_Otsuka from "../ReactFlow/PCV01_Otsuka";
 import PCV_02_Otsuka from "../ReactFlow/PCV02_Otsuka";
 import { readToken } from "@/service/localStorage";
-import { id_OTSUKA, id_LGDS } from "../../data-table-device/ID-DEVICE/IdDevice";
+import { id_LGDS } from "../../data-table-device/ID-DEVICE/IdDevice";
 import BallValueCenter from "../ReactFlow/BallValueCenter";
 import { OverlayPanel } from "primereact/overlaypanel";
 import {
@@ -34,14 +34,12 @@ import {
     BlackTriangle,
     BlackTriangleRight,
     FIQ,
-    GD,
+
     PTV,
-    SVD_NC,
     SVD_NO,
     VavleWay,
     WhiteTriangleRight,
-    juntionBottom,
-    juntionTop,
+
     tankGas,
 } from "./iconSVG";
 import PSV01_Otsuka from "../ReactFlow/PSV01_Otsuka";
@@ -50,7 +48,6 @@ import { httpApi } from "@/api/http.api";
 import BallVavlePSV from "../ReactFlow/BallVavlePSV";
 import { Toast } from "primereact/toast";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
-import AlarmOTSUKA from "@/layout/AlarmBell/AlarmOTSUKA";
 import BallValueFirst from "../ReactFlow/BallValueFirst";
 import BallValueLast from "../ReactFlow/BallValueLast";
 import { edgePRU } from "../../PRU/GraphicPRU/edgePRU";
@@ -59,7 +56,6 @@ import { GetTelemetry_ZOVC, PostTelemetry_ZOVC } from "./Api_ZOVC";
 import BallVavleSDV_TOP from "../ReactFlow/BallVavleSDV_TOP";
 import BallVavleSDV_TOP1 from "../ReactFlow/BallVavleSDV_TOP";
 import BallVavleSDV_BOTTOM1 from "../ReactFlow/BallVavleSDV_BOTTOM";
-import AlarmLGDS from "@/layout/AlarmBell/AlarmLGDS";
 import PSV02_Otsuka from "../ReactFlow/PSV02_Otsuka";
 interface StateMap {
     [key: string]:
@@ -91,7 +87,7 @@ export default function GraphicLGDS() {
     const [visible, setVisible] = useState(false);
     const audioRef = useRef<HTMLAudioElement>(null);
     const [editingEnabled, setEditingEnabled] = useState(false);
-    const [active, setActive] = useState();
+    const [active, setActive] = useState<any>();
 
     const [checkConnectData, setCheckConnectData] = useState(false);
     const token = readToken();
@@ -108,10 +104,76 @@ export default function GraphicLGDS() {
     const [alarmMessage, setAlarmMessage] = useState<string | null>(null);
 
     const toast = useRef<Toast>(null);
+    const ws = useRef<WebSocket | null>(null);
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+  
+    const [resetKey, setResetKey] = useState(0);
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
+    const [wasOffline, setWasOffline] = useState(false); // Theo dõi trạng thái offline trước đó
+    // useEffect(() => {
+    //     const connectWebSocket = () => {
+    //         const token = localStorage.getItem('accessToken');
+    //         const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+            
+    //         ws.current = new WebSocket(url);
+    
+    //         const obj1 = {
+    //             attrSubCmds: [],
+    //             tsSubCmds: [
+    //                 {
+    //                     entityType: "DEVICE",
+    //                     entityId: id_LGDS,
+    //                     scope: "LATEST_TELEMETRY",
+    //                     cmdId: 1,
+    //                 },
+    //             ],
+    //         };
+    
+    //         if (ws.current) {
+    //             ws.current.onopen = () => {
+    //                 setTimeout(() => {
+    //                     ws.current?.send(JSON.stringify(obj1));
+    //                 },1000); 
+    //             };
+    
+    //             ws.current.onclose = () => {
+    //                 setTimeout(() => {
+    //                     connectWebSocket(); 
+    //                 }, 10000);
+    //             };
+    //             fetchData()
+    //         }
+          
+    //         return () => {
+    //             ws.current?.close(); 
+    //         };
+    //     };
+    
+    //     connectWebSocket(); 
+    
+    //     const interval = setInterval(() => {
+    //         connectWebSocket();  
+
+    //         console.log("Resetting WebSocket connection...");
+    
+    //         ws.current?.close(); 
+    //     }, 60000); 
+    
+    //     return () => {
+    //         clearInterval(interval); 
+    //         ws.current?.close(); 
+    //     };
+    
+     
+    // }, []); 
 
     useEffect(() => {
-        ws.current = new WebSocket(url);
 
+        const connectWebSocket = () => {
+
+        const token = localStorage.getItem('accessToken');
+                const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+        ws.current = new WebSocket(url);
         const obj1 = {
             attrSubCmds: [],
             tsSubCmds: [
@@ -124,99 +186,56 @@ export default function GraphicLGDS() {
             ],
         };
 
-        const obj_PCV_PSV = {
-            entityDataCmds: [
-                {
-                    cmdId: 1,
-                    latestCmd: {
-                        keys: [
-                            {
-                                type: "ATTRIBUTE",
-                                key: "active",
-                            },
-                        ],
-                    },
-                    query: {
-                        entityFilter: {
-                            type: "singleEntity",
-                            singleEntity: {
-                                entityType: "DEVICE",
-                                id: id_LGDS,
-                            },
-                        },
-                        pageLink: {
-                            pageSize: 1,
-                            page: 0,
-                            sortOrder: {
-                                key: {
-                                    type: "ENTITY_FIELD",
-                                    key: "createdTime",
-                                },
-                                direction: "DESC",
-                            },
-                        },
-                        entityFields: [
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "name",
-                            },
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "label",
-                            },
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "additionalInfo",
-                            },
-                        ],
-                        latestValues: [
-                            {
-                                type: "ATTRIBUTE",
-                                key: "active",
-                            },
-                        ],
-                    },
-                },
-            ],
-        };
-
         if (ws.current) {
             ws.current.onopen = () => {
                 console.log("WebSocket connected");
-                setCheckConnectData(true);
-                setTimeout(() => {
+
+                if (ws.current?.readyState === WebSocket.OPEN) {
                     ws.current?.send(JSON.stringify(obj1));
-                    ws.current?.send(JSON.stringify(obj_PCV_PSV));
-                });
+                } else {
+                    console.log("WebSocket is not ready, will retry...");
+                    const retryInterval = setInterval(() => {
+                        if (ws.current?.readyState === WebSocket.OPEN) {
+                            ws.current?.send(JSON.stringify(obj1));
+                            clearInterval(retryInterval); // Dừng việc retry sau khi thành công
+                        }
+                    }, 1000);
+                }
             };
 
             ws.current.onclose = () => {
-                console.log("WebSocket connection closed.");
-                setCheckConnectData(false);
+                console.log("WebSocket disconnected. Reconnecting in 10 seconds...");
+                setTimeout(() => {
+                    connectWebSocket(); // Tự động kết nối lại sau 10 giây
+                }, 10000);
             };
 
+            // Xử lý sự kiện khi gặp lỗi
+            ws.current.onerror = (error) => {
+                console.error("WebSocket error:", error);
+            };
+
+            // Dọn dẹp kết nối khi component bị unmount
             return () => {
                 console.log("Cleaning up WebSocket connection.");
                 ws.current?.close();
             };
         }
-    }, []);
+    };
+       
+        connectWebSocket()
+        
+    }, [isOnline,resetKey]);
 
-    useEffect(() => {
+
+    
+useEffect(() => {
         if (ws.current) {
             ws.current.onmessage = (evt) => {
                 let dataReceived = JSON.parse(evt.data);
                 if (dataReceived.update !== null) {
-                    setData([...data, dataReceived]);
-                    const formatValue = (value: any) => {
-                        return value !== null
-                            ? new Intl.NumberFormat("en-US", {
-                                  minimumFractionDigits: 2,
-                                  maximumFractionDigits: 2,
-                                  useGrouping: true,
-                              }).format(parseFloat(value))
-                            : "";
-                    };
+                    setData(prevData => [...prevData, dataReceived]);
+
                     const keys = Object?.keys(dataReceived.data);
                     const stateMap: StateMap = {
                        
@@ -280,29 +299,22 @@ export default function GraphicLGDS() {
                         DO_SV_02: setDO_SV_02,
 
                     
+                        FC_Conn_STT: setFC_Conn_STT,
+                        PLC_Conn_STT: setConn_STT,
 
-                        time: setTimeUpdate,
                     };
 
                     const valueStateMap: ValueStateMap = {
                         FC_Conn_STT: setFC_Conn_STTValue,
                         PLC_Conn_STT: setConn_STTValue,
                     };
-                    const stateMap2: StateMap2 = { 
-
-                        FC_Conn_STT: setFC_Conn_STT,
-                        PLC_Conn_STT: setConn_STT,
-                    }
+                
                     keys.forEach((key) => {
+                  
                         if (stateMap[key]) {
                             const value = dataReceived.data[key][0][1];
-                            const formattedValue = formatValue(value);
-                            stateMap[key]?.(formattedValue);
-                        }
-                        if (stateMap2[key]) {
-                            const value = dataReceived.data[key][0][1];
                             const slicedValue = value;
-                            stateMap2[key]?.(slicedValue);
+                            stateMap[key]?.(slicedValue);
                         }
                 
                         if (valueStateMap[key]) {
@@ -329,25 +341,46 @@ export default function GraphicLGDS() {
                     });
                 }
 
-                if (dataReceived.data && dataReceived.data.data?.length > 0) {
-                    const ballValue =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.active.value;
-                    setActive(ballValue);
-                } else if (
-                    dataReceived.update &&
-                    dataReceived.update?.length > 0
-                ) {
-                    const updatedData =
-                        dataReceived.update[0].latest.ATTRIBUTE.setActive.value;
-                    setActive(updatedData);
-                }
-                fetchData();
+                
+                  
             };
+            fetchData();
+
         }
     }, [data]);
-    const ws = useRef<WebSocket | null>(null);
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+    
+
+
     //============================GD =============================
+    useEffect(() => {
+        // Hàm cập nhật trạng thái online/offline
+        const handleOnlineStatus = () => {
+            const currentStatus = navigator.onLine;
+            setIsOnline(currentStatus);
+
+            if (!currentStatus) {
+                // Khi mất kết nối, đặt trạng thái offline
+                console.log("Mất kết nối internet.");
+                setWasOffline(true);
+            } else if (currentStatus && wasOffline) {
+                // Khi có lại kết nối và trước đó là offline, reset component
+                console.log("Kết nối internet được khôi phục. Reset component...");
+                setResetKey(prevKey => prevKey + 1); // Reset component
+                setWasOffline(false); // Reset lại để chỉ reset 1 lần khi online trở lại
+            }
+        };
+
+        // Lắng nghe sự kiện thay đổi trạng thái online/offline
+        window.addEventListener('online', handleOnlineStatus);
+        window.addEventListener('offline', handleOnlineStatus);
+
+        return () => {
+            // Dọn dẹp sự kiện khi component unmount
+            window.removeEventListener('online', handleOnlineStatus);
+            window.removeEventListener('offline', handleOnlineStatus);
+        };
+    }, [wasOffline]);
+
 
     // =================================================================================================================== 
 
@@ -2057,6 +2090,16 @@ useEffect(() => {
             );
  setMaintainFC_Conn_STT(FC_Conn_STT_Maintain?.value || false);
 
+
+ 
+
+ const Active = res.data.find(
+    (item: any) => item.key === "active"
+);
+setActive(Active?.value || false);
+
+
+
  // =================================================================================================================== 
 
 
@@ -2232,7 +2275,14 @@ useEffect(() => {
     };
 
 
-
+    const formatValue = (value:any) => {
+        return value !== null
+            ? new Intl.NumberFormat('en-US', {
+                  maximumFractionDigits: 2,
+                  useGrouping: true, 
+              }).format(parseFloat(value))
+            : "";
+    };
 
 
     useEffect(() => {
@@ -2289,7 +2339,7 @@ useEffect(() => {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {FC_01_Current_Values_Flow_Rate}
+                                        {formatValue(FC_01_Current_Values_Flow_Rate)}
                                     </p>
                                 </div>
                                 <p
@@ -2360,7 +2410,7 @@ useEffect(() => {
                                         }}
                                     >
                                         {
-                                            FC_01_Current_Values_Uncorrected_Flow_Rate
+                                            formatValue(FC_01_Current_Values_Uncorrected_Flow_Rate)
                                         }
                                     </p>
                                 </div>
@@ -2431,7 +2481,7 @@ useEffect(() => {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {FC_01_Accumulated_Values_Volume}
+                                        {formatValue(FC_01_Accumulated_Values_Volume)}
                                     </p>
                                 </div>
                                 <p
@@ -2504,7 +2554,7 @@ useEffect(() => {
                                         }}
                                     >
                                         {
-                                            FC_01_Accumulated_Values_Uncorrected_Volume
+                                            formatValue(FC_01_Accumulated_Values_Uncorrected_Volume)
                                         }
                                     </p>
                                 </div>
@@ -2576,7 +2626,7 @@ useEffect(() => {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {FC_02_Current_Values_Flow_Rate}
+                                        {formatValue(FC_02_Current_Values_Flow_Rate)}
                                     </p>
                                 </div>
                                 <p
@@ -2647,7 +2697,7 @@ useEffect(() => {
                                         }}
                                     >
                                         {
-                                            FC_02_Current_Values_Uncorrected_Flow_Rate
+                                            formatValue(FC_02_Current_Values_Uncorrected_Flow_Rate)
                                         }
                                     </p>
                                 </div>
@@ -2719,7 +2769,7 @@ useEffect(() => {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {FC_02_Accumulated_Values_Volume}
+                                        {formatValue(FC_02_Accumulated_Values_Volume)}
                                     </p>
                                 </div>
                                 <p
@@ -2791,7 +2841,7 @@ useEffect(() => {
                                         }}
                                     >
                                         {
-                                            FC_02_Accumulated_Values_Uncorrected_Volume
+                                            formatValue(FC_02_Accumulated_Values_Uncorrected_Volume)
                                         }
                                     </p>
                                 </div>
@@ -2810,8 +2860,7 @@ useEffect(() => {
                 };
             }
             if (node.id === "Pressure_Trans01") {
-                const roundedPT1 =
-                    PT1 !== null ? parseFloat(PT1).toFixed(2) : "";
+            
 
                 return {
                     ...node,
@@ -2828,9 +2877,9 @@ useEffect(() => {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThresholdPT1 && !maintainPT1
+                                    exceedThresholdPT_1003 && !maintainPT_1003
                                             ? "#ff5656"
-                                            : maintainPT1
+                                            : maintainPT_1003
                                             ? "orange"
                                             : "transparent",
                                 }}
@@ -2853,7 +2902,7 @@ useEffect(() => {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {PT_1003}
+                                        {formatValue(PT_1003)}
                                     </p>
                                 </div>
                                 <p
@@ -2921,7 +2970,7 @@ useEffect(() => {
                                     >
                                         {/* {roundedFC_01_Current_Values_Static_Pressure} */}
                                         {
-                                            roundedFC_01_Current_Values_Static_Pressure
+                                            formatValue(FC_01_Current_Values_Static_Pressure)
                                         }
                                     </p>
                                 </div>
@@ -2990,7 +3039,7 @@ useEffect(() => {
                                         }}
                                     >
                                         {
-                                            roundedFC_02_Current_Values_Static_Pressure
+                                            formatValue(FC_02_Current_Values_Static_Pressure)
                                         }
                                     </p>
                                 </div>
@@ -3068,7 +3117,7 @@ useEffect(() => {
                                 <div style={{}}>
                                     <p style={{ marginLeft: 5 }}>
                                         <p style={{ marginLeft: 5 }}>
-                                            {active === "true" ? (
+                                            {active === true ? (
                                                 <span
                                                     style={{
                                                         color: "#25d125",
@@ -3128,8 +3177,7 @@ useEffect(() => {
             //  =============================== GD ===================================
 
             if (node.id === "GD1_Value1901") {
-                const roundedGD1 =
-                    GD1 !== null ? parseFloat(GD1).toFixed(2) : "";
+      
 
                 return {
                     ...node,
@@ -3155,15 +3203,14 @@ useEffect(() => {
                                 }}
                                 // onClick={() => confirmGD_1901()}
                             >
-                                <p>{roundedGD1} %LEL</p>
+                                <p>{GD1} %LEL</p>
                             </div>
                         ),
                     },
                 };
             }
             if (node.id === "GD2_Value1902") {
-                const roundedGD2 =
-                    GD2 !== null ? parseFloat(GD2).toFixed(2) : "";
+    
 
                 return {
                     ...node,
@@ -3191,7 +3238,7 @@ useEffect(() => {
                                 }}
                                 // onClick={() => confirmGD_1902()}
                             >
-                                <p>{roundedGD2} %LEL</p>
+                                <p>{GD2} %LEL</p>
                             </div>
                         ),
                     },
@@ -3206,11 +3253,7 @@ useEffect(() => {
                         label: (
                             <div>
                                 <div>
-                                    {/* {NO === "1"
-                                        ? SVD_NO
-                                        : NC === "0"
-                                        ? SVD_NC
-                                        : null} */}
+                                   
                                     {SVD_NO}
                                 </div>
                             </div>
@@ -3227,11 +3270,7 @@ useEffect(() => {
                         label: (
                             <div>
                                 <div>
-                                    {/* {NO === "1"
-                                        ? SVD_NO
-                                        : NO === "0"
-                                        ? SVD_NC
-                                        : null} */}
+                                
                                     {SVD_NO}
                                 </div>
                             </div>
@@ -4884,6 +4923,7 @@ useEffect(() => {
                             height={60}
                             alt="Picture of the author"
                         />
+                        {/* {PCV} */}
                     </div>
                 ),
             },
@@ -6775,7 +6815,6 @@ useEffect(() => {
             data: {
                 label: (
                     <div>
-                        <AlarmLGDS />
                     </div>
                 ),
             },
@@ -7742,6 +7781,7 @@ useEffect(() => {
             {/* <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
             </Button> */}
+            {/* <p>Trạng thái kết nối: {isOnline ? 'Online' : 'Offline'}</p> */}
 
             <Toast ref={toast} />
             <ConfirmDialog />
@@ -7764,6 +7804,8 @@ useEffect(() => {
                 )}
             </Dialog>
             <div
+                key={resetKey}
+
                 style={{
                     borderRadius: 5,
                     //width: "auto",

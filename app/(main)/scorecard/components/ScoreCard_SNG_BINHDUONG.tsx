@@ -21,6 +21,12 @@ interface ValueStateMap {
         | React.Dispatch<React.SetStateAction<string | null>>
         | undefined;
 }
+
+interface StateMap2 {
+    [key: string]:
+        | React.Dispatch<React.SetStateAction<string | null>>
+        | undefined;
+}
 export default function ScoreCard_SNG_BINHDUONG() {
     const [data, setData] = useState<any[]>([]);
 
@@ -82,7 +88,15 @@ export default function ScoreCard_SNG_BINHDUONG() {
                 let dataReceived = JSON.parse(evt.data);
                 if (dataReceived.update !== null) {
                     setData([...data, dataReceived]);
-
+                    const formatValue = (value: any) => {
+                        return value !== null
+                            ? new Intl.NumberFormat("en-US", {
+                                  minimumFractionDigits: 2, // Đảm bảo có 2 chữ số sau dấu thập phân
+                                  maximumFractionDigits: 2, // Không nhiều hơn 2 chữ số thập phân
+                                  useGrouping: true, // Phân cách phần ngàn bằng dấu phẩy
+                              }).format(parseFloat(value))
+                            : "";
+                    };
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
                   
@@ -110,39 +124,10 @@ export default function ScoreCard_SNG_BINHDUONG() {
 
 
                         TOTAL_SNG: setTOTAL_SNG,
-                        SDV_2004: setSDV_2004,
 
-
-
-
-                        SDV_2003: setSDV_2003,
                         
-                        GD1_STATUS: setGD1_STATUS,
-                        GD2_STATUS: setGD2_STATUS,
-                        GD3_STATUS: setGD3_STATUS,
-                        GD4_STATUS: setGD4_STATUS,
-                        GD5_STATUS: setGD5_STATUS,
-
-
-                        ESD: setESD,
-                        HR_BC: setHR_BC,
-                        SD: setSD,
-                        VAPORIZER_1: setVAPORIZER_1,
-                        VAPORIZER_2: setVAPORIZER_2,
-                        VAPORIZER_3: setVAPORIZER_3,
-
-                        VAPORIZER_4: setVAPORIZER_4,
-                        COOLING_V: setCOOLING_V,
-                        FCV_2001: setFCV_2001,
-
-
-
-
-                        PERCENT_LPG: setPERCENT_LPG,
-                        PERCENT_AIR: setPERCENT_AIR,
                         HV_1001: setHV_1001,
-                        RATIO_MODE: setRATIO_MODE,
-                        FCV_MODE: setFCV_MODE,
+                     
                         TOTAL_CNG: setTOTAL_CNG,
 
                         TM_2002_CNG: setTM_2002_CNG,
@@ -153,9 +138,7 @@ export default function ScoreCard_SNG_BINHDUONG() {
 
                         SG_Calorimeter: setSG_Calorimeter,
 
-                        
-                        TD_4072_Conn_STT: setTD_4072_Conn_STT,
-                        PLC_Conn_STT: setPLC_Conn_STT,
+                    
 
 
 
@@ -165,11 +148,45 @@ export default function ScoreCard_SNG_BINHDUONG() {
                         TD_4072_Conn_STT: setFC_Conn_STTValue,
                         PLC_Conn_STT: setConn_STTValue,
                     };
+                    const stateMap2: StateMap2 = {
+                        ESD: setESD,
+                        HR_BC: setHR_BC,
+                        SD: setSD,
+                        VAPORIZER_1: setVAPORIZER_1,
+                        VAPORIZER_2: setVAPORIZER_2,
+                        VAPORIZER_3: setVAPORIZER_3,
+
+                        VAPORIZER_4: setVAPORIZER_4,
+                        COOLING_V: setCOOLING_V,
+                        FCV_2001: setFCV_2001,
+                        SDV_2004: setSDV_2004,
+
+                        SDV_2003: setSDV_2003,
+
+
+                        GD1_STATUS: setGD1_STATUS,
+                        GD2_STATUS: setGD2_STATUS,
+                        GD3_STATUS: setGD3_STATUS,
+                        GD4_STATUS: setGD4_STATUS,
+                        GD5_STATUS: setGD5_STATUS,
+                        TD_4072_Conn_STT: setTD_4072_Conn_STT,
+                        PLC_Conn_STT: setPLC_Conn_STT,
+
+                        RATIO_MODE: setRATIO_MODE,
+                        FCV_MODE: setFCV_MODE,
+                        PERCENT_LPG: setPERCENT_LPG,
+                        PERCENT_AIR: setPERCENT_AIR,
+                    };
                     keys.forEach((key) => {
                         if (stateMap[key]) {
                             const value = dataReceived.data[key][0][1];
+                            const formattedValue = formatValue(value);
+                            stateMap[key]?.(formattedValue);
+                        }
+                        if (stateMap2[key]) {
+                            const value = dataReceived.data[key][0][1];
                             const slicedValue = value;
-                            stateMap[key]?.(slicedValue);
+                            stateMap2[key]?.(slicedValue);
                         }
 
                         if (valueStateMap[key]) {
@@ -1875,8 +1892,8 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
         GD_2005: `Gas Detector GD-2005 (%LEL)`,
         GD_2006: `Gas Detector GD-2006 (%LEL)`,
 
-        TM_2002_SNG:`Tubine Meter TM_2002-SNG${nameValue.Sm3h}`,
-        TM_2003_SNG:`Tubine Meter TM_2003-SNG${nameValue.Sm3h}`,
+        TM_2002_SNG:`Tubine Meter TM2002-SNG${nameValue.Sm3h}`,
+        TM_2003_SNG:`Tubine Meter TM2003-SNG${nameValue.Sm3h}`,
         TOTAL_SNG: `Total SNG ${nameValue.m3}`,
 
         SDV_2004:"Shutdown Valve SDV-2004 (0: Close - 1: Open)",
