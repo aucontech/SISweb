@@ -21,6 +21,12 @@ interface ValueStateMap {
         | React.Dispatch<React.SetStateAction<string | null>>
         | undefined;
 }
+
+interface StateMap2 {
+    [key: string]:
+        | React.Dispatch<React.SetStateAction<string | null>>
+        | undefined;
+}
 export default function ScoreCard_SNG_HUNGYEN() {
     const [data, setData] = useState<any[]>([]);
 
@@ -42,9 +48,19 @@ export default function ScoreCard_SNG_HUNGYEN() {
         setIsVisible(!isVisible);
     };
 
-    useEffect(() => {
-        ws.current = new WebSocket(url);
 
+
+
+
+    const [resetKey, setResetKey] = useState(0);
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+    const [cmdId, setCmdId] = useState(1); // Track cmdId for requests
+ 
+    const connectWebSocket = (cmdId: number) => {
+        const token = localStorage.getItem('accessToken');
+        const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+        ws.current = new WebSocket(url);
         const obj1 = {
             attrSubCmds: [],
             tsSubCmds: [
@@ -52,7 +68,7 @@ export default function ScoreCard_SNG_HUNGYEN() {
                     entityType: "DEVICE",
                     entityId: id_SNG_HungYen,
                     scope: "LATEST_TELEMETRY",
-                    cmdId: 1,
+                    cmdId: cmdId, // Use dynamic cmdId for new requests
                 },
             ],
         };
@@ -69,26 +85,14 @@ export default function ScoreCard_SNG_HUNGYEN() {
                 console.log("WebSocket connection closed.");
             };
 
-            return () => {
-                console.log("Cleaning up WebSocket connection.");
-                ws.current?.close();
-            };
-        }
-    }, []);
-
-    useEffect(() => {
-        if (ws.current) {
-            ws.current.onmessage = (evt) => {
-                let dataReceived = JSON.parse(evt.data);
+            ws.current.onmessage = (event) => {
+                let dataReceived = JSON.parse(event.data);
                 if (dataReceived.update !== null) {
-                    setData([...data, dataReceived]);
+                    setData(prevData => [...prevData, dataReceived]);
 
+                
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
-                  
-
-
-
                         PT_3005: setPT_3005,
                         PT_3006: setPT_3006,
                         TT_3003: setTT_3003,
@@ -110,12 +114,7 @@ export default function ScoreCard_SNG_HUNGYEN() {
 
 
                         TOTAL_SNG: setTOTAL_SNG,
-                        SDV_3004: setSDV_3004,
-
-
-
-
-                        SDV_3003: setSDV_3003,
+                 
                         
                         GD1_STATUS: setGD1_STATUS,
                         GD2_STATUS: setGD2_STATUS,
@@ -136,15 +135,12 @@ export default function ScoreCard_SNG_HUNGYEN() {
                         FCV_3001: setFCV_3001,
 
 
-
-
-                        PERCENT_LPG: setPERCENT_LPG,
-                        PERCENT_AIR: setPERCENT_AIR,
                         HV_3001: setHV_3001,
                         RATIO_MODE: setRATIO_MODE,
                         FCV_MODE: setFCV_MODE,
                         TOTAL_CNG: setTOTAL_CNG,
 
+                     
                         TM_3002_CNG: setTM_3002_CNG,
                         TM_3003_CNG: setTM_3003_CNG,
                         WB_Setpoint: setWB_Setpoint,
@@ -154,24 +150,29 @@ export default function ScoreCard_SNG_HUNGYEN() {
                         SG_Calorimeter: setSG_Calorimeter,
 
                         
+                        
+
+                        SDV_3004: setSDV_3004,
+                        SDV_3003: setSDV_3003,
                         TD_4072_Conn_STT: setTD_4072_Conn_STT,
                         PLC_Conn_STT: setPLC_Conn_STT,
-
-
-
+                        PERCENT_LPG: setPERCENT_LPG,
+                        PERCENT_AIR: setPERCENT_AIR,
 
                     };
                     const valueStateMap: ValueStateMap = {
-                        TD_4072_Conn_STT: setFC_Conn_STTValue,
                         PLC_Conn_STT: setConn_STTValue,
+
                     };
+
+                  
                     keys.forEach((key) => {
+                        
                         if (stateMap[key]) {
                             const value = dataReceived.data[key][0][1];
                             const slicedValue = value;
                             stateMap[key]?.(slicedValue);
                         }
-
                         if (valueStateMap[key]) {
                             const value = dataReceived.data[key][0][0];
 
@@ -195,10 +196,63 @@ export default function ScoreCard_SNG_HUNGYEN() {
                         }
                     });
                 }
-                fetchData()
+
+              
+                fetchData();
             };
+
         }
-    }, [data]);
+    };
+    useEffect(() => {
+        fetchData()
+    },[isOnline])
+    
+    useEffect(() => {
+        if (isOnline) {
+            // Initial connection
+            connectWebSocket(cmdId);
+            fetchData()
+        }
+
+        return () => {
+            if (ws.current) {
+                console.log("Cleaning up WebSocket connection.");
+                ws.current.close();
+            }
+        };
+    }, [isOnline, cmdId]); // Reconnect if isOnline or cmdId changes
+    
+
+    useEffect(() => {
+        const handleOnline = () => {
+            setIsOnline(true);
+            console.log('Back online. Reconnecting WebSocket with new cmdId.');
+            setCmdId(prevCmdId => prevCmdId + 1); // Increment cmdId on reconnect
+            fetchData()
+
+        };
+
+        const handleOffline = () => {
+            setIsOnline(false);
+            console.log('Offline detected. Closing WebSocket.');
+            if (ws.current) {
+                ws.current.close(); // Close WebSocket when offline
+            }
+        };
+
+        // Attach event listeners for online/offline status
+        window.addEventListener('online', handleOnline);
+        window.addEventListener('offline', handleOffline);
+
+        return () => {
+            // Cleanup event listeners on unmount
+            window.removeEventListener('online', handleOnline);
+            window.removeEventListener('offline', handleOffline);
+        };
+    }, []);
+
+
+    //============================GD =============================
 
 
     const fetchData = async () => {
@@ -1875,8 +1929,8 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
         GD_3005: `Gas Detector GD-3005 (%LEL)`,
         GD_3006: `Gas Detector GD-3006 (%LEL)`,
 
-        TM_3002_SNG:`Tubine Meter TM_3002-SNG${nameValue.Sm3h}`,
-        TM_3003_SNG:`Tubine Meter TM_3003-SNG${nameValue.Sm3h}`,
+        TM_3002_SNG:`Tubine Meter TM3002-SNG${nameValue.Sm3h}`,
+        TM_3003_SNG:`Tubine Meter TM3003-SNG${nameValue.Sm3h}`,
         TOTAL_SNG: `Total SNG ${nameValue.Sm3}`,
 
         SDV_3004:"Shutdown Valve SDV-3004 (0: Close - 1: Open)",
@@ -2619,153 +2673,161 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
           };
 
 
-
+          const formatValue = (value:any) => {
+            return value !== null
+                ? new Intl.NumberFormat('en-US', {
+                      maximumFractionDigits: 2,
+                      useGrouping: true, 
+                  }).format(parseFloat(value))
+                : "";
+        };
+    
 
     const dataPLC = [
         {
             name: <span>{tagNamePLC.PT_3005}</span>,
-            PLC: <span style={combineCss.CSSPT_3005}>{} {PT_3005} {DataPT_3005}</span>,
+            PLC: <span style={combineCss.CSSPT_3005}>{} {formatValue(PT_3005)} {DataPT_3005}</span>,
         },
 
         {
             name: <span>{tagNamePLC.PT_3006}</span>,
-            PLC: <span style={combineCss.CSSPT_3006}> {PT_3006} {DataPT_3006}</span>,
+            PLC: <span style={combineCss.CSSPT_3006}> {formatValue(PT_3006)} {DataPT_3006}</span>,
         },
      
         {
             name: <span>{tagNamePLC.TT_3004}</span>,
-            PLC: <span style={combineCss.CSSTT_3004}>{TT_3004} {DataTT_3004}</span>,
+            PLC: <span style={combineCss.CSSTT_3004}>{formatValue(TT_3004)} {DataTT_3004}</span>,
         },
         {
             name: <span>{tagNamePLC.TT_3003}</span>,
-            PLC: <span style={combineCss.CSSTT_3003}> {TT_3003} {DataTT_3003}</span>,
+            PLC: <span style={combineCss.CSSTT_3003}> {formatValue(TT_3003)} {DataTT_3003}</span>,
         },
    
         {
             name: <span>{tagNamePLC.TG_3005}</span>,
-            PLC: <span style={combineCss.CSSTG_3005}> {TG_3005} {DataTG_3005}</span>,
+            PLC: <span style={combineCss.CSSTG_3005}> {formatValue(TG_3005)} {DataTG_3005}</span>,
         },
       
         {
             name: <span>{tagNamePLC.WB_3001}</span>,
-            PLC: <span style={combineCss.CSSWB_3001}>{WB_3001} {DataWB_3001}</span>,
+            PLC: <span style={combineCss.CSSWB_3001}>{formatValue(WB_3001)} {DataWB_3001}</span>,
         },
         {
             name: <span>{tagNamePLC.GD_3002}</span>,
-            PLC: <span style={combineCss.CSSGD_3002}> {GD_3002} {DataGD_3002}</span>,
+            PLC: <span style={combineCss.CSSGD_3002}> {formatValue(GD_3002)} {DataGD_3002}</span>,
         },
            
         {
             name: <span>{tagNamePLC.GD_3003}</span>,
-            PLC: <span style={combineCss.CSSGD_3003}>{GD_3003} {DataGD_3003}</span>,
+            PLC: <span style={combineCss.CSSGD_3003}>{formatValue(GD_3003)} {DataGD_3003}</span>,
         },
         {
             name: <span>{tagNamePLC.GD_3004}</span>,
-            PLC: <span style={combineCss.CSSGD_3004}> {GD_3004} {DataGD_3004}</span>,
+            PLC: <span style={combineCss.CSSGD_3004}> {formatValue(GD_3004)} {DataGD_3004}</span>,
         },
       
       
         {
             name: <span>{tagNamePLC.GD_3005}</span>,
-            PLC: <span style={combineCss.CSSGD_3005}>{GD_3005} </span>,
+            PLC: <span style={combineCss.CSSGD_3005}>{formatValue(GD_3005)} </span>,
         },
         {
             name: <span>{tagNamePLC.GD_3006}</span>,
-            PLC: <span style={combineCss.CSSGD_3006}> {GD_3006} </span>,
+            PLC: <span style={combineCss.CSSGD_3006}> {formatValue(GD_3006)} </span>,
         },
 
 
         {
             name: <span>{tagNamePLC.TM_3002_SNG}</span>,
-            PLC: <span style={combineCss.CSSTM_3002_SNG}>{TM_3002_SNG} </span>,
+            PLC: <span style={combineCss.CSSTM_3002_SNG}>{formatValue(TM_3002_SNG)} </span>,
         },
      
         {
             name: <span>{tagNamePLC.TM_3003_SNG}</span>,
-            PLC: <span style={combineCss.CSSTM_3003_SNG}>{TM_3003_SNG}</span>,
+            PLC: <span style={combineCss.CSSTM_3003_SNG}>{formatValue(TM_3003_SNG)}</span>,
         },
         {
             name: <span>{tagNamePLC.TOTAL_SNG}</span>,
-            PLC: <span style={combineCss.CSSTOTAL_SNG}>{TOTAL_SNG}  </span>,
+            PLC: <span style={combineCss.CSSTOTAL_SNG}>{formatValue(TOTAL_SNG)}  </span>,
         },
         {
             name: <span>{tagNamePLC.SDV_3004}</span>,
-            PLC: <span style={combineCss.CSSSDV_3004}> {SDV_3004}  {DataSDV_3004}</span>,
+            PLC: <span style={combineCss.CSSSDV_3004}> {formatValue(SDV_3004)}  {DataSDV_3004}</span>,
         },
 
         {
             name: <span>{tagNamePLC.SDV_3003}</span>,
-            PLC: <span style={combineCss.CSSSDV_3003}>{SDV_3003} {DataSDV_3003}</span>,
+            PLC: <span style={combineCss.CSSSDV_3003}>{formatValue(SDV_3003)} {DataSDV_3003}</span>,
         },
 
 //===
 
         {
             name: <span>{tagNamePLC.GD1_STATUS}</span>,
-            PLC: <span style={combineCss.CSSGD1_STATUS}>{GD1_STATUS}  {DataGD1_STATUS}</span>,
+            PLC: <span style={combineCss.CSSGD1_STATUS}>{formatValue(GD1_STATUS)}  {DataGD1_STATUS}</span>,
         },
      
         {
             name: <span>{tagNamePLC.GD2_STATUS}</span>,
-            PLC: <span style={combineCss.CSSGD2_STATUS}>{GD2_STATUS}  {DataGD2_STATUS}</span>,
+            PLC: <span style={combineCss.CSSGD2_STATUS}>{formatValue(GD2_STATUS)}  {DataGD2_STATUS}</span>,
         },
       
 
 
         {
             name: <span>{tagNamePLC.GD3_STATUS}</span>,
-            PLC: <span style={combineCss.CSSGD3_STATUS}>{GD3_STATUS}  {DataGD3_STATUS}</span>,
+            PLC: <span style={combineCss.CSSGD3_STATUS}>{formatValue(GD3_STATUS)}  {DataGD3_STATUS}</span>,
         },
         {
             name: <span>{tagNamePLC.GD4_STATUS}</span>,
-            PLC: <span style={combineCss.CSSGD4_STATUS}> {GD4_STATUS}  {DataGD4_STATUS}</span>,
+            PLC: <span style={combineCss.CSSGD4_STATUS}> {formatValue(GD4_STATUS)}  {DataGD4_STATUS}</span>,
         },
      
  
 
         {
             name: <span>{tagNamePLC.GD5_STATUS}</span>,
-            PLC: <span style={combineCss.CSSGD5_STATUS}> {GD5_STATUS} {DataGD5_STATUS}</span>,
+            PLC: <span style={combineCss.CSSGD5_STATUS}> {formatValue(GD5_STATUS)} {DataGD5_STATUS}</span>,
         },
         
         {
             name: <span>{tagNamePLC.SD}</span>,
-            PLC: <span style={combineCss.CSSSD}> {SD} {DataSD}</span>,
+            PLC: <span style={combineCss.CSSSD}> {formatValue(SD)} {DataSD}</span>,
         },
    
         {
             name: <span>{tagNamePLC.HR_BC}</span>,
-            PLC: <span style={combineCss.CSSHR_BC}> {HR_BC} {DataHR_BC}</span>,
+            PLC: <span style={combineCss.CSSHR_BC}> {formatValue(HR_BC)} {DataHR_BC}</span>,
         },
         {
             name: <span>{tagNamePLC.ESD}</span>,
-            PLC: <span style={combineCss.CSSESD}>{} {ESD} {DataESD}</span>,
+            PLC: <span style={combineCss.CSSESD}>{} {formatValue(ESD)} {DataESD}</span>,
         },
         {
             name: <span>{tagNamePLC.VAPORIZER_1}</span>,
-            PLC: <span style={combineCss.CSSVAPORIZER_1}>{VAPORIZER_1} {DataVAPORIZER_1}</span>,
+            PLC: <span style={combineCss.CSSVAPORIZER_1}>{formatValue(VAPORIZER_1)} {DataVAPORIZER_1}</span>,
         },
         {
             name: <span>{tagNamePLC.VAPORIZER_2}</span>,
-            PLC: <span style={combineCss.CSSVAPORIZER_2}>{VAPORIZER_2} {DataVAPORIZER_2}</span>,
+            PLC: <span style={combineCss.CSSVAPORIZER_2}>{formatValue(VAPORIZER_2)} {DataVAPORIZER_2}</span>,
         },
    
         {
             name: <span>{tagNamePLC.VAPORIZER_3}</span>,
-            PLC: <span style={combineCss.CSSVAPORIZER_3}> {VAPORIZER_3} {DataVAPORIZER_3}</span>,
+            PLC: <span style={combineCss.CSSVAPORIZER_3}> {formatValue(VAPORIZER_3)} {DataVAPORIZER_3}</span>,
         },
      
         {
             name: <span>{tagNamePLC.VAPORIZER_4}</span>,
-            PLC: <span style={combineCss.CSSVAPORIZER_4}> {VAPORIZER_4} {DataVAPORIZER_4}</span>,
+            PLC: <span style={combineCss.CSSVAPORIZER_4}> {formatValue(VAPORIZER_4)} {DataVAPORIZER_4}</span>,
         },
         {
             name: <span>{tagNamePLC.COOLING_V}</span>,
-            PLC: <span style={combineCss.CSSCOOLING_V}>{COOLING_V} {DataCOOLING_V}</span>,
+            PLC: <span style={combineCss.CSSCOOLING_V}>{formatValue(COOLING_V)} {DataCOOLING_V}</span>,
         },
         {
             name: <span>{tagNamePLC.FCV_3001}</span>,
-            PLC: <span style={combineCss.CSSFCV_3001}> {FCV_3001} </span>,
+            PLC: <span style={combineCss.CSSFCV_3001}> {formatValue(FCV_3001)} </span>,
         },
      
      
@@ -2773,42 +2835,42 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
      
         {
             name: <span>{tagNamePLC.PERCENT_LPG}</span>,
-            PLC: <span style={combineCss.CSSPERCENT_LPG}>{} {PERCENT_LPG} </span>,
+            PLC: <span style={combineCss.CSSPERCENT_LPG}>{} {formatValue(PERCENT_LPG)} </span>,
         },
         {
             name: <span>{tagNamePLC.PERCENT_AIR}</span>,
-            PLC: <span style={combineCss.CSSPERCENT_AIR}> {PERCENT_AIR} </span>,
+            PLC: <span style={combineCss.CSSPERCENT_AIR}> {formatValue(PERCENT_AIR)} </span>,
         },
         {
             name: <span>{tagNamePLC.HV_3001}</span>,
-            PLC: <span style={combineCss.CSSHV_3001}> {HV_3001} </span>,
+            PLC: <span style={combineCss.CSSHV_3001}> {formatValue(HV_3001)} </span>,
         },
    
         {
             name: <span>{tagNamePLC.RATIO_MODE}</span>,
-            PLC: <span style={combineCss.CSSFCV_MODE}>{FCV_MODE} {DataFCV_MODE}</span>,
+            PLC: <span style={combineCss.CSSFCV_MODE}>{formatValue(FCV_MODE)} {DataFCV_MODE}</span>,
         },
         {
             name: <span>{tagNamePLC.FCV_MODE}</span>,
-            PLC: <span style={combineCss.CSSRATIO_MODE}>{RATIO_MODE} {DataRATIO_MODE}</span>,
+            PLC: <span style={combineCss.CSSRATIO_MODE}>{formatValue(RATIO_MODE)} {DataRATIO_MODE}</span>,
         },
       
         {
             name: <span>{tagNamePLC.TOTAL_CNG}</span>,
-            PLC: <span style={combineCss.CSSTOTAL_CNG}> {TOTAL_CNG} </span>,
+            PLC: <span style={combineCss.CSSTOTAL_CNG}> {formatValue(TOTAL_CNG)} </span>,
         },
         {
             name: <span>{tagNamePLC.TM_3002_CNG}</span>,
-            PLC: <span style={combineCss.CSSTM_3002_CNG}> {TM_3002_CNG} </span>,
+            PLC: <span style={combineCss.CSSTM_3002_CNG}> {formatValue(TM_3002_CNG)} </span>,
         },
 
         {
             name: <span>{tagNamePLC.TM_3003_CNG}</span>,
-            PLC: <span style={combineCss.CSSTM_3003_CNG}>{TM_3003_CNG} </span>,
+            PLC: <span style={combineCss.CSSTM_3003_CNG}>{formatValue(TM_3003_CNG)} </span>,
         },
         {
             name: <span>{tagNamePLC.WB_Setpoint}</span>,
-            PLC: <span style={combineCss.CSSWB_Setpoint}> {WB_Setpoint}</span>,
+            PLC: <span style={combineCss.CSSWB_Setpoint}> {formatValue(WB_Setpoint)}</span>,
         },
     
      
@@ -2823,17 +2885,17 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
     const TD_CON_STT = [
         {
             name: <span>{tagNamePLC.WIS_Calorimeter}</span>,
-            PLC: <span style={combineCss.CSSWIS_Calorimeter}> {WIS_Calorimeter} </span>,
+            PLC: <span style={combineCss.CSSWIS_Calorimeter}> {formatValue(WIS_Calorimeter)} </span>,
         },
         
         {
             name: <span>{tagNamePLC.CVS_Calorimeter}</span>,
-            PLC: <span style={combineCss.CSSCVS_Calorimeter}>{CVS_Calorimeter} </span>,
+            PLC: <span style={combineCss.CSSCVS_Calorimeter}>{formatValue(CVS_Calorimeter)} </span>,
         },
 
         {
             name: <span>{tagNamePLC.SG_Calorimeter}</span>,
-            PLC: <span style={combineCss.CSSSG_Calorimeter}> {SG_Calorimeter}</span>,
+            PLC: <span style={combineCss.CSSSG_Calorimeter}> {formatValue(SG_Calorimeter)}</span>,
         },
 
      

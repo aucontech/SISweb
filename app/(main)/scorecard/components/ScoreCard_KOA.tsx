@@ -9,6 +9,7 @@ import { httpApi } from "@/api/http.api";
 import { DotGreen, DotRed } from "./SVG_Scorecard";
 
 import "./ScoreCard.css"
+import { Down, Up } from "../SVG_Scorecard";
 
 interface StateMap {
     [key: string]:
@@ -16,6 +17,12 @@ interface StateMap {
         | undefined;
 }
 interface ValueStateMap {
+    [key: string]:
+        | React.Dispatch<React.SetStateAction<string | null>>
+        | undefined;
+}
+
+interface StateMap2 {
     [key: string]:
         | React.Dispatch<React.SetStateAction<string | null>>
         | undefined;
@@ -42,9 +49,19 @@ export default function ScoreCard_KOA() {
         setIsVisible(!isVisible);
     };
 
-    useEffect(() => {
-        ws.current = new WebSocket(url);
 
+    //===================================================================================================================
+
+
+    const [resetKey, setResetKey] = useState(0);
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+    const [cmdId, setCmdId] = useState(1); // Track cmdId for requests
+ 
+    const connectWebSocket = (cmdId: number) => {
+        const token = localStorage.getItem('accessToken');
+        const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+        ws.current = new WebSocket(url);
         const obj1 = {
             attrSubCmds: [],
             tsSubCmds: [
@@ -52,7 +69,7 @@ export default function ScoreCard_KOA() {
                     entityType: "DEVICE",
                     entityId: id_KOA,
                     scope: "LATEST_TELEMETRY",
-                    cmdId: 1,
+                    cmdId: cmdId, // Use dynamic cmdId for new requests
                 },
             ],
         };
@@ -69,24 +86,15 @@ export default function ScoreCard_KOA() {
                 console.log("WebSocket connection closed.");
             };
 
-            return () => {
-                console.log("Cleaning up WebSocket connection.");
-                ws.current?.close();
-            };
-        }
-    }, []);
-
-    useEffect(() => {
-        if (ws.current) {
             ws.current.onmessage = (evt) => {
                 let dataReceived = JSON.parse(evt.data);
                 if (dataReceived.update !== null) {
-                    setData([...data, dataReceived]);
+                    setData(prevData => [...prevData, dataReceived]);
 
-                    const keys = Object.keys(dataReceived.data);
+                   
+                    const keys = Object?.keys(dataReceived.data);
                     const stateMap: StateMap = {
 
-                        FC_Lithium_Battery_Status: setFC_Lithium_Battery_Status,
                         FC_Battery_Voltage: setFC_Battery_Voltage,
                         FC_System_Voltage: setFC_System_Voltage,
                         FC_Charger_Voltage: setFC_Charger_Voltage,
@@ -120,11 +128,13 @@ export default function ScoreCard_KOA() {
                         GD1: setGD1,
                         GD2: setGD2,
                         PT1: setPT1,
+                 
                         DI_ZSO_1: setDI_ZSO_1,
                         DI_ZSC_1: setDI_ZSC_1,
 
                         DI_ZSO_2: setDI_ZSO_2,
                         DI_ZSC_2: setDI_ZSC_2,
+                        FC_Lithium_Battery_Status: setFC_Lithium_Battery_Status,
 
                         DI_UPS_BATTERY: setDI_UPS_BATTERY,
                         DI_UPS_CHARGING: setDI_UPS_CHARGING,
@@ -141,22 +151,26 @@ export default function ScoreCard_KOA() {
                         DO_BC_01: setDO_BC_01,
                         DO_SV_01: setDO_SV_01,
                         DO_SV_02: setDO_SV_02,
-
+                       
                         FC_Conn_STT: setFC_STT01,
                         PLC_Conn_STT: setPLC_Conn_STT,
+                  
+
 
                     };
                     const valueStateMap: ValueStateMap = {
                         FC_Conn_STT: setFC_Conn_STTValue,
                         PLC_Conn_STT: setConn_STTValue,
                     };
+
+
                     keys.forEach((key) => {
+                      
                         if (stateMap[key]) {
                             const value = dataReceived.data[key][0][1];
                             const slicedValue = value;
                             stateMap[key]?.(slicedValue);
                         }
-
                         if (valueStateMap[key]) {
                             const value = dataReceived.data[key][0][0];
 
@@ -166,7 +180,7 @@ export default function ScoreCard_KOA() {
                                 .toString()
                                 .padStart(2, "0")}-${(date.getMonth() + 1)
                                 .toString()
-                                .padStart(2, "0")}-${date.getFullYear()} ${date
+                                .padStart(2, "0")} ${date
                                 .getHours()
                                 .toString()
                                 .padStart(2, "0")}:${date
@@ -176,14 +190,72 @@ export default function ScoreCard_KOA() {
                                 .getSeconds()
                                 .toString()
                                 .padStart(2, "0")}`;
-                            valueStateMap[key]?.(formattedDate); // Set formatted timestamp
+                            valueStateMap[key]?.(formattedDate);
                         }
                     });
                 }
-                fetchData()
+
+                fetchData();
             };
+
         }
-    }, [data]);
+    };
+    useEffect(() => {
+        fetchData()
+    },[isOnline])
+    
+    useEffect(() => {
+        if (isOnline) {
+            // Initial connection
+            connectWebSocket(cmdId);
+        }
+
+        return () => {
+            if (ws.current) {
+                console.log("Cleaning up WebSocket connection.");
+                ws.current.close();
+            }
+        };
+    }, [isOnline, cmdId]); // Reconnect if isOnline or cmdId changes
+    
+
+    useEffect(() => {
+        const handleOnline = () => {
+            setIsOnline(true);
+            console.log('Back online. Reconnecting WebSocket with new cmdId.');
+            setCmdId(prevCmdId => prevCmdId + 1); // Increment cmdId on reconnect
+
+        };
+
+        const handleOffline = () => {
+            setIsOnline(false);
+            console.log('Offline detected. Closing WebSocket.');
+            if (ws.current) {
+                ws.current.close(); // Close WebSocket when offline
+            }
+        };
+
+        // Attach event listeners for online/offline status
+        window.addEventListener('online', handleOnline);
+        window.addEventListener('offline', handleOffline);
+
+        return () => {
+            // Cleanup event listeners on unmount
+            window.removeEventListener('online', handleOnline);
+            window.removeEventListener('offline', handleOffline);
+        };
+    }, []);
+
+
+    //============================GD =============================
+
+
+
+    //===================================================================================================================
+
+
+
+
 
 
     const fetchData = async () => {
@@ -2811,7 +2883,15 @@ useEffect(() => {
                 },
         
           };
-
+          const formatValue = (value:any) => {
+            return value !== null
+                ? new Intl.NumberFormat('en-US', {
+                      maximumFractionDigits: 2,
+                      useGrouping: true, 
+                  }).format(parseFloat(value))
+                : "";
+        };
+        
 
           const dataFC1 = [
             {
@@ -2821,132 +2901,110 @@ useEffect(() => {
             },
             {
                 name: <span>{tagNameFC.Battery_Voltage}</span>,
-                FC1: <span style={combineCss.CSSFC_Battery_Voltage}>{FC_Battery_Voltage}</span>,
+                FC1: <span style={combineCss.CSSFC_Battery_Voltage}>{formatValue(FC_Battery_Voltage)}</span>,
     
             },
             {
                 name: <span>{tagNameFC.System_Voltage}</span>,
-                FC1: <span style={combineCss.CSSFC_System_Voltage}>{FC_System_Voltage}</span>,
+                FC1: <span style={combineCss.CSSFC_System_Voltage}>{formatValue(FC_System_Voltage)}</span>,
     
             },
             {
                 name: <span>{tagNameFC.Charger_Voltage}</span>,
-                FC1: <span style={combineCss.CSSFC_Charger_Voltage}>{FC_Charger_Voltage}</span>,
+                FC1: <span style={combineCss.CSSFC_Charger_Voltage}>{formatValue(FC_Charger_Voltage)}</span>,
     
             },
             
           
         ];
 
-    const dataFC = [
-        {
-            name: <span>{tagNameFC.InputPressure}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure}>{FC_01_Current_Values_Static_Pressure}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure}>{FC_02_Current_Values_Static_Pressure}</span>,
-
-        },
-        {
-            name: <span>{tagNameFC.Temperature}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Current_Values_Temperature}>{FC_01_Current_Values_Temperature}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Current_Values_Temperature}>{FC_02_Current_Values_Temperature}</span>,
-
-        },
-        {
-            name: <span>{tagNameFC.SVF}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate}>{FC_01_Current_Values_Flow_Rate}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate}>{FC_02_Current_Values_Flow_Rate}</span>,
-
-        },
-        {
-            name: <span>{tagNameFC.GVF}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>{FC_01_Current_Values_Uncorrected_Flow_Rate}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}>{FC_02_Current_Values_Uncorrected_Flow_Rate}</span>,
-
-        },
-        {
-            name: <span>{tagNameFC.SVA}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>{FC_01_Accumulated_Values_Uncorrected_Volume}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}>{FC_02_Accumulated_Values_Uncorrected_Volume}</span>,
-
-        },
-        {
-            name: <span>{tagNameFC.GVA}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume}>{FC_01_Accumulated_Values_Volume}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume}>{FC_02_Accumulated_Values_Volume}</span>,
-
-        },
-     
-        {
-            name: <span>{tagNameFC.VbToday}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Today_Values_Volume}>{FC_01_Today_Values_Volume}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Today_Values_Volume}>{FC_02_Today_Values_Volume}</span>,
-
-        },
-        {
-            name: <span>{tagNameFC.VbLastDay}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume}>{FC_01_Yesterday_Values_Volume}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume}>{FC_02_Yesterday_Values_Volume}</span>,
-
-        },
-        {
-            name: <span>{tagNameFC.VmToday}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}>{FC_01_Today_Values_Uncorrected_Volume}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}>{FC_02_Today_Values_Uncorrected_Volume}</span>,
-
-        },
-        {
-            name: <span>{tagNameFC.VmLastDay}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}>{FC_01_Yesterday_Values_Uncorrected_Volume}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}>{FC_02_Yesterday_Values_Uncorrected_Volume}</span>,
-
-        },
-      
-    ];
+        const dataFC = [
+            {
+                name: <span>{tagNameFC.InputPressure}</span>,
+                FC1901: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure}>{formatValue(FC_01_Current_Values_Static_Pressure)}</span>,
+                FC1902: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure}>{formatValue(FC_02_Current_Values_Static_Pressure)}</span>,
+            },
+            {
+                name: <span>{tagNameFC.Temperature}</span>,
+                FC1901: <span style={combineCss.CSSFC_01_Current_Values_Temperature}>{formatValue(FC_01_Current_Values_Temperature)}</span>,
+                FC1902: <span style={combineCss.CSSFC_02_Current_Values_Temperature}>{formatValue(FC_02_Current_Values_Temperature)}</span>,
+            },
+            {
+                name: <span>{tagNameFC.SVF}</span>,
+                FC1901: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate}>{formatValue(FC_01_Current_Values_Flow_Rate)}</span>,
+                FC1902: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate}>{formatValue(FC_02_Current_Values_Flow_Rate)}</span>,
+            },
+            {
+                name: <span>{tagNameFC.GVF}</span>,
+                FC1901: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>{formatValue(FC_01_Current_Values_Uncorrected_Flow_Rate)}</span>,
+                FC1902: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}>{formatValue(FC_02_Current_Values_Uncorrected_Flow_Rate)}</span>,
+            },
+            {
+                name: <span>{tagNameFC.SVA}</span>,
+                FC1901: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>{formatValue(FC_01_Accumulated_Values_Uncorrected_Volume)}</span>,
+                FC1902: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}>{formatValue(FC_02_Accumulated_Values_Uncorrected_Volume)}</span>,
+            },
+            {
+                name: <span>{tagNameFC.GVA}</span>,
+                FC1901: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume}>{formatValue(FC_01_Accumulated_Values_Volume)}</span>,
+                FC1902: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume}>{formatValue(FC_02_Accumulated_Values_Volume)}</span>,
+            },
+            {
+                name: <span>{tagNameFC.VbToday}</span>,
+                FC1901: <span style={combineCss.CSSFC_01_Today_Values_Volume}>{formatValue(FC_01_Today_Values_Volume)}</span>,
+                FC1902: <span style={combineCss.CSSFC_02_Today_Values_Volume}>{formatValue(FC_02_Today_Values_Volume)}</span>,
+            },
+            {
+                name: <span>{tagNameFC.VmToday}</span>,
+                FC1901: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}>{formatValue(FC_01_Today_Values_Uncorrected_Volume)}</span>,
+                FC1902: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}>{formatValue(FC_02_Today_Values_Uncorrected_Volume)}</span>,
+            },
+            {
+                name: <span>{tagNameFC.VbLastDay}</span>,
+                FC1901: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume}>{formatValue(FC_01_Yesterday_Values_Volume)}</span>,
+                FC1902: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume}>{formatValue(FC_02_Yesterday_Values_Volume)}</span>,
+            },
+            {
+                name: <span>{tagNameFC.VmLastDay}</span>,
+                FC1901: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}>{formatValue(FC_01_Yesterday_Values_Uncorrected_Volume)}</span>,
+                FC1902: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}>{formatValue(FC_02_Yesterday_Values_Uncorrected_Volume)}</span>,
+            },
+        ];
+        
 
     const dataPLC = [
-        {
-            name: <span>{tagNamePLC.PT01}</span>,
-            PLC: <span style={combineCss.CSSPT1}> {PT1}</span>,
-        },
-        {
+         {
             name: <span>{tagNamePLC.GD1}</span>,
-            PLC: <span style={combineCss.CSSGD1}>{} {GD1}</span>,
+            PLC: <span style={combineCss.CSSGD1}> {formatValue(GD1)}</span>,
         },
         {
             name: <span>{tagNamePLC.GD2}</span>,
-            PLC: <span style={combineCss.CSSGD2}> {GD2}</span>,
+            PLC: <span style={combineCss.CSSGD2}> {formatValue(GD2)}</span>,
         },
         {
-            name: <span>{tagNamePLC.DO_SV_01}</span>,
-            PLC: <span style={combineCss.CSSDO_SV_01}> {DO_SV_01} {DataDO_SV_01}</span>,
+            name: <span>{tagNamePLC.PT01}</span>,
+            PLC: <span style={combineCss.CSSPT1}> {formatValue(PT1)}</span>,
         },
-        {
-            name: <span>{tagNamePLC.DO_SV_02}</span>,
-            PLC: <span style={combineCss.CSSDO_SV_02}> {DO_SV_02} {DataDO_SV_02}</span>,
-        },
-      
-
         {
             name: <span>{tagNamePLC.ZSO1}</span>,
             PLC: <span style={combineCss.CSSDI_ZSO_1}>{DI_ZSO_1} {DataZSO_1}</span>,
         },
-      
         {
             name: <span>{tagNamePLC.ZSC1}</span>,
             PLC: <span style={combineCss.CSSDI_ZSC_1}>{DI_ZSC_1} {DataZSC_1}</span>,
         },
-
-
         {
             name: <span>{tagNamePLC.ZSO2}</span>,
-            PLC: <span style={combineCss.CSSDI_ZSO_2}>{DI_ZSO_1} {DataZSO_2}</span>,
+            PLC: <span style={combineCss.CSSDI_ZSO_2}>{DI_ZSO_2} {DataZSO_2}</span>,
         },
-      
         {
-            name: <span>{tagNamePLC.ZSC2}</span>,
+            name: <span>{tagNamePLC.ZSO2}</span>,
             PLC: <span style={combineCss.CSSDI_ZSC_2}>{DI_ZSC_2} {DataZSC_2}</span>,
         },
-      
+        {
+            name: <span>{tagNamePLC.MAP}</span>,
+            PLC: <span style={combineCss.CSSDI_MAP_1}> {DI_MAP_1} {DataMap1}</span>,
+        },
         {
             name: <span>{tagNamePLC.UPS_BATTERY}</span>,
             PLC: <span style={combineCss.CSSDI_UPS_BATTERY}> {DI_UPS_BATTERY} {DataBattery}</span>,
@@ -2955,17 +3013,9 @@ useEffect(() => {
             name: <span>{tagNamePLC.UPS_CHARGING}</span>,
             PLC: <span style={combineCss.CSSDI_UPS_CHARGING}> {DI_UPS_CHARGING} {DataCharging}</span>,
         },
-
-     
         {
             name: <span>{tagNamePLC.UPS_ALARM}</span>,
             PLC: <span style={combineCss.CSSDI_UPS_ALARM}>{DI_UPS_ALARM} {DataAlarm}</span>,
-        },
-
-   
-        {
-            name: <span>{tagNamePLC.UPS_MODE}</span>,
-            PLC: <span style={combineCss.CSSUPS_Mode}> {UPS_Mode} {DataMode}</span>,
         },
         {
             name: <span>{tagNamePLC.DI_SD_1}</span>,
@@ -2976,7 +3026,6 @@ useEffect(() => {
             name: <span>{tagNamePLC.SELECT_SW}</span>,
             PLC: <span style={combineCss.CSSDI_SELECT_SW}>{DI_SELECT_SW} {DataDI_SELECT_SW}</span>,
         },
-
         {
             name: <span>{tagNamePLC.RESET}</span>,
             PLC: <span style={combineCss.CSSDI_RESET}>{DI_RESET} {DataRESET}</span>,
@@ -2989,22 +3038,27 @@ useEffect(() => {
             name: <span>{tagNamePLC.EmergencyNC}</span>,
             PLC: <span style={combineCss.CSSEmergency_NC}>{Emergency_NC} {DataEmergency_NC}</span>,
         },
-     
-
         {
-            name: <span>{tagNamePLC.HORN}</span>,
-            PLC: <span style={combineCss.CSSDO_HR_01}>{DO_HR_01} {DataHorn}</span>,
+            name: <span>{tagNamePLC.UPS_MODE}</span>,
+            PLC: <span style={combineCss.CSSUPS_Mode}> {UPS_Mode} {DataMode}</span>,
         },
         {
-            name: <span>{tagNamePLC.BEACON}</span>,
-            PLC: <span style={combineCss.CSSDO_BC_01}> {DO_BC_01} {DataBeacon}</span>,
+                name: <span>{tagNamePLC.HORN}</span>,
+                PLC: <span style={combineCss.CSSDO_HR_01}>{DO_HR_01} {DataHorn}</span>,
         },
-   
-
-    
         {
-            name: <span>{tagNamePLC.MAP}</span>,
-            PLC: <span style={combineCss.CSSDI_MAP_1}> {DI_MAP_1} {DataMap1}</span>,
+                name: <span>{tagNamePLC.BEACON}</span>,
+                PLC: <span style={combineCss.CSSDO_BC_01}> {DO_BC_01} {DataBeacon}</span>,
+        },
+       
+        {
+            name: <span>{tagNamePLC.DO_SV_01}</span>,
+            PLC: <span style={combineCss.CSSDO_SV_01}> {DO_SV_01} {DataDO_SV_01}</span>,
+        },
+        
+        {
+            name: <span>{tagNamePLC.DO_SV_02}</span>,
+            PLC: <span style={combineCss.CSSDO_SV_02}> {DO_SV_02} {DataDO_SV_02}</span>,
         },
     ];
 
@@ -3054,7 +3108,9 @@ useEffect(() => {
                         <div style={{  fontWeight: 500,display:'flex' }}>
                      {FC_Conn_STTValue}
                         </div>
-                    
+                        <div  onClick={handleShowMore} >
+                    {ShowMore ? <span style={{cursor:"pointer",  }}>{Up}</span>  : <span style={{cursor:"pointer"}}>{Down}</span>}
+                    </div>
                     </div>
                     
                 </div>
@@ -3062,7 +3118,7 @@ useEffect(() => {
 
 
 
-
+                {ShowMore ?    <div > 
 
                 <DataTable value={dataFC} size="small" selectionMode="single"> 
                     <Column field="name" header="FC Parameter"></Column>
@@ -3143,6 +3199,50 @@ useEffect(() => {
                     
                     </DataTable>
 
+                                   
+                </div> 
+                
+                : 
+                <div>
+
+<DataTable value={dataFC} size="small" selectionMode="single"> 
+                    <Column field="name" header="FC Parameter"></Column>
+
+                    <Column
+                            field="FC1901"
+                            header={FC_STT01 === "1" ? (
+
+                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center',  position:'relative', right:30}}>
+                                {DotGreen} <p style={{marginLeft:5}}>FC-1201</p>
+   
+                               </div>
+                               
+                            ) : (
+                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center' , position:'relative', right:30}}>
+                                   {DotRed}  <p style={{marginLeft:5}}>FC-1201</p>
+                                </div>
+                            )}
+                        ></Column>
+                        <Column
+                        style={{display:'flex', justifyContent:'flex-end'}}
+                            field="FC1902"
+                            header={FC_STT01 === "1" ? (
+
+                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                                {DotGreen} <p style={{marginLeft:5}}>FC-1202</p>
+   
+                               </div>
+                              
+                            ) : (
+                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
+                                {DotRed}  <p style={{marginLeft:5}}>FC-1202</p>
+                             </div>
+                            )}
+                        ></Column>
+                </DataTable>
+            </div>
+
+                }
             </div>
 
         

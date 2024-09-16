@@ -35,6 +35,7 @@ import {
     BlackTriangleRight,
     FIQ,
     GD,
+    PCV,
     PTV,
     SVD_NC,
     SVD_NO,
@@ -50,13 +51,11 @@ import { httpApi } from "@/api/http.api";
 import BallVavlePSV from "../ReactFlow/BallVavlePSV";
 import { Toast } from "primereact/toast";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
-import AlarmOTSUKA from "@/layout/AlarmBell/AlarmOTSUKA";
 import BallValueFirst from "../ReactFlow/BallValueFirst";
 import BallValueLast from "../ReactFlow/BallValueLast";
 import { edgePRU } from "../../PRU/GraphicPRU/edgePRU";
 import { edgeZOVC } from "./edgeZOVC";
 import { GetTelemetry_ZOVC, PostTelemetry_ZOVC } from "./Api_ZOVC";
-import AlarmKOA from "@/layout/AlarmBell/AlarmKOA";
 import BallValueSDV_2 from "../ReactFlow/BallValueSDV_2";
 interface StateMap {
     [key: string]:
@@ -94,21 +93,7 @@ export default function GraphicKOA() {
     const [timeUpdate, setTimeUpdate] = useState<any | null>(null);
     const [data, setData] = useState<any[]>([]);
 
-    const [GVF1, setGVF1] = useState<string | null>(null);
-    const [SVF1, setSVF1] = useState<string | null>(null);
-    const [SVA1, setSVA1] = useState<string | null>(null);
-    const [GVA1, setGVA1] = useState<string | null>(null);
-
-    const [PT02, setPT02] = useState<string | null>(null);
-
-    const [GD3, SetGD3] = useState<string | null>(null);
-
-    const [NC, setNC] = useState<string | null>(null);
-    const [NO, setNO] = useState<string | null>(null);
-
-    const [NC2, setNC2] = useState<string | null>(null);
-    const [NO2, setNO2] = useState<string | null>(null);
-
+ 
     const [FC_Conn_STTValue, setFC_Conn_STTValue] = useState<string | null>(
         null
     );
@@ -117,10 +102,17 @@ export default function GraphicKOA() {
     const [alarmMessage, setAlarmMessage] = useState<string | null>(null);
 
     const toast = useRef<Toast>(null);
+    const ws = useRef<WebSocket | null>(null);
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+    const [resetKey, setResetKey] = useState(0);
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
 
-    useEffect(() => {
+    const [cmdId, setCmdId] = useState(1); // Track cmdId for requests
+ 
+    const connectWebSocket = (cmdId: number) => {
+        const token = localStorage.getItem('accessToken');
+        const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
         ws.current = new WebSocket(url);
-
         const obj1 = {
             attrSubCmds: [],
             tsSubCmds: [
@@ -128,63 +120,7 @@ export default function GraphicKOA() {
                     entityType: "DEVICE",
                     entityId: id_KOA,
                     scope: "LATEST_TELEMETRY",
-                    cmdId: 1,
-                },
-            ],
-        };
-
-        const obj_PCV_PSV = {
-            entityDataCmds: [
-                {
-                    cmdId: 1,
-                    latestCmd: {
-                        keys: [
-                            {
-                                type: "ATTRIBUTE",
-                                key: "active",
-                            },
-                        ],
-                    },
-                    query: {
-                        entityFilter: {
-                            type: "singleEntity",
-                            singleEntity: {
-                                entityType: "DEVICE",
-                                id: id_KOA,
-                            },
-                        },
-                        pageLink: {
-                            pageSize: 1,
-                            page: 0,
-                            sortOrder: {
-                                key: {
-                                    type: "ENTITY_FIELD",
-                                    key: "createdTime",
-                                },
-                                direction: "DESC",
-                            },
-                        },
-                        entityFields: [
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "name",
-                            },
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "label",
-                            },
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "additionalInfo",
-                            },
-                        ],
-                        latestValues: [
-                            {
-                                type: "ATTRIBUTE",
-                                key: "active",
-                            },
-                        ],
-                    },
+                    cmdId: cmdId, // Use dynamic cmdId for new requests
                 },
             ],
         };
@@ -192,40 +128,21 @@ export default function GraphicKOA() {
         if (ws.current) {
             ws.current.onopen = () => {
                 console.log("WebSocket connected");
-                setCheckConnectData(true);
                 setTimeout(() => {
                     ws.current?.send(JSON.stringify(obj1));
-                    ws.current?.send(JSON.stringify(obj_PCV_PSV));
                 });
             };
 
             ws.current.onclose = () => {
                 console.log("WebSocket connection closed.");
-                setCheckConnectData(false);
             };
 
-            return () => {
-                console.log("Cleaning up WebSocket connection.");
-                ws.current?.close();
-            };
-        }
-    }, []);
-
-    useEffect(() => {
-        if (ws.current) {
             ws.current.onmessage = (evt) => {
                 let dataReceived = JSON.parse(evt.data);
                 if (dataReceived.update !== null) {
-                    setData([...data, dataReceived]);
-                    const formatValue = (value: any) => {
-                        return value !== null
-                            ? new Intl.NumberFormat("en-US", {
-                                  minimumFractionDigits: 2, // Đảm bảo có 2 chữ số sau dấu thập phân
-                                  maximumFractionDigits: 2, // Không nhiều hơn 2 chữ số thập phân
-                                  useGrouping: true, // Phân cách phần ngàn bằng dấu phẩy
-                              }).format(parseFloat(value))
-                            : "";
-                    };
+                    setData(prevData => [...prevData, dataReceived]);
+
+                   
                     const keys = Object?.keys(dataReceived.data);
                     const stateMap: StateMap = {
                         FC_Lithium_Battery_Status: setFC_Lithium_Battery_Status,
@@ -294,13 +211,6 @@ export default function GraphicKOA() {
                         DO_BC_01: setDO_BC_01,
                         DO_SV_01: setDO_SV_01,
                         DO_SV_02: setDO_SV_02,
-                    };
-
-                    const valueStateMap: ValueStateMap = {
-                        FC_Conn_STT: setFC_Conn_STTValue,
-                        PLC_Conn_STT: setConn_STTValue,
-                    };
-                    const stateMap2: StateMap2 = {
                         DI_ZSO_1: setDI_ZSO_1,
                         DI_ZSC_1: setDI_ZSC_1,
 
@@ -310,16 +220,18 @@ export default function GraphicKOA() {
                         PLC_Conn_STT: setPLC_Conn_STT,
                     };
 
+                    const valueStateMap: ValueStateMap = {
+                        FC_Conn_STT: setFC_Conn_STTValue,
+                        PLC_Conn_STT: setConn_STTValue,
+                    };
+                 
+
                     keys.forEach((key) => {
+                      
                         if (stateMap[key]) {
                             const value = dataReceived.data[key][0][1];
-                            const formattedValue = formatValue(value);
-                            stateMap[key]?.(formattedValue); // Áp dụng định dạng giá trị
-                        }
-                        if (stateMap2[key]) {
-                            const value = dataReceived.data[key][0][1];
                             const slicedValue = value;
-                            stateMap2[key]?.(slicedValue);
+                            stateMap[key]?.(slicedValue);
                         }
                         if (valueStateMap[key]) {
                             const value = dataReceived.data[key][0][0];
@@ -359,13 +271,58 @@ export default function GraphicKOA() {
                 }
                 fetchData();
             };
+
         }
-    }, [data]);
-    const ws = useRef<WebSocket | null>(null);
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+    };
+    useEffect(() => {
+        fetchData()
+    },[isOnline])
+    
+    useEffect(() => {
+        if (isOnline) {
+            // Initial connection
+            connectWebSocket(cmdId);
+        }
+
+        return () => {
+            if (ws.current) {
+                console.log("Cleaning up WebSocket connection.");
+                ws.current.close();
+            }
+        };
+    }, [isOnline, cmdId]); // Reconnect if isOnline or cmdId changes
+    
+
+    useEffect(() => {
+        const handleOnline = () => {
+            setIsOnline(true);
+            console.log('Back online. Reconnecting WebSocket with new cmdId.');
+            setCmdId(prevCmdId => prevCmdId + 1); // Increment cmdId on reconnect
+
+        };
+
+        const handleOffline = () => {
+            setIsOnline(false);
+            console.log('Offline detected. Closing WebSocket.');
+            if (ws.current) {
+                ws.current.close(); // Close WebSocket when offline
+            }
+        };
+
+        // Attach event listeners for online/offline status
+        window.addEventListener('online', handleOnline);
+        window.addEventListener('offline', handleOffline);
+
+        return () => {
+            // Cleanup event listeners on unmount
+            window.removeEventListener('online', handleOnline);
+            window.removeEventListener('offline', handleOffline);
+        };
+    }, []);
+
+
     //============================GD =============================
 
-    // ===================================================================================================================
 
     const [FC_Lithium_Battery_Status, setFC_Lithium_Battery_Status] = useState<
         string | null
@@ -2413,8 +2370,8 @@ export default function GraphicKOA() {
 
     //================================ GVA1 FIQ 1901 ======================================================
 
-    const [lineDuty1901, setLineduty1901] = useState<any>();
-    const [lineDuty1902, setLineduty1902] = useState<any>();
+    const [lineDuty1901, setLineduty1901] = useState<boolean>(false);
+    const [lineDuty1902, setLineduty1902] = useState<boolean>(true);
 
     const ChangeStatusFIQ = async () => {
         try {
@@ -2422,8 +2379,8 @@ export default function GraphicKOA() {
             const newValue2 = !lineDuty1902;
 
             await httpApi.post(PostTelemetry_ZOVC, {
-                FIQ1901_LineDuty: newValue1,
-                FIQ1902_LineDuty: newValue2,
+                Line_Duty_01: newValue1,
+                Line_Duty_02: newValue2,
             });
             setLineduty1901(newValue1);
             setLineduty1902(newValue2);
@@ -3158,6 +3115,11 @@ export default function GraphicKOA() {
             const DI_SD_1_Maintain = res.data.find(
                 (item: any) => item.key === "DI_SD_1_Maintain"
             );
+
+            const Active = res.data.find(
+                (item: any) => item.key === "active"
+            );
+            setActive(Active?.value || false);
             // ===================================================================================================================
 
             setMaintainDI_SD_1(DI_SD_1_Maintain?.value || false);
@@ -3304,6 +3266,13 @@ export default function GraphicKOA() {
             setMaintainDI_ZSO_2(DI_ZSO_2_Maintain?.value || false);
 
             setMaintainDI_ZSC_1(DI_ZSC_1_Maintain?.value || false);
+
+            const Line_Duty_01 = res.data.find((item: any) => item.key === "Line_Duty_01");
+            
+            setLineduty1901(Line_Duty_01?.value || null);
+            const Line_Duty_02 = res.data.find((item: any) => item.key === "Line_Duty_02");
+            setLineduty1902(Line_Duty_02?.value || null);
+
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -3572,6 +3541,16 @@ export default function GraphicKOA() {
         SDV: "Shutdown valve",
     };
 
+    const formatValue = (value:any) => {
+        return value !== null
+            ? new Intl.NumberFormat('en-US', {
+                  maximumFractionDigits: 2,
+                  useGrouping: true, 
+              }).format(parseFloat(value))
+            : "";
+    };
+
+
     useEffect(() => {
         const updatedNodes = nodes.map((node) => {
             if (node.id === "data4") {
@@ -3620,7 +3599,7 @@ export default function GraphicKOA() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {FC_01_Current_Values_Flow_Rate}
+                                        {formatValue(FC_01_Current_Values_Flow_Rate)}
                                     </p>
                                 </div>
                                 <p
@@ -3686,7 +3665,7 @@ export default function GraphicKOA() {
                                         }}
                                     >
                                         {
-                                            FC_01_Current_Values_Uncorrected_Flow_Rate
+                                            formatValue(FC_01_Current_Values_Uncorrected_Flow_Rate)
                                         }
                                     </p>
                                 </div>
@@ -3750,7 +3729,7 @@ export default function GraphicKOA() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {FC_01_Accumulated_Values_Volume}
+                                        {formatValue(FC_01_Accumulated_Values_Volume)}
                                     </p>
                                 </div>
                                 <p
@@ -3818,7 +3797,7 @@ export default function GraphicKOA() {
                                         }}
                                     >
                                         {
-                                            FC_01_Accumulated_Values_Uncorrected_Volume
+                                            formatValue(FC_01_Accumulated_Values_Uncorrected_Volume)
                                         }
                                     </p>
                                 </div>
@@ -3883,7 +3862,7 @@ export default function GraphicKOA() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {FC_02_Current_Values_Flow_Rate}
+                                        {formatValue(FC_02_Current_Values_Flow_Rate)}
                                     </p>
                                 </div>
                                 <p
@@ -3950,7 +3929,7 @@ export default function GraphicKOA() {
                                         }}
                                     >
                                         {
-                                            FC_02_Current_Values_Uncorrected_Flow_Rate
+                                            formatValue(FC_02_Current_Values_Uncorrected_Flow_Rate)
                                         }
                                     </p>
                                 </div>
@@ -4015,7 +3994,7 @@ export default function GraphicKOA() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {FC_02_Accumulated_Values_Volume}
+                                        {formatValue(FC_02_Accumulated_Values_Volume)}
                                     </p>
                                 </div>
                                 <p
@@ -4082,7 +4061,7 @@ export default function GraphicKOA() {
                                         }}
                                     >
                                         {
-                                            FC_02_Accumulated_Values_Uncorrected_Volume
+                                            formatValue(FC_02_Accumulated_Values_Uncorrected_Volume)
                                         }
                                     </p>
                                 </div>
@@ -4144,7 +4123,7 @@ export default function GraphicKOA() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedPT1}
+                                        {formatValue(PT1)}
                                     </p>
                                 </div>
                                 <p
@@ -4212,7 +4191,7 @@ export default function GraphicKOA() {
                                     >
                                         {/* {roundedFC_01_Current_Values_Static_Pressure} */}
                                         {
-                                            roundedFC_01_Current_Values_Static_Pressure
+                                            formatValue(FC_01_Current_Values_Static_Pressure)
                                         }
                                     </p>
                                 </div>
@@ -4223,7 +4202,7 @@ export default function GraphicKOA() {
                                         top: 5,
                                     }}
                                 >
-                                    BarG
+                                    BarA
                                 </p>
                             </div>
                         ),
@@ -4281,7 +4260,7 @@ export default function GraphicKOA() {
                                         }}
                                     >
                                         {
-                                            roundedFC_02_Current_Values_Static_Pressure
+                                            formatValue(FC_02_Current_Values_Static_Pressure)
                                         }
                                     </p>
                                 </div>
@@ -4292,7 +4271,7 @@ export default function GraphicKOA() {
                                         top: 5,
                                     }}
                                 >
-                                    BarG
+                                    BarA
                                 </p>
                             </div>
                         ),
@@ -4491,7 +4470,7 @@ export default function GraphicKOA() {
                                 }}
                                 // onClick={() => confirmGD_1901()}
                             >
-                                <p>{roundedGD1} %LEL</p>
+                                <p>{formatValue(GD1)} %LEL</p>
                             </div>
                         ),
                     },
@@ -4527,7 +4506,7 @@ export default function GraphicKOA() {
                                 }}
                                 // onClick={() => confirmGD_1902()}
                             >
-                                <p>{roundedGD2} %LEL</p>
+                                <p>{formatValue(GD2)} %LEL</p>
                             </div>
                         ),
                     },
@@ -4755,10 +4734,10 @@ export default function GraphicKOA() {
         Line2_NONE: { x: -884.3336203769039, y: 1046.097424130381 },
         Line2_NONE1: { x: -771.9885863058424, y: 1046.097424130381 },
         LineBall_1_1: { x: -1307.8650736152229, y: 1045.9167371770163 },
-        PCV01: { x: -111.50890549579239, y: 883.8137375633868 },
-        PCV02: { x: -111.53560759935901, y: 1115.2398542513167 },
-        PCV_NUM01: { x: -170.86428983603884, y: 814.1809328156613 },
-        PCV_NUM02: { x: -182.4241890018547, y: 1192.3540390642565 },
+        PCV01: { x: -71.72419522919697, y: 872.1992339822971 },
+        PCV02: { x: -70.59914284418218, y: 1102.7742211636619 },
+        PCV_NUM01: { x: -150.01994102955004, y: 822.7337186204609 },
+        PCV_NUM02: { x: -152.59143023214534, y: 1177.587987672237 },
         PCV_ballVavle_Small1: { x: -9.97812688216436, y: 890.3528829879407 },
         PCV_ballVavle_Small1_none1: {
             x: -85.98048131286686,
@@ -5874,12 +5853,14 @@ export default function GraphicKOA() {
             data: {
                 label: (
                     <div>
-                        <Image
+                        {/* <Image
                             src="/layout/imgGraphic/PVC.png"
                             width={60}
                             height={60}
                             alt="Picture of the author"
-                        />
+                        /> */}
+
+                        {PCV}
                     </div>
                 ),
             },
@@ -5901,12 +5882,14 @@ export default function GraphicKOA() {
             data: {
                 label: (
                     <div>
-                        <Image
+                        {/* <Image
                             src="/layout/imgGraphic/PVC.png"
                             width={60}
                             height={60}
                             alt="Picture of the author"
-                        />
+                        /> */}
+                        {PCV}
+
                     </div>
                 ),
             },
@@ -5922,129 +5905,129 @@ export default function GraphicKOA() {
             zIndex: 9999,
         },
 
-        {
-            id: "PCV_ballVavle_Small1",
-            position: positions.PCV_ballVavle_Small1,
-            type: "custom",
-            data: {
-                label: (
-                    <div>
-                        <Image
-                            src="/layout/imgGraphic/BallValueRight.png"
-                            width={30}
-                            height={30}
-                            alt="Picture of the author"
-                        />
-                    </div>
-                ),
-            },
+        // {
+        //     id: "PCV_ballVavle_Small1",
+        //     position: positions.PCV_ballVavle_Small1,
+        //     type: "custom",
+        //     data: {
+        //         label: (
+        //             <div>
+        //                 <Image
+        //                     src="/layout/imgGraphic/BallValueRight.png"
+        //                     width={30}
+        //                     height={30}
+        //                     alt="Picture of the author"
+        //                 />
+        //             </div>
+        //         ),
+        //     },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: {
-                border: "#333333",
-                background: background,
-                width: 1,
-                height: 1,
-            },
-            zIndex: 9999,
-        },
-        {
-            id: "PCV_ballVavle_Small2",
-            position: positions.PCV_ballVavle_Small2,
-            type: "custom",
-            data: {
-                label: (
-                    <div>
-                        <Image
-                            src="/layout/imgGraphic/BallValueRight.png"
-                            width={30}
-                            height={30}
-                            alt="Picture of the author"
-                        />
-                    </div>
-                ),
-            },
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Left,
+        //     style: {
+        //         border: "#333333",
+        //         background: background,
+        //         width: 1,
+        //         height: 1,
+        //     },
+        //     zIndex: 9999,
+        // },
+        // {
+        //     id: "PCV_ballVavle_Small2",
+        //     position: positions.PCV_ballVavle_Small2,
+        //     type: "custom",
+        //     data: {
+        //         label: (
+        //             <div>
+        //                 <Image
+        //                     src="/layout/imgGraphic/BallValueRight.png"
+        //                     width={30}
+        //                     height={30}
+        //                     alt="Picture of the author"
+        //                 />
+        //             </div>
+        //         ),
+        //     },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: {
-                border: "#333333",
-                background: background,
-                width: 1,
-                height: 1,
-            },
-            zIndex: 9999,
-        },
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Left,
+        //     style: {
+        //         border: "#333333",
+        //         background: background,
+        //         width: 1,
+        //         height: 1,
+        //     },
+        //     zIndex: 9999,
+        // },
 
-        {
-            id: "PCV_ballVavle_Small1_none1",
-            position: positions.PCV_ballVavle_Small1_none1,
-            type: "custom",
-            data: {
-                label: <div> </div>,
-            },
+        // {
+        //     id: "PCV_ballVavle_Small1_none1",
+        //     position: positions.PCV_ballVavle_Small1_none1,
+        //     type: "custom",
+        //     data: {
+        //         label: <div> </div>,
+        //     },
 
-            sourcePosition: Position.Top,
-            targetPosition: Position.Right,
-            style: {
-                border: "#333333",
-                background: background,
-                width: 30,
-                height: 1,
-            },
-        },
-        {
-            id: "PCV_ballVavle_Small2_none1",
-            position: positions.PCV_ballVavle_Small2_none1,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
+        //     sourcePosition: Position.Top,
+        //     targetPosition: Position.Right,
+        //     style: {
+        //         border: "#333333",
+        //         background: background,
+        //         width: 30,
+        //         height: 1,
+        //     },
+        // },
+        // {
+        //     id: "PCV_ballVavle_Small2_none1",
+        //     position: positions.PCV_ballVavle_Small2_none1,
+        //     type: "custom",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            sourcePosition: Position.Left,
-            targetPosition: Position.Top,
-            style: {
-                border: "#333333",
-                background: "none",
-                width: 30,
-                height: 1,
-            },
-        },
-        {
-            id: "PCV_ballVavle_Small1_none2",
-            position: positions.PCV_ballVavle_Small1_none2,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
+        //     sourcePosition: Position.Left,
+        //     targetPosition: Position.Top,
+        //     style: {
+        //         border: "#333333",
+        //         background: "none",
+        //         width: 30,
+        //         height: 1,
+        //     },
+        // },
+        // {
+        //     id: "PCV_ballVavle_Small1_none2",
+        //     position: positions.PCV_ballVavle_Small1_none2,
+        //     type: "custom",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            sourcePosition: Position.Top,
-            targetPosition: Position.Right,
-            style: {
-                border: "#333333",
-                background: background,
-                width: 30,
-                height: 1,
-            },
-        },
-        {
-            id: "PCV_ballVavle_Small2_none2",
-            position: positions.PCV_ballVavle_Small2_none2,
-            type: "custom",
-            data: {
-                label: <div> </div>,
-            },
+        //     sourcePosition: Position.Top,
+        //     targetPosition: Position.Right,
+        //     style: {
+        //         border: "#333333",
+        //         background: background,
+        //         width: 30,
+        //         height: 1,
+        //     },
+        // },
+        // {
+        //     id: "PCV_ballVavle_Small2_none2",
+        //     position: positions.PCV_ballVavle_Small2_none2,
+        //     type: "custom",
+        //     data: {
+        //         label: <div> </div>,
+        //     },
 
-            sourcePosition: Position.Left,
-            targetPosition: Position.Top,
-            style: {
-                border: "#333333",
-                background: "none",
-                width: 30,
-                height: 1,
-            },
-        },
+        //     sourcePosition: Position.Left,
+        //     targetPosition: Position.Top,
+        //     style: {
+        //         border: "#333333",
+        //         background: "none",
+        //         width: 30,
+        //         height: 1,
+        //     },
+        // },
 
         {
             id: "PCV_NUM01",
@@ -6090,36 +6073,36 @@ export default function GraphicKOA() {
                 // Thêm box shadow với màu (0, 255, 255)
             },
         },
-        {
-            id: "PCV_none1",
-            position: positions.PCV_none1,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
+        // {
+        //     id: "PCV_none1",
+        //     position: positions.PCV_none1,
+        //     type: "custom",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            sourcePosition: Position.Top,
-            targetPosition: Position.Left,
-            style: {
-                height: 1,
-                width: 1,
-            },
-        },
-        {
-            id: "PCV_none2",
-            position: positions.PCV_none2,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
+        //     sourcePosition: Position.Top,
+        //     targetPosition: Position.Left,
+        //     style: {
+        //         height: 1,
+        //         width: 1,
+        //     },
+        // },
+        // {
+        //     id: "PCV_none2",
+        //     position: positions.PCV_none2,
+        //     type: "custom",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            sourcePosition: Position.Bottom,
-            targetPosition: Position.Left,
-            style: {
-                height: 1,
-                width: 1,
-            },
-        },
+        //     sourcePosition: Position.Bottom,
+        //     targetPosition: Position.Left,
+        //     style: {
+        //         height: 1,
+        //         width: 1,
+        //     },
+        // },
 
         // ==================== FIQ =============================
         {
@@ -8331,6 +8314,7 @@ export default function GraphicKOA() {
                 )}
             </Dialog>
             <div
+            key={resetKey}
                 style={{
                     borderRadius: 5,
                     //width: "auto",

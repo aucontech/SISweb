@@ -3671,8 +3671,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
            // =================================================================================================================== 
          // =================================================================================================================== 
          
-
-
+       
 
 
     const handleButtonClick = async () => {
@@ -4944,6 +4943,14 @@ PT1003: <span  style={{display:'flex',textAlign:'center', justifyContent:'space-
 
 };
 
+const formatValue = (value:any) => {
+    return value !== null
+        ? new Intl.NumberFormat('en-US', {
+              maximumFractionDigits: 2,
+              useGrouping: true, 
+          }).format(parseFloat(value))
+        : "";
+};
 
 
   
@@ -4960,7 +4967,7 @@ const DataFC_Lithium_Battery_Status = FC_Lithium_Battery_Status === "0" ? "Yes" 
 
        modbus: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure}>47619	 </span> ,
 
-      value: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure} > {FC_01_Current_Values_Static_Pressure} {nameValue.Bara}</span> , 
+      value: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure} > {formatValue(FC_01_Current_Values_Static_Pressure)} {nameValue.Bara}</span> , 
        high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Current_Values_Static_Pressure}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Current_Values_Static_Pressure} onChange={handleInputChangeFC_01_Current_Values_Static_Pressure} inputMode="decimal" />, 
        low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Current_Values_Static_Pressure}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Current_Values_Static_Pressure} onChange={handleInputChange2FC_01_Current_Values_Static_Pressure} inputMode="decimal" />,
        update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -4979,7 +4986,7 @@ const DataFC_Lithium_Battery_Status = FC_Lithium_Battery_Status === "0" ? "Yes" 
 
       modbus: <span style={combineCss.CSSFC_01_Current_Values_Temperature}>47621	 </span> ,
 
-     value: <span style={combineCss.CSSFC_01_Current_Values_Temperature} > {FC_01_Current_Values_Temperature} {nameValue.C}</span> , 
+     value: <span style={combineCss.CSSFC_01_Current_Values_Temperature} > {formatValue(FC_01_Current_Values_Temperature)} {nameValue.C}</span> , 
       high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Current_Values_Temperature}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Current_Values_Temperature} onChange={handleInputChangeFC_01_Current_Values_Temperature} inputMode="decimal" />, 
       low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Current_Values_Temperature}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Current_Values_Temperature} onChange={handleInputChange2FC_01_Current_Values_Temperature} inputMode="decimal" />,
       update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -4998,7 +5005,7 @@ const DataFC_Lithium_Battery_Status = FC_Lithium_Battery_Status === "0" ? "Yes" 
 
       modbus: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>47615	 </span> ,
 
-     value: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume} > {FC_01_Accumulated_Values_Uncorrected_Volume} {nameValue.m3}</span> , 
+     value: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume} > {formatValue(FC_01_Accumulated_Values_Uncorrected_Volume)} {nameValue.m3}</span> , 
       high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Accumulated_Values_Uncorrected_Volume} onChange={handleInputChangeFC_01_Accumulated_Values_Uncorrected_Volume} inputMode="decimal" />, 
       low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Accumulated_Values_Uncorrected_Volume} onChange={handleInputChange2FC_01_Accumulated_Values_Uncorrected_Volume} inputMode="decimal" />,
       update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -5017,7 +5024,7 @@ const DataFC_Lithium_Battery_Status = FC_Lithium_Battery_Status === "0" ? "Yes" 
 
      modbus: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume}>47617	 </span> ,
 
-    value: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume} > {FC_01_Accumulated_Values_Volume} {nameValue.Sm3}</span> , 
+    value: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume} > {formatValue(FC_01_Accumulated_Values_Volume)} {nameValue.Sm3}</span> , 
      high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Accumulated_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Accumulated_Values_Volume} onChange={handleInputChangeFC_01_Accumulated_Values_Volume} inputMode="decimal" />, 
      low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Accumulated_Values_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Accumulated_Values_Volume} onChange={handleInputChange2FC_01_Accumulated_Values_Volume} inputMode="decimal" />,
      update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -5040,7 +5047,7 @@ const DataFC_Lithium_Battery_Status = FC_Lithium_Battery_Status === "0" ? "Yes" 
 
     modbus: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate}>47623	 </span> ,
 
-   value: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate} > {FC_01_Current_Values_Flow_Rate} {nameValue.Sm3h}</span> , 
+   value: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate} > {formatValue(FC_01_Current_Values_Flow_Rate)} {nameValue.Sm3h}</span> , 
     high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Current_Values_Flow_Rate}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Current_Values_Flow_Rate} onChange={handleInputChangeFC_01_Current_Values_Flow_Rate} inputMode="decimal" />, 
     low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Current_Values_Flow_Rate}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Current_Values_Flow_Rate} onChange={handleInputChange2FC_01_Current_Values_Flow_Rate} inputMode="decimal" />,
     update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -5061,7 +5068,7 @@ const DataFC_Lithium_Battery_Status = FC_Lithium_Battery_Status === "0" ? "Yes" 
 
    modbus: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>	 47627 </span> ,
 
-  value: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate} > {FC_01_Current_Values_Uncorrected_Flow_Rate} {nameValue.m3h}</span> , 
+  value: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate} > {formatValue(FC_01_Current_Values_Uncorrected_Flow_Rate)} {nameValue.m3h}</span> , 
    high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Current_Values_Uncorrected_Flow_Rate} onChange={handleInputChangeFC_01_Current_Values_Uncorrected_Flow_Rate} inputMode="decimal" />, 
    low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Current_Values_Uncorrected_Flow_Rate} onChange={handleInputChange2FC_01_Current_Values_Uncorrected_Flow_Rate} inputMode="decimal" />,
    update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -5082,7 +5089,7 @@ const DataFC_Lithium_Battery_Status = FC_Lithium_Battery_Status === "0" ? "Yes" 
 
   modbus: <span style={combineCss.CSSFC_01_Today_Values_Volume}>	47625 </span> ,
 
- value: <span style={combineCss.CSSFC_01_Today_Values_Volume} > {FC_01_Today_Values_Volume} {nameValue.Sm3}</span> , 
+ value: <span style={combineCss.CSSFC_01_Today_Values_Volume} > {formatValue(FC_01_Today_Values_Volume)} {nameValue.Sm3}</span> , 
   high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Today_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Today_Values_Volume} onChange={handleInputChangeFC_01_Today_Values_Volume} inputMode="decimal" />, 
   low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Today_Values_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Today_Values_Volume} onChange={handleInputChange2FC_01_Today_Values_Volume} inputMode="decimal" />,
   update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -5104,7 +5111,7 @@ const DataFC_Lithium_Battery_Status = FC_Lithium_Battery_Status === "0" ? "Yes" 
    
         modbus: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}>47629	 </span> ,
    
-       value: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume} > {FC_01_Today_Values_Uncorrected_Volume} {nameValue.m3}</span> , 
+       value: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume} > {formatValue(FC_01_Today_Values_Uncorrected_Volume)} {nameValue.m3}</span> , 
         high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Today_Values_Uncorrected_Volume} onChange={handleInputChangeFC_01_Today_Values_Uncorrected_Volume} inputMode="decimal" />, 
         low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Today_Values_Uncorrected_Volume} onChange={handleInputChange2FC_01_Today_Values_Uncorrected_Volume} inputMode="decimal" />,
         update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -5129,7 +5136,7 @@ name: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume}>{TagName.Vb_Yest
 
 modbus: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume}>47631	 </span> ,
 
-value: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume} > {FC_01_Yesterday_Values_Volume} {nameValue.Sm3}</span> , 
+value: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume} > {formatValue(FC_01_Yesterday_Values_Volume)} {nameValue.Sm3}</span> , 
 high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Yesterday_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Yesterday_Values_Volume} onChange={handleInputChangeFC_01_Yesterday_Values_Volume} inputMode="decimal" />, 
 low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Yesterday_Values_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Yesterday_Values_Volume} onChange={handleInputChange2FC_01_Yesterday_Values_Volume} inputMode="decimal" />,
 update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -5150,7 +5157,7 @@ name: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}>{Tag
 
 modbus: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}>47633	 </span> ,
 
-value: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume} > {FC_01_Yesterday_Values_Uncorrected_Volume} {nameValue.m3}</span> , 
+value: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume} > {formatValue(FC_01_Yesterday_Values_Uncorrected_Volume)} {nameValue.m3}</span> , 
 high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_01_Yesterday_Values_Uncorrected_Volume} onChange={handleInputChangeFC_01_Yesterday_Values_Uncorrected_Volume} inputMode="decimal" />, 
 low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_01_Yesterday_Values_Uncorrected_Volume} onChange={handleInputChange2FC_01_Yesterday_Values_Uncorrected_Volume} inputMode="decimal" />,
 update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -5175,7 +5182,7 @@ const dataFC02 = [
 
  modbus: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure}>48619	 </span> ,
 
-value: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure} > {FC_02_Current_Values_Static_Pressure} {nameValue.Bara}</span> , 
+value: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure} > {formatValue(FC_02_Current_Values_Static_Pressure)} {nameValue.Bara}</span> , 
  high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Current_Values_Static_Pressure}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Current_Values_Static_Pressure} onChange={handleInputChangeFC_02_Current_Values_Static_Pressure} inputMode="decimal" />, 
  low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Current_Values_Static_Pressure}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Current_Values_Static_Pressure} onChange={handleInputChange2FC_02_Current_Values_Static_Pressure} inputMode="decimal" />,
  update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -5198,7 +5205,7 @@ name: <span style={combineCss.CSSFC_02_Current_Values_Temperature}>{TagName.EVC_
 
 modbus: <span style={combineCss.CSSFC_02_Current_Values_Temperature}>48621	 </span> ,
 
-value: <span style={combineCss.CSSFC_02_Current_Values_Temperature} > {FC_02_Current_Values_Temperature} {nameValue.C}</span> , 
+value: <span style={combineCss.CSSFC_02_Current_Values_Temperature} > {formatValue(FC_02_Current_Values_Temperature)} {nameValue.C}</span> , 
 high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Current_Values_Temperature}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Current_Values_Temperature} onChange={handleInputChangeFC_02_Current_Values_Temperature} inputMode="decimal" />, 
 low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Current_Values_Temperature}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Current_Values_Temperature} onChange={handleInputChange2FC_02_Current_Values_Temperature} inputMode="decimal" />,
 update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -5217,7 +5224,7 @@ name: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}>{T
 
 modbus: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}>48615	 </span> ,
 
-value: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume} > {FC_02_Accumulated_Values_Uncorrected_Volume} {nameValue.m3}</span> , 
+value: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume} > {formatValue(FC_02_Accumulated_Values_Uncorrected_Volume)} {nameValue.m3}</span> , 
 high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Accumulated_Values_Uncorrected_Volume} onChange={handleInputChangeFC_02_Accumulated_Values_Uncorrected_Volume} inputMode="decimal" />, 
 low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Accumulated_Values_Uncorrected_Volume} onChange={handleInputChange2FC_02_Accumulated_Values_Uncorrected_Volume} inputMode="decimal" />,
 update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -5237,7 +5244,7 @@ name: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume}>{TagName.SVA}<
 
 modbus: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume}>48617	 </span> ,
 
-value: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume} > {FC_02_Accumulated_Values_Volume} {nameValue.Sm3}</span> , 
+value: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume} > {formatValue(FC_02_Accumulated_Values_Volume)} {nameValue.Sm3}</span> , 
 high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Accumulated_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Accumulated_Values_Volume} onChange={handleInputChangeFC_02_Accumulated_Values_Volume} inputMode="decimal" />, 
 low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Accumulated_Values_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Accumulated_Values_Volume} onChange={handleInputChange2FC_02_Accumulated_Values_Volume} inputMode="decimal" />,
 update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -5259,7 +5266,7 @@ name: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate}>{TagName.SVF}</
 
 modbus: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate}>48623	 </span> ,
 
-value: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate} > {FC_02_Current_Values_Flow_Rate} {nameValue.Sm3h}</span> , 
+value: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate} > {formatValue(FC_02_Current_Values_Flow_Rate)} {nameValue.Sm3h}</span> , 
 high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Current_Values_Flow_Rate}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Current_Values_Flow_Rate} onChange={handleInputChangeFC_02_Current_Values_Flow_Rate} inputMode="decimal" />, 
 low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Current_Values_Flow_Rate}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Current_Values_Flow_Rate} onChange={handleInputChange2FC_02_Current_Values_Flow_Rate} inputMode="decimal" />,
 update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -5280,7 +5287,7 @@ name: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}>{Ta
 
 modbus: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}>	48627 </span> ,
 
-value: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate} > {FC_02_Current_Values_Uncorrected_Flow_Rate} {nameValue.m3h}</span> , 
+value: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate} > {formatValue(FC_02_Current_Values_Uncorrected_Flow_Rate)} {nameValue.m3h}</span> , 
 high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Current_Values_Uncorrected_Flow_Rate} onChange={handleInputChangeFC_02_Current_Values_Uncorrected_Flow_Rate} inputMode="decimal" />, 
 low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Current_Values_Uncorrected_Flow_Rate} onChange={handleInputChange2FC_02_Current_Values_Uncorrected_Flow_Rate} inputMode="decimal" />,
 update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -5301,7 +5308,7 @@ name: <span style={combineCss.CSSFC_02_Today_Values_Volume}>{TagName.Vb_Today}</
 
 modbus: <span style={combineCss.CSSFC_02_Today_Values_Volume}>	48625 </span> ,
 
-value: <span style={combineCss.CSSFC_02_Today_Values_Volume} > {FC_02_Today_Values_Volume} {nameValue.Sm3}</span> , 
+value: <span style={combineCss.CSSFC_02_Today_Values_Volume} > {formatValue(FC_02_Today_Values_Volume)} {nameValue.Sm3}</span> , 
 high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Today_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Today_Values_Volume} onChange={handleInputChangeFC_02_Today_Values_Volume} inputMode="decimal" />, 
 low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Today_Values_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Today_Values_Volume} onChange={handleInputChange2FC_02_Today_Values_Volume} inputMode="decimal" />,
 update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -5322,7 +5329,7 @@ name: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}>{TagName
 
 modbus: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}>48629	 </span> ,
 
-value: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume} > {FC_02_Today_Values_Uncorrected_Volume} {nameValue.m3}</span> , 
+value: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume} > {formatValue(FC_02_Today_Values_Uncorrected_Volume)} {nameValue.m3}</span> , 
 high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Today_Values_Uncorrected_Volume} onChange={handleInputChangeFC_02_Today_Values_Uncorrected_Volume} inputMode="decimal" />, 
 low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Today_Values_Uncorrected_Volume} onChange={handleInputChange2FC_02_Today_Values_Uncorrected_Volume} inputMode="decimal" />,
 update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -5347,7 +5354,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
 
          modbus: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume}>48631	 </span> ,
 
-        value: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume} > {FC_02_Yesterday_Values_Volume} {nameValue.Sm3}</span> , 
+        value: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume} > {formatValue(FC_02_Yesterday_Values_Volume)} {nameValue.Sm3}</span> , 
          high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Yesterday_Values_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Yesterday_Values_Volume} onChange={handleInputChangeFC_02_Yesterday_Values_Volume} inputMode="decimal" />, 
          low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Yesterday_Values_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Yesterday_Values_Volume} onChange={handleInputChange2FC_02_Yesterday_Values_Volume} inputMode="decimal" />,
          update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -5368,7 +5375,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
 
          modbus: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}>48633	 </span> ,
 
-        value: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume} > {FC_02_Yesterday_Values_Uncorrected_Volume} {nameValue.m3}</span> , 
+        value: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume} > {formatValue(FC_02_Yesterday_Values_Uncorrected_Volume)} {nameValue.m3}</span> , 
          high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}   placeholder='High' step="0.1" type='number' value={inputValueFC_02_Yesterday_Values_Uncorrected_Volume} onChange={handleInputChangeFC_02_Yesterday_Values_Uncorrected_Volume} inputMode="decimal" />, 
          low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_02_Yesterday_Values_Uncorrected_Volume} onChange={handleInputChange2FC_02_Yesterday_Values_Uncorrected_Volume} inputMode="decimal" />,
          update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -5392,7 +5399,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
 
          modbus: <span style={combineCss.CSSPT_1003}>40002</span> ,
 
-        value: <span style={combineCss.CSSPT_1003} > {PT_1003} {nameValue.Bara}</span> , 
+        value: <span style={combineCss.CSSPT_1003} > {formatValue(PT_1003)} {nameValue.Bara}</span> , 
          high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSPT_1003}   placeholder='High' step="0.1" type='number' value={inputValuePT_1003} onChange={handleInputChangePT_1003} inputMode="decimal" />, 
          low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSPT_1003}   placeholder='Low' step="0.1" type='number' value={inputValue2PT_1003} onChange={handleInputChange2PT_1003} inputMode="decimal" />,
          update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -5416,7 +5423,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
             timeUpdate: <span style={combineCss.CSSFC_Lithium_Battery_Status} >{EVC_STT01Value}</span>,
          name: <span style={combineCss.CSSFC_Lithium_Battery_Status}>Lithium Battery Status</span> ,
          modbus: <span style={combineCss.CSSFC_Lithium_Battery_Status}>5615	 </span> ,
-        value: <span style={combineCss.CSSFC_Lithium_Battery_Status} > {FC_Lithium_Battery_Status} {DataFC_Lithium_Battery_Status}</span> , 
+        value: <span style={combineCss.CSSFC_Lithium_Battery_Status} > {formatValue(FC_Lithium_Battery_Status)} {DataFC_Lithium_Battery_Status}</span> , 
          high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_Lithium_Battery_Status}   placeholder='High' step="0.1" type='number' value={inputValueFC_Lithium_Battery_Status} onChange={handleInputChangeFC_Lithium_Battery_Status} inputMode="decimal" />, 
          low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_Lithium_Battery_Status}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_Lithium_Battery_Status} onChange={handleInputChange2FC_Lithium_Battery_Status} inputMode="decimal" />,
          update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -5436,7 +5443,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
 
          modbus: <span style={combineCss.CSSFC_Battery_Voltage}>46615	 </span> ,
 
-        value: <span style={combineCss.CSSFC_Battery_Voltage} > {FC_Battery_Voltage} {nameValue.Volt}</span> , 
+        value: <span style={combineCss.CSSFC_Battery_Voltage} > {formatValue(FC_Battery_Voltage)} {nameValue.Volt}</span> , 
          high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_Battery_Voltage}   placeholder='High' step="0.1" type='number' value={inputValueFC_Battery_Voltage} onChange={handleInputChangeFC_Battery_Voltage} inputMode="decimal" />, 
          low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_Battery_Voltage}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_Battery_Voltage} onChange={handleInputChange2FC_Battery_Voltage} inputMode="decimal" />,
          update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -5455,7 +5462,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
 
         modbus: <span style={combineCss.CSSFC_System_Voltage}>46617	 </span> ,
 
-       value: <span style={combineCss.CSSFC_System_Voltage} > {FC_System_Voltage} {nameValue.Volt}</span> , 
+       value: <span style={combineCss.CSSFC_System_Voltage} > {formatValue(FC_System_Voltage)} {nameValue.Volt}</span> , 
         high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_System_Voltage}   placeholder='High' step="0.1" type='number' value={inputValueFC_System_Voltage} onChange={handleInputChangeFC_System_Voltage} inputMode="decimal" />, 
         low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_System_Voltage}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_System_Voltage} onChange={handleInputChange2FC_System_Voltage} inputMode="decimal" />,
         update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -5474,7 +5481,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
 
        modbus: <span style={combineCss.CSSFC_Charger_Voltage}>46619	 </span> ,
 
-      value: <span style={combineCss.CSSFC_Charger_Voltage} > {FC_Charger_Voltage} {nameValue.Volt}</span> , 
+      value: <span style={combineCss.CSSFC_Charger_Voltage} > {formatValue(FC_Charger_Voltage)} {nameValue.Volt}</span> , 
        high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_Charger_Voltage}   placeholder='High' step="0.1" type='number' value={inputValueFC_Charger_Voltage} onChange={handleInputChangeFC_Charger_Voltage} inputMode="decimal" />, 
        low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_Charger_Voltage}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_Charger_Voltage} onChange={handleInputChange2FC_Charger_Voltage} inputMode="decimal" />,
        update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -5493,7 +5500,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
 
        modbus: <span style={combineCss.CSSFC_Conn_STT}>Status	 </span> ,
 
-      value: <span style={combineCss.CSSFC_Conn_STT} > {FC_Conn_STT} {DataFC_Conn_STT}</span> , 
+      value: <span style={combineCss.CSSFC_Conn_STT} > {formatValue(FC_Conn_STT)} {DataFC_Conn_STT}</span> , 
        high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_Conn_STT}   placeholder='High' step="0.1" type='number' value={inputValueFC_Conn_STT} onChange={handleInputChangeFC_Conn_STT} inputMode="decimal" />, 
        low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFC_Conn_STT}   placeholder='Low' step="0.1" type='number' value={inputValue2FC_Conn_STT} onChange={handleInputChange2FC_Conn_STT} inputMode="decimal" />,
        update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -5518,7 +5525,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
         
         modbus: <span style={combineCss.CSSPT_1003}>AI1</span> ,
         
-        value: <span style={combineCss.CSSPT_1003} > {PT_1003} {nameValue.BARG}</span> , 
+        value: <span style={combineCss.CSSPT_1003} > {formatValue(PT_1003)} {nameValue.BARG}</span> , 
         high: <InputText    disabled={AuthInputHighLow} style={combineCss.CSSPT_1003}   placeholder='High' step="0.1" type='number' value={inputValuePT_1003} onChange={handleInputChangePT_1003} inputMode="decimal" />, 
         low:  <InputText    disabled={AuthInputHighLow} style={combineCss.CSSPT_1003}   placeholder='Low' step="0.1" type='number' value={inputValue2PT_1003} onChange={handleInputChange2PT_1003} inputMode="decimal" />,
         update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update'  disabled={AuthUpdatePCV} />,
@@ -5529,9 +5536,6 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
         ></Checkbox>
         
         },
-
-
-        
         
     ]
       //=========================================================================

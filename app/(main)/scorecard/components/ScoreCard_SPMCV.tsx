@@ -9,6 +9,7 @@ import { httpApi } from "@/api/http.api";
 import { DotGreen, DotRed } from "./SVG_Scorecard";
 
 import "./ScoreCard.css"
+import { Down, Up } from "../SVG_Scorecard";
 
 interface StateMap {
     [key: string]:
@@ -16,6 +17,12 @@ interface StateMap {
         | undefined;
 }
 interface ValueStateMap {
+    [key: string]:
+        | React.Dispatch<React.SetStateAction<string | null>>
+        | undefined;
+}
+
+interface StateMap2 {
     [key: string]:
         | React.Dispatch<React.SetStateAction<string | null>>
         | undefined;
@@ -42,9 +49,16 @@ export default function ScoreCard_SPMCV() {
         setIsVisible(!isVisible);
     };
 
-    useEffect(() => {
-        ws.current = new WebSocket(url);
 
+    const [resetKey, setResetKey] = useState(0);
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+    const [cmdId, setCmdId] = useState(1); // Track cmdId for requests
+ 
+    const connectWebSocket = (cmdId: number) => {
+        const token = localStorage.getItem('accessToken');
+        const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+        ws.current = new WebSocket(url);
         const obj1 = {
             attrSubCmds: [],
             tsSubCmds: [
@@ -52,7 +66,7 @@ export default function ScoreCard_SPMCV() {
                     entityType: "DEVICE",
                     entityId: id_SPMCV,
                     scope: "LATEST_TELEMETRY",
-                    cmdId: 1,
+                    cmdId: cmdId, // Use dynamic cmdId for new requests
                 },
             ],
         };
@@ -69,20 +83,13 @@ export default function ScoreCard_SPMCV() {
                 console.log("WebSocket connection closed.");
             };
 
-            return () => {
-                console.log("Cleaning up WebSocket connection.");
-                ws.current?.close();
-            };
-        }
-    }, []);
-
-    useEffect(() => {
-        if (ws.current) {
             ws.current.onmessage = (evt) => {
                 let dataReceived = JSON.parse(evt.data);
                 if (dataReceived.update !== null) {
-                    setData([...data, dataReceived]);
+                    setData(prevData => [...prevData, dataReceived]);
 
+
+               
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
                         EVC_01_Flow_at_Base_Condition: setEVC_01_Flow_at_Base_Condition,
@@ -127,17 +134,21 @@ export default function ScoreCard_SPMCV() {
                         PLC_Conn_STT: setPLC_Conn_STT,
 
                     };
+
+                   
                     const valueStateMap: ValueStateMap = {
                         EVC_01_Conn_STT: setFC_Conn_STTValue,
                         PLC_Conn_STT: setConn_STTValue,
                     };
+
+                   
                     keys.forEach((key) => {
+                      
                         if (stateMap[key]) {
                             const value = dataReceived.data[key][0][1];
                             const slicedValue = value;
                             stateMap[key]?.(slicedValue);
                         }
-
                         if (valueStateMap[key]) {
                             const value = dataReceived.data[key][0][0];
 
@@ -147,7 +158,7 @@ export default function ScoreCard_SPMCV() {
                                 .toString()
                                 .padStart(2, "0")}-${(date.getMonth() + 1)
                                 .toString()
-                                .padStart(2, "0")}-${date.getFullYear()} ${date
+                                .padStart(2, "0")} ${date
                                 .getHours()
                                 .toString()
                                 .padStart(2, "0")}:${date
@@ -157,14 +168,68 @@ export default function ScoreCard_SPMCV() {
                                 .getSeconds()
                                 .toString()
                                 .padStart(2, "0")}`;
-                            valueStateMap[key]?.(formattedDate); // Set formatted timestamp
+                            valueStateMap[key]?.(formattedDate);
                         }
                     });
                 }
-                fetchData()
+
+              
+                fetchData();
             };
+
         }
-    }, [data]);
+    };
+    useEffect(() => {
+        fetchData()
+    },[isOnline])
+    
+    useEffect(() => {
+        if (isOnline) {
+            // Initial connection
+            connectWebSocket(cmdId);
+            fetchData()
+        }
+
+        return () => {
+            if (ws.current) {
+                console.log("Cleaning up WebSocket connection.");
+                ws.current.close();
+            }
+        };
+    }, [isOnline, cmdId]); // Reconnect if isOnline or cmdId changes
+    
+
+    useEffect(() => {
+        const handleOnline = () => {
+            setIsOnline(true);
+            console.log('Back online. Reconnecting WebSocket with new cmdId.');
+            setCmdId(prevCmdId => prevCmdId + 1); // Increment cmdId on reconnect
+            fetchData()
+
+        };
+
+        const handleOffline = () => {
+            setIsOnline(false);
+            console.log('Offline detected. Closing WebSocket.');
+            if (ws.current) {
+                ws.current.close(); // Close WebSocket when offline
+            }
+        };
+
+        // Attach event listeners for online/offline status
+        window.addEventListener('online', handleOnline);
+        window.addEventListener('offline', handleOffline);
+
+        return () => {
+            // Cleanup event listeners on unmount
+            window.removeEventListener('online', handleOnline);
+            window.removeEventListener('offline', handleOffline);
+        };
+    }, []);
+
+
+   
+    // =================================================================================================================== 
 
 
     const fetchData = async () => {
@@ -1697,130 +1762,185 @@ useEffect(() => {
                 },
         
           };
+          const formatValue = (value:any) => {
+            return value !== null
+                ? new Intl.NumberFormat('en-US', {
+                      maximumFractionDigits: 2,
+                      useGrouping: true, 
+                  }).format(parseFloat(value))
+                : "";
+        };
 
 
+          const dataEVC = [
+            {
+                name: <span>{tagNameEVC.Output}</span>,
+                evc1901: <span style={combineCss.CSSEVC_01_Pressure}>{formatValue(EVC_01_Pressure)}</span>,
+            },
+            {
+                name: <span>{tagNameEVC.Temperature}</span>,
+                evc1901: <span style={combineCss.CSSEVC_01_Temperature}>{formatValue(EVC_01_Temperature)}</span>,
+            },
+            {
+                name: <span>{tagNameEVC.SVF}</span>,
+                evc1901: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition}>{formatValue(EVC_01_Flow_at_Base_Condition)}</span>,
+            },
+            {
+                name: <span>{tagNameEVC.GVF}</span>,
+                evc1901: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}>{formatValue(EVC_01_Flow_at_Measurement_Condition)}</span>,
+            },
+            {
+                name: <span>{tagNameEVC.SVA}</span>,
+                evc1901: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition}>{formatValue(EVC_01_Volume_at_Base_Condition)}</span>,
+            },
+            {
+                name: <span>{tagNameEVC.GVA}</span>,
+                evc1901: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}>{formatValue(EVC_01_Volume_at_Measurement_Condition)}</span>,
+            },
+            {
+                name: <span>{tagNameEVC.VbToday}</span>,
+                evc1901: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day}>{formatValue(EVC_01_Vb_of_Current_Day)}</span>,
+            },
+            {
+                name: <span>{tagNameEVC.VmToday}</span>,
+                evc1901: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day}>{formatValue(EVC_01_Vm_of_Current_Day)}</span>,
+            },
+            {
+                name: <span>{tagNameEVC.VbLastDay}</span>,
+                evc1901: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day}>{formatValue(EVC_01_Vb_of_Last_Day)}</span>,
+            },
+            {
+                name: <span>{tagNameEVC.VmLastDay}</span>,
+                evc1901: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day}>{formatValue(EVC_01_Vm_of_Last_Day)}</span>,
+            },
+            {
+                name: <span>{tagNameEVC.ReBattery}</span>,
+                evc1901: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}>{EVC_01_Remain_Battery_Service_Life}</span>,
+            },
+        ];
+    
 
-    const dataEVC = [
-        {
-            name: <span>{tagNameEVC.Output}</span>,
-            evc1901: <span style={combineCss.CSSEVC_01_Pressure}>{EVC_01_Pressure}</span>,
-        },
-        {
-            name: <span>{tagNameEVC.Temperature}</span>,
-            evc1901: <span style={combineCss.CSSEVC_01_Temperature}>{EVC_01_Temperature}</span>,
-        },
-        {
-            name: <span>{tagNameEVC.SVF}</span>,
-            evc1901: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition}>{EVC_01_Flow_at_Base_Condition}</span>,
-        },
-        {
-            name: <span>{tagNameEVC.GVF}</span>,
-            evc1901: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}>{EVC_01_Flow_at_Measurement_Condition}</span>,
-        },
-        {
-            name: <span>{tagNameEVC.SVA}</span>,
-            evc1901: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition}>{EVC_01_Volume_at_Base_Condition}</span>,
-        },
-        {
-            name: <span>{tagNameEVC.GVA}</span>,
-            evc1901: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}>{EVC_01_Volume_at_Measurement_Condition}</span>,
-        },
-     
 
-        {
-            name: <span>{tagNameEVC.VbToday}</span>,
-            evc1901: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day}>{EVC_01_Vb_of_Current_Day}</span>,
-        },
-        {
-            name: <span>{tagNameEVC.VbLastDay}</span>,
-            evc1901: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day}>{EVC_01_Vb_of_Last_Day}</span>,
-        },
-        {
-            name: <span>{tagNameEVC.VmToday}</span>,
-            evc1901: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day}>{EVC_01_Vm_of_Current_Day}</span>,
-        },
-        {
-            name: <span>{tagNameEVC.VmLastDay}</span>,
-            evc1901: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day}>{EVC_01_Vm_of_Last_Day}</span>,
-        },
-        {
-            name: <span>{tagNameEVC.ReBattery}</span>,
-            evc1901: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}>{EVC_01_Remain_Battery_Service_Life}</span>,
-        },
-    ];
+        const dataEVC02 = [
+            {
+                name: <span>{tagNameEVC.Output}</span>,
+                evc1901: <span style={combineCss.CSSEVC_01_Pressure}>{formatValue(EVC_01_Pressure)}</span>,
+            },
+            {
+                name: <span>{tagNameEVC.Temperature}</span>,
+                evc1901: <span style={combineCss.CSSEVC_01_Temperature}>{formatValue(EVC_01_Temperature)}</span>,
+            },
+            {
+                name: <span>{tagNameEVC.SVF}</span>,
+                evc1901: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition}>{formatValue(EVC_01_Flow_at_Base_Condition)}</span>,
+            },
+            {
+                name: <span>{tagNameEVC.GVF}</span>,
+                evc1901: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}>{formatValue(EVC_01_Flow_at_Measurement_Condition)}</span>,
+            },
+            {
+                name: <span>{tagNameEVC.SVA}</span>,
+                evc1901: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition}>{formatValue(EVC_01_Volume_at_Base_Condition)}</span>,
+            },
+            {
+                name: <span>{tagNameEVC.GVA}</span>,
+                evc1901: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}>{formatValue(EVC_01_Volume_at_Measurement_Condition)}</span>,
+            },
+            {
+                name: <span>{tagNameEVC.VbToday}</span>,
+                evc1901: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day}>{formatValue(EVC_01_Vb_of_Current_Day)}</span>,
+            },
+            {
+                name: <span>{tagNameEVC.VmToday}</span>,
+                evc1901: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day}>{formatValue(EVC_01_Vm_of_Current_Day)}</span>,
+            },
+            {
+                name: <span>{tagNameEVC.VbLastDay}</span>,
+                evc1901: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day}>{formatValue(EVC_01_Vb_of_Last_Day)}</span>,
+            },
+            {
+                name: <span>{tagNameEVC.VmLastDay}</span>,
+                evc1901: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day}>{formatValue(EVC_01_Vm_of_Last_Day)}</span>,
+            },
+        ];
+    
 
-    const dataPLC = [
-        {
-            name: <span>{tagNamePLC.PT01}</span>,
-            PLC: <span style={combineCss.CSSPT1}> {PT1}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.GD1}</span>,
-            PLC: <span style={combineCss.CSSGD1}>{} {GD1}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.GD2}</span>,
-            PLC: <span style={combineCss.CSSGD2}> {GD2}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.DO_SV_01}</span>,
-            PLC: <span style={combineCss.CSSDO_SV_01}> {DO_SV_01} {DataDO_SV_01}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.ZSO}</span>,
-            PLC: <span style={combineCss.CSSDI_ZSO_1}>{DI_ZSO_1} {DataZSO_1}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.ZSC}</span>,
-            PLC: <span style={combineCss.CSSDI_ZSC_1}>{DI_ZSC_1} {DataZSC_1}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.UPS_BATTERY}</span>,
-            PLC: <span style={combineCss.CSSDI_UPS_BATTERY}> {DI_UPS_BATTERY} {DataBattery}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.UPS_CHARGING}</span>,
-            PLC: <span style={combineCss.CSSDI_UPS_CHARGING}> {DI_UPS_CHARGING} {DataCharging}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.UPS_ALARM}</span>,
-            PLC: <span style={combineCss.CSSDI_UPS_ALARM}>{DI_UPS_ALARM} {DataAlarm}</span>,
-        },
 
-     
-        {
-            name: <span>{tagNamePLC.UPS_MODE}</span>,
-            PLC: <span style={combineCss.CSSUPS_Mode}> {UPS_Mode} {DataMode}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.SELECT_SW}</span>,
-            PLC: <span style={combineCss.CSSDI_SELECT_SW}>{DI_SELECT_SW} {DataDI_SELECT_SW}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.RESET}</span>,
-            PLC: <span style={combineCss.CSSDI_RESET}>{DI_RESET} {DataRESET}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.EmergencyNO}</span>,
-            PLC: <span style={combineCss.CSSEmergency_NO}> {Emergency_NO} {DataEmergency_NO}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.EmergencyNC}</span>,
-            PLC: <span style={combineCss.CSSEmergency_NC}>{Emergency_NC} {DataEmergency_NC}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.HORN}</span>,
-            PLC: <span style={combineCss.CSSDO_HR_01}>{DO_HR_01} {DataHorn}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.BEACON}</span>,
-            PLC: <span style={combineCss.CSSDO_BC_01}> {DO_BC_01} {DataBeacon}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.MAP}</span>,
-            PLC: <span style={combineCss.CSSDI_MAP_1}> {DI_MAP_1} {DataMap1}</span>,
-        },
-    ];
+        const dataPLC = [
+            {
+                name: <span>{tagNamePLC.PT01}</span>,
+                PLC: <span style={combineCss.CSSPT1}> {formatValue(PT1)}</span>,
+            },
+            {
+                name: <span>{tagNamePLC.GD1}</span>,
+                PLC: <span style={combineCss.CSSGD1}>{} {formatValue(GD1)}</span>,
+            },
+            {
+                name: <span>{tagNamePLC.GD2}</span>,
+                PLC: <span style={combineCss.CSSGD2}> {formatValue(GD2)}</span>,
+            },
+            {
+                name: <span>{tagNamePLC.ZSO}</span>,
+                PLC: <span style={combineCss.CSSDI_ZSO_1}>{DI_ZSO_1} {DataZSO_1}</span>,
+            },
+            {
+                name: <span>{tagNamePLC.ZSC}</span>,
+                PLC: <span style={combineCss.CSSDI_ZSC_1}>{DI_ZSC_1} {DataZSC_1}</span>,
+            },
+            {
+                name: <span>{tagNamePLC.MAP}</span>,
+                PLC: <span style={combineCss.CSSDI_MAP_1}> {DI_MAP_1} {DataMap1}</span>,
+            },
+            {
+                name: <span>{tagNamePLC.UPS_BATTERY}</span>,
+                PLC: <span style={combineCss.CSSDI_UPS_BATTERY}> {DI_UPS_BATTERY} {DataBattery}</span>,
+            },
+            {
+                name: <span>{tagNamePLC.UPS_CHARGING}</span>,
+                PLC: <span style={combineCss.CSSDI_UPS_CHARGING}> {DI_UPS_CHARGING} {DataCharging}</span>,
+            },
+            {
+                name: <span>{tagNamePLC.UPS_ALARM}</span>,
+                PLC: <span style={combineCss.CSSDI_UPS_ALARM}>{DI_UPS_ALARM} {DataAlarm}</span>,
+            },
+            {
+                name: <span>{tagNamePLC.SELECT_SW}</span>,
+                PLC: <span style={combineCss.CSSDI_SELECT_SW}>{DI_SELECT_SW} {DataDI_SELECT_SW}</span>,
+            },
+            {
+                name: <span>{tagNamePLC.RESET}</span>,
+                PLC: <span style={combineCss.CSSDI_RESET}>{DI_RESET} {DataRESET}</span>,
+            },
+            {
+                name: <span>{tagNamePLC.EmergencyNO}</span>,
+                PLC: <span style={combineCss.CSSEmergency_NO}> {Emergency_NO} {DataEmergency_NO}</span>,
+            },
+            {
+                name: <span>{tagNamePLC.EmergencyNC}</span>,
+                PLC: <span style={combineCss.CSSEmergency_NC}>{Emergency_NC} {DataEmergency_NC}</span>,
+            },
+            {
+                name: <span>{tagNamePLC.UPS_MODE}</span>,
+                PLC: <span style={combineCss.CSSUPS_Mode}> {UPS_Mode} {DataMode}</span>,
+            },
+            {
+                name: <span>{tagNamePLC.HORN}</span>,
+                PLC: <span style={combineCss.CSSDO_HR_01}>{DO_HR_01} {DataHorn}</span>,
+            },
+            {
+                name: <span>{tagNamePLC.BEACON}</span>,
+                PLC: <span style={combineCss.CSSDO_BC_01}> {DO_BC_01} {DataBeacon}</span>,
+            },
+            {
+                name: <span>{tagNamePLC.DO_SV_01}</span>,
+                PLC: <span style={combineCss.CSSDO_SV_01}> {DO_SV_01} {DataDO_SV_01}</span>,
+            },
+        ];
+    const [ShowMore,setShowMore] = useState(false)
+
+    const handleShowMore = () => {
+        setShowMore(!ShowMore)
+    }
 
     return (
         <div >
@@ -1861,10 +1981,16 @@ useEffect(() => {
                         <div style={{  fontWeight: 500,display:'flex' }}>
                            {FC_Conn_STTValue}
                         </div>
-                 
+                        <div  onClick={handleShowMore} >
+                    {ShowMore ? <span style={{cursor:"pointer",  }}>{Up}</span>  : <span style={{cursor:"pointer"}}>{Down}</span>}
+                    </div>
                     </div>
                  
                 </div>
+
+
+
+                {ShowMore ?    <div > 
                 <DataTable value={dataEVC} size="small" selectionMode="single"> 
                     <Column field="name" header="EVC Parameter"></Column>
                     <Column
@@ -1902,12 +2028,32 @@ useEffect(() => {
                             )}
                         ></Column>
                     </DataTable>
+                    </div> 
                 
+                : 
+                <div>
+            <DataTable value={dataEVC02} size="small" selectionMode="single"> 
+                    <Column field="name" header="EVC Parameter"></Column>
+                    <Column
+                        style={{display:'flex', justifyContent:'flex-end'}}
+                        field="evc1901"
+                        header={EVC_STT01 === "1" ? (
+                            <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center',}}>
+                            {DotGreen} <p>EVC-1701</p>
+                           </div>
+                        ) : (
+                            <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center',}}>
+                               {DotRed} <p>EVC-1701</p>
+                            </div>
+                        )}
+                    ></Column>
+                </DataTable>
+              
+            </div>
+            }
             </div>
 
-            {/* <div>
-                <SetAttribute1/>
-            </div> */}
+        
 
         </div>
     );

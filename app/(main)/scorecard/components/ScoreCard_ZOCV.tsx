@@ -9,6 +9,7 @@ import { httpApi } from "@/api/http.api";
 import { DotGreen, DotRed } from "./SVG_Scorecard";
 
 import "./ScoreCard.css"
+import { Down, Up } from "../SVG_Scorecard";
 
 interface StateMap {
     [key: string]:
@@ -16,6 +17,12 @@ interface StateMap {
         | undefined;
 }
 interface ValueStateMap {
+    [key: string]:
+        | React.Dispatch<React.SetStateAction<string | null>>
+        | undefined;
+}
+
+interface StateMap2 {
     [key: string]:
         | React.Dispatch<React.SetStateAction<string | null>>
         | undefined;
@@ -42,9 +49,17 @@ export default function ScoreCard_ZOCV() {
         setIsVisible(!isVisible);
     };
 
-    useEffect(() => {
-        ws.current = new WebSocket(url);
 
+
+    const [resetKey, setResetKey] = useState(0);
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+    const [cmdId, setCmdId] = useState(1); // Track cmdId for requests
+ 
+    const connectWebSocket = (cmdId: number) => {
+        const token = localStorage.getItem('accessToken');
+        const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+        ws.current = new WebSocket(url);
         const obj1 = {
             attrSubCmds: [],
             tsSubCmds: [
@@ -52,7 +67,7 @@ export default function ScoreCard_ZOCV() {
                     entityType: "DEVICE",
                     entityId: id_ZOCV,
                     scope: "LATEST_TELEMETRY",
-                    cmdId: 1,
+                    cmdId: cmdId, // Use dynamic cmdId for new requests
                 },
             ],
         };
@@ -69,68 +84,75 @@ export default function ScoreCard_ZOCV() {
                 console.log("WebSocket connection closed.");
             };
 
-            return () => {
-                console.log("Cleaning up WebSocket connection.");
-                ws.current?.close();
-            };
-        }
-    }, []);
-
-    useEffect(() => {
-        if (ws.current) {
             ws.current.onmessage = (evt) => {
                 let dataReceived = JSON.parse(evt.data);
                 if (dataReceived.update !== null) {
                     setData([...data, dataReceived]);
-
+                  
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
 
-                        FC_01_Lithium_Battery_Status: setFC_01_Lithium_Battery_Status,
-                        FC_01_Battery_Voltage: setFC_01_Battery_Voltage,
-                        FC_01_System_Voltage: setFC_01_System_Voltage,
-                        FC_01_Charger_Voltage: setFC_01_Charger_Voltage,
+                     
+                    FC_01_Battery_Voltage: setFC_01_Battery_Voltage,
+                    FC_01_System_Voltage: setFC_01_System_Voltage,
+                    FC_01_Charger_Voltage: setFC_01_Charger_Voltage,
 
+                    FC_01_Current_Values_Flow_Rate:
+                        setFC_01_Current_Values_Flow_Rate,
+                    FC_01_Current_Values_Uncorrected_Flow_Rate:
+                        setFC_01_Current_Values_Uncorrected_Flow_Rate,
+                    FC_01_Accumulated_Values_Uncorrected_Volume:
+                        setFC_01_Accumulated_Values_Uncorrected_Volume,
+                    FC_01_Accumulated_Values_Volume:
+                        setFC_01_Accumulated_Values_Volume,
+                    FC_01_Current_Values_Static_Pressure:
+                        setFC_01_Current_Values_Static_Pressure,
 
-                        FC_01_Current_Values_Flow_Rate: setFC_01_Current_Values_Flow_Rate,
-                        FC_01_Current_Values_Uncorrected_Flow_Rate: setFC_01_Current_Values_Uncorrected_Flow_Rate,
-                        FC_01_Accumulated_Values_Uncorrected_Volume: setFC_01_Accumulated_Values_Uncorrected_Volume,
-                        FC_01_Accumulated_Values_Volume: setFC_01_Accumulated_Values_Volume,
-                        FC_01_Current_Values_Static_Pressure: setFC_01_Current_Values_Static_Pressure,
+                    FC_01_Current_Values_Temperature:
+                        setFC_01_Current_Values_Temperature,
+                    FC_01_Yesterday_Values_Uncorrected_Volume:
+                        setFC_01_Yesterday_Values_Uncorrected_Volume,
+                    FC_01_Yesterday_Values_Volume:
+                        setFC_01_Yesterday_Values_Volume,
+                    FC_01_Today_Values_Uncorrected_Volume:
+                        setFC_01_Today_Values_Uncorrected_Volume,
+                    FC_01_Today_Values_Volume: setFC_01_Today_Values_Volume,
 
-                        FC_01_Current_Values_Temperature: setFC_01_Current_Values_Temperature,
-                        FC_01_Yesterday_Values_Uncorrected_Volume: setFC_01_Yesterday_Values_Uncorrected_Volume,
-                        FC_01_Yesterday_Values_Volume: setFC_01_Yesterday_Values_Volume,
-                        FC_01_Today_Values_Uncorrected_Volume: setFC_01_Today_Values_Uncorrected_Volume,
-                        FC_01_Today_Values_Volume: setFC_01_Today_Values_Volume,
+           
+                    EVC_02_Temperature: setEVC_02_Temperature,
+                    EVC_02_Pressure: setEVC_02_Pressure,
+                    EVC_02_Volume_at_Base_Condition:
+                        setEVC_02_Volume_at_Base_Condition,
 
-                        EVC_02_Remain_Battery_Service_Life: setEVC_02_Remain_Battery_Service_Life,
-                        EVC_02_Temperature: setEVC_02_Temperature,
-                        EVC_02_Pressure: setEVC_02_Pressure,
-                        EVC_02_Volume_at_Base_Condition: setEVC_02_Volume_at_Base_Condition,
+                    EVC_02_Volume_at_Measurement_Condition:
+                        setEVC_02_Volume_at_Measurement_Condition,
+                    EVC_02_Flow_at_Base_Condition:
+                        setEVC_02_Flow_at_Base_Condition,
+                    EVC_02_Flow_at_Measurement_Condition:
+                        setEVC_02_Flow_at_Measurement_Condition,
+                    EVC_02_Vb_of_Current_Day: setEVC_02_Vb_of_Current_Day,
+                    EVC_02_Vm_of_Current_Day: setEVC_02_Vm_of_Current_Day,
+                    EVC_02_Vm_of_Last_Day: setEVC_02_Vm_of_Last_Day,
+                    EVC_02_Vb_of_Last_Day: setEVC_02_Vb_of_Last_Day,
 
-                        EVC_02_Volume_at_Measurement_Condition: setEVC_02_Volume_at_Measurement_Condition,
-                        EVC_02_Flow_at_Base_Condition: setEVC_02_Flow_at_Base_Condition,
-                        EVC_02_Flow_at_Measurement_Condition: setEVC_02_Flow_at_Measurement_Condition,
-                        EVC_02_Vb_of_Current_Day: setEVC_02_Vb_of_Current_Day,
-                        EVC_02_Vm_of_Current_Day: setEVC_02_Vm_of_Current_Day,
-                        EVC_02_Vm_of_Last_Day: setEVC_02_Vm_of_Last_Day,
-                        EVC_02_Vb_of_Last_Day: setEVC_02_Vb_of_Last_Day,
+                    PT_1103: setPT_1103,
+                    Mode_ATS: setMode_ATS,
+                    ATS_Auto_Man: setATS_Auto_Man,
+                    EVC_02_Conn_STT: setEVC_02_Conn_STT,
+                    EVC_02_Remain_Battery_Service_Life: setEVC_02_Remain_Battery_Service_Life,
 
-                        PT_1103:setPT_1103,
-
-                        Mode_ATS:setMode_ATS,
-                        ATS_Auto_Man:setATS_Auto_Man,
-                        FC_01_Conn_STT:setFC_Conn_STTValue,
-                        EVC_02_Conn_STT:setEVC_02_Conn_STT,
-
-
+                    FC_01_Lithium_Battery_Status:
+                    setFC_01_Lithium_Battery_Status,
+                    FC_01_Conn_STT: setFC_01_Conn_STT,
+                
                     };
                     const valueStateMap: ValueStateMap = {
                         FC_01_Conn_STT: setFC_STT01,
                         EVC_02_Conn_STT: setConn_STTValue,
                     };
+
                     keys.forEach((key) => {
+                       
                         if (stateMap[key]) {
                             const value = dataReceived.data[key][0][1];
                             const slicedValue = value;
@@ -162,8 +184,64 @@ export default function ScoreCard_ZOCV() {
                 }
                 fetchData()
             };
+
         }
-    }, [data]);
+    };
+    useEffect(() => {
+        fetchData()
+    },[isOnline])
+    
+    useEffect(() => {
+        if (isOnline) {
+            // Initial connection
+            connectWebSocket(cmdId);
+            fetchData()
+        }
+
+        return () => {
+            if (ws.current) {
+                console.log("Cleaning up WebSocket connection.");
+                ws.current.close();
+            }
+        };
+    }, [isOnline, cmdId]); // Reconnect if isOnline or cmdId changes
+    
+
+     
+
+    //============================GD =============================
+    useEffect(() => {
+        const handleOnline = () => {
+            setIsOnline(true);
+            console.log('Back online. Reconnecting WebSocket with new cmdId.');
+            setCmdId(prevCmdId => prevCmdId + 1); // Increment cmdId on reconnect
+            fetchData()
+
+        };
+
+        const handleOffline = () => {
+            setIsOnline(false);
+            console.log('Offline detected. Closing WebSocket.');
+            if (ws.current) {
+                ws.current.close(); // Close WebSocket when offline
+            }
+        };
+
+        // Attach event listeners for online/offline status
+        window.addEventListener('online', handleOnline);
+        window.addEventListener('offline', handleOffline);
+
+        return () => {
+            // Cleanup event listeners on unmount
+            window.removeEventListener('online', handleOnline);
+            window.removeEventListener('offline', handleOffline);
+        };
+    }, []);
+
+
+
+
+    //================================================================================================
 
 
     const fetchData = async () => {
@@ -1210,6 +1288,8 @@ useEffect(() => {
         VmLastDay: "Gross Volume Vm Yesterday (m³)",
         ReBattery: "Lithium Battery Status (Months)",
         PT_1103: "Output Pressure PT-1103 (BarG)",
+        EVC_02_Remain_Battery_Service_Life: "Remain Battery Service Life (Months) ",
+
 
     };
 
@@ -1781,75 +1861,130 @@ const DataEVC_02_Conn_STT  = EVC_02_Conn_STT === "0" ? "Not Init" : EVC_02_Conn_
 const DataFC_01_Conn_STT  = FC_01_Conn_STT === "0" ? "Not Init" : FC_01_Conn_STT === "1" ? "COM OK" : FC_01_Conn_STT === "2" ? "Error" : null;
 
 
-const dataFC = [
+const formatValue = (value:any) => {
+    return value !== null
+        ? new Intl.NumberFormat('en-US', {
+              maximumFractionDigits: 2,
+              useGrouping: true, 
+          }).format(parseFloat(value))
+        : "";
+};
 
-      
+const dataFC = [
     {
         name: <span>{tagNameFC.InputPressure}</span>,
-        FC1901: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure}>{FC_01_Current_Values_Static_Pressure}</span>,
-        FC1902: <span style={combineCss.CSSEVC_02_Pressure}>{EVC_02_Pressure}</span>,
-
+        FC1901: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure}>{formatValue(FC_01_Current_Values_Static_Pressure)}</span>,
+        FC1902: <span style={combineCss.CSSEVC_02_Pressure}>{formatValue(EVC_02_Pressure)}</span>,
     },
+    {
+        name: <span>{tagNameFC.Temperature}</span>,
+        FC1901: <span style={combineCss.CSSFC_01_Current_Values_Temperature}>{formatValue(FC_01_Current_Values_Temperature)}</span>,
+        FC1902: <span style={combineCss.CSSEVC_02_Temperature}>{formatValue(EVC_02_Temperature)}</span>,
+    },
+    {
+        name: <span>{tagNameFC.SVF}</span>,
+        FC1901: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate}>{formatValue(FC_01_Current_Values_Flow_Rate)}</span>,
+        FC1902: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition}>{formatValue(EVC_02_Flow_at_Base_Condition)}</span>,
+    },
+    {
+        name: <span>{tagNameFC.GVF}</span>,
+        FC1901: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>{formatValue(FC_01_Current_Values_Uncorrected_Flow_Rate)}</span>,
+        FC1902: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition}>{formatValue(EVC_02_Flow_at_Measurement_Condition)}</span>,
+    },
+    {
+        name: <span>{tagNameFC.SVA}</span>,
+        FC1901: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume}>{formatValue(FC_01_Accumulated_Values_Volume)}</span>,
+        FC1902: <span style={combineCss.CSSEVC_02_Volume_at_Base_Condition}>{formatValue(EVC_02_Volume_at_Base_Condition)}</span>,
+    },
+    {
+        name: <span>{tagNameFC.GVA}</span>,
+        FC1901: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>{formatValue(FC_01_Accumulated_Values_Uncorrected_Volume)}</span>,
+        FC1902: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition}>{formatValue(EVC_02_Volume_at_Measurement_Condition)}</span>,
+    },
+    {
+        name: <span>{tagNameFC.VbToday}</span>,
+        FC1901: <span style={combineCss.CSSFC_01_Today_Values_Volume}>{formatValue(FC_01_Today_Values_Volume)}</span>,
+        FC1902: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day}>{formatValue(EVC_02_Vb_of_Current_Day)}</span>,
+    },
+    {
+        name: <span>{tagNameFC.VmToday}</span>,
+        FC1901: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}>{formatValue(FC_01_Today_Values_Uncorrected_Volume)}</span>,
+        FC1902: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day}>{formatValue(EVC_02_Vb_of_Current_Day)}</span>,
+    },
+    {
+        name: <span>{tagNameFC.VbLastDay}</span>,
+        FC1901: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume}>{formatValue(FC_01_Yesterday_Values_Volume)}</span>,
+        FC1902: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day}>{formatValue(EVC_02_Vb_of_Last_Day)}</span>,
+    },
+    {
+        name: <span>{tagNameFC.VmLastDay}</span>,
+        FC1901: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}>{formatValue(FC_01_Yesterday_Values_Uncorrected_Volume)}</span>,
+        FC1902: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day}>{formatValue(EVC_02_Vm_of_Last_Day)}</span>,
+    },
+];
+
+    const dataFC_EVC = [
+
+      
+        {
+            name: <span>{tagNameFC.InputPressure}</span>,
+            FC1901: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure}>{formatValue(FC_01_Current_Values_Static_Pressure)}</span>,
+            FC1902: <span style={combineCss.CSSEVC_02_Pressure}>{formatValue(EVC_02_Pressure)}</span>,
+        },
         {
             name: <span>{tagNameFC.Temperature}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Current_Values_Temperature}>{FC_01_Current_Values_Temperature}</span>,
-            FC1902: <span style={combineCss.CSSEVC_02_Temperature}>{EVC_02_Temperature}</span>,
-
+            FC1901: <span style={combineCss.CSSFC_01_Current_Values_Temperature}>{formatValue(FC_01_Current_Values_Temperature)}</span>,
+            FC1902: <span style={combineCss.CSSEVC_02_Temperature}>{formatValue(EVC_02_Temperature)}</span>,
         },
         {
             name: <span>{tagNameFC.SVF}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate}>{FC_01_Current_Values_Flow_Rate}</span>,
-            FC1902: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition}>{EVC_02_Flow_at_Base_Condition}</span>,
-
+            FC1901: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate}>{formatValue(FC_01_Current_Values_Flow_Rate)}</span>,
+            FC1902: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition}>{formatValue(EVC_02_Flow_at_Base_Condition)}</span>,
         },
         {
             name: <span>{tagNameFC.GVF}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>{FC_01_Current_Values_Uncorrected_Flow_Rate}</span>,
-            FC1902: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition}>{EVC_02_Flow_at_Measurement_Condition}</span>,
-
+            FC1901: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>{formatValue(FC_01_Current_Values_Uncorrected_Flow_Rate)}</span>,
+            FC1902: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition}>{formatValue(EVC_02_Flow_at_Measurement_Condition)}</span>,
         },
         {
             name: <span>{tagNameFC.SVA}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume}>{FC_01_Accumulated_Values_Volume}</span>,
-            FC1902: <span style={combineCss.CSSEVC_02_Volume_at_Base_Condition}>{EVC_02_Volume_at_Base_Condition}</span>,
-
+            FC1901: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume}>{formatValue(FC_01_Accumulated_Values_Volume)}</span>,
+            FC1902: <span style={combineCss.CSSEVC_02_Volume_at_Base_Condition}>{formatValue(EVC_02_Volume_at_Base_Condition)}</span>,
         },
         {
             name: <span>{tagNameFC.GVA}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>{FC_01_Accumulated_Values_Uncorrected_Volume}</span>,
-            FC1902: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition}>{EVC_02_Volume_at_Measurement_Condition}</span>,
-
+            FC1901: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>{formatValue(FC_01_Accumulated_Values_Uncorrected_Volume)}</span>,
+            FC1902: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition}>{formatValue(EVC_02_Volume_at_Measurement_Condition)}</span>,
         },
-     
         {
             name: <span>{tagNameFC.VbToday}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Today_Values_Volume}>{FC_01_Today_Values_Volume}</span>,
-            FC1902: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day}>{EVC_02_Vb_of_Current_Day}</span>,
-
+            FC1901: <span style={combineCss.CSSFC_01_Today_Values_Volume}>{formatValue(FC_01_Today_Values_Volume)}</span>,
+            FC1902: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day}>{formatValue(EVC_02_Vb_of_Current_Day)}</span>,
         },
-        
         {
             name: <span>{tagNameFC.VmToday}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}>{FC_01_Today_Values_Uncorrected_Volume}</span>,
-            FC1902: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day}>{EVC_02_Vb_of_Current_Day}</span>,
-
+            FC1901: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}>{formatValue(FC_01_Today_Values_Uncorrected_Volume)}</span>,
+            FC1902: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day}>{formatValue(EVC_02_Vb_of_Current_Day)}</span>,
         },
         {
             name: <span>{tagNameFC.VbLastDay}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume}>{FC_01_Yesterday_Values_Volume}</span>,
-            FC1902: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day}>{EVC_02_Vb_of_Last_Day}</span>,
-
-
+            FC1901: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume}>{formatValue(FC_01_Yesterday_Values_Volume)}</span>,
+            FC1902: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day}>{formatValue(EVC_02_Vb_of_Last_Day)}</span>,
         },
         {
             name: <span>{tagNameFC.VmLastDay}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}>{FC_01_Yesterday_Values_Uncorrected_Volume}</span>,
-            FC1902: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day}>{EVC_02_Vm_of_Last_Day}</span>,
-
+            FC1901: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}>{formatValue(FC_01_Yesterday_Values_Uncorrected_Volume)}</span>,
+            FC1902: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day}>{formatValue(EVC_02_Vm_of_Last_Day)}</span>,
         },
-       
-     
-    ];
+
+            {
+                name: <span>{tagNameFC.EVC_02_Remain_Battery_Service_Life}</span>,
+                FC1902: <span style={combineCss.CSSEVC_02_Remain_Battery_Service_Life}>{EVC_02_Remain_Battery_Service_Life}</span>,
+    
+            },
+         
+        ];
+    
 
     
 
@@ -1859,24 +1994,20 @@ const dataFC = [
         {
             name: <span>{tagNameFC.FC_01_Lithium_Battery_Status}</span>,
             FC0: <span style={combineCss.CSSFC_Lithinum_Battery_Status}>{FC_01_Lithium_Battery_Status} {DataFC_01_Lithium_Battery_Status}</span>,
-
         },
         {
             name: <span>{tagNameFC.Battery_Voltage}</span>,
-            FC0: <span style={combineCss.CSSFC_01_Battery_Voltage}>{FC_01_Battery_Voltage}</span>,
-
+            FC0: <span style={combineCss.CSSFC_01_Battery_Voltage}>{formatValue(FC_01_Battery_Voltage)}</span>,
         },
         {
             name: <span>{tagNameFC.System_Voltage}</span>,
-            FC0: <span style={combineCss.CSSFC_01_System_Voltage}>{FC_01_System_Voltage}</span>,
-
+            FC0: <span style={combineCss.CSSFC_01_System_Voltage}>{formatValue(FC_01_System_Voltage)}</span>,
         },
         {
             name: <span>{tagNameFC.Charger_Voltage}</span>,
-            FC0: <span style={combineCss.CSSFC_01_Charger_Voltage}>{FC_01_Charger_Voltage}</span>,
-
+            FC0: <span style={combineCss.CSSFC_01_Charger_Voltage}>{formatValue(FC_01_Charger_Voltage)}</span>,
         },
-     
+        
 
     ]
     const dataPT = [
@@ -1884,7 +2015,7 @@ const dataFC = [
 
     {
         name: <span>Output Pressure PT-1103 (BarG)</span>,
-        FC1901: <span style={combineCss.CSSPT_1103}>{PT_1103}</span>,
+        FC1901: <span style={combineCss.CSSPT_1103}>{formatValue(PT_1103)}</span>,
 
     },
 ];
@@ -1982,9 +2113,9 @@ const dataFC = [
                         <div style={{  fontWeight: 500 , display:'flex',paddingRight:20}}>
                         {Conn_STTValue}
                         </div>
-                        <button onClick={handleShowMore} >
-                    {ShowMore ? <i  style={{fontSize:'1.5rem', cursor:'pointer'}} className="pi pi-arrow-up"></i>  : <i style={{fontSize:'1.5rem',cursor:'pointer'}} className="pi pi-arrow-down"></i>}
-                    </button>
+                        <div  onClick={handleShowMore} >
+                    {ShowMore ? <span style={{cursor:"pointer",  }}>{Up}</span>  : <span style={{cursor:"pointer"}}>{Down}</span>}
+                    </div>
                     </div>
                 </div>
 
@@ -1992,13 +2123,13 @@ const dataFC = [
 
 
 
-                <DataTable value={dataFC} size="small" selectionMode="single"> 
-                    <Column field="name" header="FC Parameter"></Column>
+                <DataTable value={dataFC_EVC} size="small" selectionMode="single"> 
+                    <Column field="name" header="FC & EVC Parameter"></Column>
 
      
                     <Column
                             field="FC1901"
-                            header={FC_Conn_STTValue === "1" ? (
+                            header={FC_01_Conn_STT === "1" ? (
 
                                 <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center',  position:'relative', right:30}}>
                                 {DotGreen} <p style={{marginLeft:5}}>FC-1101</p>
@@ -2058,7 +2189,7 @@ const dataFC = [
                         style={{display:'flex', justifyContent:'flex-end'}}
 
                             field="FC0"
-                            header={FC_Conn_STTValue === "1" ? (
+                            header={FC_01_Conn_STT === "1" ? (
 
                                 <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
                                 {DotGreen} <p style={{marginLeft:5}}>FC </p>
@@ -2107,7 +2238,7 @@ const dataFC = [
  
                 <Column
                         field="FC1901"
-                        header={FC_Conn_STTValue === "1" ? (
+                        header={FC_01_Conn_STT === "1" ? (
 
                             <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center',  position:'relative', right:30}}>
                             {DotGreen} <p style={{marginLeft:5}}>FC-1101</p>

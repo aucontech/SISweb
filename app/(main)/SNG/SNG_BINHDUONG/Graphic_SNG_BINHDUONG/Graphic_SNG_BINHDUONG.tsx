@@ -44,9 +44,7 @@ import { httpApi } from "@/api/http.api";
 import { Toast } from "primereact/toast";
 import { id_SNG_BinhDuong } from "@/app/(main)/data-table-device/ID-DEVICE/IdDevice";
 import { BlackTriangleRight } from "@/app/(main)/PRU/GraphicPRU/iconSVG";
-import AlarmMeiko from "@/layout/AlarmBell/AlarmMeiko";
 
-import AlarmSNG_HUNGYEN from "@/layout/AlarmBell/AlarmSNG_HUNGYEN";
 import { nameValue } from "@/app/(main)/SetupData/namValue";
 import BallValue02 from "../BallValueSNG_BINHDUONG/BallValue02";
 import BallValue03 from "../BallValueSNG_BINHDUONG/BallValue03";
@@ -99,239 +97,222 @@ export default function Graphic_SNG_BD() {
     const totalWidth = 50;
 
 
-    useEffect(() => {
-        ws.current = new WebSocket(url);
+//=====================================================================================
+  
+const [resetKey, setResetKey] = useState(0);
+const [isOnline, setIsOnline] = useState(navigator.onLine);
 
-        const obj1 = {
-            attrSubCmds: [],
-            tsSubCmds: [
-                {
-                    entityType: "DEVICE",
-                    entityId: id_SNG_BinhDuong,
-                    scope: "LATEST_TELEMETRY",
-                    cmdId: 1,
-                },
-            ],
-        };
-        const obj_PCV_PSV = {
-            entityDataCmds: [
-                {
-                    cmdId: 1,
-                    latestCmd: {
-                        keys: [
-                            {
-                                type: "ATTRIBUTE",
-                                key: "active",
-                            },
-                        ],
-                    },
-                    query: {
-                        entityFilter: {
-                            type: "singleEntity",
-                            singleEntity: {
-                                entityType: "DEVICE",
-                                id: id_SNG_BinhDuong,
-                            },
-                        },
-                        pageLink: {
-                            pageSize: 1,
-                            page: 0,
-                            sortOrder: {
-                                key: {
-                                    type: "ENTITY_FIELD",
-                                    key: "createdTime",
-                                },
-                                direction: "DESC",
-                            },
-                        },
-                        entityFields: [
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "name",
-                            },
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "label",
-                            },
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "additionalInfo",
-                            },
-                        ],
-                        latestValues: [
-                            {
-                                type: "ATTRIBUTE",
-                                key: "active",
-                            },
-                        ],
-                    },
-                },
-            ],
+const [cmdId, setCmdId] = useState(1); // Track cmdId for requests
+
+const connectWebSocket = (cmdId: number) => {
+    const token = localStorage.getItem('accessToken');
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+    ws.current = new WebSocket(url);
+    const obj1 = {
+        attrSubCmds: [],
+        tsSubCmds: [
+            {
+                entityType: "DEVICE",
+                entityId: id_SNG_BinhDuong,
+                scope: "LATEST_TELEMETRY",
+                cmdId: cmdId, // Use dynamic cmdId for new requests
+            },
+        ],
+    };
+
+    if (ws.current) {
+        ws.current.onopen = () => {
+            console.log("WebSocket connected");
+            setTimeout(() => {
+                ws.current?.send(JSON.stringify(obj1));
+            });
         };
 
-        if (ws.current) {
-            ws.current.onopen = () => {
-                console.log("WebSocket connected");
-                setTimeout(() => {
-                    ws.current?.send(JSON.stringify(obj1));
-                    ws.current?.send(JSON.stringify(obj_PCV_PSV));
-                });
-            };
+        ws.current.onclose = () => {
+            console.log("WebSocket connection closed.");
+        };
 
-            ws.current.onclose = () => {
-                console.log("WebSocket connection closed.");
-            };
-
-            return () => {
-                console.log("Cleaning up WebSocket connection.");
-                ws.current?.close();
-            };
-        }
-    }, []);
-
-    useEffect(() => {
-        if (ws.current) {
-            ws.current.onmessage = (event) => {
-                let dataReceived = JSON.parse(event.data);
-                if (dataReceived.update !== null) {
-                    setData([...data, dataReceived]);
-                    const formatValue = (value:any) => {
-                        return value !== null
-                            ? new Intl.NumberFormat('en-US', {
-                                  minimumFractionDigits: 2, // Đảm bảo có 2 chữ số sau dấu thập phân
-                                  maximumFractionDigits: 2, // Không nhiều hơn 2 chữ số thập phân
-                                  useGrouping: true, // Phân cách phần ngàn bằng dấu phẩy
-                              }).format(parseFloat(value))
-                            : "";
-                    };
-                    const keys = Object.keys(dataReceived.data);
-                    const stateMap: StateMap = {
-                  
-                        PT_2004: setPT_2004,
-                        PT_2005: setPT_2005,
-                        TT_2003: setTT_2003,
-                        TT_2004: setTT_2004,
-                        WB_1001: setWB_1001,
-                        TG_2005: setTG_2005,
-
-                        GD_2002: setGD_2002,
-                        GD_2003: setGD_2003,
-                        GD_2004: setGD_2004,
-
-                        GD_2005: setGD_2005,
-                        GD_2006: setGD_2006,
-
-
-                        TM_2002_SNG: setTM_2002_SNG,
-                    
-                        TM_2003_SNG: setTM_2003_SNG,
-
-
-                        TOTAL_SNG: setTOTAL_SNG,
-                  
-                        
-                        GD1_STATUS: setGD1_STATUS,
-                        GD2_STATUS: setGD2_STATUS,
-                        GD3_STATUS: setGD3_STATUS,
-                        GD4_STATUS: setGD4_STATUS,
-                        GD5_STATUS: setGD5_STATUS,
-
-
-                        ESD: setESD,
-                        HR_BC: setHR_BC,
-                        SD: setSD,
-                        VAPORIZER_1: setVAPORIZER_1,
-                        VAPORIZER_2: setVAPORIZER_2,
-                        VAPORIZER_3: setVAPORIZER_3,
-
-                        VAPORIZER_4: setVAPORIZER_4,
-                        COOLING_V: setCOOLING_V,
-                        FCV_2001: setFCV_2001,
-
-
-
-
-                    
-                        HV_1001: setHV_1001,
-                        RATIO_MODE: setRATIO_MODE,
-                        FCV_MODE: setFCV_MODE,
-                        TOTAL_CNG: setTOTAL_CNG,
-
-                        TM2002_CNG: setTM2002_CNG,
-                        TM2003_CNG: setTM2003_CNG,
-                        WB_Setpoint: setWB_Setpoint,
-                        WIS_Calorimeter: setWIS_Calorimeter,
-                        CVS_Calorimeter: setCVS_Calorimeter,
-
-                        SG_Calorimeter: setSG_Calorimeter,
-
+        ws.current.onmessage = (event) => {
+            let dataReceived = JSON.parse(event.data);
+            if (dataReceived.update !== null) {
+                setData(prevData => [...prevData, dataReceived]);
                
+                const keys = Object.keys(dataReceived.data);
+                const stateMap: StateMap = {
+              
+                    PT_2004: setPT_2004,
+                    PT_2005: setPT_2005,
+                    TT_2003: setTT_2003,
+                    TT_2004: setTT_2004,
+                    WB_1001: setWB_1001,
+                    TG_2005: setTG_2005,
 
-                    };
-                    const valueStateMap: ValueStateMap = {
-                        PLC_Conn_STT: setPLC_STTValue,
-                    };
+                    GD_2002: setGD_2002,
+                    GD_2003: setGD_2003,
+                    GD_2004: setGD_2004,
 
-                    const stateMap2: StateMap2 = { 
-                        SDV_2004: setSDV_2004,
-                        SDV_2003: setSDV_2003,
-                        TD_4072_Conn_STT: setTD_4072_Conn_STT,
-                        PLC_Conn_STT: setPLC_Conn_STT,
-                        PERCENT_LPG: setPERCENT_LPG,
-                        PERCENT_AIR: setPERCENT_AIR,
+                    GD_2005: setGD_2005,
+                    GD_2006: setGD_2006,
+
+
+                    TM_2002_SNG: setTM_2002_SNG,
+                
+                    TM_2003_SNG: setTM_2003_SNG,
+
+
+                    TOTAL_SNG: setTOTAL_SNG,
+              
+                    
+                    GD1_STATUS: setGD1_STATUS,
+                    GD2_STATUS: setGD2_STATUS,
+                    GD3_STATUS: setGD3_STATUS,
+                    GD4_STATUS: setGD4_STATUS,
+                    GD5_STATUS: setGD5_STATUS,
+
+
+                    ESD: setESD,
+                    HR_BC: setHR_BC,
+                    SD: setSD,
+                    VAPORIZER_1: setVAPORIZER_1,
+                    VAPORIZER_2: setVAPORIZER_2,
+                    VAPORIZER_3: setVAPORIZER_3,
+
+                    VAPORIZER_4: setVAPORIZER_4,
+                    COOLING_V: setCOOLING_V,
+                    FCV_2001: setFCV_2001,
+
+
+
+
+                
+                    HV_1001: setHV_1001,
+                    RATIO_MODE: setRATIO_MODE,
+                    FCV_MODE: setFCV_MODE,
+                    TOTAL_CNG: setTOTAL_CNG,
+
+                    TM_2002_CNG: setTM2002_CNG,
+                    TM_2003_CNG: setTM2003_CNG,
+                    WB_Setpoint: setWB_Setpoint,
+                    WIS_Calorimeter: setWIS_Calorimeter,
+                    CVS_Calorimeter: setCVS_Calorimeter,
+
+                    SG_Calorimeter: setSG_Calorimeter,
+
+           
+                    SDV_2004: setSDV_2004,
+                    SDV_2003: setSDV_2003,
+                    TD_4072_Conn_STT: setTD_4072_Conn_STT,
+                    PLC_Conn_STT: setPLC_Conn_STT,
+                    PERCENT_LPG: setPERCENT_LPG,
+                    PERCENT_AIR: setPERCENT_AIR,
+                };
+                const valueStateMap: ValueStateMap = {
+                    PLC_Conn_STT: setPLC_STTValue,
+                };
+
+              
+                keys.forEach((key) => {
+                 
+                    if (stateMap[key]) {
+                        const value = dataReceived.data[key][0][1];
+                        const slicedValue = value;
+                        stateMap[key]?.(slicedValue);
                     }
-                    keys.forEach((key) => {
-                        if (stateMap[key]) {
-                            const value = dataReceived.data[key][0][1];
-                            const formattedValue = formatValue(value);
-                            stateMap[key]?.(formattedValue); 
-                        }
-                        if (stateMap2[key]) {
-                            const value = dataReceived.data[key][0][1];
-                            const slicedValue = value;
-                            stateMap2[key]?.(slicedValue);
-                        }
-                        if (valueStateMap[key]) {
-                            const value = dataReceived.data[key][0][0];
+                    if (valueStateMap[key]) {
+                        const value = dataReceived.data[key][0][0];
 
-                            const date = new Date(value);
-                            const formattedDate = `${date
-                                .getDate()
-                                .toString()
-                                .padStart(2, "0")}-${(date.getMonth() + 1)
-                                .toString()
-                                .padStart(2, "0")}-${date.getFullYear()} ${date
-                                .getHours()
-                                .toString()
-                                .padStart(2, "0")}:${date
-                                .getMinutes()
-                                .toString()
-                                .padStart(2, "0")}:${date
-                                .getSeconds()
-                                .toString()
-                                .padStart(2, "0")}`;
-                            valueStateMap[key]?.(formattedDate); // Set formatted timestamp
-                        }
-                    });
-                }
+                        const date = new Date(value);
+                        const formattedDate = `${date
+                            .getDate()
+                            .toString()
+                            .padStart(2, "0")}-${(date.getMonth() + 1)
+                            .toString()
+                            .padStart(2, "0")}-${date.getFullYear()} ${date
+                            .getHours()
+                            .toString()
+                            .padStart(2, "0")}:${date
+                            .getMinutes()
+                            .toString()
+                            .padStart(2, "0")}:${date
+                            .getSeconds()
+                            .toString()
+                            .padStart(2, "0")}`;
+                        valueStateMap[key]?.(formattedDate); // Set formatted timestamp
+                    }
+                });
+            }
 
-                if (dataReceived.data && dataReceived.data.data?.length > 0) {
-                    const ballValue =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.active.value;
-                    setActive(ballValue);
-                } else if (
-                    dataReceived.update &&
-                    dataReceived.update?.length > 0
-                ) {
-                    const updatedData =
-                        dataReceived.update[0].latest.ATTRIBUTE.setActive.value;
-                    setActive(updatedData);
-                }
-                fetchData();
-            };
+            if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                const ballValue =
+                    dataReceived.data.data[0].latest.ATTRIBUTE.active.value;
+                setActive(ballValue);
+            } else if (
+                dataReceived.update &&
+                dataReceived.update?.length > 0
+            ) {
+                const updatedData =
+                    dataReceived.update[0].latest.ATTRIBUTE.setActive.value;
+                setActive(updatedData);
+            }
+            fetchData();
+        };
+
+    }
+};
+useEffect(() => {
+    fetchData()
+},[isOnline])
+
+useEffect(() => {
+    if (isOnline) {
+        // Initial connection
+        connectWebSocket(cmdId);
+        fetchData()
+    }
+
+    return () => {
+        if (ws.current) {
+            console.log("Cleaning up WebSocket connection.");
+            ws.current.close();
         }
-    }, [data]);
+    };
+}, [isOnline, cmdId]); // Reconnect if isOnline or cmdId changes
 
+
+useEffect(() => {
+    const handleOnline = () => {
+        setIsOnline(true);
+        console.log('Back online. Reconnecting WebSocket with new cmdId.');
+        setCmdId(prevCmdId => prevCmdId + 1); // Increment cmdId on reconnect
+        fetchData()
+
+    };
+
+    const handleOffline = () => {
+        setIsOnline(false);
+        console.log('Offline detected. Closing WebSocket.');
+        if (ws.current) {
+            ws.current.close(); // Close WebSocket when offline
+        }
+    };
+
+    // Attach event listeners for online/offline status
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+        // Cleanup event listeners on unmount
+        window.removeEventListener('online', handleOnline);
+        window.removeEventListener('offline', handleOffline);
+    };
+}, []);
+
+
+//============================GD =============================
+
+
+
+    
     const ValueGas = {
         SVF: "SVF",
         GVF: "GVF",
@@ -747,7 +728,10 @@ export default function Graphic_SNG_BD() {
                 (item: any) => item.key === "TD_4072_Conn_STT_Maintain"
             );
 
-
+            const Active = res.data.find(
+                (item: any) => item.key === "active"
+            );
+            setActive(Active?.value || false);
  // =================================================================================================================== 
 
 
@@ -2005,7 +1989,19 @@ export default function Graphic_SNG_BD() {
         
                         
                              // =================================================================================================================== 
-    useEffect(() => {
+ 
+ 
+                             const formatValue = (value:any) => {
+                                return value !== null
+                                    ? new Intl.NumberFormat('en-US', {
+                                          maximumFractionDigits: 2,
+                                          useGrouping: true, 
+                                      }).format(parseFloat(value))
+                                    : "";
+                            };
+                        
+ 
+                             useEffect(() => {
         const updatedNodes = nodes.map((node) => {
             // if (node.id === "timeUpdate3") {
             //     return {
@@ -2117,7 +2113,7 @@ export default function Graphic_SNG_BD() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {formatValue(PT_2004)}
                                     </p>
                                 </div>
                                 <p
@@ -2180,7 +2176,7 @@ export default function Graphic_SNG_BD() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {formatValue(PT_2005)}
                                     </p>
                                 </div>
                                 <p
@@ -2245,7 +2241,7 @@ export default function Graphic_SNG_BD() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {formatValue(TM_2002_SNG)}
                                     </p>
                                 </div>
                                 <p
@@ -2310,7 +2306,7 @@ export default function Graphic_SNG_BD() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {formatValue(TM_2003_SNG)}
                                     </p>
                                 </div>
                                 <p
@@ -2373,7 +2369,7 @@ export default function Graphic_SNG_BD() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {formatValue(TT_2003)}
                                     </p>
                                 </div>
                                 <p
@@ -2436,7 +2432,7 @@ export default function Graphic_SNG_BD() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {formatValue(TT_2004)}
                                     </p>
                                 </div>
                                 <p
@@ -2517,7 +2513,7 @@ export default function Graphic_SNG_BD() {
                                             marginLeft: 5,
                                         }}
                                     >
-                                        {FCV_2001}
+                                        {formatValue(FCV_2001)}
                                     </p>
                                 </div>
                                 <p
@@ -2581,7 +2577,7 @@ export default function Graphic_SNG_BD() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {formatValue(WB_1001)}
                                     </p>
                                 </div>
                                 <p
@@ -2654,7 +2650,7 @@ export default function Graphic_SNG_BD() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {TOTAL_SNG}
+                                        {formatValue(TOTAL_SNG)}
                                     </p>
                                     <p
                                         style={{
@@ -2726,7 +2722,7 @@ export default function Graphic_SNG_BD() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {formatValue(WB_Setpoint)}
                                     </p>
                                     <p
                                         style={{
@@ -2796,7 +2792,7 @@ export default function Graphic_SNG_BD() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {formatValue(HV_1001)}
                                     </p>
                                     <p
                                         style={{
@@ -4741,7 +4737,6 @@ export default function Graphic_SNG_BD() {
             data: {
                 label: (
                     <div>
-                        <AlarmSNG_HUNGYEN />
                     </div>
                 ),
             },
@@ -5113,6 +5108,7 @@ export default function Graphic_SNG_BD() {
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
             </Button> */}
             <div
+            key={resetKey}
                 style={{
                     // width: "100%",
                     height: "100%",

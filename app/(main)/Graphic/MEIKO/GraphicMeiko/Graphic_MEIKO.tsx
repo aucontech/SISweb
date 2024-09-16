@@ -42,7 +42,7 @@ import { httpApi } from "@/api/http.api";
 import { Toast } from "primereact/toast";
 import { id_THACHTHAT } from "@/app/(main)/data-table-device/ID-DEVICE/IdDevice";
 import { BlackTriangleRight } from "@/app/(main)/PRU/GraphicPRU/iconSVG";
-import AlarmMeiko from "@/layout/AlarmBell/AlarmMeiko";
+import { formatDate } from "@/app/(main)/dateUtils/dateUtils";
 
 interface StateMap {
     [key: string]:
@@ -77,8 +77,7 @@ export default function Graphic_MEIKO() {
     const token = readToken();
     const [data, setData] = useState<any[]>([]);
 
-    const ws = useRef<WebSocket | null>(null);
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+
 
     const toast = useRef<Toast>(null);
 
@@ -91,76 +90,71 @@ export default function Graphic_MEIKO() {
 
     const [PLC_STTValue, setPLC_STTValue] = useState<any>();
     const [alarmMessage, setAlarmMessage] = useState<string | null>(null);
+    const reconnectInterval = useRef<NodeJS.Timeout | null>(null);
+    const [isConnected, setIsConnected] = useState<boolean>(false);
 
-    useEffect(() => {
-        ws.current = new WebSocket(url);
+    
+    const ws = useRef<WebSocket | null>(null);
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+   
 
-        const obj1 = {
-            attrSubCmds: [],
-            tsSubCmds: [
-                {
-                    entityType: "DEVICE",
-                    entityId: id_THACHTHAT,
-                    scope: "LATEST_TELEMETRY",
-                    cmdId: 1,
-                },
-            ],
-        };
 
-        if (ws.current) {
-            ws.current.onopen = () => {
-                console.log("WebSocket connected");
-                setTimeout(() => {
-                    ws.current?.send(JSON.stringify(obj1));
-                });
-            };
+   //=====================================================================================
+  
+   const [resetKey, setResetKey] = useState(0);
+   const [isOnline, setIsOnline] = useState(navigator.onLine);
 
-            ws.current.onclose = () => {
-                console.log("WebSocket connection closed.");
-            };
+   const [cmdId, setCmdId] = useState(1); // Track cmdId for requests
 
-            return () => {
-                console.log("Cleaning up WebSocket connection.");
-                ws.current?.close();
-            };
-        }
-    }, []);
+   const connectWebSocket = (cmdId: number) => {
+       const token = localStorage.getItem('accessToken');
+       const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+       ws.current = new WebSocket(url);
+       const obj1 = {
+           attrSubCmds: [],
+           tsSubCmds: [
+               {
+                   entityType: "DEVICE",
+                   entityId: id_THACHTHAT,
+                   scope: "LATEST_TELEMETRY",
+                   cmdId: cmdId, // Use dynamic cmdId for new requests
+               },
+           ],
+       };
 
-    useEffect(() => {
-        if (ws.current) {
-            ws.current.onmessage = (event) => {
+       if (ws.current) {
+           ws.current.onopen = () => {
+               console.log("WebSocket connected");
+               setTimeout(() => {
+                   ws.current?.send(JSON.stringify(obj1));
+               });
+           };
+
+           ws.current.onclose = () => {
+               console.log("WebSocket connection closed.");
+           };
+
+           ws.current.onmessage = (event) => {
+            try {
                 let dataReceived = JSON.parse(event.data);
                 if (dataReceived.update !== null) {
-                    setData([...data, dataReceived]);
-                    const formatValue = (value: any) => {
-                        return value !== null
-                            ? new Intl.NumberFormat("en-US", {
-                                  minimumFractionDigits: 2, // Đảm bảo có 2 chữ số sau dấu thập phân
-                                  maximumFractionDigits: 2, // Không nhiều hơn 2 chữ số thập phân
-                                  useGrouping: true, // Phân cách phần ngàn bằng dấu phẩy
-                              }).format(parseFloat(value))
-                            : "";
-                    };
+                    setData(prevData => [...prevData, dataReceived]);
+
+
                     const keys = Object.keys(dataReceived.data);
-                    const stateMap: StateMap = {
+                    const stateMap: StateMap =  {
                         Tank_01_Level: setTank_01_Level,
                         Tank_01_Volume: setTank_01_Volume,
                         Tank_01_Mass: setTank_01_Mass,
                         Tank_PT_301: setTank_PT_301,
                         Tank_TT_301: setTank_TT_301,
-
                         Pipe_Temp: setPipe_Temp,
                         Pipe_Press: setPipe_Press,
-
                         Flow_Meter_Total: setFlow_Meter_Total,
                         Consumption_Flow: setConsumption_Flow,
                         Flow_Velocity: setFlow_Velocity,
-
                         V1_Flow_Meter: setV1_Flow_Meter,
                         V2_Flow_Meter: setV2_Flow_Meter,
-                        PLC_Conn_STT: setPLC_STT,
-                    };
-                    const stateMap2: StateMap2 = {
                         GD_101_High: setGD_101_High,
                         GD_101_Low: setGD_101_Low,
                         GD_102_High: setGD_102_High,
@@ -173,50 +167,83 @@ export default function Graphic_MEIKO() {
                         VP_302: setVP_302,
                         VP_303: setVP_303,
                         PLC_Conn_STT: setPLC_Conn_STT,
+
                     };
 
                     const valueStateMap: ValueStateMap = {
                         PLC_Conn_STT: setPLC_STTValue,
                     };
+
                     keys.forEach((key) => {
                         if (stateMap[key]) {
                             const value = dataReceived.data[key][0][1];
-                            const formattedValue = formatValue(value);
-                            stateMap[key]?.(formattedValue);
-                        }
-
-                        if (stateMap2[key]) {
-                            const value = dataReceived.data[key][0][1];
-                            const slicedValue = value;
-                            stateMap2[key]?.(slicedValue);
+                            stateMap[key]?.(value);
                         }
                         if (valueStateMap[key]) {
                             const value = dataReceived.data[key][0][0];
-
-                            const date = new Date(value);
-                            const formattedDate = `${date
-                                .getDate()
-                                .toString()
-                                .padStart(2, "0")}-${(date.getMonth() + 1)
-                                .toString()
-                                .padStart(2, "0")}-${date.getFullYear()} ${date
-                                .getHours()
-                                .toString()
-                                .padStart(2, "0")}:${date
-                                .getMinutes()
-                                .toString()
-                                .padStart(2, "0")}:${date
-                                .getSeconds()
-                                .toString()
-                                .padStart(2, "0")}`;
-                            valueStateMap[key]?.(formattedDate); // Set formatted timestamp
+                            const formattedDate = formatDate(value)
+                            valueStateMap[key]?.(formattedDate);
                         }
                     });
                 }
-                fetchData();
-            };
-        }
-    }, [data]);
+            } catch (error) {
+                console.error("Error handling WebSocket message:", error);
+            }
+        };
+
+       }
+   };
+   useEffect(() => {
+       fetchData()
+   },[isOnline])
+   
+   useEffect(() => {
+       if (isOnline) {
+           // Initial connection
+           connectWebSocket(cmdId);
+           fetchData()
+       }
+
+       return () => {
+           if (ws.current) {
+               console.log("Cleaning up WebSocket connection.");
+               ws.current.close();
+           }
+       };
+   }, [isOnline, cmdId]); // Reconnect if isOnline or cmdId changes
+   
+
+   useEffect(() => {
+       const handleOnline = () => {
+           setIsOnline(true);
+           console.log('Back online. Reconnecting WebSocket with new cmdId.');
+           setCmdId(prevCmdId => prevCmdId + 1); // Increment cmdId on reconnect
+           fetchData()
+
+       };
+
+       const handleOffline = () => {
+           setIsOnline(false);
+           console.log('Offline detected. Closing WebSocket.');
+           if (ws.current) {
+               ws.current.close(); // Close WebSocket when offline
+           }
+       };
+
+       // Attach event listeners for online/offline status
+       window.addEventListener('online', handleOnline);
+       window.addEventListener('offline', handleOffline);
+
+       return () => {
+           // Cleanup event listeners on unmount
+           window.removeEventListener('online', handleOnline);
+           window.removeEventListener('offline', handleOffline);
+       };
+   }, []);
+
+
+   //============================GD =============================
+
 
     const ValueGas = {
         SVF: "SVF",
@@ -1102,13 +1129,19 @@ useEffect(() => {
         }
     }, [PLC_Conn_STT, PLC_Conn_STT_High, PLC_Conn_STT_Low, maintainPLC_Conn_STT]);
      
- 
-     
-     
 
+     
+  
 
 //======================================================================================================================
-
+const formatValue = (value:any) => {
+    return value !== null
+        ? new Intl.NumberFormat('en-US', {
+              maximumFractionDigits: 2,
+              useGrouping: true, 
+          }).format(parseFloat(value))
+        : "";
+};
     useEffect(() => {
         const updatedNodes = nodes.map((node) => {
             if (node.id === "Tank_01_Level") {
@@ -1158,7 +1191,7 @@ useEffect(() => {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {Tank_01_Level}
+                                        {formatValue(Tank_01_Level)}
                                     </p>
                                 </div>
                                 <p
@@ -1222,7 +1255,7 @@ useEffect(() => {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {Tank_01_Volume}
+                                        {formatValue(Tank_01_Volume)}
                                     </p>
                                 </div>
                                 <p
@@ -1287,7 +1320,7 @@ useEffect(() => {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {Tank_01_Mass}
+                                        {formatValue(Tank_01_Mass)}
                                     </p>
                                 </div>
                                 <p
@@ -1351,7 +1384,7 @@ useEffect(() => {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {Tank_PT_301}
+                                        {formatValue(Tank_PT_301)}
                                     </p>
                                 </div>
                                 <p
@@ -1416,7 +1449,7 @@ useEffect(() => {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {Tank_TT_301}
+                                        {formatValue(Tank_TT_301)}
                                     </p>
                                 </div>
                                 <p
@@ -1479,7 +1512,7 @@ useEffect(() => {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {Pipe_Temp}
+                                        {formatValue(Pipe_Temp)}
                                     </p>
                                 </div>
                                 <p
@@ -1543,7 +1576,7 @@ useEffect(() => {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {Pipe_Press}
+                                        {formatValue(Pipe_Press)}
                                     </p>
                                 </div>
                                 <p
@@ -1610,7 +1643,7 @@ useEffect(() => {
                                 </p>
                                 <p style={{ color: colorData }}>
                                     {" "}
-                                    {PCV_6001B}{" "}
+                                    {formatValue(PCV_6001B)}{" "}
                                 </p>
                                 <p style={{ color: colorNameValue }}>Bar</p>
                             </div>
@@ -1639,7 +1672,7 @@ useEffect(() => {
                                 </p>
                                 <p style={{ color: colorData }}>
                                     {" "}
-                                    {PCV_6002A}{" "}
+                                    {formatValue(PCV_6002A)}{" "}
                                 </p>
                                 <p style={{ color: colorNameValue }}>Bar</p>
                             </div>
@@ -1668,7 +1701,7 @@ useEffect(() => {
                                 </p>
                                 <p style={{ color: colorData }}>
                                     {" "}
-                                    {PCV_6002B}{" "}
+                                    {formatValue(PCV_6002B)}{" "}
                                 </p>
                                 <p style={{ color: colorNameValue }}>Bar</p>
                             </div>
@@ -1702,7 +1735,7 @@ useEffect(() => {
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>TT-301</p>
-                                <p style={{ color: colorData }}> {Pipe_Temp}</p>
+                                <p style={{ color: colorData }}> {formatValue(Pipe_Temp)}</p>
                                 <p style={{ color: colorNameValue }}>°C</p>
                             </div>
                         ),
@@ -1735,7 +1768,7 @@ useEffect(() => {
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>PT-301</p>
-                                <p style={{ color: colorData }}>{Pipe_Press}</p>
+                                <p style={{ color: colorData }}>{formatValue(Pipe_Press)}</p>
                                 <p style={{ color: colorNameValue }}>Bar</p>
                             </div>
                         ),
@@ -2085,7 +2118,7 @@ useEffect(() => {
                                 <p style={{ color: colorNameValue }}>Total</p>
                                 <p style={{ color: colorData }}>
                                     {" "}
-                                    {Flow_Meter_Total}
+                                    {formatValue(Flow_Meter_Total)}
                                 </p>
                                 <p style={{ color: colorNameValue }}>m³</p>
                             </div>
@@ -2123,7 +2156,7 @@ useEffect(() => {
                                 </p>
                                 <p style={{ color: colorData }}>
                                     {" "}
-                                    {Flow_Velocity}
+                                    {formatValue(Flow_Velocity)}
                                 </p>
                                 <p style={{ color: colorNameValue }}>m³/h</p>
                             </div>
@@ -2162,7 +2195,7 @@ useEffect(() => {
                                 </p>
                                 <p style={{ color: colorData }}>
                                     {" "}
-                                    {Consumption_Flow}
+                                    {formatValue(Consumption_Flow)}
                                 </p>
                                 <p style={{ color: colorNameValue }}>m³</p>
                             </div>
@@ -3448,7 +3481,6 @@ useEffect(() => {
             data: {
                 label: (
                     <div>
-                        <AlarmMeiko />
                     </div>
                 ),
             },
@@ -3775,7 +3807,10 @@ useEffect(() => {
             {/* <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
             </Button> */}
+
             <div
+
+            key={resetKey}
                 style={{
                     // width: "100%",
                     height: "100%",

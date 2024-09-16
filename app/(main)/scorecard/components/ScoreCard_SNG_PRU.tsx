@@ -21,6 +21,12 @@ interface ValueStateMap {
         | React.Dispatch<React.SetStateAction<string | null>>
         | undefined;
 }
+
+interface StateMap2 {
+    [key: string]:
+        | React.Dispatch<React.SetStateAction<string | null>>
+        | undefined;
+}
 export default function ScoreCard_SNG_PRU() {
     const [data, setData] = useState<any[]>([]);
 
@@ -82,7 +88,7 @@ export default function ScoreCard_SNG_PRU() {
                 let dataReceived = JSON.parse(evt.data);
                 if (dataReceived.update !== null) {
                     setData([...data, dataReceived]);
-
+                 
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
                   
@@ -2855,9 +2861,8 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
                     </DataTable>
             </div>
 
-            {/* <div>
-                <SetAttribute1/>
-            </div> */}
+            <br />
+            <br />
         </div>
     );
 }

@@ -15,8 +15,10 @@ import {
     ArrowRight,
     BlackTriangle,
     DownArrow,
+    FIQ,
     GD,
     GaugeTemperature,
+    PCV,
     PTV,
     SVD_NC,
     SVD_NO,
@@ -29,9 +31,9 @@ import { id_CNG_HungYen } from "../../data-table-device/ID-DEVICE/IdDevice";
 import { readToken } from "@/service/localStorage";
 import { httpApi } from "@/api/http.api";
 import { Toast } from "primereact/toast";
-import AlarmCNG_HUNGYEN from "@/layout/AlarmBell/AlarmCNG_HUNGYEN";
 import { nameValue } from "../../SetupData/namValue";
 import "./ForCssGraphic.css";
+import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 
 interface StateMap {
     [key: string]:
@@ -90,356 +92,397 @@ export default function Graphic_CNG_HUNGYEN() {
     const [PLC_STT, setPLC_STT] = useState<string | null>(null);
     const [alarmMessage, setAlarmMessage] = useState<string | null>(null);
 
-    useEffect(() => {
-        ws.current = new WebSocket(url);
+   //=====================================================================================
+  
+   const [resetKey, setResetKey] = useState(0);
+   const [isOnline, setIsOnline] = useState(navigator.onLine);
 
-        const obj1 = {
-            attrSubCmds: [],
-            tsSubCmds: [
-                {
-                    entityType: "DEVICE",
-                    entityId: id_CNG_HungYen,
-                    scope: "LATEST_TELEMETRY",
-                    cmdId: 1,
-                },
-            ],
-        };
+   const [cmdId, setCmdId] = useState(1); // Track cmdId for requests
 
-        const obj_PCV_PSV = {
-            entityDataCmds: [
-                {
-                    cmdId: 1,
-                    latestCmd: {
-                        keys: [
-                            {
-                                type: "ATTRIBUTE",
-                                key: "PCV_3001A",
-                            },
-                            {
-                                type: "ATTRIBUTE",
-                                key: "PCV_3001B",
-                            },
-                            {
-                                type: "ATTRIBUTE",
-                                key: "PCV_3002A",
-                            },
-                            {
-                                type: "ATTRIBUTE",
-                                key: "PCV_3002B",
-                            },
+   const connectWebSocket = (cmdId: number) => {
+       const token = localStorage.getItem('accessToken');
+       const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+       ws.current = new WebSocket(url);
+       const obj1 = {
+           attrSubCmds: [],
+           tsSubCmds: [
+               {
+                   entityType: "DEVICE",
+                   entityId: id_CNG_HungYen,
+                   scope: "LATEST_TELEMETRY",
+                   cmdId: cmdId, // Use dynamic cmdId for new requests
+               },
+           ],
+       };
 
-                            {
-                                type: "ATTRIBUTE",
-                                key: "PSV_3001A",
-                            },
-                            {
-                                type: "ATTRIBUTE",
-                                key: "PSV_3001B",
-                            },
-                            {
-                                type: "ATTRIBUTE",
-                                key: "PSV_3002A",
-                            },
-                            {
-                                type: "ATTRIBUTE",
-                                key: "PSV_3002B",
-                            },
-                        ],
-                    },
-                    query: {
-                        entityFilter: {
-                            type: "singleEntity",
-                            singleEntity: {
-                                entityType: "DEVICE",
-                                id: id_CNG_HungYen,
-                            },
+       const obj_PCV_PSV = {
+        entityDataCmds: [
+            {
+                cmdId: 1,
+                latestCmd: {
+                    keys: [
+                        {
+                            type: "ATTRIBUTE",
+                            key: "PCV_3001A",
                         },
-                        pageLink: {
-                            pageSize: 1,
-                            page: 0,
-                            sortOrder: {
-                                key: {
-                                    type: "ENTITY_FIELD",
-                                    key: "createdTime",
-                                },
-                                direction: "DESC",
-                            },
+                        {
+                            type: "ATTRIBUTE",
+                            key: "PCV_3001B",
                         },
-                        entityFields: [
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "name",
-                            },
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "label",
-                            },
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "additionalInfo",
-                            },
-                        ],
-                        latestValues: [
-                            {
-                                type: "ATTRIBUTE",
-                                key: "PCV_3001A",
-                            },
-                            {
-                                type: "ATTRIBUTE",
-                                key: "PCV_3001B",
-                            },
-                            {
-                                type: "ATTRIBUTE",
-                                key: "PCV_3002A",
-                            },
-                            {
-                                type: "ATTRIBUTE",
-                                key: "PCV_3002B",
-                            },
+                        {
+                            type: "ATTRIBUTE",
+                            key: "PCV_3002A",
+                        },
+                        {
+                            type: "ATTRIBUTE",
+                            key: "PCV_3002B",
+                        },
 
-                            {
-                                type: "ATTRIBUTE",
-                                key: "PSV_3001A",
-                            },
-                            {
-                                type: "ATTRIBUTE",
-                                key: "PSV_3001B",
-                            },
-                            {
-                                type: "ATTRIBUTE",
-                                key: "PSV_3002A",
-                            },
-                            {
-                                type: "ATTRIBUTE",
-                                key: "PSV_3002B",
-                            },
-                        ],
-                    },
+                        {
+                            type: "ATTRIBUTE",
+                            key: "PSV_3001A",
+                        },
+                        {
+                            type: "ATTRIBUTE",
+                            key: "PSV_3001B",
+                        },
+                        {
+                            type: "ATTRIBUTE",
+                            key: "PSV_3002A",
+                        },
+                        {
+                            type: "ATTRIBUTE",
+                            key: "PSV_3002B",
+                        },
+                    ],
                 },
-            ],
-        };
+                query: {
+                    entityFilter: {
+                        type: "singleEntity",
+                        singleEntity: {
+                            entityType: "DEVICE",
+                            id: id_CNG_HungYen,
+                        },
+                    },
+                    pageLink: {
+                        pageSize: 1,
+                        page: 0,
+                        sortOrder: {
+                            key: {
+                                type: "ENTITY_FIELD",
+                                key: "createdTime",
+                            },
+                            direction: "DESC",
+                        },
+                    },
+                    entityFields: [
+                        {
+                            type: "ENTITY_FIELD",
+                            key: "name",
+                        },
+                        {
+                            type: "ENTITY_FIELD",
+                            key: "label",
+                        },
+                        {
+                            type: "ENTITY_FIELD",
+                            key: "additionalInfo",
+                        },
+                    ],
+                    latestValues: [
+                        {
+                            type: "ATTRIBUTE",
+                            key: "PCV_3001A",
+                        },
+                        {
+                            type: "ATTRIBUTE",
+                            key: "PCV_3001B",
+                        },
+                        {
+                            type: "ATTRIBUTE",
+                            key: "PCV_3002A",
+                        },
+                        {
+                            type: "ATTRIBUTE",
+                            key: "PCV_3002B",
+                        },
 
-        if (ws.current) {
-            ws.current.onopen = () => {
-                console.log("WebSocket connected");
-                setTimeout(() => {
-                    ws.current?.send(JSON.stringify(obj1));
-                    ws.current?.send(JSON.stringify(obj_PCV_PSV));
+                        {
+                            type: "ATTRIBUTE",
+                            key: "PSV_3001A",
+                        },
+                        {
+                            type: "ATTRIBUTE",
+                            key: "PSV_3001B",
+                        },
+                        {
+                            type: "ATTRIBUTE",
+                            key: "PSV_3002A",
+                        },
+                        {
+                            type: "ATTRIBUTE",
+                            key: "PSV_3002B",
+                        },
+                    ],
+                },
+            },
+        ],
+    };
+
+       if (ws.current) {
+           ws.current.onopen = () => {
+               console.log("WebSocket connected");
+               setTimeout(() => {
+                   ws.current?.send(JSON.stringify(obj1));
+                   ws.current?.send(JSON.stringify(obj_PCV_PSV));
+
+               });
+           };
+
+           ws.current.onclose = () => {
+               console.log("WebSocket connection closed.");
+           };
+
+           ws.current.onmessage = (event) => {
+            let dataReceived = JSON.parse(event.data);
+            if (dataReceived.update !== null) {
+                setData(prevData => [...prevData, dataReceived]);
+
+                
+                const keys = Object.keys(dataReceived.data);
+                const stateMap: StateMap = {
+                    EVC_01_Flow_at_Base_Condition:
+                        setEVC_01_Flow_at_Base_Condition,
+                    EVC_01_Flow_at_Measurement_Condition:
+                        setEVC_01_Flow_at_Measurement_Condition,
+                    EVC_01_Volume_at_Base_Condition:
+                        setEVC_01_Volume_at_Base_Condition,
+                    EVC_01_Volume_at_Measurement_Condition:
+                        setEVC_01_Volume_at_Measurement_Condition,
+                    EVC_01_Pressure: setEVC_01_Pressure,
+
+                    EVC_01_Temperature: setEVC_01_Temperature,
+                    EVC_01_Vm_of_Last_Day: setEVC_01_Vm_of_Last_Day,
+                    EVC_01_Vb_of_Last_Day: setEVC_01_Vb_of_Last_Day,
+                    EVC_01_Vm_of_Current_Day: setEVC_01_Vm_of_Current_Day,
+                    EVC_01_Vb_of_Current_Day: setEVC_01_Vb_of_Current_Day,
+
+                    EVC_01_Remain_Battery_Service_Life:
+                        setEVC_01_Remain_Battery_Service_Life,
+
+                    EVC_02_Flow_at_Base_Condition:
+                        setEVC_02_Flow_at_Base_Condition,
+                    EVC_02_Flow_at_Measurement_Condition:
+                        setEVC_02_Flow_at_Measurement_Condition,
+                    EVC_02_Volume_at_Base_Condition:
+                        setEVC_02_Volume_at_Base_Condition,
+                    EVC_02_Volume_at_Measurement_Condition:
+                        setEVC_02_Volume_at_Measurement_Condition,
+                    EVC_02_Pressure: setEVC_02_Pressure,
+
+                    EVC_02_Temperature: setEVC_02_Temperature,
+                    EVC_02_Vm_of_Last_Day: setEVC_02_Vm_of_Last_Day,
+                    EVC_02_Vb_of_Last_Day: setEVC_02_Vb_of_Last_Day,
+                    EVC_02_Vm_of_Current_Day: setEVC_02_Vm_of_Current_Day,
+                    EVC_02_Vb_of_Current_Day: setEVC_02_Vb_of_Current_Day,
+
+                    EVC_02_Remain_Battery_Service_Life:
+                        setEVC_02_Remain_Battery_Service_Life,
+
+                    PIT_3001A: setPIT_3001A,
+
+                    PIT_3001B: setPIT_3001B,
+                    PT_3001: setPT_3001,
+                    PT_3002: setPT_3002,
+                    PT_3003: setPT_3003,
+
+                    TT_3002: setTT_3002,
+                    TT_3001: setTT_3001,
+
+                    GD_3001: setGD_3001,
+
+                    Water_PG: setWater_PG,
+                    Water_LSW: setWater_LSW,
+                    PUMP_1: setPUMP_1,
+                    PUMP_2: setPUMP_2,
+                    HEATER_1: setHEATER_1,
+                    HEATER_2: setHEATER_2,
+
+                    BOILER: setBOILER,
+
+                    GD_STATUS: setGD_STATUS,
+
+                    HR_BC: setHR_BC,
+                    ESD_3001: setESD_3001,
+                    SD_3001: setSD_3001,
+                    SD_3002: setSD_3002,
+                    SDV_3001A: setSDV_3001A,
+                    SDV_3001B: setSDV_3001B,
+                    SDV_3002: setSDV_3002,
+                    PLC_Conn_STT: setPLC_Conn_STT,
+                    EVC_01_Conn_STT: setEVC_01_Conn_STT,
+                    EVC_02_Conn_STT: setEVC_02_Conn_STT,
+                };
+                const valueStateMap: ValueStateMap = {
+                    EVC_01_Conn_STT: setEVC_01_Conn_STTValue,
+                   
+                };
+                
+                keys.forEach((key) => {
+                  
+                    if (stateMap[key]) {
+                        const value = dataReceived.data[key][0][1];
+                        const slicedValue = value;
+                        stateMap[key]?.(slicedValue);
+                    }
+                    if (valueStateMap[key]) {
+                        const value = dataReceived.data[key][0][0];
+
+                        const date = new Date(value);
+                        const formattedDate = `${date
+                            .getDate()
+                            .toString()
+                            .padStart(2, "0")}-${(date.getMonth() + 1)
+                            .toString()
+                            .padStart(2, "0")} ${date
+                            .getHours()
+                            .toString()
+                            .padStart(2, "0")}:${date
+                            .getMinutes()
+                            .toString()
+                            .padStart(2, "0")}:${date
+                            .getSeconds()
+                            .toString()
+                            .padStart(2, "0")}`;
+                        valueStateMap[key]?.(formattedDate);
+                    }
                 });
-            };
+            }
 
-            ws.current.onclose = () => {
-                console.log("WebSocket connection closed.");
-            };
+            if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                const ballValue =
+                    dataReceived.data.data[0].latest.ATTRIBUTE.PCV_3001A
+                        .value;
+                setPCV_3001A(ballValue);
+                const ballValueB =
+                    dataReceived.data.data[0].latest.ATTRIBUTE.PCV_3001B
+                        .value;
+                setPCV_3001B(ballValueB);
+                const ballValue2B =
+                    dataReceived.data.data[0].latest.ATTRIBUTE.PCV_3002B
+                        .value;
+                setPCV_3002B(ballValue2B);
+                const ballValue2A =
+                    dataReceived.data.data[0].latest.ATTRIBUTE.PCV_3002A
+                        .value;
+                setPCV_3002A(ballValue2A);
 
-            return () => {
-                console.log("Cleaning up WebSocket connection.");
-                ws.current?.close();
-            };
-        }
-    }, []);
+                const ballValueS =
+                    dataReceived.data.data[0].latest.ATTRIBUTE.PSV_3001A
+                        .value;
+                setPSV_3001A(ballValueS);
+                const ballValueSB =
+                    dataReceived.data.data[0].latest.ATTRIBUTE.PSV_3001B
+                        .value;
+                setPSV_3001B(ballValueSB);
+                const ballValueS2B =
+                    dataReceived.data.data[0].latest.ATTRIBUTE.PSV_3002B
+                        .value;
+                setPSV_3002B(ballValueS2B);
+                const ballValueS2A =
+                    dataReceived.data.data[0].latest.ATTRIBUTE.PSV_3002A
+                        .value;
+                setPSV_3002A(ballValueS2A);
+            } else if (
+                dataReceived.update &&
+                dataReceived.update?.length > 0
+            ) {
+                const updatedData =
+                    dataReceived.update[0].latest.ATTRIBUTE.PCV_3001A.value;
+                setPCV_3001A(updatedData);
+                const updatedDataB =
+                    dataReceived.update[0].latest.ATTRIBUTE.PCV_3001B.value;
+                setPCV_3001B(updatedDataB);
 
-    useEffect(() => {
-        if (ws.current) {
-            ws.current.onmessage = (event) => {
-                let dataReceived = JSON.parse(event.data);
-                if (dataReceived.update !== null) {
-                    setData([...data, dataReceived]);
-                    const formatValue = (value: any) => {
-                        return value !== null
-                            ? new Intl.NumberFormat("en-US", {
-                                  minimumFractionDigits: 2, // Đảm bảo có 2 chữ số sau dấu thập phân
-                                  maximumFractionDigits: 2, // Không nhiều hơn 2 chữ số thập phân
-                                  useGrouping: true, // Phân cách phần ngàn bằng dấu phẩy
-                              }).format(parseFloat(value))
-                            : "";
-                    };
-                    const keys = Object.keys(dataReceived.data);
-                    const stateMap: StateMap = {
-                        EVC_01_Flow_at_Base_Condition:
-                            setEVC_01_Flow_at_Base_Condition,
-                        EVC_01_Flow_at_Measurement_Condition:
-                            setEVC_01_Flow_at_Measurement_Condition,
-                        EVC_01_Volume_at_Base_Condition:
-                            setEVC_01_Volume_at_Base_Condition,
-                        EVC_01_Volume_at_Measurement_Condition:
-                            setEVC_01_Volume_at_Measurement_Condition,
-                        EVC_01_Pressure: setEVC_01_Pressure,
+                const ballValue2B =
+                    dataReceived.update[0].latest.ATTRIBUTE.PCV_3002A.value;
+                setPCV_3002A(ballValue2B);
+                const updatedEVC_01_Volume_at_Base_ConditionA =
+                    dataReceived.update[0].latest.ATTRIBUTE.PCV_3002B.value;
+                setPCV_3002B(updatedEVC_01_Volume_at_Base_ConditionA);
 
-                        EVC_01_Temperature: setEVC_01_Temperature,
-                        EVC_01_Vm_of_Last_Day: setEVC_01_Vm_of_Last_Day,
-                        EVC_01_Vb_of_Last_Day: setEVC_01_Vb_of_Last_Day,
-                        EVC_01_Vm_of_Current_Day: setEVC_01_Vm_of_Current_Day,
-                        EVC_01_Vb_of_Current_Day: setEVC_01_Vb_of_Current_Day,
+                const updatedDataS =
+                    dataReceived.update[0].latest.ATTRIBUTE.PCV_3001A.value;
+                setPSV_3001A(updatedDataS);
+                const updatedDataSB =
+                    dataReceived.update[0].latest.ATTRIBUTE.PSV_3001B.value;
+                setPSV_3001B(updatedDataSB);
 
-                        EVC_01_Remain_Battery_Service_Life:
-                            setEVC_01_Remain_Battery_Service_Life,
+                const ballValueS2B =
+                    dataReceived.update[0].latest.ATTRIBUTE.PSV_3002A.value;
+                setPSV_3002A(ballValueS2B);
+                const updatedDataS2A =
+                    dataReceived.update[0].latest.ATTRIBUTE.PSV_3002B.value;
+                setPSV_3002B(updatedDataS2A);
+            }
 
-                        EVC_02_Flow_at_Base_Condition:
-                            setEVC_02_Flow_at_Base_Condition,
-                        EVC_02_Flow_at_Measurement_Condition:
-                            setEVC_02_Flow_at_Measurement_Condition,
-                        EVC_02_Volume_at_Base_Condition:
-                            setEVC_02_Volume_at_Base_Condition,
-                        EVC_02_Volume_at_Measurement_Condition:
-                            setEVC_02_Volume_at_Measurement_Condition,
-                        EVC_02_Pressure: setEVC_02_Pressure,
+            fetchData();
+        };
 
-                        EVC_02_Temperature: setEVC_02_Temperature,
-                        EVC_02_Vm_of_Last_Day: setEVC_02_Vm_of_Last_Day,
-                        EVC_02_Vb_of_Last_Day: setEVC_02_Vb_of_Last_Day,
-                        EVC_02_Vm_of_Current_Day: setEVC_02_Vm_of_Current_Day,
-                        EVC_02_Vb_of_Current_Day: setEVC_02_Vb_of_Current_Day,
+       }
+   };
+   useEffect(() => {
+       fetchData()
+   },[isOnline])
+   
+   useEffect(() => {
+       if (isOnline) {
+           // Initial connection
+           connectWebSocket(cmdId);
+           fetchData()
+       }
 
-                        EVC_02_Remain_Battery_Service_Life:
-                            setEVC_02_Remain_Battery_Service_Life,
+       return () => {
+           if (ws.current) {
+               console.log("Cleaning up WebSocket connection.");
+               ws.current.close();
+           }
+       };
+   }, [isOnline, cmdId]); // Reconnect if isOnline or cmdId changes
+   
 
-                        PIT_3001A: setPIT_3001A,
+   useEffect(() => {
+       const handleOnline = () => {
+           setIsOnline(true);
+           console.log('Back online. Reconnecting WebSocket with new cmdId.');
+           setCmdId(prevCmdId => prevCmdId + 1); // Increment cmdId on reconnect
+           fetchData()
 
-                        PIT_3001B: setPIT_3001B,
-                        PT_3001: setPT_3001,
-                        PT_3002: setPT_3002,
-                        PT_3003: setPT_3003,
+       };
 
-                        TT_3002: setTT_3002,
-                        TT_3001: setTT_3001,
+       const handleOffline = () => {
+           setIsOnline(false);
+           console.log('Offline detected. Closing WebSocket.');
+           if (ws.current) {
+               ws.current.close(); // Close WebSocket when offline
+           }
+       };
 
-                        GD_3001: setGD_3001,
+       // Attach event listeners for online/offline status
+       window.addEventListener('online', handleOnline);
+       window.addEventListener('offline', handleOffline);
 
-                        Water_PG: setWater_PG,
-                        Water_LSW: setWater_LSW,
-                        PUMP_1: setPUMP_1,
-                        PUMP_2: setPUMP_2,
-                        HEATER_1: setHEATER_1,
-                        HEATER_2: setHEATER_2,
+       return () => {
+           // Cleanup event listeners on unmount
+           window.removeEventListener('online', handleOnline);
+           window.removeEventListener('offline', handleOffline);
+       };
+   }, []);
 
-                        BOILER: setBOILER,
 
-                        GD_STATUS: setGD_STATUS,
+   //============================GD =============================
 
-                        HR_BC: setHR_BC,
-                        ESD_3001: setESD_3001,
-                        SD_3001: setSD_3001,
-                        SD_3002: setSD_3002,
-                    };
-                    const valueStateMap: ValueStateMap = {
-                        EVC_01_Conn_STT: setEVC_01_Conn_STTValue,
-                       
-                    };
-                    const stateMap2: StateMap2 = {
-                        SDV_3001A: setSDV_3001A,
-                        SDV_3001B: setSDV_3001B,
-                        SDV_3002: setSDV_3002,
-                        PLC_Conn_STT: setPLC_Conn_STT,
-                        EVC_01_Conn_STT: setEVC_01_Conn_STT,
-                        EVC_02_Conn_STT: setEVC_02_Conn_STT,
-                    };
-                    keys.forEach((key) => {
-                        if (stateMap[key]) {
-                            const value = dataReceived.data[key][0][1];
-                            const formattedValue = formatValue(value);
-                            stateMap[key]?.(formattedValue);
-                        }
-                        if (stateMap2[key]) {
-                            const value = dataReceived.data[key][0][1];
-                            const slicedValue = value;
-                            stateMap2[key]?.(slicedValue);
-                        }
-                        if (valueStateMap[key]) {
-                            const value = dataReceived.data[key][0][0];
 
-                            const date = new Date(value);
-                            const formattedDate = `${date
-                                .getDate()
-                                .toString()
-                                .padStart(2, "0")}-${(date.getMonth() + 1)
-                                .toString()
-                                .padStart(2, "0")} ${date
-                                .getHours()
-                                .toString()
-                                .padStart(2, "0")}:${date
-                                .getMinutes()
-                                .toString()
-                                .padStart(2, "0")}:${date
-                                .getSeconds()
-                                .toString()
-                                .padStart(2, "0")}`;
-                            valueStateMap[key]?.(formattedDate);
-                        }
-                    });
-                }
-
-                if (dataReceived.data && dataReceived.data.data?.length > 0) {
-                    const ballValue =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_3001A
-                            .value;
-                    setPCV_3001A(ballValue);
-                    const ballValueB =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_3001B
-                            .value;
-                    setPCV_3001B(ballValueB);
-                    const ballValue2B =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_3002B
-                            .value;
-                    setPCV_3002B(ballValue2B);
-                    const ballValue2A =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_3002A
-                            .value;
-                    setPCV_3002A(ballValue2A);
-
-                    const ballValueS =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_3001A
-                            .value;
-                    setPSV_3001A(ballValueS);
-                    const ballValueSB =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_3001B
-                            .value;
-                    setPSV_3001B(ballValueSB);
-                    const ballValueS2B =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_3002B
-                            .value;
-                    setPSV_3002B(ballValueS2B);
-                    const ballValueS2A =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_3002A
-                            .value;
-                    setPSV_3002A(ballValueS2A);
-                } else if (
-                    dataReceived.update &&
-                    dataReceived.update?.length > 0
-                ) {
-                    const updatedData =
-                        dataReceived.update[0].latest.ATTRIBUTE.PCV_3001A.value;
-                    setPCV_3001A(updatedData);
-                    const updatedDataB =
-                        dataReceived.update[0].latest.ATTRIBUTE.PCV_3001B.value;
-                    setPCV_3001B(updatedDataB);
-
-                    const ballValue2B =
-                        dataReceived.update[0].latest.ATTRIBUTE.PCV_3002A.value;
-                    setPCV_3002A(ballValue2B);
-                    const updatedEVC_01_Volume_at_Base_ConditionA =
-                        dataReceived.update[0].latest.ATTRIBUTE.PCV_3002B.value;
-                    setPCV_3002B(updatedEVC_01_Volume_at_Base_ConditionA);
-
-                    const updatedDataS =
-                        dataReceived.update[0].latest.ATTRIBUTE.PCV_3001A.value;
-                    setPSV_3001A(updatedDataS);
-                    const updatedDataSB =
-                        dataReceived.update[0].latest.ATTRIBUTE.PSV_3001B.value;
-                    setPSV_3001B(updatedDataSB);
-
-                    const ballValueS2B =
-                        dataReceived.update[0].latest.ATTRIBUTE.PSV_3002A.value;
-                    setPSV_3002A(ballValueS2B);
-                    const updatedDataS2A =
-                        dataReceived.update[0].latest.ATTRIBUTE.PSV_3002B.value;
-                    setPSV_3002B(updatedDataS2A);
-                }
-
-                fetchData();
-            };
-        }
-    }, [data]);
 
     const fetchData = async () => {
         try {
@@ -1123,7 +1166,10 @@ export default function Graphic_CNG_HUNGYEN() {
             const PLC_Conn_STT_Maintain = res.data.find(
                 (item: any) => item.key === "PLC_Conn_STT_Maintain"
             );
+ 
 
+       
+            
             // ===================================================================================================================
 
             setmaintainEVC_01_Conn_STT(
@@ -1231,6 +1277,19 @@ export default function Graphic_CNG_HUNGYEN() {
             setmaintainESD_3001(ESD_3001_Maintain?.value || false);
             setmaintainSD_3001(SD_3001_Maintain?.value || false);
             setmaintainSD_3002(SD_3002_Maintain?.value || false);
+
+            const Line_Duty_01 = res.data.find(
+                (item: any) => item.key === "Line_Duty_01"
+            );
+
+            setLineduty1901(Line_Duty_01?.value || null);
+            const Line_Duty_02 = res.data.find(
+                (item: any) => item.key === "Line_Duty_02"
+            );
+            setLineduty1902(Line_Duty_02?.value || null);
+
+
+
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -3007,7 +3066,53 @@ export default function Graphic_CNG_HUNGYEN() {
     ]);
 
     // ===================================================================================================================
+
+
+    //======================================================================
+
+    const [lineDuty1901, setLineduty1901] = useState<boolean>(false);
+    const [lineDuty1902, setLineduty1902] = useState<boolean>(true);
+
+    const ChangeStatusFIQ = async () => {
+        try {
+            const newValue1 = !lineDuty1901;
+            const newValue2 = !lineDuty1902;
+
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
+                { Line_Duty_01: newValue1, Line_Duty_02: newValue2 }
+            );
+            setLineduty1901(newValue1);
+            setLineduty1902(newValue2);
+
+            toast.current?.show({
+                severity: "info",
+                detail: "Success ",
+                life: 3000,
+            });
+            fetchData();
+        } catch (error) {}
+    };
+    const confirmLineDuty = () => {
+        confirmDialog({
+            header: "Comfirmation",
+            message: "Are you sure to change Line Duty?",
+            icon: "pi pi-info-circle",
+            accept: () => ChangeStatusFIQ(),
+        });
+    };
+
     //====================================================================
+
+
+    const formatValue = (value:any) => {
+        return value !== null
+            ? new Intl.NumberFormat('en-US', {
+                  maximumFractionDigits: 2,
+                  useGrouping: true, 
+              }).format(parseFloat(value))
+            : "";
+    };
 
     useEffect(() => {
         const updatedNodes = nodes.map((node) => {
@@ -3057,7 +3162,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_01_Flow_at_Base_Condition}
+                                        {formatValue(EVC_01_Flow_at_Base_Condition)}
                                     </p>
                                 </div>
                                 <p
@@ -3124,7 +3229,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_01_Flow_at_Measurement_Condition}
+                                        {formatValue(EVC_01_Flow_at_Measurement_Condition)}
                                     </p>
                                 </div>
                                 <p
@@ -3188,7 +3293,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_01_Volume_at_Base_Condition}
+                                        {formatValue(EVC_01_Volume_at_Base_Condition)}
                                     </p>
                                 </div>
                                 <p
@@ -3256,7 +3361,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_01_Volume_at_Measurement_Condition}
+                                        {formatValue(EVC_01_Volume_at_Measurement_Condition)}
                                     </p>
                                 </div>
                                 <p
@@ -3321,7 +3426,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_02_Flow_at_Base_Condition}
+                                        {formatValue(EVC_02_Flow_at_Base_Condition)}
                                     </p>
                                 </div>
                                 <p
@@ -3388,7 +3493,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_02_Flow_at_Measurement_Condition}
+                                        {formatValue(EVC_02_Flow_at_Measurement_Condition)}
                                     </p>
                                 </div>
                                 <p
@@ -3453,7 +3558,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_02_Volume_at_Base_Condition}
+                                        {formatValue(EVC_02_Volume_at_Base_Condition)}
                                     </p>
                                 </div>
                                 <p
@@ -3520,7 +3625,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_02_Volume_at_Measurement_Condition}
+                                        {formatValue(EVC_02_Volume_at_Measurement_Condition)}
                                     </p>
                                 </div>
                                 <p
@@ -3583,7 +3688,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {PIT_3001A}
+                                        {formatValue(PIT_3001A)}
                                     </p>
                                 </div>
                                 <p
@@ -3646,7 +3751,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {PIT_3001B}
+                                        {formatValue(PIT_3001B)}
                                     </p>
                                 </div>
                                 <p
@@ -3710,7 +3815,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {PT_3001}
+                                        {formatValue(PT_3001)}
                                     </p>
                                 </div>
                                 <p
@@ -3773,7 +3878,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {PT_3002}
+                                        {formatValue(PT_3002)}
                                     </p>
                                 </div>
                                 <p
@@ -3838,7 +3943,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_02_Pressure}
+                                        {formatValue(EVC_02_Pressure)}
                                     </p>
                                 </div>
                                 <p
@@ -3904,7 +4009,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_01_Pressure}
+                                        {formatValue(EVC_01_Pressure)}
                                     </p>
                                 </div>
                                 <p
@@ -3970,7 +4075,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_01_Temperature}
+                                        {formatValue(EVC_01_Temperature)}
                                     </p>
                                 </div>
                                 <p
@@ -4035,7 +4140,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {EVC_02_Temperature}
+                                        {formatValue(EVC_02_Temperature)}
                                     </p>
                                 </div>
                                 <p
@@ -4070,7 +4175,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                 }}
                             >
                                 <p style={{ color: "black", marginLeft: 10 }}>
-                                    PCV-3001A: {PCV_3001A} BarG
+                                    PCV-3001A: {formatValue(PCV_3001A)} BarG
                                 </p>
                             </div>
                         ),
@@ -4094,7 +4199,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                 }}
                             >
                                 <p style={{ color: "black", marginLeft: 10 }}>
-                                    PCV-3001B: {PCV_3001B} BarG
+                                    PCV-3001B: {formatValue(PCV_3001B)} BarG
                                 </p>
                             </div>
                         ),
@@ -4116,7 +4221,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                 }}
                             >
                                 <p style={{ color: "black" }}>
-                                    PCV-3002A: {PCV_3002A} BarG
+                                    PCV-3002A: {formatValue(PCV_3002A)} BarG
                                 </p>
                             </div>
                         ),
@@ -4138,7 +4243,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                 }}
                             >
                                 <p style={{ color: "black" }}>
-                                    PCV-3002B: {PCV_3002B} BarG
+                                    PCV-3002B: {formatValue(PCV_3002B)} BarG
                                 </p>
                             </div>
                         ),
@@ -4251,7 +4356,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {formatValue(TT_3001)}
                                     </p>
                                 </div>
                                 <p
@@ -4315,7 +4420,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {formatValue(PT_3003)}
                                     </p>
                                 </div>
                                 <p
@@ -4379,7 +4484,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {roundedPT02}
+                                        {formatValue(GD_3001)}
                                     </p>
                                 </div>
                                 <p
@@ -4415,7 +4520,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
-                                    PSV-3001A: {PSV_3001A} BarG
+                                    PSV-3001A: {formatValue(PSV_3001A)} BarG
                                 </p>
                             </div>
                         ),
@@ -4439,7 +4544,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
-                                    PSV-3002A: {PSV_3002A} BarG
+                                    PSV-3002A: {formatValue(PSV_3002A)} BarG
                                 </p>
                             </div>
                         ),
@@ -4463,7 +4568,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
-                                    PSV-3001B: {PSV_3001B} BarG
+                                    PSV-3001B: {formatValue(PSV_3001B)} BarG
                                 </p>
                             </div>
                         ),
@@ -4487,7 +4592,7 @@ export default function Graphic_CNG_HUNGYEN() {
                                 }}
                             >
                                 <p style={{ color: colorNameValue }}>
-                                    PSV-3002B: {PSV_3002B} BarG
+                                    PSV-3002B: {formatValue(PSV_3002B)} BarG
                                 </p>
                             </div>
                         ),
@@ -4712,6 +4817,77 @@ export default function Graphic_CNG_HUNGYEN() {
                                 )}
 
                                 {/* {alarmMessage} */}
+                            </div>
+                        ),
+                    },
+                };
+            }
+
+
+
+            if (node.id === "FIQ_2001A_line") {
+                return {
+                    ...node,
+                    data: {
+                        ...node.data,
+                        label: (
+                            <div
+                                style={{
+                                    fontSize: 25,
+                                    fontWeight: 600,
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                }}
+                                onClick={confirmLineDuty}
+                            >
+                                FIQ-3001A
+                                {lineDuty1901 && (
+                                    <span style={{ marginLeft: 25 }}>
+                                        <i
+                                            className="pi pi-check"
+                                            style={{
+                                                fontSize: 35,
+                                                color: "green",
+                                                fontWeight: 700,
+                                            }}
+                                        ></i>
+                                    </span>
+                                )}
+                            </div>
+                        ),
+                    },
+                };
+            }
+            if (node.id === "FIQ_2001B_line") {
+                return {
+                    ...node,
+                    data: {
+                        ...node.data,
+                        label: (
+                            <div
+                                style={{
+                                    fontSize: 25,
+                                    fontWeight: 600,
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                }}
+                                onClick={confirmLineDuty}
+                            >
+                                FIQ-3001B
+                                {lineDuty1902 && (
+                                    <span style={{ marginLeft: 30 }}>
+                                        <i
+                                            className="pi pi-check"
+                                            style={{
+                                                fontSize: 35,
+                                                color: "green",
+                                                fontWeight: 700,
+                                            }}
+                                        ></i>
+                                    </span>
+                                )}
                             </div>
                         ),
                     },
@@ -4953,7 +5129,8 @@ export default function Graphic_CNG_HUNGYEN() {
     //     : {
     const initialPositions = {
         AlarmCenter: { x: -914.1523303275185, y: 750.7002523253735 },
-        Arrow10: { x: -545.9342380564901, y: 1235.848639932193 },
+        Arrow10:{ x: -450.1273892235929, y: 1235.2124555688624 },
+
         BallVavleLine2_Bottom: {
             x: -1752.748552461399,
             y: 1398.7809179318454,
@@ -4988,11 +5165,11 @@ export default function Graphic_CNG_HUNGYEN() {
         },
         DownArrow: { x: -2443.3288674803475, y: 1576.7373833505735 },
         EVC_01_Flow_at_Base_Condition: {
-            x: -1300.2117083264288,
-            y: 751.5293893652726,
+            x: -1288.545041659762,
+            y: 751.1960560319393,
         },
         EVC_01_Flow_at_Measurement_Condition: {
-            x: -1300.4747755822623,
+            x: -1288.4747755822623,
             y: 812.9342555162998,
         },
         EVC_01_Pressure_COL: {
@@ -5000,8 +5177,8 @@ export default function Graphic_CNG_HUNGYEN() {
             y: 1463.468095326561,
         },
         EVC_01_Pressure_DATA: {
-            x: -1300.5518647911813,
-            y: 874.307982790011,
+            x: -1288.5518647911813,
+            y: 874.6413161233444,
         },
         EVC_01_Pressure_IMG: {
             x: -1455.2210748964526,
@@ -5020,36 +5197,36 @@ export default function Graphic_CNG_HUNGYEN() {
             y: 1427.2945127887838,
         },
         EVC_01_Temperature_DATA: {
-            x: -1651.9839445793107,
-            y: 873.7849536634603,
+            x: -1639.9839445793107,
+            y: 874.4516203301271,
         },
         EVC_01_Temperature_NONE: {
             x: -1362.8266325377226,
             y: 977.2539852046791,
         },
         EVC_01_Volume_at_Base_Condition: {
-            x: -1651.3638601651735,
+            x: -1640.03052683184,
             y: 751.2185853413771,
         },
         EVC_01_Volume_at_Measurement_Condition: {
-            x: -1651.889586160885,
+            x: -1639.889586160885,
             y: 812.6874699639815,
         },
         EVC_02_Flow_at_Base_Condition: {
-            x: -1304.5045612961057,
-            y: 1526.246568287584,
+            x: -1288.5933134621641,
+            y: 1571.7093988220463,
         },
         EVC_02_Flow_at_Measurement_Condition: {
-            x: -1304.6902205234626,
-            y: 1587.58097045636,
+            x: -1288.6902205234624,
+            y: 1633.2476371230268,
         },
         EVC_02_Pressure_COL: {
             x: -1425.0343776799361,
             y: 1050.2965580409796,
         },
         EVC_02_Pressure_DATA: {
-            x: -1304.6862397428831,
-            y: 1648.7497951092391,
+            x: -1289.0195730762166,
+            y: 1694.4386364711129,
         },
         EVC_02_Pressure_IMG: {
             x: -1457.3119231476958,
@@ -5068,25 +5245,28 @@ export default function Graphic_CNG_HUNGYEN() {
             y: 1007.3441734368228,
         },
         EVC_02_Temperature_DATA: {
-            x: -1655.6231376798764,
-            y: 1649.0182904812473,
+            x: -1640.2898043465432,
+            y: 1694.6097028887507,
         },
         EVC_02_Temperature_NONE: {
             x: -1361.3563019384721,
             y: 1396.8762550311894,
         },
         EVC_02_Volume_at_Base_Condition: {
-            x: -1655.441578959918,
-            y: 1526.3262726240537,
+            x: -1640.067500591515,
+            y: 1571.455769825182,
         },
         EVC_02_Volume_at_Measurement_Condition: {
-            x: -1655.518638620903,
-            y: 1587.742152328961,
+            x: -1640.1853052875697,
+            y: 1633.0754856622943,
         },
-        FIQ_2001A: { x: -1376.2594215963863, y: 1088.2610822726886 },
-        FIQ_2001B: { x: -1380.2615237408395, y: 1420.5100867355798 },
-        GD_3001: { x: -989.3020106788827, y: 1318.7155007722488 },
-        GD_IMG: { x: -902.3496415151986, y: 1386.2752067158738 },
+       
+        FIQ_2001A: { x: -1328.079248110901, y: 1049.3497080637314 },
+        FIQ_2001A_line: { x: -1640.3720324854337, y: 695.3761875658004 },
+        FIQ_2001B: { x: -1329.4253599609215, y: 1381.4722998781535 },
+        FIQ_2001B_line: { x: -1639.8588031644051, y: 1515.9916131233235 },
+        GD_3001:  { x: -945.6398042701333, y: 1315.7043141233696 },
+        GD_IMG: { x: -857.1818417820095, y: 1381.758426742555 },
         Header: { x: -2306.77566619973, y: 628.2068245812715 },
         PCV_3001A: { x: -1673.1177611019, y: 1384.1107119962714 },
         PCV_3001A_DATA: { x: -2170.9650034926362, y: 1130.7404080690226 },
@@ -5099,7 +5279,7 @@ export default function Graphic_CNG_HUNGYEN() {
             x: -1644.8538756176888,
             y: 1406.5995698502961,
         },
-        PCV_3001B: { x: -1677.3656150260101, y: 1052.000421403267 },
+        PCV_3001B:  { x: -1677.123410373879, y: 1039.0520129027036 },
         PCV_3001B_DATA: { x: -2176.351987591129, y: 1459.1757585792388 },
         PCV_3001B_SmallBallVavle: {
             x: -1589.286173260068,
@@ -5109,9 +5289,9 @@ export default function Graphic_CNG_HUNGYEN() {
         PCV_3001B_none2: { x: -1577.480563248409, y: 1105.4215156026714 },
         PCV_3002A_DATA: { x: -1732.3997094020176, y: 1126.9918815357198 },
         PCV_3002B_DATA: { x: -1731.7040390057148, y: 1459.3124743874007 },
-        PCV_line1_Bottom: {
-            x: -2111.3678672845463,
-            y: 1052.190596866844,
+        PCV_line1_Bottom:{
+            x: -2110.034533951213,
+            y: 1039.5239302001773,
         },
         PCV_line1_Bottom_SmallBallVavle: {
             x: -2021.0842967435187,
@@ -5125,7 +5305,7 @@ export default function Graphic_CNG_HUNGYEN() {
             x: -2009.774232806013,
             y: 1437.5474817836612,
         },
-        PCV_line1_Top: { x: -2112.3004799183254, y: 1384.5659352076464 },
+        PCV_line1_Top: { x: -2111.649926515413, y: 1371.2712473040258 },
         PCV_line1_Top_SmallBallVavle: {
             x: -2020.758188887233,
             y: 1058.572245211475,
@@ -5248,22 +5428,22 @@ export default function Graphic_CNG_HUNGYEN() {
         PT_3002_DATA: { x: -2067.9964811841455, y: 1526.3956606647857 },
         PT_3002_IMG: { x: -1971.8531774900027, y: 1019.033781469687 },
         PT_3002_NONE: { x: -1943.220994341128, y: 1393.0940219176825 },
-        PT_3003: { x: -804.9838255763632, y: 1193.6908985163677 },
-        PT_3003_COL: { x: -772.6201142386359, y: 1255.823965495775 },
-        PT_3003_DATA: { x: -881.5805709775428, y: 1097.9621390192506 },
+        PT_3003: { x: -742.0101421228649, y: 1192.0966280491907 },
+        PT_3003_COL: { x: -709.6464307851375, y: 1254.2296950285977 },
+        PT_3003_DATA: { x: -825.6912645861574, y: 1132.5084741841129 },
         PT_3003_NONE: { x: -629.1520213626982, y: 1210.0446422285258 },
 
         SDV_3001A: { x: -2366.3636954964386, y: 1046.6978648787797 },
         SDV_3001A_Name: { x: -2383.319090652285, y: 1021.7959995852489 },
         SDV_3001B: { x: -2364.216934032177, y: 1378.662715302721 },
         SDV_3001B_Name: { x: -2383.0887467126913, y: 1353.984343990213 },
-        SDV_3002: { x: -654.0856743065801, y: 1208.5938789238871 },
-        SDV_3002_Name: { x: -674.9837678308808, y: 1182.0376431738848 },
+        SDV_3002:  { x: -548.0666882392982, y: 1208.5938789238871 },
+        SDV_3002_Name: { x: -569.7619169971873, y: 1179.646237473119 },
 
-        TT_3001: { x: -1024.6693805861637, y: 1196.2161585621343 },
-        TT_3001_COL: { x: -1001.6514199634926, y: 1243.4512827449053 },
-        TT_3001_DATA: { x: -1107.1297683556631, y: 1099.0937179243501 },
-        TT_3001_NONE: { x: -610.2603899665803, y: 1209.4943855440024 },
+        TT_3001:  { x: -999.161053111329, y: 1197.0132937957233 },
+        TT_3001_COL: { x: -975.3459572550692, y: 1241.0598770441397 },
+        TT_3001_DATA: { x: -1066.9923215916738, y: 1132.6071527911554 },
+        TT_3001_NONE:  { x: -610.2603899665803, y: 1209.4943855440024 },
         bor1: { x: -2436.5855686504956, y: 1039.1608637258034 },
         bor2: { x: -983.1512218888312, y: 1025.8994423073616 },
         bor3: { x: -2320.8078213113167, y: 1680.894788044694 },
@@ -5276,11 +5456,11 @@ export default function Graphic_CNG_HUNGYEN() {
         line4: { x: -2082.153208656881, y: 1430.8103326059108 },
         line5: { x: -1647.2085647611, y: 1098.3740496757796 },
         line6: { x: -1643.3489136999835, y: 1430.6385004862382 },
-        line7: { x: -1336.2923834627995, y: 1098.3096365331119 },
-        line8: { x: -1334.9498607206287, y: 1430.742252363529 },
+        line7: { x: -1299.1833022795545, y: 1098.3096365331119 },
+        line8: { x: -1299.2089689663812, y: 1430.7422523635291 },
         line9: { x: -925.9976477005001, y: 1260.4714803086474 },
-        line9none: { x: -1148.3698628173815, y: 1260.4228327419648 },
-        line10: { x: -531.9035836581911, y: 1260.593609780011 },
+        line9none: { x: -1125.7031961507148, y: 1260.4228327419648 },
+        line10: { x: -435.45022039397213, y: 1260.593609780011 },
         line10none: { x: -880.6662088366958, y: 1260.3787384164796 },
         percent: { x: -405.6683476271253, y: 1298.7587875755169 },
         timeUpdate3: { x: -2305.9237339446345, y: 702.7171281735419 },
@@ -5421,17 +5601,15 @@ export default function Graphic_CNG_HUNGYEN() {
             position: positions.FIQ_2001A,
             type: "custom",
             data: {
-                label: <div>FIQ-3001A</div>,
+                label: <div>{FIQ}</div>,
             },
             sourcePosition: Position.Top,
             targetPosition: Position.Bottom,
             style: {
-                fontSize: 18,
-                fontWeight: 600,
-                padding: 5,
-
-                background: "white",
-                borderRadius: 5,
+                background: background,
+                height: 1,
+                width: 1,
+                border: background,
             },
         },
 
@@ -5440,17 +5618,50 @@ export default function Graphic_CNG_HUNGYEN() {
             position: positions.FIQ_2001B,
             type: "custom",
             data: {
-                label: <div>FIQ-3001B</div>,
+                label: <div>{FIQ}</div>,
             },
             sourcePosition: Position.Bottom,
             targetPosition: Position.Bottom,
             style: {
-                fontSize: 18,
-                fontWeight: 600,
-                padding: 5,
+                background: background,
+                height: 1,
+                width: 1,
+                border: background,
+            },
+        },
 
-                background: "white",
-                borderRadius: 5,
+
+        {
+            id: "FIQ_2001A_line",
+            position: positions.FIQ_2001A_line,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+            sourcePosition: Position.Top,
+            targetPosition: Position.Bottom,
+            style: {
+                background: "#ffffaa",
+                border: "1px solid white",
+                width: 700,
+                height: 55,
+            },
+        },
+
+        {
+            id: "FIQ_2001B_line",
+            position: positions.FIQ_2001B_line,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+            sourcePosition: Position.Bottom,
+            targetPosition: Position.Bottom,
+            style: {
+                background: "#ffffaa",
+                border: "1px solid white",
+                width: 700,
+                height: 55,
             },
         },
 
@@ -5691,7 +5902,7 @@ export default function Graphic_CNG_HUNGYEN() {
 
             sourcePosition: Position.Top,
             targetPosition: Position.Bottom,
-            style: { border: "none", width: 10, height: 10, background: line },
+            style: { border: "none", width: 10, height: 10, background: 'none' },
         },
         {
             id: "line3",
@@ -5703,7 +5914,7 @@ export default function Graphic_CNG_HUNGYEN() {
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
-            style: { border: "none", width: 10, height: 10, background: line },
+            style: { border: "none", width: 10, height: 10, background: 'none'  },
         },
         {
             id: "line4",
@@ -5715,7 +5926,7 @@ export default function Graphic_CNG_HUNGYEN() {
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
-            style: { border: "none", width: 10, height: 10, background: line },
+            style: { border: "none", width: 10, height: 10, background: 'none'  },
         },
         {
             id: "line5",
@@ -5727,7 +5938,7 @@ export default function Graphic_CNG_HUNGYEN() {
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
-            style: { border: "none", width: 10, height: 10, background: line },
+            style: { border: "none", width: 10, height: 10, background: 'none'  },
         },
         {
             id: "line6",
@@ -5739,7 +5950,7 @@ export default function Graphic_CNG_HUNGYEN() {
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
-            style: { border: "none", width: 10, height: 10, background: line },
+            style: { border: "none", width: 10, height: 10, background: 'none'  },
         },
         {
             id: "line7",
@@ -5767,6 +5978,41 @@ export default function Graphic_CNG_HUNGYEN() {
             },
 
             sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 10,
+                height: 10,
+                background: "none",
+            },
+        },
+
+        {
+            id: "line7_none",
+            position: positions.line7,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 10,
+                height: 10,
+                background: "none",
+            },
+        },
+        {
+            id: "line8_none",
+            position: positions.line8,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Bottom,
             targetPosition: Position.Left,
             style: {
                 border: "none",
@@ -6076,12 +6322,15 @@ export default function Graphic_CNG_HUNGYEN() {
             data: {
                 label: (
                     <div>
-                        <Image
+                        {/* <Image
                             src="/layout/imgGraphic/PVC.png"
                             width={60}
                             height={60}
                             alt="Picture of the author"
-                        />
+                        /> */}
+
+{PCV}
+
                     </div>
                 ),
             },
@@ -6103,12 +6352,13 @@ export default function Graphic_CNG_HUNGYEN() {
             data: {
                 label: (
                     <div>
-                        <Image
+                        {/* <Image
                             src="/layout/imgGraphic/PVC.png"
                             width={60}
                             height={60}
                             alt="Picture of the author"
-                        />
+                        /> */}
+                        {PCV}
                     </div>
                 ),
             },
@@ -6131,12 +6381,13 @@ export default function Graphic_CNG_HUNGYEN() {
             data: {
                 label: (
                     <div>
-                        <Image
+                        {/* <Image
                             src="/layout/imgGraphic/PVC.png"
                             width={60}
                             height={60}
                             alt="Picture of the author"
-                        />
+                        /> */}
+                        {PCV}
                     </div>
                 ),
             },
@@ -6158,12 +6409,13 @@ export default function Graphic_CNG_HUNGYEN() {
             data: {
                 label: (
                     <div>
-                        <Image
+                        {/* <Image
                             src="/layout/imgGraphic/PVC.png"
                             width={60}
                             height={60}
                             alt="Picture of the author"
-                        />
+                        /> */}
+                        {PCV}
                     </div>
                 ),
             },
@@ -6179,264 +6431,264 @@ export default function Graphic_CNG_HUNGYEN() {
             zIndex: 9999,
         },
 
-        {
-            id: "PCV_line1_Bottom_none",
-            data: {
-                label: <div></div>,
-            },
+        // {
+        //     id: "PCV_line1_Bottom_none",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            position: positions.PCV_line1_Bottom_none,
+        //     position: positions.PCV_line1_Bottom_none,
 
-            style: {
-                background: "none",
-                border: "none",
-                width: "10px",
+        //     style: {
+        //         background: "none",
+        //         border: "none",
+        //         width: "10px",
 
-                height: 0,
-            },
-            targetPosition: Position.Top,
-            sourcePosition: Position.Top,
-        },
-        {
-            id: "PCV_line1_Top_none",
-            data: {
-                label: <div></div>,
-            },
+        //         height: 0,
+        //     },
+        //     targetPosition: Position.Top,
+        //     sourcePosition: Position.Top,
+        // },
+        // {
+        //     id: "PCV_line1_Top_none",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            position: positions.PCV_line1_Top_none,
+        //     position: positions.PCV_line1_Top_none,
 
-            style: {
-                background: "none",
-                border: "none",
-                width: "10px",
+        //     style: {
+        //         background: "none",
+        //         border: "none",
+        //         width: "10px",
 
-                height: 0,
-            },
-            targetPosition: Position.Top,
-            sourcePosition: Position.Top,
-        },
+        //         height: 0,
+        //     },
+        //     targetPosition: Position.Top,
+        //     sourcePosition: Position.Top,
+        // },
 
-        {
-            id: "PCV_3001B_none",
-            data: {
-                label: <div></div>,
-            },
+        // {
+        //     id: "PCV_3001B_none",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            position: positions.PCV_3001B_none,
+        //     position: positions.PCV_3001B_none,
 
-            style: {
-                background: "none",
-                border: "none",
-                width: "10px",
+        //     style: {
+        //         background: "none",
+        //         border: "none",
+        //         width: "10px",
 
-                height: 0,
-            },
-            targetPosition: Position.Top,
-            sourcePosition: Position.Top,
-        },
-        {
-            id: "PCV_3001A_none",
-            data: {
-                label: <div></div>,
-            },
+        //         height: 0,
+        //     },
+        //     targetPosition: Position.Top,
+        //     sourcePosition: Position.Top,
+        // },
+        // {
+        //     id: "PCV_3001A_none",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            position: positions.PCV_3001A_none,
+        //     position: positions.PCV_3001A_none,
 
-            style: {
-                background: "none",
-                border: "none",
-                width: "10px",
+        //     style: {
+        //         background: "none",
+        //         border: "none",
+        //         width: "10px",
 
-                height: 0,
-            },
-            targetPosition: Position.Top,
-            sourcePosition: Position.Top,
-        },
+        //         height: 0,
+        //     },
+        //     targetPosition: Position.Top,
+        //     sourcePosition: Position.Top,
+        // },
 
-        {
-            id: "PCV_line1_Bottom_none2",
-            data: {
-                label: <div></div>,
-            },
+        // {
+        //     id: "PCV_line1_Bottom_none2",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            position: positions.PCV_line1_Bottom_none2,
+        //     position: positions.PCV_line1_Bottom_none2,
 
-            style: {
-                background: "none",
-                border: "none",
-                width: "10px",
+        //     style: {
+        //         background: "none",
+        //         border: "none",
+        //         width: "10px",
 
-                height: 0,
-            },
-            targetPosition: Position.Top,
-            sourcePosition: Position.Top,
-        },
-        {
-            id: "PCV_line1_Top_none2",
-            data: {
-                label: <div></div>,
-            },
+        //         height: 0,
+        //     },
+        //     targetPosition: Position.Top,
+        //     sourcePosition: Position.Top,
+        // },
+        // {
+        //     id: "PCV_line1_Top_none2",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            position: positions.PCV_line1_Top_none2,
+        //     position: positions.PCV_line1_Top_none2,
 
-            style: {
-                background: "none",
-                border: "none",
-                width: "10px",
+        //     style: {
+        //         background: "none",
+        //         border: "none",
+        //         width: "10px",
 
-                height: 0,
-            },
-            targetPosition: Position.Top,
-        },
+        //         height: 0,
+        //     },
+        //     targetPosition: Position.Top,
+        // },
 
-        {
-            id: "PCV_3001B_none2",
-            data: {
-                label: <div></div>,
-            },
+        // {
+        //     id: "PCV_3001B_none2",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            position: positions.PCV_3001B_none2,
+        //     position: positions.PCV_3001B_none2,
 
-            style: {
-                background: "none",
-                border: "none",
-                width: "10px",
+        //     style: {
+        //         background: "none",
+        //         border: "none",
+        //         width: "10px",
 
-                height: 0,
-            },
-            targetPosition: Position.Top,
-            sourcePosition: Position.Top,
-        },
-        {
-            id: "PCV_3001A_none2",
-            data: {
-                label: <div></div>,
-            },
+        //         height: 0,
+        //     },
+        //     targetPosition: Position.Top,
+        //     sourcePosition: Position.Top,
+        // },
+        // {
+        //     id: "PCV_3001A_none2",
+        //     data: {
+        //         label: <div></div>,
+        //     },
 
-            position: positions.PCV_3001A_none2,
+        //     position: positions.PCV_3001A_none2,
 
-            style: {
-                background: "none",
-                border: "none",
-                width: "10px",
+        //     style: {
+        //         background: "none",
+        //         border: "none",
+        //         width: "10px",
 
-                height: 0,
-            },
-            targetPosition: Position.Top,
-            sourcePosition: Position.Top,
-        },
+        //         height: 0,
+        //     },
+        //     targetPosition: Position.Top,
+        //     sourcePosition: Position.Top,
+        // },
 
-        {
-            id: "PCV_line1_Bottom_SmallBallVavle",
-            position: positions.PCV_line1_Bottom_SmallBallVavle,
-            type: "custom",
-            data: {
-                label: (
-                    <div>
-                        <Image
-                            src="/layout/imgGraphic/BallValueRight.png"
-                            width={30}
-                            height={30}
-                            alt="Picture of the author"
-                        />
-                    </div>
-                ),
-            },
+        // {
+        //     id: "PCV_line1_Bottom_SmallBallVavle",
+        //     position: positions.PCV_line1_Bottom_SmallBallVavle,
+        //     type: "custom",
+        //     data: {
+        //         label: (
+        //             <div>
+        //                 <Image
+        //                     src="/layout/imgGraphic/BallValueRight.png"
+        //                     width={30}
+        //                     height={30}
+        //                     alt="Picture of the author"
+        //                 />
+        //             </div>
+        //         ),
+        //     },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: {
-                border: "none",
-                background: background,
-                width: 1,
-                height: 1,
-            },
-            zIndex: 9999,
-        },
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Left,
+        //     style: {
+        //         border: "none",
+        //         background: background,
+        //         width: 1,
+        //         height: 1,
+        //     },
+        //     zIndex: 9999,
+        // },
 
-        {
-            id: "PCV_line1_Top_SmallBallVavle",
-            position: positions.PCV_line1_Top_SmallBallVavle,
-            type: "custom",
-            data: {
-                label: (
-                    <div>
-                        <Image
-                            src="/layout/imgGraphic/BallValueRight.png"
-                            width={30}
-                            height={30}
-                            alt="Picture of the author"
-                        />
-                    </div>
-                ),
-            },
+        // {
+        //     id: "PCV_line1_Top_SmallBallVavle",
+        //     position: positions.PCV_line1_Top_SmallBallVavle,
+        //     type: "custom",
+        //     data: {
+        //         label: (
+        //             <div>
+        //                 <Image
+        //                     src="/layout/imgGraphic/BallValueRight.png"
+        //                     width={30}
+        //                     height={30}
+        //                     alt="Picture of the author"
+        //                 />
+        //             </div>
+        //         ),
+        //     },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: {
-                border: "none",
-                background: background,
-                width: 1,
-                height: 1,
-            },
-            zIndex: 9999,
-        },
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Left,
+        //     style: {
+        //         border: "none",
+        //         background: background,
+        //         width: 1,
+        //         height: 1,
+        //     },
+        //     zIndex: 9999,
+        // },
 
-        {
-            id: "PCV_3001A_SmallBallVavle",
-            position: positions.PCV_3001A_SmallBallVavle,
-            type: "custom",
-            data: {
-                label: (
-                    <div>
-                        <Image
-                            src="/layout/imgGraphic/BallValueRight.png"
-                            width={30}
-                            height={30}
-                            alt="Picture of the author"
-                        />
-                    </div>
-                ),
-            },
+        // {
+        //     id: "PCV_3001A_SmallBallVavle",
+        //     position: positions.PCV_3001A_SmallBallVavle,
+        //     type: "custom",
+        //     data: {
+        //         label: (
+        //             <div>
+        //                 <Image
+        //                     src="/layout/imgGraphic/BallValueRight.png"
+        //                     width={30}
+        //                     height={30}
+        //                     alt="Picture of the author"
+        //                 />
+        //             </div>
+        //         ),
+        //     },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: {
-                border: "none",
-                background: background,
-                width: 1,
-                height: 1,
-            },
-            zIndex: 9999,
-        },
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Left,
+        //     style: {
+        //         border: "none",
+        //         background: background,
+        //         width: 1,
+        //         height: 1,
+        //     },
+        //     zIndex: 9999,
+        // },
 
-        {
-            id: "PCV_3001B_SmallBallVavle",
-            position: positions.PCV_3001B_SmallBallVavle,
-            type: "custom",
-            data: {
-                label: (
-                    <div>
-                        <Image
-                            src="/layout/imgGraphic/BallValueRight.png"
-                            width={30}
-                            height={30}
-                            alt="Picture of the author"
-                        />
-                    </div>
-                ),
-            },
+        // {
+        //     id: "PCV_3001B_SmallBallVavle",
+        //     position: positions.PCV_3001B_SmallBallVavle,
+        //     type: "custom",
+        //     data: {
+        //         label: (
+        //             <div>
+        //                 <Image
+        //                     src="/layout/imgGraphic/BallValueRight.png"
+        //                     width={30}
+        //                     height={30}
+        //                     alt="Picture of the author"
+        //                 />
+        //             </div>
+        //         ),
+        //     },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: {
-                border: "none",
-                background: background,
-                width: 1,
-                height: 1,
-            },
-            zIndex: 9999,
-        },
+        //     sourcePosition: Position.Right,
+        //     targetPosition: Position.Left,
+        //     style: {
+        //         border: "none",
+        //         background: background,
+        //         width: 1,
+        //         height: 1,
+        //     },
+        //     zIndex: 9999,
+        // },
 
         {
             id: "PCV_3001A_DATA",
@@ -8041,7 +8293,6 @@ export default function Graphic_CNG_HUNGYEN() {
             data: {
                 label: (
                     <div>
-                        <AlarmCNG_HUNGYEN />
                     </div>
                 ),
             },
@@ -8800,7 +9051,11 @@ export default function Graphic_CNG_HUNGYEN() {
             {/* <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
             </Button> */}
+
+<Toast ref={toast} />
+<ConfirmDialog />
             <div
+            key={resetKey}
                 style={{
                     // width: "100%",
                     height: "100%",

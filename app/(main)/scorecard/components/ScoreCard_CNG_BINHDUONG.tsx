@@ -45,9 +45,16 @@ export default function ScoreCard_CNG_BINHDUONG() {
         setIsVisible(!isVisible);
     };
 
-    useEffect(() => {
-        ws.current = new WebSocket(url);
 
+    const [resetKey, setResetKey] = useState(0);
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+    const [cmdId, setCmdId] = useState(1); // Track cmdId for requests
+ 
+    const connectWebSocket = (cmdId: number) => {
+        const token = localStorage.getItem('accessToken');
+        const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+        ws.current = new WebSocket(url);
         const obj1 = {
             attrSubCmds: [],
             tsSubCmds: [
@@ -55,7 +62,7 @@ export default function ScoreCard_CNG_BINHDUONG() {
                     entityType: "DEVICE",
                     entityId: id_CNG_BinhDuong,
                     scope: "LATEST_TELEMETRY",
-                    cmdId: 1,
+                    cmdId: cmdId, // Use dynamic cmdId for new requests
                 },
             ],
         };
@@ -72,20 +79,12 @@ export default function ScoreCard_CNG_BINHDUONG() {
                 console.log("WebSocket connection closed.");
             };
 
-            return () => {
-                console.log("Cleaning up WebSocket connection.");
-                ws.current?.close();
-            };
-        }
-    }, []);
-
-    useEffect(() => {
-        if (ws.current) {
-            ws.current.onmessage = (evt) => {
-                let dataReceived = JSON.parse(evt.data);
+            ws.current.onmessage = (event) => {
+                let dataReceived = JSON.parse(event.data);
                 if (dataReceived.update !== null) {
-                    setData([...data, dataReceived]);
+                    setData(prevData => [...prevData, dataReceived]);
 
+                  
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
                         EVC_01_Flow_at_Base_Condition: setEVC_01_Flow_at_Base_Condition,
@@ -163,12 +162,12 @@ export default function ScoreCard_CNG_BINHDUONG() {
                         PLC_Conn_STT: setConn_STTValue,
                     };
                     keys.forEach((key) => {
+                      
                         if (stateMap[key]) {
                             const value = dataReceived.data[key][0][1];
                             const slicedValue = value;
                             stateMap[key]?.(slicedValue);
                         }
-
                         if (valueStateMap[key]) {
                             const value = dataReceived.data[key][0][0];
 
@@ -178,7 +177,7 @@ export default function ScoreCard_CNG_BINHDUONG() {
                                 .toString()
                                 .padStart(2, "0")}-${(date.getMonth() + 1)
                                 .toString()
-                                .padStart(2, "0")}-${date.getFullYear()} ${date
+                                .padStart(2, "0")} ${date
                                 .getHours()
                                 .toString()
                                 .padStart(2, "0")}:${date
@@ -188,14 +187,62 @@ export default function ScoreCard_CNG_BINHDUONG() {
                                 .getSeconds()
                                 .toString()
                                 .padStart(2, "0")}`;
-                            valueStateMap[key]?.(formattedDate); // Set formatted timestamp
+                            valueStateMap[key]?.(formattedDate);
                         }
                     });
                 }
-                fetchData()
+
+                fetchData();
             };
+
         }
-    }, [data]);
+    };
+    useEffect(() => {
+        fetchData()
+    },[isOnline])
+    
+    useEffect(() => {
+        if (isOnline) {
+            // Initial connection
+            connectWebSocket(cmdId);
+            fetchData()
+        }
+
+        return () => {
+            if (ws.current) {
+                console.log("Cleaning up WebSocket connection.");
+                ws.current.close();
+            }
+        };
+    }, [isOnline, cmdId]); // Reconnect if isOnline or cmdId changes
+
+    useEffect(() => {
+        const handleOnline = () => {
+            setIsOnline(true);
+            console.log('Back online. Reconnecting WebSocket with new cmdId.');
+            setCmdId(prevCmdId => prevCmdId + 1); // Increment cmdId on reconnect
+            fetchData()
+
+        };
+
+        const handleOffline = () => {
+            setIsOnline(false);
+            console.log('Offline detected. Closing WebSocket.');
+            if (ws.current) {
+                ws.current.close(); // Close WebSocket when offline
+            }
+        };
+
+        // Attach event listeners for online/offline status
+        window.addEventListener('online', handleOnline);
+        window.addEventListener('offline', handleOffline);
+
+        return () => {
+            // Cleanup event listeners on unmount
+            window.removeEventListener('online', handleOnline);
+            window.removeEventListener('offline', handleOffline);
+        };
+    }, []);
 
 
     const fetchData = async () => {
@@ -2504,99 +2551,93 @@ useEffect(() => {
         
           };
 
+          const formatValue = (value:any) => {
+            return value !== null
+                ? new Intl.NumberFormat('en-US', {
+                      maximumFractionDigits: 2,
+                      useGrouping: true, 
+                  }).format(parseFloat(value))
+                : "";
+        };
 
-
-    const dataEVC = [
-        {
-            name: <span>{tagNameEVC.InputPressure}</span>,
-            evc1901: <span style={combineCss.CSSEVC_01_Pressure}>{EVC_01_Pressure}</span>,
-            evc1902: <span style={combineCss.CSSEVC_02_Pressure}>{EVC_02_Pressure}</span>,
-
-        },
-        {
-            name: <span>{tagNameEVC.Temperature}</span>,
-            evc1901: <span style={combineCss.CSSEVC_01_Temperature}>{EVC_01_Temperature}</span>,
-            evc1902: <span style={combineCss.CSSEVC_02_Temperature}>{EVC_02_Temperature}</span>,
-
-        },
-        {
-            name: <span>{tagNameEVC.SVF}</span>,
-            evc1901: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition}>{EVC_01_Flow_at_Base_Condition}</span>,
-            evc1902: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition}>{EVC_02_Flow_at_Base_Condition}</span>,
-
-        },
-        {
-            name: <span>{tagNameEVC.GVF}</span>,
-            evc1901: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}>{EVC_01_Flow_at_Measurement_Condition}</span>,
-            evc1902: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition}>{EVC_02_Flow_at_Measurement_Condition}</span>,
-
-        },
-        {
-            name: <span>{tagNameEVC.SVA}</span>,
-            evc1901: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition}>{EVC_01_Volume_at_Base_Condition}</span>,
-            evc1902: <span style={combineCss.CSSEVC_02_Volume_at_Base_Condition}>{EVC_02_Volume_at_Base_Condition}</span>,
-
-        },
-        {
-            name: <span>{tagNameEVC.GVA}</span>,
-            evc1901: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}>{EVC_01_Volume_at_Measurement_Condition}</span>,
-            evc1902: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition}>{EVC_02_Volume_at_Measurement_Condition}</span>,
-
-        },
-     
-
-        {
-            name: <span>{tagNameEVC.VbToday}</span>,
-            evc1901: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day}>{EVC_01_Vb_of_Current_Day}</span>,
-            evc1902: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day}>{EVC_02_Vb_of_Current_Day}</span>,
-
-        },
-        {
-            name: <span>{tagNameEVC.VbLastDay}</span>,
-            evc1901: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day}>{EVC_01_Vb_of_Last_Day}</span>,
-            evc1902: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day}>{EVC_02_Vb_of_Last_Day}</span>,
-
-        },
-        {
-            name: <span>{tagNameEVC.VmToday}</span>,
-            evc1901: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day}>{EVC_01_Vm_of_Current_Day}</span>,
-            evc1902: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day}>{EVC_02_Vm_of_Current_Day}</span>,
-
-        },
-        {
-            name: <span>{tagNameEVC.VmLastDay}</span>,
-            evc1901: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day}>{EVC_01_Vm_of_Last_Day}</span>,
-            evc1902: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day}>{EVC_02_Vm_of_Last_Day}</span>,
-
-        },
-        {
-            name: <span>{tagNameEVC.ReBattery}</span>,
-            evc1901: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}>{EVC_01_Remain_Battery_Service_Life}</span>,
-            evc1902: <span style={combineCss.CSSEVC_02_Remain_Battery_Service_Life}>{EVC_02_Remain_Battery_Service_Life}</span>,
-
-        },
-    ];
+        const dataEVC = [
+            {
+                name: <span>{tagNameEVC.InputPressure}</span>,
+                evc1901: <span style={combineCss.CSSEVC_01_Pressure}>{formatValue(EVC_01_Pressure)}</span>,
+                evc1902: <span style={combineCss.CSSEVC_02_Pressure}>{formatValue(EVC_02_Pressure)}</span>,
+            },
+            {
+                name: <span>{tagNameEVC.Temperature}</span>,
+                evc1901: <span style={combineCss.CSSEVC_01_Temperature}>{formatValue(EVC_01_Temperature)}</span>,
+                evc1902: <span style={combineCss.CSSEVC_02_Temperature}>{formatValue(EVC_02_Temperature)}</span>,
+            },
+            {
+                name: <span>{tagNameEVC.SVF}</span>,
+                evc1901: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition}>{formatValue(EVC_01_Flow_at_Base_Condition)}</span>,
+                evc1902: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition}>{formatValue(EVC_02_Flow_at_Base_Condition)}</span>,
+            },
+            {
+                name: <span>{tagNameEVC.GVF}</span>,
+                evc1901: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}>{formatValue(EVC_01_Flow_at_Measurement_Condition)}</span>,
+                evc1902: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition}>{formatValue(EVC_02_Flow_at_Measurement_Condition)}</span>,
+            },
+            {
+                name: <span>{tagNameEVC.SVA}</span>,
+                evc1901: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition}>{formatValue(EVC_01_Volume_at_Base_Condition)}</span>,
+                evc1902: <span style={combineCss.CSSEVC_02_Volume_at_Base_Condition}>{formatValue(EVC_02_Volume_at_Base_Condition)}</span>,
+            },
+            {
+                name: <span>{tagNameEVC.GVA}</span>,
+                evc1901: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}>{formatValue(EVC_01_Volume_at_Measurement_Condition)}</span>,
+                evc1902: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition}>{formatValue(EVC_02_Volume_at_Measurement_Condition)}</span>,
+            },
+            {
+                name: <span>{tagNameEVC.VbToday}</span>,
+                evc1901: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day}>{formatValue(EVC_01_Vb_of_Current_Day)}</span>,
+                evc1902: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day}>{formatValue(EVC_02_Vb_of_Current_Day)}</span>,
+            },
+            {
+                name: <span>{tagNameEVC.VbLastDay}</span>,
+                evc1901: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day}>{formatValue(EVC_01_Vb_of_Last_Day)}</span>,
+                evc1902: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day}>{formatValue(EVC_02_Vb_of_Last_Day)}</span>,
+            },
+            {
+                name: <span>{tagNameEVC.VmToday}</span>,
+                evc1901: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day}>{formatValue(EVC_01_Vm_of_Current_Day)}</span>,
+                evc1902: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day}>{formatValue(EVC_02_Vm_of_Current_Day)}</span>,
+            },
+            {
+                name: <span>{tagNameEVC.VmLastDay}</span>,
+                evc1901: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day}>{formatValue(EVC_01_Vm_of_Last_Day)}</span>,
+                evc1902: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day}>{formatValue(EVC_02_Vm_of_Last_Day)}</span>,
+            },
+            {
+                name: <span>{tagNameEVC.ReBattery}</span>,
+                evc1901: <span style={combineCss.CSSEVC_01_Remain_Battery_Service_Life}>{formatValue(EVC_01_Remain_Battery_Service_Life)}</span>,
+                evc1902: <span style={combineCss.CSSEVC_02_Remain_Battery_Service_Life}>{formatValue(EVC_02_Remain_Battery_Service_Life)}</span>,
+            },
+        ];
 
     const dataPLC = [
         {
             name: <span>{tagNamePLC.PIT_2006}</span>,
-            PLC: <span style={combineCss.CSSPIT_2006}> {PIT_2006}</span>,
+            PLC: <span style={combineCss.CSSPIT_2006}> {formatValue(PIT_2006)}</span>,
         },
         {
             name: <span>{tagNamePLC.PIT_2007}</span>,
-            PLC: <span style={combineCss.CSSPIT_2007}>{} {PIT_2007}</span>,
+            PLC: <span style={combineCss.CSSPIT_2007}>{} {formatValue(PIT_2007)}</span>,
         },
         {
             name: <span>{tagNamePLC.PT_2001}</span>,
-            PLC: <span style={combineCss.CSSPT_2001}> {PT_2001}</span>,
+            PLC: <span style={combineCss.CSSPT_2001}> {formatValue(PT_2001)}</span>,
         },
         {
             name: <span>{tagNamePLC.PT_2002}</span>,
-            PLC: <span style={combineCss.CSSPT_2002}> {PT_2002}</span>,
+            PLC: <span style={combineCss.CSSPT_2002}> {formatValue(PT_2002)}</span>,
         },
         {
             name: <span>{tagNamePLC.PT_2003}</span>,
-            PLC: <span style={combineCss.CSSPT_2003}> {PT_2003} {DataPT_2003}</span>,
+            PLC: <span style={combineCss.CSSPT_2003}> {formatValue(PT_2003)} {DataPT_2003}</span>,
         },
       
 

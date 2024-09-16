@@ -11,7 +11,7 @@ export default function SNG_Scorecard() {
       <ScoreCard_SNG_HUNGYEN/>
       
       <ScoreCard_SNG_PRU/>
-
+     
     </div>
   )
 }
