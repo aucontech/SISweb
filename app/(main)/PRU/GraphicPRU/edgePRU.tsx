@@ -391,16 +391,16 @@ export const edgePRU = [
         },
     },
     {
-        id: "FIQ_2001A-EVC_01_Pressure_DATA",
-        source: "FIQ_2001A",
+        id: "line7_none-EVC_01_Pressure_DATA",
+        source: "line7_none",
         target: "EVC_01_Pressure_DATA",
         type: "smoothstep",
     },
 
 
     {
-        id: "FIQ_2001B-EVC_02_Pressure_DATA",
-        source: "FIQ_2001B",
+        id: "line8_none-EVC_02_Pressure_DATA",
+        source: "line8_none",
         target: "EVC_02_Pressure_DATA",
         type: "smoothstep",
     },

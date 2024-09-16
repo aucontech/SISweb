@@ -107,16 +107,18 @@ export default function GraphicARAKAWA() {
     const toast = useRef<Toast>(null);
     const ws = useRef<WebSocket | null>(null);
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
-    const [resetKey, setResetKey] = useState(0);
+
+
+
+
+  const [resetKey, setResetKey] = useState(0);
     const [isOnline, setIsOnline] = useState(navigator.onLine);
-    const [wasOffline, setWasOffline] = useState(false); // Theo dõi trạng thái offline trước đó
 
-    useEffect(() => {
-
-        const connectWebSocket = () => {
-
+    const [cmdId, setCmdId] = useState(1); // Track cmdId for requests
+ 
+    const connectWebSocket = (cmdId: number) => {
         const token = localStorage.getItem('accessToken');
-                const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+        const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
         ws.current = new WebSocket(url);
         const obj1 = {
             attrSubCmds: [],
@@ -125,7 +127,7 @@ export default function GraphicARAKAWA() {
                     entityType: "DEVICE",
                     entityId: id_ARAKAWA,
                     scope: "LATEST_TELEMETRY",
-                    cmdId: 1,
+                    cmdId: cmdId, // Use dynamic cmdId for new requests
                 },
             ],
         };
@@ -135,50 +137,13 @@ export default function GraphicARAKAWA() {
                 console.log("WebSocket connected");
                 setTimeout(() => {
                     ws.current?.send(JSON.stringify(obj1));
-             
-
                 });
             };
+
             ws.current.onclose = () => {
-                                setTimeout(() => {
-                                    connectWebSocket(); 
-                                }, 10000);
-                            };
-            return () => {
-                console.log("Cleaning up WebSocket connection.");
-                ws.current?.close();
+                console.log("WebSocket connection closed.");
             };
-        }
-        };
-       
-        connectWebSocket()
-        
-    }, [isOnline]);
 
-    useEffect(() => {
-        const handleOnlineStatus = () => {
-            const currentStatus = navigator.onLine;
-            setIsOnline(currentStatus);
-
-            if (!currentStatus) {
-                setWasOffline(true);
-            } else if (currentStatus && wasOffline) {
-                setResetKey(prevKey => prevKey + 1); 
-                setWasOffline(false); 
-            }
-        };
-
-        window.addEventListener('online', handleOnlineStatus);
-        window.addEventListener('offline', handleOnlineStatus);
-
-        return () => {
-            window.removeEventListener('online', handleOnlineStatus);
-            window.removeEventListener('offline', handleOnlineStatus);
-        };
-    }, [wasOffline]);
-
-    useEffect(() => {
-        if (ws.current) {
             ws.current.onmessage = (evt) => {
                 let dataReceived = JSON.parse(evt.data);
                 if (dataReceived.update !== null) {
@@ -280,8 +245,57 @@ export default function GraphicARAKAWA() {
                 }
                 fetchData();
             };
+
         }
-    }, [data]);
+    };
+    useEffect(() => {
+        fetchData()
+    },[isOnline])
+    
+    useEffect(() => {
+        if (isOnline) {
+            // Initial connection
+            connectWebSocket(cmdId);
+            fetchData()
+        }
+
+        return () => {
+            if (ws.current) {
+                console.log("Cleaning up WebSocket connection.");
+                ws.current.close();
+            }
+        };
+    }, [isOnline, cmdId]); // Reconnect if isOnline or cmdId changes
+    
+
+    useEffect(() => {
+        const handleOnline = () => {
+            setIsOnline(true);
+            console.log('Back online. Reconnecting WebSocket with new cmdId.');
+            setCmdId(prevCmdId => prevCmdId + 1); // Increment cmdId on reconnect
+            fetchData()
+
+        };
+
+        const handleOffline = () => {
+            setIsOnline(false);
+            console.log('Offline detected. Closing WebSocket.');
+            if (ws.current) {
+                ws.current.close(); // Close WebSocket when offline
+            }
+        };
+
+        // Attach event listeners for online/offline status
+        window.addEventListener('online', handleOnline);
+        window.addEventListener('offline', handleOffline);
+
+        return () => {
+            // Cleanup event listeners on unmount
+            window.removeEventListener('online', handleOnline);
+            window.removeEventListener('offline', handleOffline);
+        };
+    }, []);
+
 
     //============================GD =============================
 
@@ -1238,20 +1252,17 @@ export default function GraphicARAKAWA() {
 
     //======================================================================================================================
 
-    const [lineDuty1901, setLineduty1901] = useState<boolean>(false);
-    const [lineDuty1902, setLineduty1902] = useState<boolean>(true);
+    const [lineDuty1901, setLineduty1901] = useState<boolean>(true);
 
     const ChangeStatusFIQ = async () => {
         try {
             const newValue1 = !lineDuty1901;
-            const newValue2 = !lineDuty1902;
 
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_ARAKAWA}/SERVER_SCOPE`,
-                { FIQ1901_LineDuty: newValue1, FIQ1902_LineDuty: newValue2 }
+                { Line_Duty_01: newValue1, }
             );
             setLineduty1901(newValue1);
-            setLineduty1902(newValue2);
 
             toast.current?.show({
                 severity: "info",
@@ -1625,6 +1636,13 @@ setActive(Active?.value || false);
 
 
             setMaintainDO_SV_01(DO_SV_01_Maintain?.value || false);
+
+            const Line_Duty_01 = res.data.find((item: any) => item.key === "Line_Duty_01");
+
+            setLineduty1901(Line_Duty_01?.value || null);
+      
+
+
             } catch (error) {
             console.error("Error fetching data:", error);
             }
@@ -2671,7 +2689,6 @@ setActive(Active?.value || false);
                                     justifyContent: "center",
                                     alignItems: "center",
                                 }}
-                                onClick={confirmLineDuty}
                             >
                                 FIQ-1601
                                 {lineDuty1901 && (
@@ -2705,21 +2722,9 @@ setActive(Active?.value || false);
                                     justifyContent: "center",
                                     alignItems: "center",
                                 }}
-                                onClick={confirmLineDuty}
                             >
                                 FIQ-1602
-                                {lineDuty1902 && (
-                                    <span style={{ marginLeft: 30 }}>
-                                        <i
-                                            className="pi pi-check"
-                                            style={{
-                                                fontSize: 35,
-                                                color: "green",
-                                                fontWeight: 700,
-                                            }}
-                                        ></i>
-                                    </span>
-                                )}
+                               
                             </div>
                         ),
                     },
@@ -4300,10 +4305,8 @@ setActive(Active?.value || false);
                             fontSize: 32,
                             fontWeight: 600,
                         }}
-                        onClick={confirmLineDuty}
                     >
                         FIQ-1601
-                        {lineDuty1901 && <span>1901</span>}
                     </div>
                 ),
             },
@@ -4326,10 +4329,8 @@ setActive(Active?.value || false);
                             fontSize: 32,
                             fontWeight: 600,
                         }}
-                        onClick={confirmLineDuty}
                     >
                         FIQ-1602
-                        {lineDuty1902 && <span>1902</span>}
                     </div>
                 ),
             },

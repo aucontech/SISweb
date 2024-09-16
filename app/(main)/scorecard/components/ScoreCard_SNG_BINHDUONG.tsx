@@ -48,174 +48,210 @@ export default function ScoreCard_SNG_BINHDUONG() {
         setIsVisible(!isVisible);
     };
 
-    useEffect(() => {
-        ws.current = new WebSocket(url);
 
-        const obj1 = {
-            attrSubCmds: [],
-            tsSubCmds: [
-                {
-                    entityType: "DEVICE",
-                    entityId: id_SNG_BinhDuong,
-                    scope: "LATEST_TELEMETRY",
-                    cmdId: 1,
-                },
-            ],
+
+    //=====================================================================================
+  
+const [resetKey, setResetKey] = useState(0);
+const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+const [cmdId, setCmdId] = useState(1); // Track cmdId for requests
+
+const connectWebSocket = (cmdId: number) => {
+    const token = localStorage.getItem('accessToken');
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+    ws.current = new WebSocket(url);
+    const obj1 = {
+        attrSubCmds: [],
+        tsSubCmds: [
+            {
+                entityType: "DEVICE",
+                entityId: id_SNG_BinhDuong,
+                scope: "LATEST_TELEMETRY",
+                cmdId: cmdId, // Use dynamic cmdId for new requests
+            },
+        ],
+    };
+
+    if (ws.current) {
+        ws.current.onopen = () => {
+            console.log("WebSocket connected");
+            setTimeout(() => {
+                ws.current?.send(JSON.stringify(obj1));
+            });
         };
 
-        if (ws.current) {
-            ws.current.onopen = () => {
-                console.log("WebSocket connected");
-                setTimeout(() => {
-                    ws.current?.send(JSON.stringify(obj1));
+        ws.current.onclose = () => {
+            console.log("WebSocket connection closed.");
+        };
+
+        ws.current.onmessage = (event) => {
+            let dataReceived = JSON.parse(event.data);
+            if (dataReceived.update !== null) {
+                setData(prevData => [...prevData, dataReceived]);
+               
+                const keys = Object.keys(dataReceived.data);
+                const stateMap: StateMap = {
+              
+                    PT_2004: setPT_2004,
+                    PT_2005: setPT_2005,
+                    TT_2003: setTT_2003,
+                    TT_2004: setTT_2004,
+                    WB_1001: setWB_1001,
+                    TG_2005: setTG_2005,
+
+                    GD_2002: setGD_2002,
+                    GD_2003: setGD_2003,
+                    GD_2004: setGD_2004,
+
+                    GD_2005: setGD_2005,
+                    GD_2006: setGD_2006,
+
+
+                    TM_2002_SNG: setTM_2002_SNG,
+                
+                    TM_2003_SNG: setTM_2003_SNG,
+
+
+                    TOTAL_SNG: setTOTAL_SNG,
+              
+                    
+                    GD1_STATUS: setGD1_STATUS,
+                    GD2_STATUS: setGD2_STATUS,
+                    GD3_STATUS: setGD3_STATUS,
+                    GD4_STATUS: setGD4_STATUS,
+                    GD5_STATUS: setGD5_STATUS,
+
+
+                    ESD: setESD,
+                    HR_BC: setHR_BC,
+                    SD: setSD,
+                    VAPORIZER_1: setVAPORIZER_1,
+                    VAPORIZER_2: setVAPORIZER_2,
+                    VAPORIZER_3: setVAPORIZER_3,
+
+                    VAPORIZER_4: setVAPORIZER_4,
+                    COOLING_V: setCOOLING_V,
+                    FCV_2001: setFCV_2001,
+
+
+
+                    TM_2002_CNG: setTM_2002_CNG,
+                    TM_2003_CNG: setTM_2003_CNG,
+                
+                    HV_1001: setHV_1001,
+                    RATIO_MODE: setRATIO_MODE,
+                    FCV_MODE: setFCV_MODE,
+                    TOTAL_CNG: setTOTAL_CNG,
+
+            
+                    WB_Setpoint: setWB_Setpoint,
+                    WIS_Calorimeter: setWIS_Calorimeter,
+                    CVS_Calorimeter: setCVS_Calorimeter,
+
+                    SG_Calorimeter: setSG_Calorimeter,
+
+           
+                    SDV_2004: setSDV_2004,
+                    SDV_2003: setSDV_2003,
+                    TD_4072_Conn_STT: setTD_4072_Conn_STT,
+                    PLC_Conn_STT: setPLC_Conn_STT,
+                    PERCENT_LPG: setPERCENT_LPG,
+                    PERCENT_AIR: setPERCENT_AIR,
+                };
+                const valueStateMap: ValueStateMap = {
+                    PLC_Conn_STT: setConn_STTValue,
+
+                };
+
+              
+                keys.forEach((key) => {
+                 
+                    if (stateMap[key]) {
+                        const value = dataReceived.data[key][0][1];
+                        const slicedValue = value;
+                        stateMap[key]?.(slicedValue);
+                    }
+                    if (valueStateMap[key]) {
+                        const value = dataReceived.data[key][0][0];
+
+                        const date = new Date(value);
+                        const formattedDate = `${date
+                            .getDate()
+                            .toString()
+                            .padStart(2, "0")}-${(date.getMonth() + 1)
+                            .toString()
+                            .padStart(2, "0")}-${date.getFullYear()} ${date
+                            .getHours()
+                            .toString()
+                            .padStart(2, "0")}:${date
+                            .getMinutes()
+                            .toString()
+                            .padStart(2, "0")}:${date
+                            .getSeconds()
+                            .toString()
+                            .padStart(2, "0")}`;
+                        valueStateMap[key]?.(formattedDate); // Set formatted timestamp
+                    }
                 });
-            };
+            }
 
-            ws.current.onclose = () => {
-                console.log("WebSocket connection closed.");
-            };
+          
+            fetchData();
+        };
 
-            return () => {
-                console.log("Cleaning up WebSocket connection.");
-                ws.current?.close();
-            };
-        }
-    }, []);
+    }
+};
+useEffect(() => {
+    fetchData()
+},[isOnline])
 
-    useEffect(() => {
+useEffect(() => {
+    if (isOnline) {
+        // Initial connection
+        connectWebSocket(cmdId);
+        fetchData()
+    }
+
+    return () => {
         if (ws.current) {
-            ws.current.onmessage = (evt) => {
-                let dataReceived = JSON.parse(evt.data);
-                if (dataReceived.update !== null) {
-                    setData([...data, dataReceived]);
-                    const formatValue = (value: any) => {
-                        return value !== null
-                            ? new Intl.NumberFormat("en-US", {
-                                  minimumFractionDigits: 2, // Đảm bảo có 2 chữ số sau dấu thập phân
-                                  maximumFractionDigits: 2, // Không nhiều hơn 2 chữ số thập phân
-                                  useGrouping: true, // Phân cách phần ngàn bằng dấu phẩy
-                              }).format(parseFloat(value))
-                            : "";
-                    };
-                    const keys = Object.keys(dataReceived.data);
-                    const stateMap: StateMap = {
-                  
-
-
-
-                        PT_2004: setPT_2004,
-                        PT_2005: setPT_2005,
-                        TT_2003: setTT_2003,
-                        TT_2004: setTT_2004,
-                        WB_1001: setWB_1001,
-                        TG_2005: setTG_2005,
-
-                        GD_2002: setGD_2002,
-                        GD_2003: setGD_2003,
-                        GD_2004: setGD_2004,
-
-                        GD_2005: setGD_2005,
-                        GD_2006: setGD_2006,
-
-
-                        TM_2002_SNG: setTM_2002_SNG,
-                    
-                        TM_2003_SNG: setTM_2003_SNG,
-
-
-                        TOTAL_SNG: setTOTAL_SNG,
-
-                        
-                        HV_1001: setHV_1001,
-                     
-                        TOTAL_CNG: setTOTAL_CNG,
-
-                        TM_2002_CNG: setTM_2002_CNG,
-                        TM_2003_CNG: setTM_2003_CNG,
-                        WB_Setpoint: setWB_Setpoint,
-                        WIS_Calorimeter: setWIS_Calorimeter,
-                        CVS_Calorimeter: setCVS_Calorimeter,
-
-                        SG_Calorimeter: setSG_Calorimeter,
-
-                    
-
-
-
-
-                    };
-                    const valueStateMap: ValueStateMap = {
-                        TD_4072_Conn_STT: setFC_Conn_STTValue,
-                        PLC_Conn_STT: setConn_STTValue,
-                    };
-                    const stateMap2: StateMap2 = {
-                        ESD: setESD,
-                        HR_BC: setHR_BC,
-                        SD: setSD,
-                        VAPORIZER_1: setVAPORIZER_1,
-                        VAPORIZER_2: setVAPORIZER_2,
-                        VAPORIZER_3: setVAPORIZER_3,
-
-                        VAPORIZER_4: setVAPORIZER_4,
-                        COOLING_V: setCOOLING_V,
-                        FCV_2001: setFCV_2001,
-                        SDV_2004: setSDV_2004,
-
-                        SDV_2003: setSDV_2003,
-
-
-                        GD1_STATUS: setGD1_STATUS,
-                        GD2_STATUS: setGD2_STATUS,
-                        GD3_STATUS: setGD3_STATUS,
-                        GD4_STATUS: setGD4_STATUS,
-                        GD5_STATUS: setGD5_STATUS,
-                        TD_4072_Conn_STT: setTD_4072_Conn_STT,
-                        PLC_Conn_STT: setPLC_Conn_STT,
-
-                        RATIO_MODE: setRATIO_MODE,
-                        FCV_MODE: setFCV_MODE,
-                        PERCENT_LPG: setPERCENT_LPG,
-                        PERCENT_AIR: setPERCENT_AIR,
-                    };
-                    keys.forEach((key) => {
-                        if (stateMap[key]) {
-                            const value = dataReceived.data[key][0][1];
-                            const formattedValue = formatValue(value);
-                            stateMap[key]?.(formattedValue);
-                        }
-                        if (stateMap2[key]) {
-                            const value = dataReceived.data[key][0][1];
-                            const slicedValue = value;
-                            stateMap2[key]?.(slicedValue);
-                        }
-
-                        if (valueStateMap[key]) {
-                            const value = dataReceived.data[key][0][0];
-
-                            const date = new Date(value);
-                            const formattedDate = `${date
-                                .getDate()
-                                .toString()
-                                .padStart(2, "0")}-${(date.getMonth() + 1)
-                                .toString()
-                                .padStart(2, "0")}-${date.getFullYear()} ${date
-                                .getHours()
-                                .toString()
-                                .padStart(2, "0")}:${date
-                                .getMinutes()
-                                .toString()
-                                .padStart(2, "0")}:${date
-                                .getSeconds()
-                                .toString()
-                                .padStart(2, "0")}`;
-                            valueStateMap[key]?.(formattedDate); // Set formatted timestamp
-                        }
-                    });
-                }
-                fetchData()
-            };
+            console.log("Cleaning up WebSocket connection.");
+            ws.current.close();
         }
-    }, [data]);
+    };
+}, [isOnline, cmdId]); // Reconnect if isOnline or cmdId changes
+
+
+useEffect(() => {
+    const handleOnline = () => {
+        setIsOnline(true);
+        console.log('Back online. Reconnecting WebSocket with new cmdId.');
+        setCmdId(prevCmdId => prevCmdId + 1); // Increment cmdId on reconnect
+        fetchData()
+
+    };
+
+    const handleOffline = () => {
+        setIsOnline(false);
+        console.log('Offline detected. Closing WebSocket.');
+        if (ws.current) {
+            ws.current.close(); // Close WebSocket when offline
+        }
+    };
+
+    // Attach event listeners for online/offline status
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+        // Cleanup event listeners on unmount
+        window.removeEventListener('online', handleOnline);
+        window.removeEventListener('offline', handleOffline);
+    };
+}, []);
+
+
+//============================GD =============================
 
 
     const fetchData = async () => {
@@ -2637,152 +2673,160 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
 
 
 
+          const formatValue = (value:any) => {
+            return value !== null
+                ? new Intl.NumberFormat('en-US', {
+                      maximumFractionDigits: 2,
+                      useGrouping: true, 
+                  }).format(parseFloat(value))
+                : "";
+        };
 
     const dataPLC = [
         {
             name: <span>{tagNamePLC.PT_2004}</span>,
-            PLC: <span style={combineCss.CSSPT_2004}>{} {PT_2004} {DataPT_2004}</span>,
+            PLC: <span style={combineCss.CSSPT_2004}>{} {formatValue(PT_2004)} {DataPT_2004}</span>,
         },
 
         {
             name: <span>{tagNamePLC.PT_2005}</span>,
-            PLC: <span style={combineCss.CSSPT_2005}> {PT_2005} {DataPT_2005}</span>,
+            PLC: <span style={combineCss.CSSPT_2005}> {formatValue(PT_2005)} {DataPT_2005}</span>,
         },
      
         {
             name: <span>{tagNamePLC.TT_2004}</span>,
-            PLC: <span style={combineCss.CSSTT_2004}>{TT_2004} {DataTT_2004}</span>,
+            PLC: <span style={combineCss.CSSTT_2004}>{formatValue(TT_2004)} {DataTT_2004}</span>,
         },
         {
             name: <span>{tagNamePLC.TT_2003}</span>,
-            PLC: <span style={combineCss.CSSTT_2003}> {TT_2003} {DataTT_2003}</span>,
+            PLC: <span style={combineCss.CSSTT_2003}> {formatValue(TT_2003)} {DataTT_2003}</span>,
         },
    
         {
             name: <span>{tagNamePLC.TG_2005}</span>,
-            PLC: <span style={combineCss.CSSTG_2005}> {TG_2005} {DataTG_2005}</span>,
+            PLC: <span style={combineCss.CSSTG_2005}> {formatValue(TG_2005)} {DataTG_2005}</span>,
         },
       
         {
             name: <span>{tagNamePLC.WB_1001}</span>,
-            PLC: <span style={combineCss.CSSWB_1001}>{WB_1001} {DataWB_1001}</span>,
+            PLC: <span style={combineCss.CSSWB_1001}>{formatValue(WB_1001)} {DataWB_1001}</span>,
         },
         {
             name: <span>{tagNamePLC.GD_2002}</span>,
-            PLC: <span style={combineCss.CSSGD_2002}> {GD_2002} {DataGD_2002}</span>,
+            PLC: <span style={combineCss.CSSGD_2002}> {formatValue(GD_2002)} {DataGD_2002}</span>,
         },
            
         {
             name: <span>{tagNamePLC.GD_2003}</span>,
-            PLC: <span style={combineCss.CSSGD_2003}>{GD_2003} {DataGD_2003}</span>,
+            PLC: <span style={combineCss.CSSGD_2003}>{formatValue(GD_2003)} {DataGD_2003}</span>,
         },
         {
             name: <span>{tagNamePLC.GD_2004}</span>,
-            PLC: <span style={combineCss.CSSGD_2004}> {GD_2004} {DataGD_2004}</span>,
+            PLC: <span style={combineCss.CSSGD_2004}> {formatValue(GD_2004)} {DataGD_2004}</span>,
         },
       
       
         {
             name: <span>{tagNamePLC.GD_2005}</span>,
-            PLC: <span style={combineCss.CSSGD_2005}>{GD_2005} </span>,
+            PLC: <span style={combineCss.CSSGD_2005}>{formatValue(GD_2005)} </span>,
         },
         {
             name: <span>{tagNamePLC.GD_2006}</span>,
-            PLC: <span style={combineCss.CSSGD_2006}> {GD_2006} </span>,
+            PLC: <span style={combineCss.CSSGD_2006}> {formatValue(GD_2006)} </span>,
         },
 
 
         {
             name: <span>{tagNamePLC.TM_2002_SNG}</span>,
-            PLC: <span style={combineCss.CSSTM_2002_SNG}>{TM_2002_SNG} </span>,
+            PLC: <span style={combineCss.CSSTM_2002_SNG}>{formatValue(TM_2002_SNG)} </span>,
         },
      
         {
             name: <span>{tagNamePLC.TM_2003_SNG}</span>,
-            PLC: <span style={combineCss.CSSTM_2003_SNG}>{TM_2003_SNG}</span>,
+            PLC: <span style={combineCss.CSSTM_2003_SNG}>{formatValue(TM_2003_SNG)}</span>,
         },
         {
             name: <span>{tagNamePLC.TOTAL_SNG}</span>,
-            PLC: <span style={combineCss.CSSTOTAL_SNG}>{TOTAL_SNG}  </span>,
+            PLC: <span style={combineCss.CSSTOTAL_SNG}>{formatValue(TOTAL_SNG)}  </span>,
         },
         {
             name: <span>{tagNamePLC.SDV_2004}</span>,
-            PLC: <span style={combineCss.CSSSDV_2004}> {SDV_2004}  {DataSDV_2004}</span>,
+            PLC: <span style={combineCss.CSSSDV_2004}> {formatValue(SDV_2004)}  {DataSDV_2004}</span>,
         },
 
         {
             name: <span>{tagNamePLC.SDV_2003}</span>,
-            PLC: <span style={combineCss.CSSSDV_2003}>{SDV_2003} {DataSDV_2003}</span>,
+            PLC: <span style={combineCss.CSSSDV_2003}>{formatValue(SDV_2003)} {DataSDV_2003}</span>,
         },
 
 //===
 
         {
             name: <span>{tagNamePLC.GD1_STATUS}</span>,
-            PLC: <span style={combineCss.CSSGD1_STATUS}>{GD1_STATUS}  {DataGD1_STATUS}</span>,
+            PLC: <span style={combineCss.CSSGD1_STATUS}>{formatValue(GD1_STATUS)}  {DataGD1_STATUS}</span>,
         },
      
         {
             name: <span>{tagNamePLC.GD2_STATUS}</span>,
-            PLC: <span style={combineCss.CSSGD2_STATUS}>{GD2_STATUS}  {DataGD2_STATUS}</span>,
+            PLC: <span style={combineCss.CSSGD2_STATUS}>{formatValue(GD2_STATUS)}  {DataGD2_STATUS}</span>,
         },
       
 
 
         {
             name: <span>{tagNamePLC.GD3_STATUS}</span>,
-            PLC: <span style={combineCss.CSSGD3_STATUS}>{GD3_STATUS}  {DataGD3_STATUS}</span>,
+            PLC: <span style={combineCss.CSSGD3_STATUS}>{formatValue(GD3_STATUS)}  {DataGD3_STATUS}</span>,
         },
         {
             name: <span>{tagNamePLC.GD4_STATUS}</span>,
-            PLC: <span style={combineCss.CSSGD4_STATUS}> {GD4_STATUS}  {DataGD4_STATUS}</span>,
+            PLC: <span style={combineCss.CSSGD4_STATUS}> {formatValue(GD4_STATUS)}  {DataGD4_STATUS}</span>,
         },
      
  
 
         {
             name: <span>{tagNamePLC.GD5_STATUS}</span>,
-            PLC: <span style={combineCss.CSSGD5_STATUS}> {GD5_STATUS} {DataGD5_STATUS}</span>,
+            PLC: <span style={combineCss.CSSGD5_STATUS}> {formatValue(GD5_STATUS)} {DataGD5_STATUS}</span>,
         },
         
         {
             name: <span>{tagNamePLC.SD}</span>,
-            PLC: <span style={combineCss.CSSSD}> {SD} {DataSD}</span>,
+            PLC: <span style={combineCss.CSSSD}> {formatValue(SD)} {DataSD}</span>,
         },
    
         {
             name: <span>{tagNamePLC.HR_BC}</span>,
-            PLC: <span style={combineCss.CSSHR_BC}> {HR_BC} {DataHR_BC}</span>,
+            PLC: <span style={combineCss.CSSHR_BC}> {formatValue(HR_BC)} {DataHR_BC}</span>,
         },
         {
             name: <span>{tagNamePLC.ESD}</span>,
-            PLC: <span style={combineCss.CSSESD}>{} {ESD} {DataESD}</span>,
+            PLC: <span style={combineCss.CSSESD}>{} {formatValue(ESD)} {DataESD}</span>,
         },
         {
             name: <span>{tagNamePLC.VAPORIZER_1}</span>,
-            PLC: <span style={combineCss.CSSVAPORIZER_1}>{VAPORIZER_1} {DataVAPORIZER_1}</span>,
+            PLC: <span style={combineCss.CSSVAPORIZER_1}>{formatValue(VAPORIZER_1)} {DataVAPORIZER_1}</span>,
         },
         {
             name: <span>{tagNamePLC.VAPORIZER_2}</span>,
-            PLC: <span style={combineCss.CSSVAPORIZER_2}>{VAPORIZER_2} {DataVAPORIZER_2}</span>,
+            PLC: <span style={combineCss.CSSVAPORIZER_2}>{formatValue(VAPORIZER_2)} {DataVAPORIZER_2}</span>,
         },
    
         {
             name: <span>{tagNamePLC.VAPORIZER_3}</span>,
-            PLC: <span style={combineCss.CSSVAPORIZER_3}> {VAPORIZER_3} {DataVAPORIZER_3}</span>,
+            PLC: <span style={combineCss.CSSVAPORIZER_3}> {formatValue(VAPORIZER_3)} {DataVAPORIZER_3}</span>,
         },
      
         {
             name: <span>{tagNamePLC.VAPORIZER_4}</span>,
-            PLC: <span style={combineCss.CSSVAPORIZER_4}> {VAPORIZER_4} {DataVAPORIZER_4}</span>,
+            PLC: <span style={combineCss.CSSVAPORIZER_4}> {formatValue(VAPORIZER_4)} {DataVAPORIZER_4}</span>,
         },
         {
             name: <span>{tagNamePLC.COOLING_V}</span>,
-            PLC: <span style={combineCss.CSSCOOLING_V}>{COOLING_V} {DataCOOLING_V}</span>,
+            PLC: <span style={combineCss.CSSCOOLING_V}>{formatValue(COOLING_V)} {DataCOOLING_V}</span>,
         },
         {
             name: <span>{tagNamePLC.FCV_2001}</span>,
-            PLC: <span style={combineCss.CSSFCV_2001}> {FCV_2001} </span>,
+            PLC: <span style={combineCss.CSSFCV_2001}> {formatValue(FCV_2001)} </span>,
         },
      
      
@@ -2790,42 +2834,42 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
      
         {
             name: <span>{tagNamePLC.PERCENT_LPG}</span>,
-            PLC: <span style={combineCss.CSSPERCENT_LPG}>{} {PERCENT_LPG} </span>,
+            PLC: <span style={combineCss.CSSPERCENT_LPG}>{} {formatValue(PERCENT_LPG)} </span>,
         },
         {
             name: <span>{tagNamePLC.PERCENT_AIR}</span>,
-            PLC: <span style={combineCss.CSSPERCENT_AIR}> {PERCENT_AIR} </span>,
+            PLC: <span style={combineCss.CSSPERCENT_AIR}> {formatValue(PERCENT_AIR)} </span>,
         },
         {
             name: <span>{tagNamePLC.HV_1001}</span>,
-            PLC: <span style={combineCss.CSSHV_1001}> {HV_1001} </span>,
+            PLC: <span style={combineCss.CSSHV_1001}> {formatValue(HV_1001)} </span>,
         },
    
        
         {
             name: <span>{tagNamePLC.RATIO_MODE}</span>,
-            PLC: <span style={combineCss.CSSFCV_MODE}>{FCV_MODE} {DataFCV_MODE}</span>,
+            PLC: <span style={combineCss.CSSFCV_MODE}>{formatValue(FCV_MODE)} {DataFCV_MODE}</span>,
         },
         {
             name: <span>{tagNamePLC.FCV_MODE}</span>,
-            PLC: <span style={combineCss.CSSRATIO_MODE}>{RATIO_MODE} {DataRATIO_MODE}</span>,
+            PLC: <span style={combineCss.CSSRATIO_MODE}>{formatValue(RATIO_MODE)} {DataRATIO_MODE}</span>,
         },
         {
             name: <span>{tagNamePLC.TOTAL_CNG}</span>,
-            PLC: <span style={combineCss.CSSTOTAL_CNG}> {TOTAL_CNG} </span>,
+            PLC: <span style={combineCss.CSSTOTAL_CNG}> {formatValue(TOTAL_CNG)} </span>,
         },
         {
             name: <span>{tagNamePLC.TM_2002_CNG}</span>,
-            PLC: <span style={combineCss.CSSTM_2002_CNG}> {TM_2002_CNG} </span>,
+            PLC: <span style={combineCss.CSSTM_2002_CNG}> {formatValue(TM_2002_CNG)} </span>,
         },
 
         {
             name: <span>{tagNamePLC.TM_2003_CNG}</span>,
-            PLC: <span style={combineCss.CSSTM_2003_CNG}>{TM_2003_CNG} </span>,
+            PLC: <span style={combineCss.CSSTM_2003_CNG}>{formatValue(TM_2003_CNG)} </span>,
         },
         {
             name: <span>{tagNamePLC.WB_Setpoint}</span>,
-            PLC: <span style={combineCss.CSSWB_Setpoint}> {WB_Setpoint}</span>,
+            PLC: <span style={combineCss.CSSWB_Setpoint}> {formatValue(WB_Setpoint)}</span>,
         },
     
      
@@ -2840,17 +2884,17 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
     const TD_CON_STT = [
         {
             name: <span>{tagNamePLC.WIS_Calorimeter}</span>,
-            PLC: <span style={combineCss.CSSWIS_Calorimeter}> {WIS_Calorimeter} </span>,
+            PLC: <span style={combineCss.CSSWIS_Calorimeter}> {formatValue(WIS_Calorimeter)} </span>,
         },
         
         {
             name: <span>{tagNamePLC.CVS_Calorimeter}</span>,
-            PLC: <span style={combineCss.CSSCVS_Calorimeter}>{CVS_Calorimeter} </span>,
+            PLC: <span style={combineCss.CSSCVS_Calorimeter}>{formatValue(CVS_Calorimeter)} </span>,
         },
 
         {
             name: <span>{tagNamePLC.SG_Calorimeter}</span>,
-            PLC: <span style={combineCss.CSSSG_Calorimeter}> {SG_Calorimeter}</span>,
+            PLC: <span style={combineCss.CSSSG_Calorimeter}> {formatValue(SG_Calorimeter)}</span>,
         },
 
      

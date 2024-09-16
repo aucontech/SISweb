@@ -119,201 +119,218 @@ export default function GraphicIGUACU() {
     const toast = useRef<Toast>(null);
     const ws = useRef<WebSocket | null>(null);
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
-    const [resetKey, setResetKey] = useState(0);
-    const [isOnline, setIsOnline] = useState(navigator.onLine);
-    const [wasOffline, setWasOffline] = useState(false); // Theo dõi trạng thái offline trước đó
+ 
 
-    useEffect(() => {
+//=====================================================================================
+  
+const [resetKey, setResetKey] = useState(0);
+const [isOnline, setIsOnline] = useState(navigator.onLine);
 
-        const connectWebSocket = () => {
+const [cmdId, setCmdId] = useState(1); // Track cmdId for requests
 
-        const token = localStorage.getItem('accessToken');
-                const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
-        ws.current = new WebSocket(url);
-        const obj1 = {
-            attrSubCmds: [],
-            tsSubCmds: [
-                {
-                    entityType: "DEVICE",
-                    entityId: id_IGUECU,
-                    scope: "LATEST_TELEMETRY",
-                    cmdId: 1,
-                },
-            ],
+const connectWebSocket = (cmdId: number) => {
+    const token = localStorage.getItem('accessToken');
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+    ws.current = new WebSocket(url);
+    const obj1 = {
+        attrSubCmds: [],
+        tsSubCmds: [
+            {
+                entityType: "DEVICE",
+                entityId: id_IGUECU,
+                scope: "LATEST_TELEMETRY",
+                cmdId: cmdId, // Use dynamic cmdId for new requests
+            },
+        ],
+    };
+
+    if (ws.current) {
+        ws.current.onopen = () => {
+            console.log("WebSocket connected");
+            setTimeout(() => {
+                ws.current?.send(JSON.stringify(obj1));
+            });
         };
 
-        if (ws.current) {
-            ws.current.onopen = () => {
-                console.log("WebSocket connected");
-                setTimeout(() => {
-                    ws.current?.send(JSON.stringify(obj1));
+        ws.current.onclose = () => {
+            console.log("WebSocket connection closed.");
+        };
+
+        ws.current.onmessage = (evt) => {
+            let dataReceived = JSON.parse(evt.data);
+            if (dataReceived.update !== null) {
+                setData(prevData => [...prevData, dataReceived]);
+
+               
+                const keys = Object?.keys(dataReceived.data);
+                const stateMap: StateMap = {
+                    EVC_01_Flow_at_Base_Condition: setEVC_01_Flow_at_Base_Condition,
+                    EVC_01_Flow_at_Measurement_Condition: setEVC_01_Flow_at_Measurement_Condition,
+                    EVC_01_Volume_at_Base_Condition: setEVC_01_Volume_at_Base_Condition,
+                    EVC_01_Volume_at_Measurement_Condition: setEVC_01_Volume_at_Measurement_Condition,
+                    EVC_01_Pressure: setEVC_01_Pressure,
+
+                    EVC_01_Temperature: setEVC_01_Temperature,
+                    EVC_01_Vm_of_Last_Day: setEVC_01_Vm_of_Last_Day,
+                    EVC_01_Vb_of_Last_Day: setEVC_01_Vb_of_Last_Day,
+                    EVC_01_Vm_of_Current_Day: setEVC_01_Vm_of_Current_Day,
+                    EVC_01_Vb_of_Current_Day: setEVC_01_Vb_of_Current_Day,
+
+                    EVC_01_Remain_Battery_Service_Life: setEVC_01_Remain_Battery_Service_Life,
+
+
+
+                    EVC_02_Flow_at_Base_Condition: setEVC_02_Flow_at_Base_Condition,
+                    EVC_02_Flow_at_Measurement_Condition: setEVC_02_Flow_at_Measurement_Condition,
+                    EVC_02_Volume_at_Base_Condition: setEVC_02_Volume_at_Base_Condition,
+                    EVC_02_Volume_at_Measurement_Condition: setEVC_02_Volume_at_Measurement_Condition,
+                    EVC_02_Pressure: setEVC_02_Pressure,
+
+                    EVC_02_Temperature: setEVC_02_Temperature,
+                    EVC_02_Vm_of_Last_Day: setEVC_02_Vm_of_Last_Day,
+                    EVC_02_Vb_of_Last_Day: setEVC_02_Vb_of_Last_Day,
+                    EVC_02_Vm_of_Current_Day: setEVC_02_Vm_of_Current_Day,
+                    EVC_02_Vb_of_Current_Day: setEVC_02_Vb_of_Current_Day,
+
+                    EVC_02_Remain_Battery_Service_Life: setEVC_02_Remain_Battery_Service_Life,
+
+
+
+                    GD1: setGD1,
+                    GD2: setGD2,
+                    GD3: setGD3,
+
+                    PT1: setPT1,
              
 
-                });
-            };
-            ws.current.onclose = () => {
-                                setTimeout(() => {
-                                    connectWebSocket(); 
-                                }, 10000);
-                            };
-            return () => {
-                console.log("Cleaning up WebSocket connection.");
-                ws.current?.close();
-            };
-        }
-        };
-       
-        connectWebSocket()
-        
-    }, [isOnline]);
-    
-    useEffect(() => {
-        const handleOnlineStatus = () => {
-            const currentStatus = navigator.onLine;
-            setIsOnline(currentStatus);
-
-            if (!currentStatus) {
-                setWasOffline(true);
-            } else if (currentStatus && wasOffline) {
-                setResetKey(prevKey => prevKey + 1); 
-                setWasOffline(false); 
-            }
-        };
-
-        window.addEventListener('online', handleOnlineStatus);
-        window.addEventListener('offline', handleOnlineStatus);
-
-        return () => {
-            window.removeEventListener('online', handleOnlineStatus);
-            window.removeEventListener('offline', handleOnlineStatus);
-        };
-    }, [wasOffline]);
-    
-    useEffect(() => {
-        if (ws.current) {
-            ws.current.onmessage = (evt) => {
-                let dataReceived = JSON.parse(evt.data);
-                if (dataReceived.update !== null) {
-                    setData(prevData => [...prevData, dataReceived]);
-
-                   
-                    const keys = Object?.keys(dataReceived.data);
-                    const stateMap: StateMap = {
-                        EVC_01_Flow_at_Base_Condition: setEVC_01_Flow_at_Base_Condition,
-                        EVC_01_Flow_at_Measurement_Condition: setEVC_01_Flow_at_Measurement_Condition,
-                        EVC_01_Volume_at_Base_Condition: setEVC_01_Volume_at_Base_Condition,
-                        EVC_01_Volume_at_Measurement_Condition: setEVC_01_Volume_at_Measurement_Condition,
-                        EVC_01_Pressure: setEVC_01_Pressure,
-
-                        EVC_01_Temperature: setEVC_01_Temperature,
-                        EVC_01_Vm_of_Last_Day: setEVC_01_Vm_of_Last_Day,
-                        EVC_01_Vb_of_Last_Day: setEVC_01_Vb_of_Last_Day,
-                        EVC_01_Vm_of_Current_Day: setEVC_01_Vm_of_Current_Day,
-                        EVC_01_Vb_of_Current_Day: setEVC_01_Vb_of_Current_Day,
-
-                        EVC_01_Remain_Battery_Service_Life: setEVC_01_Remain_Battery_Service_Life,
-
-
-
-                        EVC_02_Flow_at_Base_Condition: setEVC_02_Flow_at_Base_Condition,
-                        EVC_02_Flow_at_Measurement_Condition: setEVC_02_Flow_at_Measurement_Condition,
-                        EVC_02_Volume_at_Base_Condition: setEVC_02_Volume_at_Base_Condition,
-                        EVC_02_Volume_at_Measurement_Condition: setEVC_02_Volume_at_Measurement_Condition,
-                        EVC_02_Pressure: setEVC_02_Pressure,
-
-                        EVC_02_Temperature: setEVC_02_Temperature,
-                        EVC_02_Vm_of_Last_Day: setEVC_02_Vm_of_Last_Day,
-                        EVC_02_Vb_of_Last_Day: setEVC_02_Vb_of_Last_Day,
-                        EVC_02_Vm_of_Current_Day: setEVC_02_Vm_of_Current_Day,
-                        EVC_02_Vb_of_Current_Day: setEVC_02_Vb_of_Current_Day,
-
-                        EVC_02_Remain_Battery_Service_Life: setEVC_02_Remain_Battery_Service_Life,
-
-
-
-                        GD1: setGD1,
-                        GD2: setGD2,
-                        GD3: setGD3,
-
-                        PT1: setPT1,
-                 
-
-                        DI_UPS_BATTERY: setDI_UPS_BATTERY,
-                        DI_UPS_CHARGING: setDI_UPS_CHARGING,
-                        DI_UPS_ALARM: setDI_UPS_ALARM,
-                        UPS_Mode: setUPS_Mode,
-                        DI_MAP_1: setDI_MAP_1,
-                        
-                        DI_SELECT_SW: setDI_SELECT_SW,
-                        DI_RESET: setDI_RESET,
-                        Emergency_NO: setEmergency_NO,
-                        Emergency_NC: setEmergency_NC,
-                        DI_SD_1: setDI_SD_1,
-                        DO_HR_01: setDO_HR_01,
-                        DO_BC_01: setDO_BC_01,
-                        DO_SV_01: setDO_SV_01,
-
-                        DI_ZSO_1: setDI_ZSO_1,
-                        DI_ZSC_1: setDI_ZSC_1,
-                        PLC_Conn_STT: setPLC_Conn_STT,
-                     
-                        EVC_01_Conn_STT: setEVC_01_Conn_STT,
-                        EVC_02_Conn_STT: setEVC_02_Conn_STT,
-                    };
-
-                    const valueStateMap: ValueStateMap = {
-                        EVC_01_Conn_STT: setEVC_01_Conn_STTValue,
-                        EVC_02_Conn_STT: setEVC_02_Conn_STTValue,
-                    };
-                
-                    keys.forEach((key) => {
+                    DI_UPS_BATTERY: setDI_UPS_BATTERY,
+                    DI_UPS_CHARGING: setDI_UPS_CHARGING,
+                    DI_UPS_ALARM: setDI_UPS_ALARM,
+                    UPS_Mode: setUPS_Mode,
+                    DI_MAP_1: setDI_MAP_1,
                     
-                        if (stateMap[key]) {
-                            const value = dataReceived.data[key][0][1];
-                            const slicedValue = value;
-                            stateMap[key]?.(slicedValue);
-                        }
-                        if (valueStateMap[key]) {
-                            const value = dataReceived.data[key][0][0];
+                    DI_SELECT_SW: setDI_SELECT_SW,
+                    DI_RESET: setDI_RESET,
+                    Emergency_NO: setEmergency_NO,
+                    Emergency_NC: setEmergency_NC,
+                    DI_SD_1: setDI_SD_1,
+                    DO_HR_01: setDO_HR_01,
+                    DO_BC_01: setDO_BC_01,
+                    DO_SV_01: setDO_SV_01,
 
-                            const date = new Date(value);
-                            const formattedDate = `${date
-                                .getDate()
-                                .toString()
-                                .padStart(2, "0")}-${(date.getMonth() + 1)
-                                .toString()
-                                .padStart(2, "0")} ${date
-                                .getHours()
-                                .toString()
-                                .padStart(2, "0")}:${date
-                                .getMinutes()
-                                .toString()
-                                .padStart(2, "0")}:${date
-                                .getSeconds()
-                                .toString()
-                                .padStart(2, "0")}`;
-                            valueStateMap[key]?.(formattedDate);
-                        }
-                    });
-                }
+                    DI_ZSO_1: setDI_ZSO_1,
+                    DI_ZSC_1: setDI_ZSC_1,
+                    PLC_Conn_STT: setPLC_Conn_STT,
+                 
+                    EVC_01_Conn_STT: setEVC_01_Conn_STT,
+                    EVC_02_Conn_STT: setEVC_02_Conn_STT,
+                };
 
-                if (dataReceived.data && dataReceived.data.data?.length > 0) {
-                    const ballValue =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.active.value;
-                    setActive(ballValue);
-                } else if (
-                    dataReceived.update &&
-                    dataReceived.update?.length > 0
-                ) {
-                    const updatedData =
-                        dataReceived.update[0].latest.ATTRIBUTE.setActive.value;
-                    setActive(updatedData);
-                }
-                fetchData();
-            };
+                const valueStateMap: ValueStateMap = {
+                    EVC_01_Conn_STT: setEVC_01_Conn_STTValue,
+                    EVC_02_Conn_STT: setEVC_02_Conn_STTValue,
+                };
+            
+                keys.forEach((key) => {
+                
+                    if (stateMap[key]) {
+                        const value = dataReceived.data[key][0][1];
+                        const slicedValue = value;
+                        stateMap[key]?.(slicedValue);
+                    }
+                    if (valueStateMap[key]) {
+                        const value = dataReceived.data[key][0][0];
+
+                        const date = new Date(value);
+                        const formattedDate = `${date
+                            .getDate()
+                            .toString()
+                            .padStart(2, "0")}-${(date.getMonth() + 1)
+                            .toString()
+                            .padStart(2, "0")} ${date
+                            .getHours()
+                            .toString()
+                            .padStart(2, "0")}:${date
+                            .getMinutes()
+                            .toString()
+                            .padStart(2, "0")}:${date
+                            .getSeconds()
+                            .toString()
+                            .padStart(2, "0")}`;
+                        valueStateMap[key]?.(formattedDate);
+                    }
+                });
+            }
+
+            if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                const ballValue =
+                    dataReceived.data.data[0].latest.ATTRIBUTE.active.value;
+                setActive(ballValue);
+            } else if (
+                dataReceived.update &&
+                dataReceived.update?.length > 0
+            ) {
+                const updatedData =
+                    dataReceived.update[0].latest.ATTRIBUTE.setActive.value;
+                setActive(updatedData);
+            }
+            fetchData();
+        };
+
+    }
+};
+useEffect(() => {
+    fetchData()
+},[isOnline])
+
+useEffect(() => {
+    if (isOnline) {
+        // Initial connection
+        connectWebSocket(cmdId);
+        fetchData()
+    }
+
+    return () => {
+        if (ws.current) {
+            console.log("Cleaning up WebSocket connection.");
+            ws.current.close();
         }
-    }, [data]);
+    };
+}, [isOnline, cmdId]); // Reconnect if isOnline or cmdId changes
 
+
+useEffect(() => {
+    const handleOnline = () => {
+        setIsOnline(true);
+        console.log('Back online. Reconnecting WebSocket with new cmdId.');
+        setCmdId(prevCmdId => prevCmdId + 1); // Increment cmdId on reconnect
+        fetchData()
+
+    };
+
+    const handleOffline = () => {
+        setIsOnline(false);
+        console.log('Offline detected. Closing WebSocket.');
+        if (ws.current) {
+            ws.current.close(); // Close WebSocket when offline
+        }
+    };
+
+    // Attach event listeners for online/offline status
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+        // Cleanup event listeners on unmount
+        window.removeEventListener('online', handleOnline);
+        window.removeEventListener('offline', handleOffline);
+    };
+}, []);
+
+
+//============================GD =============================
+    
+  
   
    // =================================================================================================================== 
 
@@ -1300,8 +1317,8 @@ useEffect(() => {
     
     //================================ GVA1 FIQ 1901 ======================================================
 
-    const [lineDuty1901, setLineduty1901] = useState<any>();
-    const [lineDuty1902, setLineduty1902] = useState<any>();
+    const [lineDuty1901, setLineduty1901] = useState<boolean>(false);
+    const [lineDuty1902, setLineduty1902] = useState<boolean>(true);
 
     const ChangeStatusFIQ = async () => {
         try {
@@ -1309,8 +1326,8 @@ useEffect(() => {
             const newValue2 = !lineDuty1902;
 
             await httpApi.post(PostTelemetry_ZOVC, {
-                FIQ1901_LineDuty: newValue1,
-                FIQ1902_LineDuty: newValue2,
+                Line_Duty_01: newValue1,
+                Line_Duty_02: newValue2,
             });
             setLineduty1901(newValue1);
             setLineduty1902(newValue2);
@@ -1331,6 +1348,7 @@ useEffect(() => {
             accept: () => ChangeStatusFIQ(),
         });
     };
+
 
     const fetchData = async () => {
         try {
@@ -1831,6 +1849,17 @@ useEffect(() => {
 
 
             setMaintainDO_SV_01(DO_SV_01_Maintain?.value || false);
+
+
+            const Line_Duty_01 = res.data.find((item: any) => item.key === "Line_Duty_01");
+
+            setLineduty1901(Line_Duty_01?.value || null);
+            const Line_Duty_02 = res.data.find((item: any) => item.key === "Line_Duty_02");
+            setLineduty1902(Line_Duty_02?.value || null);
+
+
+
+
             } catch (error) {
             console.error("Error fetching data:", error);
             }

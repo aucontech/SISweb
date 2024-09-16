@@ -112,17 +112,17 @@ export default function GraphicSPMCV() {
 
 
     const toast = useRef<Toast>(null);
+    const ws = useRef<WebSocket | null>(null);
 
+ 
     const [resetKey, setResetKey] = useState(0);
     const [isOnline, setIsOnline] = useState(navigator.onLine);
-    const [wasOffline, setWasOffline] = useState(false); // Theo dõi trạng thái offline trước đó
 
-    useEffect(() => {
-
-        const connectWebSocket = () => {
-
+    const [cmdId, setCmdId] = useState(1); // Track cmdId for requests
+ 
+    const connectWebSocket = (cmdId: number) => {
         const token = localStorage.getItem('accessToken');
-                const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+        const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
         ws.current = new WebSocket(url);
         const obj1 = {
             attrSubCmds: [],
@@ -131,63 +131,7 @@ export default function GraphicSPMCV() {
                     entityType: "DEVICE",
                     entityId: id_SPMCV,
                     scope: "LATEST_TELEMETRY",
-                    cmdId: 1,
-                },
-            ],
-        };
-
-        const obj_PCV_PSV = {
-            entityDataCmds: [
-                {
-                    cmdId: 1,
-                    latestCmd: {
-                        keys: [
-                            {
-                                type: "ATTRIBUTE",
-                                key: "active",
-                            },
-                        ],
-                    },
-                    query: {
-                        entityFilter: {
-                            type: "singleEntity",
-                            singleEntity: {
-                                entityType: "DEVICE",
-                                id: id_SPMCV,
-                            },
-                        },
-                        pageLink: {
-                            pageSize: 1,
-                            page: 0,
-                            sortOrder: {
-                                key: {
-                                    type: "ENTITY_FIELD",
-                                    key: "createdTime",
-                                },
-                                direction: "DESC",
-                            },
-                        },
-                        entityFields: [
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "name",
-                            },
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "label",
-                            },
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "additionalInfo",
-                            },
-                        ],
-                        latestValues: [
-                            {
-                                type: "ATTRIBUTE",
-                                key: "active",
-                            },
-                        ],
-                    },
+                    cmdId: cmdId, // Use dynamic cmdId for new requests
                 },
             ],
         };
@@ -197,34 +141,18 @@ export default function GraphicSPMCV() {
                 console.log("WebSocket connected");
                 setTimeout(() => {
                     ws.current?.send(JSON.stringify(obj1));
-             
-                    ws.current?.send(JSON.stringify(obj_PCV_PSV));
-
-                },1000);
+                });
             };
+
             ws.current.onclose = () => {
-                                setTimeout(() => {
-                                    connectWebSocket(); 
-                                }, 10000);
-                            };
-            return () => {
-                console.log("Cleaning up WebSocket connection.");
-                ws.current?.close();
+                console.log("WebSocket connection closed.");
             };
-        }
-        };
-       
-        connectWebSocket()
-        
-    }, [isOnline]);
 
-
-    useEffect(() => {
-        if (ws.current) {
             ws.current.onmessage = (evt) => {
                 let dataReceived = JSON.parse(evt.data);
                 if (dataReceived.update !== null) {
-                    setData([...data, dataReceived]);
+                    setData(prevData => [...prevData, dataReceived]);
+
 
                
                     const keys = Object.keys(dataReceived.data);
@@ -323,34 +251,58 @@ export default function GraphicSPMCV() {
 
                 fetchData();
             };
+
         }
-    }, [data]);
-    const ws = useRef<WebSocket | null>(null);
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+    };
+    useEffect(() => {
+        fetchData()
+    },[isOnline])
+    
+    useEffect(() => {
+        if (isOnline) {
+            // Initial connection
+            connectWebSocket(cmdId);
+            fetchData()
+        }
 
-
+        return () => {
+            if (ws.current) {
+                console.log("Cleaning up WebSocket connection.");
+                ws.current.close();
+            }
+        };
+    }, [isOnline, cmdId]); // Reconnect if isOnline or cmdId changes
+    
 
     useEffect(() => {
-        const handleOnlineStatus = () => {
-            const currentStatus = navigator.onLine;
-            setIsOnline(currentStatus);
+        const handleOnline = () => {
+            setIsOnline(true);
+            console.log('Back online. Reconnecting WebSocket with new cmdId.');
+            setCmdId(prevCmdId => prevCmdId + 1); // Increment cmdId on reconnect
+            fetchData()
 
-            if (!currentStatus) {
-                setWasOffline(true);
-            } else if (currentStatus && wasOffline) {
-                setResetKey(prevKey => prevKey + 1); 
-                setWasOffline(false); 
+        };
+
+        const handleOffline = () => {
+            setIsOnline(false);
+            console.log('Offline detected. Closing WebSocket.');
+            if (ws.current) {
+                ws.current.close(); // Close WebSocket when offline
             }
         };
 
-        window.addEventListener('online', handleOnlineStatus);
-        window.addEventListener('offline', handleOnlineStatus);
+        // Attach event listeners for online/offline status
+        window.addEventListener('online', handleOnline);
+        window.addEventListener('offline', handleOffline);
 
         return () => {
-            window.removeEventListener('online', handleOnlineStatus);
-            window.removeEventListener('offline', handleOnlineStatus);
+            // Cleanup event listeners on unmount
+            window.removeEventListener('online', handleOnline);
+            window.removeEventListener('offline', handleOffline);
         };
-    }, [wasOffline]);
+    }, []);
+
+
    
     // =================================================================================================================== 
 
@@ -1048,37 +1000,35 @@ useEffect(() => {
    
         //======================================================================================================================
 
-    const [lineDuty1901, setLineduty1901] = useState<boolean>(false);
-    const [lineDuty1902, setLineduty1902] = useState<boolean>(true);
-
-    const ChangeStatusFIQ = async () => {
-        try {
-            const newValue1 = !lineDuty1901;
-            const newValue2 = !lineDuty1902;
-
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_SPMCV}/SERVER_SCOPE`,
-                { FIQ1901_LineDuty: newValue1, FIQ1902_LineDuty: newValue2 }
-            );
-            setLineduty1901(newValue1);
-            setLineduty1902(newValue2);
-
-            toast.current?.show({
-                severity: "info",
-                detail: "Success ",
-                life: 3000,
+        const [lineDuty1901, setLineduty1901] = useState<boolean>(true);
+    
+        const ChangeStatusFIQ = async () => {
+            try {
+                const newValue1 = !lineDuty1901;
+    
+                await httpApi.post(
+                    `/plugins/telemetry/DEVICE/${id_SPMCV}/SERVER_SCOPE`,
+                    {
+                    Line_Duty_01: newValue1,
+                });
+                setLineduty1901(newValue1);
+    
+                toast.current?.show({
+                    severity: "info",
+                    detail: "Success ",
+                    life: 3000,
+                });
+                fetchData();
+            } catch (error) {}
+        };
+        const confirmLineDuty = () => {
+            confirmDialog({
+                header: "Comfirmation",
+                message: "Are you sure to change Line Duty?",
+                icon: "pi pi-info-circle",
+                accept: () => ChangeStatusFIQ(),
             });
-            fetchData();
-        } catch (error) {}
-    };
-    const confirmLineDuty = () => {
-        confirmDialog({
-            header: "Comfirmation",
-            message: "Are you sure to change Line Duty?",
-            icon: "pi pi-info-circle",
-            accept: () => ChangeStatusFIQ(),
-        });
-    };
+        };
 
     const fetchData = async () => {
         try {
@@ -1434,6 +1384,18 @@ useEffect(() => {
 
 
             setMaintainDO_SV_01(DO_SV_01_Maintain?.value || false);
+
+
+            const Line_Duty_01 = res.data.find((item: any) => item.key === "Line_Duty_01");
+
+            setLineduty1901(Line_Duty_01?.value || null);
+       
+
+
+
+
+
+
             } catch (error) {
             console.error("Error fetching data:", error);
             }
@@ -2402,7 +2364,6 @@ useEffect(() => {
                                     justifyContent: "center",
                                     alignItems: "center",
                                 }}
-                                onClick={confirmLineDuty}
                             >
                                 FIQ-1701
                                 {lineDuty1901 && (
@@ -2436,21 +2397,9 @@ useEffect(() => {
                                     justifyContent: "center",
                                     alignItems: "center",
                                 }}
-                                onClick={confirmLineDuty}
                             >
                                 FIQ-1702
-                                {lineDuty1902 && (
-                                    <span style={{ marginLeft: 30 }}>
-                                        <i
-                                            className="pi pi-check"
-                                            style={{
-                                                fontSize: 35,
-                                                color: "green",
-                                                fontWeight: 700,
-                                            }}
-                                        ></i>
-                                    </span>
-                                )}
+                               
                             </div>
                         ),
                     },
@@ -4032,7 +3981,6 @@ useEffect(() => {
                         onClick={confirmLineDuty}
                     >
                         FIQ-1701
-                        {lineDuty1901 && <span>1901</span>}
                     </div>
                 ),
             },
@@ -4058,7 +4006,6 @@ useEffect(() => {
                         onClick={confirmLineDuty}
                     >
                         FIQ-1702
-                        {lineDuty1902 && <span>1902</span>}
                     </div>
                 ),
             },

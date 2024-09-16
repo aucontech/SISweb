@@ -2226,6 +2226,15 @@ const ChangeMaintainTank_PT_301 = async () => {
     PLC: 'PLC -  Parameter & Configuration'
 };
 
+
+const formatValue = (value:any) => {
+    return value !== null
+        ? new Intl.NumberFormat('en-US', {
+              maximumFractionDigits: 2,
+              useGrouping: true, 
+          }).format(parseFloat(value))
+        : "";
+};
         const dataEVC01 = [
 
      {
@@ -2236,7 +2245,7 @@ const ChangeMaintainTank_PT_301 = async () => {
        
             modbus: <span style={combineCss.CSSV1_Flow_Meter}>400001	 </span> ,
        
-           value: <span style={combineCss.CSSV1_Flow_Meter} > {V1_Flow_Meter} {nameValue.m3}</span> , 
+           value: <span style={combineCss.CSSV1_Flow_Meter} > {formatValue(V1_Flow_Meter)} {nameValue.m3}</span> , 
             high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSV1_Flow_Meter}   placeholder='High' step="0.1" type='number' value={inputValueV1_Flow_Meter} onChange={handleInputChangeV1_Flow_Meter} inputMode="decimal" />, 
             low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSV1_Flow_Meter}   placeholder='Low' step="0.1" type='number' value={inputValue2V1_Flow_Meter} onChange={handleInputChange2V1_Flow_Meter} inputMode="decimal" />,
             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -2257,7 +2266,7 @@ const ChangeMaintainTank_PT_301 = async () => {
        
            modbus: <span style={combineCss.CSSV2_Flow_Meter}>400003	 </span> ,
        
-          value: <span style={combineCss.CSSV2_Flow_Meter} > {V2_Flow_Meter} {nameValue.m3}</span> , 
+          value: <span style={combineCss.CSSV2_Flow_Meter} > {formatValue(V2_Flow_Meter)} {nameValue.m3}</span> , 
            high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSV2_Flow_Meter}   placeholder='High' step="0.1" type='number' value={inputValueV2_Flow_Meter} onChange={handleInputChangeV2_Flow_Meter} inputMode="decimal" />, 
            low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSV2_Flow_Meter}   placeholder='Low' step="0.1" type='number' value={inputValue2V2_Flow_Meter} onChange={handleInputChange2V2_Flow_Meter} inputMode="decimal" />,
            update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -2278,7 +2287,7 @@ const ChangeMaintainTank_PT_301 = async () => {
        
           modbus: <span style={combineCss.CSSPipe_Temp}>400005	 </span> ,
        
-         value: <span style={combineCss.CSSPipe_Temp} > {Pipe_Temp} {nameValue.C}</span> , 
+         value: <span style={combineCss.CSSPipe_Temp} > {formatValue(Pipe_Temp)} {nameValue.C}</span> , 
           high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSPipe_Temp}   placeholder='High' step="0.1" type='number' value={inputValuePipe_Temp} onChange={handleInputChangePipe_Temp} inputMode="decimal" />, 
           low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSPipe_Temp}   placeholder='Low' step="0.1" type='number' value={inputValue2Pipe_Temp} onChange={handleInputChange2Pipe_Temp} inputMode="decimal" />,
           update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -2299,7 +2308,7 @@ const ChangeMaintainTank_PT_301 = async () => {
        
          modbus: <span style={combineCss.CSSPipe_Press}>400007	 </span> ,
        
-        value: <span style={combineCss.CSSPipe_Press} > {Pipe_Press} ( Bar )</span> , 
+        value: <span style={combineCss.CSSPipe_Press} > {formatValue(Pipe_Press)} ( Bar )</span> , 
          high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSPipe_Press}   placeholder='High' step="0.1" type='number' value={inputValuePipe_Press} onChange={handleInputChangePipe_Press} inputMode="decimal" />, 
          low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSPipe_Press}   placeholder='Low' step="0.1" type='number' value={inputValue2Pipe_Press} onChange={handleInputChange2Pipe_Press} inputMode="decimal" />,
          update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -2319,7 +2328,7 @@ const ChangeMaintainTank_PT_301 = async () => {
        
           modbus: <span style={combineCss.CSSTank_TT_301}>400009	 </span> ,
        
-         value: <span style={combineCss.CSSTank_TT_301} > {Tank_TT_301} {nameValue.C}</span> , 
+         value: <span style={combineCss.CSSTank_TT_301} > {formatValue(Tank_TT_301)} {nameValue.C}</span> , 
           high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSTank_TT_301}   placeholder='High' step="0.1" type='number' value={inputValueTank_TT_301} onChange={handleInputChangeTank_TT_301} inputMode="decimal" />, 
           low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSTank_TT_301}   placeholder='Low' step="0.1" type='number' value={inputValue2Tank_TT_301} onChange={handleInputChange2Tank_TT_301} inputMode="decimal" />,
           update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -2340,7 +2349,7 @@ const ChangeMaintainTank_PT_301 = async () => {
        
          modbus: <span style={combineCss.CSSTank_PT_301}>400011	 </span> ,
        
-        value: <span style={combineCss.CSSTank_PT_301} > {Tank_PT_301} ( Bar )</span> , 
+        value: <span style={combineCss.CSSTank_PT_301} > {formatValue(Tank_PT_301)} ( Bar )</span> , 
          high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSTank_PT_301}   placeholder='High' step="0.1" type='number' value={inputValueTank_PT_301} onChange={handleInputChangeTank_PT_301} inputMode="decimal" />, 
          low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSTank_PT_301}   placeholder='Low' step="0.1" type='number' value={inputValue2Tank_PT_301} onChange={handleInputChange2Tank_PT_301} inputMode="decimal" />,
          update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -2363,7 +2372,7 @@ const ChangeMaintainTank_PT_301 = async () => {
        
         modbus: <span style={combineCss.CSSTank_01_Volume}>400013	 </span> ,
        
-       value: <span style={combineCss.CSSTank_01_Volume} > {Tank_01_Volume} ( L )</span> , 
+       value: <span style={combineCss.CSSTank_01_Volume} > {formatValue(Tank_01_Volume)} ( L )</span> , 
         high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSTank_01_Volume}   placeholder='High' step="0.1" type='number' value={inputValueTank_01_Volume} onChange={handleInputChangeTank_01_Volume} inputMode="decimal" />, 
         low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSTank_01_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2Tank_01_Volume} onChange={handleInputChange2Tank_01_Volume} inputMode="decimal" />,
         update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -2383,7 +2392,7 @@ const ChangeMaintainTank_PT_301 = async () => {
        
          modbus: <span style={combineCss.CSSTank_01_Mass}>400015	 </span> ,
        
-        value: <span style={combineCss.CSSTank_01_Mass} > {Tank_01_Mass} ( Kg )</span> , 
+        value: <span style={combineCss.CSSTank_01_Mass} > {formatValue(Tank_01_Mass)} ( Kg )</span> , 
          high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSTank_01_Mass}   placeholder='High' step="0.1" type='number' value={inputValueTank_01_Mass} onChange={handleInputChangeTank_01_Mass} inputMode="decimal" />, 
          low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSTank_01_Mass}   placeholder='Low' step="0.1" type='number' value={inputValue2Tank_01_Mass} onChange={handleInputChange2Tank_01_Mass} inputMode="decimal" />,
          update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -2404,7 +2413,7 @@ const ChangeMaintainTank_PT_301 = async () => {
        
         modbus: <span style={combineCss.CSSTank_01_Level}>400017	 </span> ,
        
-       value: <span style={combineCss.CSSTank_01_Level} > {Tank_01_Level} ( % )</span> , 
+       value: <span style={combineCss.CSSTank_01_Level} > {formatValue(Tank_01_Level)} ( % )</span> , 
         high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSTank_01_Level}   placeholder='High' step="0.1" type='number' value={inputValueTank_01_Level} onChange={handleInputChangeTank_01_Level} inputMode="decimal" />, 
         low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSTank_01_Level}   placeholder='Low' step="0.1" type='number' value={inputValue2Tank_01_Level} onChange={handleInputChange2Tank_01_Level} inputMode="decimal" />,
         update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -2426,7 +2435,7 @@ const ChangeMaintainTank_PT_301 = async () => {
           
             modbus: <span style={combineCss.CSSConsumption_Flow}>400019	 </span> ,
           
-           value: <span style={combineCss.CSSConsumption_Flow} > {Consumption_Flow} {nameValue.m3}</span> , 
+           value: <span style={combineCss.CSSConsumption_Flow} > {formatValue(Consumption_Flow)} {nameValue.m3}</span> , 
             high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSConsumption_Flow}   placeholder='High' step="0.1" type='number' value={inputValueConsumption_Flow} onChange={handleInputChangeConsumption_Flow} inputMode="decimal" />, 
             low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSConsumption_Flow}   placeholder='Low' step="0.1" type='number' value={inputValue2Consumption_Flow} onChange={handleInputChange2Consumption_Flow} inputMode="decimal" />,
             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -2447,7 +2456,7 @@ const ChangeMaintainTank_PT_301 = async () => {
           
            modbus: <span style={combineCss.CSSFlow_Velocity}>400021	 </span> ,
           
-          value: <span style={combineCss.CSSFlow_Velocity} > {Flow_Velocity} {nameValue.m3h}</span> , 
+          value: <span style={combineCss.CSSFlow_Velocity} > {formatValue(Flow_Velocity)} {nameValue.m3h}</span> , 
            high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFlow_Velocity}   placeholder='High' step="0.1" type='number' value={inputValueFlow_Velocity} onChange={handleInputChangeFlow_Velocity} inputMode="decimal" />, 
            low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFlow_Velocity}   placeholder='Low' step="0.1" type='number' value={inputValue2Flow_Velocity} onChange={handleInputChange2Flow_Velocity} inputMode="decimal" />,
            update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -2468,7 +2477,7 @@ const ChangeMaintainTank_PT_301 = async () => {
     
              modbus: <span style={combineCss.CSSVP_303}>500009	 </span> ,
     
-            value: <span style={combineCss.CSSVP_303} > {VP_303} {DataVP_303}</span> , 
+            value: <span style={combineCss.CSSVP_303} > {formatValue(VP_303)} {DataVP_303}</span> , 
              high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSVP_303}   placeholder='High' step="0.1" type='number' value={inputValueVP_303} onChange={handleInputChangeVP_303} inputMode="decimal" />, 
              low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSVP_303}   placeholder='Low' step="0.1" type='number' value={inputValue2VP_303} onChange={handleInputChange2VP303} inputMode="decimal" />,
              update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -2489,7 +2498,7 @@ const ChangeMaintainTank_PT_301 = async () => {
     
              modbus: <span style={combineCss.CSSVP_302}>500011	 </span> ,
     
-            value: <span style={combineCss.CSSVP_302} > {VP_302} {DataVP_302}</span> , 
+            value: <span style={combineCss.CSSVP_302} > {formatValue(VP_302)} {DataVP_302}</span> , 
              high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSVP_302}   placeholder='High' step="0.1" type='number' value={inputValueVP_302} onChange={handleInputChangeVP_302} inputMode="decimal" />, 
              low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSVP_302}   placeholder='Low' step="0.1" type='number' value={inputValue2VP_302} onChange={handleInputChange2VP_302} inputMode="decimal" />,
              update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -2509,7 +2518,7 @@ const ChangeMaintainTank_PT_301 = async () => {
     
              modbus: <span style={combineCss.CSSVP_301}>500013	 </span> ,
     
-            value: <span style={combineCss.CSSVP_301} > {VP_301} {DataVP_301}</span> , 
+            value: <span style={combineCss.CSSVP_301} > {formatValue(VP_301)} {DataVP_301}</span> , 
              high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSVP_301}   placeholder='High' step="0.1" type='number' value={inputValueVP_301} onChange={handleInputChangeVP_301} inputMode="decimal" />, 
              low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSVP_301}   placeholder='Low' step="0.1" type='number' value={inputValue2VP_301} onChange={handleInputChange2VP_301} inputMode="decimal" />,
              update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -2530,7 +2539,7 @@ const ChangeMaintainTank_PT_301 = async () => {
     
              modbus: <span style={combineCss.CSSGD_103_High}>300015	 </span> ,
     
-            value: <span style={combineCss.CSSGD_103_High} > {GD_103_High} {DataGD_103_High}</span> , 
+            value: <span style={combineCss.CSSGD_103_High} > {formatValue(GD_103_High)} {DataGD_103_High}</span> , 
              high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSGD_103_High}   placeholder='High' step="0.1" type='number' value={inputValueGD_103_High} onChange={handleInputChangeGD_103_High} inputMode="decimal" />, 
              low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSGD_103_High}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_103_High} onChange={handleInputChange2GD_103_High} inputMode="decimal" />,
              update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -2550,7 +2559,7 @@ const ChangeMaintainTank_PT_301 = async () => {
    
             modbus: <span style={combineCss.CSSGD_102_High}>300017	 </span> ,
    
-           value: <span style={combineCss.CSSGD_102_High} > {GD_102_High} {DataGD_102_High}</span> , 
+           value: <span style={combineCss.CSSGD_102_High} > {formatValue(GD_102_High)} {DataGD_102_High}</span> , 
             high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSGD_102_High}   placeholder='High' step="0.1" type='number' value={inputValueGD_102_High} onChange={handleInputChangeGD_102_High} inputMode="decimal" />, 
             low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSGD_102_High}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_102_High} onChange={handleInputChange2GD_102_High} inputMode="decimal" />,
             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -2571,7 +2580,7 @@ const ChangeMaintainTank_PT_301 = async () => {
   
            modbus: <span style={combineCss.CSSGD_101_High}>300019	 </span> ,
   
-          value: <span style={combineCss.CSSGD_101_High} > {GD_101_High} {DataGD_101_High}</span> , 
+          value: <span style={combineCss.CSSGD_101_High} > {formatValue(GD_101_High)} {DataGD_101_High}</span> , 
            high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSGD_101_High}   placeholder='High' step="0.1" type='number' value={inputValueGD_101_High} onChange={handleInputChangeGD_101_High} inputMode="decimal" />, 
            low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSGD_101_High}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_101_High} onChange={handleInputChange2GD_101_High} inputMode="decimal" />,
            update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -2594,7 +2603,7 @@ const ChangeMaintainTank_PT_301 = async () => {
  
           modbus: <span style={combineCss.CSSGD_103_Low}>300021	 </span> ,
  
-         value: <span style={combineCss.CSSGD_103_Low} > {GD_103_Low} {DataGD_103_Low}</span> , 
+         value: <span style={combineCss.CSSGD_103_Low} > {formatValue(GD_103_Low)} {DataGD_103_Low}</span> , 
           high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSGD_103_Low}   placeholder='High' step="0.1" type='number' value={inputValueGD_103_Low} onChange={handleInputChangeGD_103_Low} inputMode="decimal" />, 
           low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSGD_103_Low}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_103_Low} onChange={handleInputChange2GD_103_Low} inputMode="decimal" />,
           update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -2614,7 +2623,7 @@ const ChangeMaintainTank_PT_301 = async () => {
 
          modbus: <span style={combineCss.CSSGD_102_Low}>300023	 </span> ,
 
-        value: <span style={combineCss.CSSGD_102_Low} > {GD_102_Low} {DataGD_102_Low}</span> , 
+        value: <span style={combineCss.CSSGD_102_Low} > {formatValue(GD_102_Low)} {DataGD_102_Low}</span> , 
          high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSGD_102_Low}   placeholder='High' step="0.1" type='number' value={inputValueGD_102_Low} onChange={handleInputChangeGD_102_Low} inputMode="decimal" />, 
          low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSGD_102_Low}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_102_Low} onChange={handleInputChange2GD_102_Low} inputMode="decimal" />,
          update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -2635,7 +2644,7 @@ const ChangeMaintainTank_PT_301 = async () => {
 
         modbus: <span style={combineCss.CSSGD_101_Low}>300025	 </span> ,
 
-       value: <span style={combineCss.CSSGD_101_Low} > {GD_101_Low} {DataGD_101_Low}</span> , 
+       value: <span style={combineCss.CSSGD_101_Low} > {formatValue(GD_101_Low)} {DataGD_101_Low}</span> , 
         high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSGD_101_Low}   placeholder='High' step="0.1" type='number' value={inputValueGD_101_Low} onChange={handleInputChangeGD_101_Low} inputMode="decimal" />, 
         low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSGD_101_Low}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_101_Low} onChange={handleInputChange2GD_101_Low} inputMode="decimal" />,
         update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
@@ -2657,7 +2666,7 @@ const ChangeMaintainTank_PT_301 = async () => {
 
        modbus: <span style={combineCss.CSSSDV_301}>500001	 </span> ,
 
-      value: <span style={combineCss.CSSSDV_301} > {SDV_301} {DataSDV_301}</span> , 
+      value: <span style={combineCss.CSSSDV_301} > {formatValue(SDV_301)} {DataSDV_301}</span> , 
        high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSSDV_301}   placeholder='High' step="0.1" type='number' value={inputValueSDV_301} onChange={handleInputChangeSDV_301} inputMode="decimal" />, 
        low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSSDV_301}   placeholder='Low' step="0.1" type='number' value={inputValue2SDV_301} onChange={handleInputChange2SDV_301} inputMode="decimal" />,
        update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,

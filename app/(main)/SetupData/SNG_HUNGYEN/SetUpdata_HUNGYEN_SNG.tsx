@@ -4423,6 +4423,16 @@ const ChangeMaintainSDV_3003 = async () => {
 <p style={{fontSize:15}}>Maintain PLC </p>  </div> )}  </span> ,
 };
 
+
+const formatValue = (value:any) => {
+    return value !== null
+        ? new Intl.NumberFormat('en-US', {
+              maximumFractionDigits: 2,
+              useGrouping: true, 
+          }).format(parseFloat(value))
+        : "";
+};
+
           const PLC01 = [
             {
                 mainCategory: mainCategoryFC.PLC,
@@ -4432,7 +4442,7 @@ const ChangeMaintainSDV_3003 = async () => {
     
              modbus: <span style={combineCss.CSSPT_3005}>40003	 </span> ,
     
-            value: <span style={combineCss.CSSPT_3005} > {PT_3005} {nameValue.BARG} </span> , 
+            value: <span style={combineCss.CSSPT_3005} > {formatValue(PT_3005)} {nameValue.BARG} </span> , 
              high: <InputText 
 disabled={AuthInputHighLow}
              
@@ -4459,7 +4469,7 @@ disabled={AuthInputHighLow}
     
              modbus: <span style={combineCss.CSSPT_3006}>40001	 </span> ,
     
-            value: <span style={combineCss.CSSPT_3006} > {PT_3006}  {nameValue.BARG}</span> , 
+            value: <span style={combineCss.CSSPT_3006} > {formatValue(PT_3006)}  {nameValue.BARG}</span> , 
              high: <InputText 
 disabled={AuthInputHighLow}
              
@@ -4486,7 +4496,7 @@ disabled={AuthInputHighLow}
    
             modbus: <span style={combineCss.CSSTT_3003}>40007	 </span> ,
    
-           value: <span style={combineCss.CSSTT_3003} > {TT_3003}  {nameValue.C}</span> , 
+           value: <span style={combineCss.CSSTT_3003} > {formatValue(TT_3003)}  {nameValue.C}</span> , 
             high: <InputText 
 disabled={AuthInputHighLow}
             
@@ -4514,7 +4524,7 @@ disabled={AuthInputHighLow}
   
            modbus: <span style={combineCss.CSSTT_3004}>40005	 </span> ,
   
-          value: <span style={combineCss.CSSTT_3004} > {TT_3004} {nameValue.C}</span> , 
+          value: <span style={combineCss.CSSTT_3004} > {formatValue(TT_3004)} {nameValue.C}</span> , 
            high: <InputText 
 disabled={AuthInputHighLow}
            
@@ -4542,7 +4552,7 @@ disabled={AuthInputHighLow}
  
           modbus: <span style={combineCss.CSSTG_3005}>40009	 </span> ,
  
-         value: <span style={combineCss.CSSTG_3005} > {TG_3005} {nameValue.C}</span> , 
+         value: <span style={combineCss.CSSTG_3005} > {formatValue(TG_3005)} {nameValue.C}</span> , 
           high: <InputText 
 disabled={AuthInputHighLow}
           
@@ -4569,7 +4579,7 @@ disabled={AuthInputHighLow}
 
          modbus: <span style={combineCss.CSSWB_3001}>40011	 </span> ,
 
-        value: <span style={combineCss.CSSWB_3001} > {WB_3001} (MJ/Sm³)</span> , 
+        value: <span style={combineCss.CSSWB_3001} > {formatValue(WB_3001)} (MJ/Sm³)</span> , 
          high: <InputText 
 disabled={AuthInputHighLow}
          
@@ -4598,7 +4608,7 @@ disabled={AuthInputHighLow}
 
         modbus: <span style={combineCss.CSSGD_3002}>40013	 </span> ,
 
-       value: <span style={combineCss.CSSGD_3002} > {GD_3002} {nameValue.LEL}</span> , 
+       value: <span style={combineCss.CSSGD_3002} > {formatValue(GD_3002)} {nameValue.LEL}</span> , 
         high: <InputText 
 disabled={AuthInputHighLow}
         
@@ -4625,7 +4635,7 @@ disabled={AuthInputHighLow}
 
        modbus: <span style={combineCss.CSSGD_3003}>40015	 </span> ,
 
-      value: <span style={combineCss.CSSGD_3003} > {GD_3003} {nameValue.LEL}</span> , 
+      value: <span style={combineCss.CSSGD_3003} > {formatValue(GD_3003)} {nameValue.LEL}</span> , 
        high: <InputText 
 disabled={AuthInputHighLow}
        
@@ -4653,7 +4663,7 @@ disabled={AuthInputHighLow}
 
         modbus: <span style={combineCss.CSSGD_3004}>40017	 </span> ,
 
-       value: <span style={combineCss.CSSGD_3004} > {GD_3004} {nameValue.LEL}</span> , 
+       value: <span style={combineCss.CSSGD_3004} > {formatValue(GD_3004)} {nameValue.LEL}</span> , 
         high: <InputText 
 disabled={AuthInputHighLow}
         
@@ -4682,7 +4692,7 @@ disabled={AuthInputHighLow}
 
        modbus: <span style={combineCss.CSSGD_3005}>40019	 </span> ,
 
-      value: <span style={combineCss.CSSGD_3005} > {GD_3005} {nameValue.LEL}</span> , 
+      value: <span style={combineCss.CSSGD_3005} > {formatValue(GD_3005)} {nameValue.LEL}</span> , 
        high: <InputText 
 disabled={AuthInputHighLow}
        
@@ -4739,7 +4749,7 @@ disabled={AuthInputHighLow}
        
             modbus: <span style={combineCss.CSSTM_3002_SNG}>40025	 </span> ,
        
-           value: <span style={combineCss.CSSTM_3002_SNG} > {TM_3002_SNG} (Sm³/h)</span> , 
+           value: <span style={combineCss.CSSTM_3002_SNG} > {formatValue(TM_3002_SNG)} (Sm³/h)</span> , 
             high: <InputText 
 disabled={AuthInputHighLow}
             
@@ -4772,7 +4782,7 @@ disabled={AuthInputHighLow}
 
     modbus: <span style={combineCss.CSSTM_3003_SNG}>40023	 </span> ,
 
-   value: <span style={combineCss.CSSTM_3003_SNG} > {TM_3003_SNG} (Sm³/h)</span> , 
+   value: <span style={combineCss.CSSTM_3003_SNG} > {formatValue(TM_3003_SNG)} (Sm³/h)</span> , 
     high: <InputText 
 disabled={AuthInputHighLow}
     
@@ -4800,7 +4810,7 @@ disabled={AuthInputHighLow}
 
    modbus: <span style={combineCss.CSSTOTAL_SNG}>40027	 </span> ,
 
-  value: <span style={combineCss.CSSTOTAL_SNG} > {TOTAL_SNG} (Sm³)</span> , 
+  value: <span style={combineCss.CSSTOTAL_SNG} > {formatValue(TOTAL_SNG)} (Sm³)</span> , 
    high: <InputText 
 disabled={AuthInputHighLow}
    
@@ -4828,7 +4838,7 @@ disabled={AuthInputHighLow}
 
   modbus: <span style={combineCss.CSSSDV_3004}>40029 </span> ,
 
- value: <span style={combineCss.CSSSDV_3004} > {SDV_3004} {DataSDV_3004} </span> , 
+ value: <span style={combineCss.CSSSDV_3004} > {formatValue(SDV_3004)} {DataSDV_3004} </span> , 
   high: <InputText 
 disabled={AuthInputHighLow}
   
@@ -4855,7 +4865,7 @@ disabled={AuthInputHighLow}
 
    modbus: <span style={combineCss.CSSSDV_3003}>40031 </span> ,
 
-  value: <span style={combineCss.CSSSDV_3003} > {SDV_3003} {DataSDV_3003}</span> , 
+  value: <span style={combineCss.CSSSDV_3003} > {formatValue(SDV_3003)} {DataSDV_3003}</span> , 
    high: <InputText 
 disabled={AuthInputHighLow}
    
@@ -4883,7 +4893,7 @@ disabled={AuthInputHighLow}
 
   modbus: <span style={combineCss.CSSGD1_STATUS}>40033	</span> ,
 
- value: <span style={combineCss.CSSGD1_STATUS} > {GD1_STATUS} {DataGD1_STATUS}</span> , 
+ value: <span style={combineCss.CSSGD1_STATUS} > {formatValue(GD1_STATUS)} {DataGD1_STATUS}</span> , 
   high: <InputText 
 disabled={AuthInputHighLow}
   
@@ -4913,7 +4923,7 @@ disabled={AuthInputHighLow}
 
  modbus: <span style={combineCss.CSSGD2_STATUS}>40035 </span> ,
 
-value: <span style={combineCss.CSSGD2_STATUS} > {GD2_STATUS} {DataGD2_STATUS}</span> , 
+value: <span style={combineCss.CSSGD2_STATUS} > {formatValue(GD2_STATUS)} {DataGD2_STATUS}</span> , 
  high: <InputText 
 disabled={AuthInputHighLow}
  
@@ -4940,7 +4950,7 @@ disabled={AuthInputHighLow}
 
   modbus: <span style={combineCss.CSSGD3_STATUS}>40037	</span> ,
 
- value: <span style={combineCss.CSSGD3_STATUS} > {GD3_STATUS} {DataGD3_STATUS}</span> , 
+ value: <span style={combineCss.CSSGD3_STATUS} > {formatValue(GD3_STATUS)} {DataGD3_STATUS}</span> , 
   high: <InputText 
 disabled={AuthInputHighLow}
   
@@ -4968,7 +4978,7 @@ disabled={AuthInputHighLow}
 
  modbus: <span style={combineCss.CSSGD4_STATUS}>40039 </span> ,
 
-value: <span style={combineCss.CSSGD4_STATUS} > {GD4_STATUS} {DataGD4_STATUS}</span> , 
+value: <span style={combineCss.CSSGD4_STATUS} > {formatValue(GD4_STATUS)} {DataGD4_STATUS}</span> , 
  high: <InputText 
 disabled={AuthInputHighLow}
  
@@ -4996,7 +5006,7 @@ name: <span style={combineCss.CSSGD5_STATUS}>GD-3006 Status</span> ,
 
 modbus: <span style={combineCss.CSSGD5_STATUS}>40041 </span> ,
 
-value: <span style={combineCss.CSSGD5_STATUS} > {GD5_STATUS} {DataGD5_STATUS}</span> , 
+value: <span style={combineCss.CSSGD5_STATUS} > {formatValue(GD5_STATUS)} {DataGD5_STATUS}</span> , 
 high: <InputText 
 disabled={AuthInputHighLow}
 
@@ -5023,7 +5033,7 @@ checked={maintainGD5_STATUS}
     
              modbus: <span style={combineCss.CSSESD}>40043	</span> ,
     
-            value: <span style={combineCss.CSSESD} > {ESD} {DataESD}</span> , 
+            value: <span style={combineCss.CSSESD} > {formatValue(ESD)} {DataESD}</span> , 
              high: <InputText 
 disabled={AuthInputHighLow}
              
@@ -5049,7 +5059,7 @@ disabled={AuthInputHighLow}
             
             modbus: <span style={combineCss.CSSHR_BC}>40045	 </span> ,
             
-            value: <span style={combineCss.CSSHR_BC} > {HR_BC} {DataHR_BC}</span> , 
+            value: <span style={combineCss.CSSHR_BC} > {formatValue(HR_BC)} {DataHR_BC}</span> , 
             high: <InputText 
 disabled={AuthInputHighLow}
             
@@ -5076,7 +5086,7 @@ name: <span style={combineCss.CSSSD}> Smoker Detector</span> ,
 
 modbus: <span style={combineCss.CSSSD}>40047	</span> ,
 
-value: <span style={combineCss.CSSSD} > {SD} {DataSD}</span> , 
+value: <span style={combineCss.CSSSD} > {formatValue(SD)} {DataSD}</span> , 
 high: <InputText 
 disabled={AuthInputHighLow}
 
@@ -5103,7 +5113,7 @@ checked={maintainSD}
     
              modbus: <span style={combineCss.CSSVAPORIZER_1}>40049	</span> ,
     
-            value: <span style={combineCss.CSSVAPORIZER_1} > {VAPORIZER_1} {DataVAPORIZER_1} </span> , 
+            value: <span style={combineCss.CSSVAPORIZER_1} > {formatValue(VAPORIZER_1)} {DataVAPORIZER_1} </span> , 
              high: <InputText 
 disabled={AuthInputHighLow}
              
@@ -5130,7 +5140,7 @@ disabled={AuthInputHighLow}
     
              modbus: <span style={combineCss.CSSVAPORIZER_2}>40051</span> ,
     
-            value: <span style={combineCss.CSSVAPORIZER_2} > {VAPORIZER_2} {DataVAPORIZER_2} </span> , 
+            value: <span style={combineCss.CSSVAPORIZER_2} > {formatValue(VAPORIZER_2)} {DataVAPORIZER_2} </span> , 
              high: <InputText 
 disabled={AuthInputHighLow}
              
@@ -5158,7 +5168,7 @@ disabled={AuthInputHighLow}
     
              modbus: <span style={combineCss.CSSVAPORIZER_3}>40053	 </span> ,
     
-            value: <span style={combineCss.CSSVAPORIZER_3} > {VAPORIZER_3} {DataVAPORIZER_3} </span> , 
+            value: <span style={combineCss.CSSVAPORIZER_3} > {formatValue(VAPORIZER_3)} {DataVAPORIZER_3} </span> , 
              high: <InputText 
 disabled={AuthInputHighLow}
              
@@ -5185,7 +5195,7 @@ disabled={AuthInputHighLow}
    
             modbus: <span style={combineCss.CSSVAPORIZER_4}>40055	 </span> ,
    
-           value: <span style={combineCss.CSSVAPORIZER_4} > {VAPORIZER_4} {DataVAPORIZER_4} </span> , 
+           value: <span style={combineCss.CSSVAPORIZER_4} > {formatValue(VAPORIZER_4)} {DataVAPORIZER_4} </span> , 
             high: <InputText 
 disabled={AuthInputHighLow}
             
@@ -5214,7 +5224,7 @@ disabled={AuthInputHighLow}
   
            modbus: <span style={combineCss.CSSCOOLING_V}>40057	 </span> ,
   
-          value: <span style={combineCss.CSSCOOLING_V} > {COOLING_V} {DataCOOLING_V}</span> , 
+          value: <span style={combineCss.CSSCOOLING_V} > {formatValue(COOLING_V)} {DataCOOLING_V}</span> , 
            high: <InputText 
 disabled={AuthInputHighLow}
            
@@ -5246,7 +5256,7 @@ disabled={AuthInputHighLow}
 
          modbus: <span style={combineCss.CSSFCV_3001}>40059	 </span> ,
 
-        value: <span style={combineCss.CSSFCV_3001} > {FCV_3001} (%) </span> , 
+        value: <span style={combineCss.CSSFCV_3001} > {formatValue(FCV_3001)} (%) </span> , 
          high: <InputText 
 disabled={AuthInputHighLow}
          
@@ -5275,7 +5285,7 @@ disabled={AuthInputHighLow}
 
         modbus: <span style={combineCss.CSSPERCENT_LPG}>40061	 </span> ,
 
-       value: <span style={combineCss.CSSPERCENT_LPG} > {PERCENT_LPG} (%)</span> , 
+       value: <span style={combineCss.CSSPERCENT_LPG} > {formatValue(PERCENT_LPG)} (%)</span> , 
         high: <InputText 
 disabled={AuthInputHighLow}
         
@@ -5305,7 +5315,7 @@ disabled={AuthInputHighLow}
 
        modbus: <span style={combineCss.CSSPERCENT_AIR}>40063	 </span> ,
 
-      value: <span style={combineCss.CSSPERCENT_AIR} > {PERCENT_AIR} (%)</span> , 
+      value: <span style={combineCss.CSSPERCENT_AIR} > {formatValue(PERCENT_AIR)} (%)</span> , 
        high: <InputText 
 disabled={AuthInputHighLow}
        
@@ -5334,7 +5344,7 @@ disabled={AuthInputHighLow}
 
       modbus: <span style={combineCss.CSSHV_3001}>40065	 </span> ,
 
-     value: <span style={combineCss.CSSHV_3001} > {HV_3001} (MJ/Sm³)</span> , 
+     value: <span style={combineCss.CSSHV_3001} > {formatValue(HV_3001)} (MJ/Sm³)</span> , 
       high: <InputText 
 disabled={AuthInputHighLow}
       
@@ -5361,7 +5371,7 @@ disabled={AuthInputHighLow}
     
      modbus: <span style={combineCss.CSSRATIO_MODE}>40067	 </span> ,
     
-    value: <span style={combineCss.CSSRATIO_MODE} > {RATIO_MODE} {DataRATIO_MODE}</span> , 
+    value: <span style={combineCss.CSSRATIO_MODE} > {formatValue(RATIO_MODE)} {DataRATIO_MODE}</span> , 
      high: <InputText 
 disabled={AuthInputHighLow}
      
@@ -5390,7 +5400,7 @@ disabled={AuthInputHighLow}
 
      modbus: <span style={combineCss.CSSFCV_MODE}>40069	 </span> ,
 
-    value: <span style={combineCss.CSSFCV_MODE} > {FCV_MODE} {DataFCV_MODE}</span> , 
+    value: <span style={combineCss.CSSFCV_MODE} > {formatValue(FCV_MODE)} {DataFCV_MODE}</span> , 
      high: <InputText 
 disabled={AuthInputHighLow}
      
@@ -5419,7 +5429,7 @@ disabled={AuthInputHighLow}
 
     modbus: <span style={combineCss.CSSTOTAL_CNG}>40071	 </span> ,
 
-   value: <span style={combineCss.CSSTOTAL_CNG} > {TOTAL_CNG} (Sm³)</span> , 
+   value: <span style={combineCss.CSSTOTAL_CNG} > {formatValue(TOTAL_CNG)} (Sm³)</span> , 
     high: <InputText 
 disabled={AuthInputHighLow}
     
@@ -5447,7 +5457,7 @@ disabled={AuthInputHighLow}
 
    modbus: <span style={combineCss.CSSTM_3002_CNG}>40073	 </span> ,
 
-  value: <span style={combineCss.CSSTM_3002_CNG} > {TM_3002_CNG} (Sm³/h)</span> , 
+  value: <span style={combineCss.CSSTM_3002_CNG} > {formatValue(TM_3002_CNG)} (Sm³/h)</span> , 
    high: <InputText 
 disabled={AuthInputHighLow}
    
@@ -5475,7 +5485,7 @@ disabled={AuthInputHighLow}
 
   modbus: <span style={combineCss.CSSTM_3003_CNG}>40075	 </span> ,
 
- value: <span style={combineCss.CSSTM_3003_CNG} > {TM_3003_CNG} (Sm³/h)</span> , 
+ value: <span style={combineCss.CSSTM_3003_CNG} > {formatValue(TM_3003_CNG)} (Sm³/h)</span> , 
   high: <InputText 
 disabled={AuthInputHighLow}
   
@@ -5502,7 +5512,7 @@ disabled={AuthInputHighLow}
 
    modbus: <span style={combineCss.CSSWB_Setpoint}>40077	 </span> ,
 
-  value: <span style={combineCss.CSSWB_Setpoint} > {WB_Setpoint} (MJ/Sm³)</span> , 
+  value: <span style={combineCss.CSSWB_Setpoint} > {formatValue(WB_Setpoint)} (MJ/Sm³)</span> , 
    high: <InputText 
 disabled={AuthInputHighLow}
    
@@ -5531,7 +5541,7 @@ name: <span style={combineCss.CSSPLC_Conn_STT}>PLC Connection Status</span> ,
 
 modbus: <span style={combineCss.CSSPLC_Conn_STT}>Status</span> ,
 
-value: <span style={combineCss.CSSPLC_Conn_STT} > {PLC_Conn_STT} {DataPLC_Conn_STT}</span> , 
+value: <span style={combineCss.CSSPLC_Conn_STT} > {formatValue(PLC_Conn_STT)} {DataPLC_Conn_STT}</span> , 
 high: <InputText 
 disabled={AuthInputHighLow}
 
@@ -5565,7 +5575,7 @@ checked={maintainPLC_Conn_STT}
             
             modbus: <span style={combineCss.CSSWIS_Calorimeter}>40001	 </span> ,
             
-            value: <span style={combineCss.CSSWIS_Calorimeter} > {WIS_Calorimeter}  (MJ/Sm³)</span> , 
+            value: <span style={combineCss.CSSWIS_Calorimeter} > {formatValue(WIS_Calorimeter)}  (MJ/Sm³)</span> , 
             high: <InputText 
             disabled={AuthInputHighLow}
             
@@ -5593,7 +5603,7 @@ checked={maintainPLC_Conn_STT}
             
             modbus: <span style={combineCss.CSSCVS_Calorimeter}>40002	 </span> ,
             
-            value: <span style={combineCss.CSSCVS_Calorimeter} > {CVS_Calorimeter}  (MJ/Sm³)</span> , 
+            value: <span style={combineCss.CSSCVS_Calorimeter} > {formatValue(CVS_Calorimeter)}  (MJ/Sm³)</span> , 
             high: <InputText 
             disabled={AuthInputHighLow}
             
@@ -5620,7 +5630,7 @@ checked={maintainPLC_Conn_STT}
             
             modbus: <span style={combineCss.CSSSG_Calorimeter}>40003	 </span> ,
             
-            value: <span style={combineCss.CSSSG_Calorimeter} > {SG_Calorimeter} (rel)</span> , 
+            value: <span style={combineCss.CSSSG_Calorimeter} > {formatValue(SG_Calorimeter)} (rel)</span> , 
             high: <InputText 
             disabled={AuthInputHighLow}
             
@@ -5647,7 +5657,7 @@ checked={maintainPLC_Conn_STT}
             
             modbus: <span style={combineCss.CSSTD_4072_Conn_STT}>Status	 </span> ,
             
-            value: <span style={combineCss.CSSTD_4072_Conn_STT} > {TD_4072_Conn_STT} {DataTD_4072_Conn_STT}</span> , 
+            value: <span style={combineCss.CSSTD_4072_Conn_STT} > {formatValue(TD_4072_Conn_STT)} {DataTD_4072_Conn_STT}</span> , 
             high: <InputText 
             disabled={AuthInputHighLow}
             

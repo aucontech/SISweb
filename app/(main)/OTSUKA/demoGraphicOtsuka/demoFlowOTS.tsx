@@ -109,279 +109,226 @@ export default function DemoFlowOTS() {
     const ws = useRef<WebSocket | null>(null);
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
 
-    const [resetKey, setResetKey] = useState(0);
-    const [isOnline, setIsOnline] = useState(navigator.onLine);
-    const [wasOffline, setWasOffline] = useState(false); // Theo dõi trạng thái offline trước đó
-    useEffect(() => {
+//=====================================================================================
+  
+const [resetKey, setResetKey] = useState(0);
+const [isOnline, setIsOnline] = useState(navigator.onLine);
 
-        const connectWebSocket = () => {
-            const token = localStorage.getItem('accessToken');
-            const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
-        ws.current = new WebSocket(url);
+const [cmdId, setCmdId] = useState(1); // Track cmdId for requests
 
-        const obj1 = {
-            attrSubCmds: [],
-            tsSubCmds: [
-                {
-                    entityType: "DEVICE",
-                    entityId: id_OTSUKA,
-                    scope: "LATEST_TELEMETRY",
-                    cmdId: 1,
-                },
-            ],
+const connectWebSocket = (cmdId: number) => {
+    const token = localStorage.getItem('accessToken');
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+    ws.current = new WebSocket(url);
+    const obj1 = {
+        attrSubCmds: [],
+        tsSubCmds: [
+            {
+                entityType: "DEVICE",
+                entityId: id_OTSUKA,
+                scope: "LATEST_TELEMETRY",
+                cmdId: cmdId, // Use dynamic cmdId for new requests
+            },
+        ],
+    };
+
+    if (ws.current) {
+        ws.current.onopen = () => {
+            console.log("WebSocket connected");
+            setTimeout(() => {
+                ws.current?.send(JSON.stringify(obj1));
+            });
         };
 
-        const obj_PCV_PSV = {
-            entityDataCmds: [
-                {
-                    cmdId: 1,
-                    latestCmd: {
-                        keys: [
-                            {
-                                type: "ATTRIBUTE",
-                                key: "active",
-                            },
-                        ],
-                    },
-                    query: {
-                        entityFilter: {
-                            type: "singleEntity",
-                            singleEntity: {
-                                entityType: "DEVICE",
-                                id: id_OTSUKA,
-                            },
-                        },
-                        pageLink: {
-                            pageSize: 1,
-                            page: 0,
-                            sortOrder: {
-                                key: {
-                                    type: "ENTITY_FIELD",
-                                    key: "createdTime",
-                                },
-                                direction: "DESC",
-                            },
-                        },
-                        entityFields: [
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "name",
-                            },
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "label",
-                            },
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "additionalInfo",
-                            },
-                        ],
-                        latestValues: [
-                            {
-                                type: "ATTRIBUTE",
-                                key: "active",
-                            },
-                        ],
-                    },
-                },
-            ],
+        ws.current.onclose = () => {
+            console.log("WebSocket connection closed.");
         };
 
-      
-        if (ws.current) {
-            ws.current.onopen = () => {
-                console.log("WebSocket connected");
-                setTimeout(() => {
-                    ws.current?.send(JSON.stringify(obj1));
-                }); 
-            };
+        ws.current.onmessage = (evt) => {
+            let dataReceived = JSON.parse(evt.data);
+            if (dataReceived.update !== null) {
+                setData(prevData => [...prevData, dataReceived]);
 
-            ws.current.onclose = () => {
-                console.log("WebSocket connection closed. Reconnecting in 10 seconds...");
-                setTimeout(() => {
-                    connectWebSocket(); 
-                }, 10000);
-            };
-        }
+
+                const keys = Object?.keys(dataReceived.data);
+                const stateMap: StateMap = {
+                    EVC_01_Flow_at_Base_Condition:
+                        setEVC_01_Flow_at_Base_Condition,
+                    EVC_01_Flow_at_Measurement_Condition:
+                        setEVC_01_Flow_at_Measurement_Condition,
+                    EVC_01_Volume_at_Base_Condition:
+                        setEVC_01_Volume_at_Base_Condition,
+                    EVC_01_Volume_at_Measurement_Condition:
+                        setEVC_01_Volume_at_Measurement_Condition,
+
+                    EVC_02_Flow_at_Base_Condition:
+                        setEVC_02_Flow_at_Base_Condition,
+                    EVC_02_Flow_at_Measurement_Condition:
+                        setEVC_02_Flow_at_Measurement_Condition,
+                    EVC_02_Volume_at_Base_Condition:
+                        setEVC_02_Volume_at_Base_Condition,
+                    EVC_02_Volume_at_Measurement_Condition:
+                        setEVC_02_Volume_at_Measurement_Condition,
+
+                    EVC_02_Pressure: setEVC_02_Pressure,
+                    EVC_01_Pressure: setEVC_01_Pressure,
+                    EVC_02_Temperature: setEVC_02_Temperature,
+                    EVC_01_Temperature: setEVC_01_Temperature,
+
+                    GD1: setGD1,
+                    GD2: setGD2,
+                    GD3: setGD3,
+
+                    PT1: setPT1,
+
+                    EVC_01_Remain_Battery_Service_Life:
+                        setEVC_01_Remain_Battery_Service_Life,
+                    EVC_02_Remain_Battery_Service_Life:
+                        setEVC_02_Remain_Battery_Service_Life,
+
+                    EVC_01_Vm_of_Last_Day: setEVC_01_Vm_of_Last_Day,
+                    EVC_02_Vm_of_Last_Day: setEVC_02_Vm_of_Last_Day,
+
+                    EVC_01_Vb_of_Last_Day: setEVC_01_Vb_of_Last_Day,
+                    EVC_02_Vb_of_Last_Day: setEVC_02_Vb_of_Last_Day,
+
+                    EVC_01_Vm_of_Current_Day: setEVC_01_Vm_of_Current_Day,
+                    EVC_02_Vm_of_Current_Day: setEVC_02_Vm_of_Current_Day,
+
+                    EVC_01_Vb_of_Current_Day: setEVC_01_Vb_of_Current_Day,
+                    EVC_02_Vb_of_Current_Day: setEVC_02_Vb_of_Current_Day,
+
+                    DI_UPS_BATTERY: setDI_UPS_BATTERY,
+                    DI_UPS_CHARGING: setDI_UPS_CHARGING,
+                    DI_UPS_ALARM: setDI_UPS_ALARM,
+                    UPS_Mode: setUPS_Mode,
+
+                    DI_SELECT_SW: setDI_SELECT_SW,
+
+                    Emergency_NC: setEmergency_NC,
+                    Emergency_NO: setEmergency_NO,
+
+                    DI_RESET: setDI_RESET,
+                    DO_HR_01: setDO_HR_01,
+
+                    DI_MAP_1: setDI_MAP_1,
+
+                    DO_SV1: setDO_SV1,
+                    DO_BC_01: setDO_BC_01,
+                    DI_ZSC_1: setDI_ZSC_1,
+                    DI_ZSO_1: setDI_ZSO_1,
+                    EVC_01_Conn_STT: setEVC_01_Conn_STT,
+                    EVC_02_Conn_STT: setEVC_02_Conn_STT,
+                    PLC_Conn_STT: setPLC_Conn_STT,
+                };
+
+               
+                const valueStateMap: ValueStateMap = {
+                    EVC_01_Conn_STT: setEVC_01_Conn_STTValue,
+                };
+                keys.forEach((key) => {
+                    if (stateMap[key]) {
+                        const value = dataReceived.data[key][0][1];
+                        const slicedValue = value;
+                        stateMap[key]?.(slicedValue);
+                    }
+                  
+                    if (valueStateMap[key]) {
+                        const value = dataReceived.data[key][0][0];
+
+                        const date = new Date(value);
+                        const formattedDate = `${date
+                            .getDate()
+                            .toString()
+                            .padStart(2, "0")}-${(date.getMonth() + 1)
+                            .toString()
+                            .padStart(2, "0")} ${date
+                            .getHours()
+                            .toString()
+                            .padStart(2, "0")}:${date
+                            .getMinutes()
+                            .toString()
+                            .padStart(2, "0")}:${date
+                            .getSeconds()
+                            .toString()
+                            .padStart(2, "0")}`;
+                        valueStateMap[key]?.(formattedDate);
+                    }
+                });
+            }
+
+            if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                const ballValue =
+                    dataReceived.data.data[0].latest.ATTRIBUTE.active.value;
+                setActive(ballValue);
+            } else if (
+                dataReceived.update &&
+                dataReceived.update?.length > 0
+            ) {
+                const updatedData =
+                    dataReceived.update[0].latest.ATTRIBUTE.setActive.value;
+                setActive(updatedData);
+            }
+            fetchData();
+        };
+
     }
-    connectWebSocket(); 
-    
-    const interval = setInterval(() => {
-        console.log("Resetting WebSocket connection...");
+};
+useEffect(() => {
+    fetchData()
+},[isOnline])
 
-        ws.current?.close(); 
-        connectWebSocket();  
-    }, 60000); 
+useEffect(() => {
+    if (isOnline) {
+        // Initial connection
+        connectWebSocket(cmdId);
+        fetchData()
+    }
 
     return () => {
-        clearInterval(interval); 
-        ws.current?.close(); 
-    };
-    }, [isOnline]);
-
-    useEffect(() => {
         if (ws.current) {
-            ws.current.onmessage = (evt) => {
-                let dataReceived = JSON.parse(evt.data);
-                if (dataReceived.update !== null) {
-                    setData(prevData => [...prevData, dataReceived]);
-
-
-                    const keys = Object?.keys(dataReceived.data);
-                    const stateMap: StateMap = {
-                        EVC_01_Flow_at_Base_Condition:
-                            setEVC_01_Flow_at_Base_Condition,
-                        EVC_01_Flow_at_Measurement_Condition:
-                            setEVC_01_Flow_at_Measurement_Condition,
-                        EVC_01_Volume_at_Base_Condition:
-                            setEVC_01_Volume_at_Base_Condition,
-                        EVC_01_Volume_at_Measurement_Condition:
-                            setEVC_01_Volume_at_Measurement_Condition,
-
-                        EVC_02_Flow_at_Base_Condition:
-                            setEVC_02_Flow_at_Base_Condition,
-                        EVC_02_Flow_at_Measurement_Condition:
-                            setEVC_02_Flow_at_Measurement_Condition,
-                        EVC_02_Volume_at_Base_Condition:
-                            setEVC_02_Volume_at_Base_Condition,
-                        EVC_02_Volume_at_Measurement_Condition:
-                            setEVC_02_Volume_at_Measurement_Condition,
-
-                        EVC_02_Pressure: setEVC_02_Pressure,
-                        EVC_01_Pressure: setEVC_01_Pressure,
-                        EVC_02_Temperature: setEVC_02_Temperature,
-                        EVC_01_Temperature: setEVC_01_Temperature,
-
-                        GD1: setGD1,
-                        GD2: setGD2,
-                        GD3: setGD3,
-
-                        PT1: setPT1,
-
-                        EVC_01_Remain_Battery_Service_Life:
-                            setEVC_01_Remain_Battery_Service_Life,
-                        EVC_02_Remain_Battery_Service_Life:
-                            setEVC_02_Remain_Battery_Service_Life,
-
-                        EVC_01_Vm_of_Last_Day: setEVC_01_Vm_of_Last_Day,
-                        EVC_02_Vm_of_Last_Day: setEVC_02_Vm_of_Last_Day,
-
-                        EVC_01_Vb_of_Last_Day: setEVC_01_Vb_of_Last_Day,
-                        EVC_02_Vb_of_Last_Day: setEVC_02_Vb_of_Last_Day,
-
-                        EVC_01_Vm_of_Current_Day: setEVC_01_Vm_of_Current_Day,
-                        EVC_02_Vm_of_Current_Day: setEVC_02_Vm_of_Current_Day,
-
-                        EVC_01_Vb_of_Current_Day: setEVC_01_Vb_of_Current_Day,
-                        EVC_02_Vb_of_Current_Day: setEVC_02_Vb_of_Current_Day,
-
-                        DI_UPS_BATTERY: setDI_UPS_BATTERY,
-                        DI_UPS_CHARGING: setDI_UPS_CHARGING,
-                        DI_UPS_ALARM: setDI_UPS_ALARM,
-                        UPS_Mode: setUPS_Mode,
-
-                        DI_SELECT_SW: setDI_SELECT_SW,
-
-                        Emergency_NC: setEmergency_NC,
-                        Emergency_NO: setEmergency_NO,
-
-                        DI_RESET: setDI_RESET,
-                        DO_HR_01: setDO_HR_01,
-
-                        DI_MAP_1: setDI_MAP_1,
-
-                        DO_SV1: setDO_SV1,
-                        DO_BC_01: setDO_BC_01,
-                        DI_ZSC_1: setDI_ZSC_1,
-                        DI_ZSO_1: setDI_ZSO_1,
-                        EVC_01_Conn_STT: setEVC_01_Conn_STT,
-                        EVC_02_Conn_STT: setEVC_02_Conn_STT,
-                        PLC_Conn_STT: setPLC_Conn_STT,
-                    };
-
-                   
-                    const valueStateMap: ValueStateMap = {
-                        EVC_01_Conn_STT: setEVC_01_Conn_STTValue,
-                    };
-                    keys.forEach((key) => {
-                        if (stateMap[key]) {
-                            const value = dataReceived.data[key][0][1];
-                            const slicedValue = value;
-                            stateMap[key]?.(slicedValue);
-                        }
-                      
-                        if (valueStateMap[key]) {
-                            const value = dataReceived.data[key][0][0];
-
-                            const date = new Date(value);
-                            const formattedDate = `${date
-                                .getDate()
-                                .toString()
-                                .padStart(2, "0")}-${(date.getMonth() + 1)
-                                .toString()
-                                .padStart(2, "0")} ${date
-                                .getHours()
-                                .toString()
-                                .padStart(2, "0")}:${date
-                                .getMinutes()
-                                .toString()
-                                .padStart(2, "0")}:${date
-                                .getSeconds()
-                                .toString()
-                                .padStart(2, "0")}`;
-                            valueStateMap[key]?.(formattedDate);
-                        }
-                    });
-                }
-
-                if (dataReceived.data && dataReceived.data.data?.length > 0) {
-                    const ballValue =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.active.value;
-                    setActive(ballValue);
-                } else if (
-                    dataReceived.update &&
-                    dataReceived.update?.length > 0
-                ) {
-                    const updatedData =
-                        dataReceived.update[0].latest.ATTRIBUTE.setActive.value;
-                    setActive(updatedData);
-                }
-                fetchData();
-            };
+            console.log("Cleaning up WebSocket connection.");
+            ws.current.close();
         }
-    }, [data]);
+    };
+}, [isOnline, cmdId]); // Reconnect if isOnline or cmdId changes
+
+
+useEffect(() => {
+    const handleOnline = () => {
+        setIsOnline(true);
+        console.log('Back online. Reconnecting WebSocket with new cmdId.');
+        setCmdId(prevCmdId => prevCmdId + 1); // Increment cmdId on reconnect
+        fetchData()
+
+    };
+
+    const handleOffline = () => {
+        setIsOnline(false);
+        console.log('Offline detected. Closing WebSocket.');
+        if (ws.current) {
+            ws.current.close(); // Close WebSocket when offline
+        }
+    };
+
+    // Attach event listeners for online/offline status
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+        // Cleanup event listeners on unmount
+        window.removeEventListener('online', handleOnline);
+        window.removeEventListener('offline', handleOffline);
+    };
+}, []);
+
+
+//============================GD =============================
 
 
 
-    useEffect(() => {
-        // Hàm cập nhật trạng thái online/offline
-        const handleOnlineStatus = () => {
-            const currentStatus = navigator.onLine;
-            setIsOnline(currentStatus);
 
-            if (!currentStatus) {
-                // Khi mất kết nối, đặt trạng thái offline
-                console.log("Mất kết nối internet.");
-                setWasOffline(true);
-            } else if (currentStatus && wasOffline) {
-                // Khi có lại kết nối và trước đó là offline, reset component
-                console.log("Kết nối internet được khôi phục. Reset component...");
-                setResetKey(prevKey => prevKey + 1); // Reset component
-                setWasOffline(false); // Reset lại để chỉ reset 1 lần khi online trở lại
-            }
-        };
 
-        // Lắng nghe sự kiện thay đổi trạng thái online/offline
-        window.addEventListener('online', handleOnlineStatus);
-        window.addEventListener('offline', handleOnlineStatus);
-
-        return () => {
-            // Dọn dẹp sự kiện khi component unmount
-            window.removeEventListener('online', handleOnlineStatus);
-            window.removeEventListener('offline', handleOnlineStatus);
-        };
-    }, [wasOffline]);
-    //============================GD =============================
 
     const [
         EVC_01_Remain_Battery_Service_Life,
@@ -2096,7 +2043,7 @@ export default function DemoFlowOTS() {
 
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-                { FIQ1901_LineDuty: newValue1, FIQ1902_LineDuty: newValue2 }
+                { Line_Duty_01: newValue1, Line_Duty_02: newValue2 }
             );
             setLineduty1901(newValue1);
             setLineduty1902(newValue2);
@@ -2893,6 +2840,17 @@ export default function DemoFlowOTS() {
             setMaintainDO_BC_01(DO_BC_01_Maintain?.value || false);
 
             setMaintainDO_SV1(DO_SV1_Maintain?.value || false);
+
+
+
+            const Line_Duty_01 = res.data.find((item: any) => item.key === "Line_Duty_01");
+
+            setLineduty1901(Line_Duty_01?.value || null);
+            const Line_Duty_02 = res.data.find((item: any) => item.key === "Line_Duty_02");
+            setLineduty1902(Line_Duty_02?.value || null);
+
+
+
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -6006,9 +5964,12 @@ export default function DemoFlowOTS() {
             sourcePosition: Position.Top,
             targetPosition: Position.Left,
             style: {
+                background: 'none',
                 height: 1,
                 width: 1,
+                border: 'none',
             },
+          
         },
         {
             id: "FIQ_none22",
@@ -6021,8 +5982,10 @@ export default function DemoFlowOTS() {
             sourcePosition: Position.Bottom,
             targetPosition: Position.Left,
             style: {
+                background: 'none',
                 height: 1,
                 width: 1,
+                border: 'none',
             },
         },
         // ==================== Ball center =============================

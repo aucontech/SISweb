@@ -109,20 +109,19 @@ export default function GraphicVREC() {
     const toast = useRef<Toast>(null);
     const [alarmMessage, setAlarmMessage] = useState<string | null>(null);
     const ws = useRef<WebSocket | null>(null);
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
 
-
+//=====================================================================================
+  
     const [resetKey, setResetKey] = useState(0);
     const [isOnline, setIsOnline] = useState(navigator.onLine);
-    const [wasOffline, setWasOffline] = useState(false); // Theo dõi trạng thái offline trước đó
 
-    useEffect(() => {
-
-        const connectWebSocket = () => {
-
+    const [cmdId, setCmdId] = useState(1); // Track cmdId for requests
+ 
+    const connectWebSocket = (cmdId: number) => {
         const token = localStorage.getItem('accessToken');
-                const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+        const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
         ws.current = new WebSocket(url);
-       
         const obj1 = {
             attrSubCmds: [],
             tsSubCmds: [
@@ -130,63 +129,7 @@ export default function GraphicVREC() {
                     entityType: "DEVICE",
                     entityId: id_VREC,
                     scope: "LATEST_TELEMETRY",
-                    cmdId: 1,
-                },
-            ],
-        };
-
-        const obj_PCV_PSV = {
-            entityDataCmds: [
-                {
-                    cmdId: 1,
-                    latestCmd: {
-                        keys: [
-                            {
-                                type: "ATTRIBUTE",
-                                key: "active",
-                            },
-                        ],
-                    },
-                    query: {
-                        entityFilter: {
-                            type: "singleEntity",
-                            singleEntity: {
-                                entityType: "DEVICE",
-                                id: id_VREC,
-                            },
-                        },
-                        pageLink: {
-                            pageSize: 1,
-                            page: 0,
-                            sortOrder: {
-                                key: {
-                                    type: "ENTITY_FIELD",
-                                    key: "createdTime",
-                                },
-                                direction: "DESC",
-                            },
-                        },
-                        entityFields: [
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "name",
-                            },
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "label",
-                            },
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "additionalInfo",
-                            },
-                        ],
-                        latestValues: [
-                            {
-                                type: "ATTRIBUTE",
-                                key: "active",
-                            },
-                        ],
-                    },
+                    cmdId: cmdId, // Use dynamic cmdId for new requests
                 },
             ],
         };
@@ -196,52 +139,13 @@ export default function GraphicVREC() {
                 console.log("WebSocket connected");
                 setTimeout(() => {
                     ws.current?.send(JSON.stringify(obj1));
-                    ws.current?.send(JSON.stringify(obj_PCV_PSV));
-             
-
                 });
             };
+
             ws.current.onclose = () => {
-                                setTimeout(() => {
-                                    connectWebSocket(); 
-                                }, 10000);
-                            };
-            return () => {
-                console.log("Cleaning up WebSocket connection.");
-                ws.current?.close();
+                console.log("WebSocket connection closed.");
             };
-        }
-        };
-       
-        connectWebSocket()
-        
-    }, [isOnline]);
 
-    useEffect(() => {
-        const handleOnlineStatus = () => {
-            const currentStatus = navigator.onLine;
-            setIsOnline(currentStatus);
-
-            if (!currentStatus) {
-                setWasOffline(true);
-            } else if (currentStatus && wasOffline) {
-                setResetKey(prevKey => prevKey + 1); 
-                setWasOffline(false); 
-            }
-        };
-
-        window.addEventListener('online', handleOnlineStatus);
-        window.addEventListener('offline', handleOnlineStatus);
-
-        return () => {
-            window.removeEventListener('online', handleOnlineStatus);
-            window.removeEventListener('offline', handleOnlineStatus);
-        };
-    }, [wasOffline]);
-
-
-    useEffect(() => {
-        if (ws.current) {
             ws.current.onmessage = (evt) => {
                 let dataReceived = JSON.parse(evt.data);
                 if (dataReceived.update !== null) {
@@ -359,7 +263,57 @@ export default function GraphicVREC() {
                 fetchData();
             };
         }
-    }, [data]);
+    };
+    useEffect(() => {
+        fetchData()
+    },[isOnline])
+    
+    useEffect(() => {
+        if (isOnline) {
+            // Initial connection
+            connectWebSocket(cmdId);
+            fetchData()
+        }
+
+        return () => {
+            if (ws.current) {
+                console.log("Cleaning up WebSocket connection.");
+                ws.current.close();
+            }
+        };
+    }, [isOnline, cmdId]); // Reconnect if isOnline or cmdId changes
+    
+
+    useEffect(() => {
+        const handleOnline = () => {
+            setIsOnline(true);
+            console.log('Back online. Reconnecting WebSocket with new cmdId.');
+            setCmdId(prevCmdId => prevCmdId + 1); // Increment cmdId on reconnect
+            fetchData()
+
+        };
+
+        const handleOffline = () => {
+            setIsOnline(false);
+            console.log('Offline detected. Closing WebSocket.');
+            if (ws.current) {
+                ws.current.close(); // Close WebSocket when offline
+            }
+        };
+
+        // Attach event listeners for online/offline status
+        window.addEventListener('online', handleOnline);
+        window.addEventListener('offline', handleOffline);
+
+        return () => {
+            // Cleanup event listeners on unmount
+            window.removeEventListener('online', handleOnline);
+            window.removeEventListener('offline', handleOffline);
+        };
+    }, []);
+
+
+    //============================GD =============================
 
 
    // =================================================================================================================== 
@@ -1394,8 +1348,9 @@ useEffect(() => {
 
     //================================ GVA1 FIQ 1901 ======================================================
 
-    const [lineDuty1901, setLineduty1901] = useState<any>();
-    const [lineDuty1902, setLineduty1902] = useState<any>();
+   
+    const [lineDuty1901, setLineduty1901] = useState<boolean>(false);
+    const [lineDuty1902, setLineduty1902] = useState<boolean>(true);
 
     const ChangeStatusFIQ = async () => {
         try {
@@ -1404,7 +1359,7 @@ useEffect(() => {
 
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_VREC}/SERVER_SCOPE`,
-                { FIQ1901_LineDuty: newValue1, FIQ1902_LineDuty: newValue2 }
+                { Line_Duty_01: newValue1, Line_Duty_02: newValue2 }
             );
             setLineduty1901(newValue1);
             setLineduty1902(newValue2);
@@ -1901,6 +1856,15 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
 
 
             setMaintainDO_SV_01(DO_SV_01_Maintain?.value || false);
+
+            const Line_Duty_01 = res.data.find((item: any) => item.key === "Line_Duty_01");
+
+            setLineduty1901(Line_Duty_01?.value || null);
+            const Line_Duty_02 = res.data.find((item: any) => item.key === "Line_Duty_02");
+            setLineduty1902(Line_Duty_02?.value || null);
+
+
+
             } catch (error) {
             console.error("Error fetching data:", error);
             }

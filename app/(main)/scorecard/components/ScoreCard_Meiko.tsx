@@ -10,6 +10,7 @@ import { DotGreen, DotRed } from "./SVG_Scorecard";
 
 import "./ScoreCard.css"
 import { nameValue } from "../../SetupData/namValue";
+import { formatDate } from "../../dateUtils/dateUtils";
 
 interface StateMap {
     [key: string]:
@@ -43,46 +44,48 @@ export default function ScoreCard_Meiko() {
         setIsVisible(!isVisible);
     };
 
-    useEffect(() => {
-        ws.current = new WebSocket(url);
 
-        const obj1 = {
-            attrSubCmds: [],
-            tsSubCmds: [
-                {
-                    entityType: "DEVICE",
-                    entityId: id_THACHTHAT,
-                    scope: "LATEST_TELEMETRY",
-                    cmdId: 1,
-                },
-            ],
-        };
+      //=====================================================================================
+  
+   const [resetKey, setResetKey] = useState(0);
+   const [isOnline, setIsOnline] = useState(navigator.onLine);
 
-        if (ws.current) {
-            ws.current.onopen = () => {
-                console.log("WebSocket connected");
-                setTimeout(() => {
-                    ws.current?.send(JSON.stringify(obj1));
-                });
-            };
+   const [cmdId, setCmdId] = useState(1); // Track cmdId for requests
 
-            ws.current.onclose = () => {
-                console.log("WebSocket connection closed.");
-            };
+   const connectWebSocket = (cmdId: number) => {
+       const token = localStorage.getItem('accessToken');
+       const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+       ws.current = new WebSocket(url);
+       const obj1 = {
+           attrSubCmds: [],
+           tsSubCmds: [
+               {
+                   entityType: "DEVICE",
+                   entityId: id_THACHTHAT,
+                   scope: "LATEST_TELEMETRY",
+                   cmdId: cmdId, // Use dynamic cmdId for new requests
+               },
+           ],
+       };
 
-            return () => {
-                console.log("Cleaning up WebSocket connection.");
-                ws.current?.close();
-            };
-        }
-    }, []);
+       if (ws.current) {
+           ws.current.onopen = () => {
+               console.log("WebSocket connected");
+               setTimeout(() => {
+                   ws.current?.send(JSON.stringify(obj1));
+               });
+           };
 
-    useEffect(() => {
-        if (ws.current) {
-            ws.current.onmessage = (evt) => {
-                let dataReceived = JSON.parse(evt.data);
+           ws.current.onclose = () => {
+               console.log("WebSocket connection closed.");
+           };
+
+           ws.current.onmessage = (event) => {
+            try {
+                let dataReceived = JSON.parse(event.data);
                 if (dataReceived.update !== null) {
-                    setData([...data, dataReceived]);
+                    setData(prevData => [...prevData, dataReceived]);
+
 
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
@@ -139,20 +142,18 @@ export default function ScoreCard_Meiko() {
                     keys.forEach((key) => {
                         if (stateMap[key]) {
                             const value = dataReceived.data[key][0][1];
-                            const slicedValue = value;
-                            stateMap[key]?.(slicedValue);
+                            stateMap[key]?.(value);
                         }
-
                         if (valueStateMap[key]) {
                             const value = dataReceived.data[key][0][0];
-
+    
                             const date = new Date(value);
                             const formattedDate = `${date
                                 .getDate()
                                 .toString()
                                 .padStart(2, "0")}-${(date.getMonth() + 1)
                                 .toString()
-                                .padStart(2, "0")}-${date.getFullYear()} ${date
+                                .padStart(2, "0")} ${date
                                 .getHours()
                                 .toString()
                                 .padStart(2, "0")}:${date
@@ -162,14 +163,68 @@ export default function ScoreCard_Meiko() {
                                 .getSeconds()
                                 .toString()
                                 .padStart(2, "0")}`;
-                            valueStateMap[key]?.(formattedDate); // Set formatted timestamp
+                            valueStateMap[key]?.(formattedDate);
                         }
                     });
                 }
-                fetchData()
-            };
-        }
-    }, [data]);
+            } catch (error) {
+                console.error("Error handling WebSocket message:", error);
+            }
+        };
+
+       }
+   };
+   useEffect(() => {
+       fetchData()
+   },[isOnline])
+   
+   useEffect(() => {
+       if (isOnline) {
+           // Initial connection
+           connectWebSocket(cmdId);
+           fetchData()
+       }
+
+       return () => {
+           if (ws.current) {
+               console.log("Cleaning up WebSocket connection.");
+               ws.current.close();
+           }
+       };
+   }, [isOnline, cmdId]); // Reconnect if isOnline or cmdId changes
+   
+
+   useEffect(() => {
+       const handleOnline = () => {
+           setIsOnline(true);
+           console.log('Back online. Reconnecting WebSocket with new cmdId.');
+           setCmdId(prevCmdId => prevCmdId + 1); // Increment cmdId on reconnect
+           fetchData()
+
+       };
+
+       const handleOffline = () => {
+           setIsOnline(false);
+           console.log('Offline detected. Closing WebSocket.');
+           if (ws.current) {
+               ws.current.close(); // Close WebSocket when offline
+           }
+       };
+
+       // Attach event listeners for online/offline status
+       window.addEventListener('online', handleOnline);
+       window.addEventListener('offline', handleOffline);
+
+       return () => {
+           // Cleanup event listeners on unmount
+           window.removeEventListener('online', handleOnline);
+           window.removeEventListener('offline', handleOffline);
+       };
+   }, []);
+
+
+   //============================GD =============================
+
 
 
     const fetchData = async () => {
@@ -1404,40 +1459,47 @@ useEffect(() => {
 
 
 
-
+          const formatValue = (value:any) => {
+            return value !== null
+                ? new Intl.NumberFormat('en-US', {
+                      maximumFractionDigits: 2,
+                      useGrouping: true, 
+                  }).format(parseFloat(value))
+                : "";
+        };
     const dataPLC = [
 
         {
             name: <span>{tagNamePLC.V1_Flow_Meter}</span>,
-            PLC: <span style={combineCss.CSSV1_Flow_Meter}>{V1_Flow_Meter} </span>,
+            PLC: <span style={combineCss.CSSV1_Flow_Meter}>{formatValue(V1_Flow_Meter)} </span>,
         },
         {
             name: <span>{tagNamePLC.V2_Flow_Meter}</span>,
-            PLC: <span style={combineCss.CSSV2_Flow_Meter}> {V2_Flow_Meter} </span>,
+            PLC: <span style={combineCss.CSSV2_Flow_Meter}> {formatValue(V2_Flow_Meter)} </span>,
         },
 
 
         {
             name: <span>{tagNamePLC.Pipe_Temp}</span>,
-            PLC: <span style={combineCss.CSSPipe_Temp}>{Pipe_Temp} </span>,
+            PLC: <span style={combineCss.CSSPipe_Temp}>{formatValue(Pipe_Temp)} </span>,
         },
      
         {
             name: <span>{tagNamePLC.Pipe_Press}</span>,
-            PLC: <span style={combineCss.CSSPipe_Press}>{Pipe_Press}</span>,
+            PLC: <span style={combineCss.CSSPipe_Press}>{formatValue(Pipe_Press)}</span>,
         },
         {
             name: <span>{tagNamePLC.Tank_TT_301}</span>,
-            PLC: <span style={combineCss.CSSTank_TT_301}>{Tank_TT_301}  </span>,
+            PLC: <span style={combineCss.CSSTank_TT_301}>{formatValue(Tank_TT_301)}  </span>,
         },
         {
             name: <span>{tagNamePLC.Tank_PT_301}</span>,
-            PLC: <span style={combineCss.CSSTank_PT_301}> {Tank_PT_301} </span>,
+            PLC: <span style={combineCss.CSSTank_PT_301}> {formatValue(Tank_PT_301)} </span>,
         },
 
         {
             name: <span>Tank-01 Level (%)</span>,
-            PLC: <span style={combineCss.CSSTank_01_Level}>{Tank_01_Level} </span>,
+            PLC: <span style={combineCss.CSSTank_01_Level}>{formatValue(Tank_01_Level)} </span>,
         },
 
     
@@ -1445,23 +1507,23 @@ useEffect(() => {
 
         {
             name: <span>Tank-01 Mass (Kg)</span>,
-            PLC: <span style={combineCss.CSSTank_01_Mass}>{Tank_01_Mass}  </span>,
+            PLC: <span style={combineCss.CSSTank_01_Mass}>{formatValue(Tank_01_Mass)}  </span>,
         },
      
         {
             name: <span>Tank-01 Volume (L)</span>,
-            PLC: <span style={combineCss.CSSTank_01_Volume}>{Tank_01_Volume}  </span>,
+            PLC: <span style={combineCss.CSSTank_01_Volume}>{formatValue(Tank_01_Volume)}  </span>,
         },
       
 
 
         {
             name: <span>{tagNamePLC.Consumption_Flow}</span>,
-            PLC: <span style={combineCss.CSSConsumption_Flow}>{Consumption_Flow} </span>,
+            PLC: <span style={combineCss.CSSConsumption_Flow}>{formatValue(Consumption_Flow)} </span>,
         },
         {
             name: <span>{tagNamePLC.Flow_Velocity}</span>,
-            PLC: <span style={combineCss.CSSFlow_Velocity}> {Flow_Velocity} </span>,
+            PLC: <span style={combineCss.CSSFlow_Velocity}> {formatValue(Flow_Velocity)} </span>,
         },
         {
             name: <span>{tagNamePLC.VP_301}</span>,
