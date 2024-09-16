@@ -4202,7 +4202,7 @@ export default function GraphicKOA() {
                                         top: 5,
                                     }}
                                 >
-                                    BarG
+                                    BarA
                                 </p>
                             </div>
                         ),
@@ -4271,7 +4271,7 @@ export default function GraphicKOA() {
                                         top: 5,
                                     }}
                                 >
-                                    BarG
+                                    BarA
                                 </p>
                             </div>
                         ),

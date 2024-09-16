@@ -2016,7 +2016,7 @@ useEffect(() => {
                                         top: 5,
                                     }}
                                 >
-                                    {KeyGas.BAR}
+                                 BarA
                                 </p>
                             </div>
                         ),

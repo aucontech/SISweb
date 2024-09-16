@@ -3602,7 +3602,7 @@ useEffect(() => {
                                         marginLeft: 10,
                                     }}
                                 >
-                                    {KeyGas.BAR}
+                                   BarA
                                 </p>
                             </div>
                         ),
@@ -3667,7 +3667,8 @@ useEffect(() => {
                                         top: 5,
                                     }}
                                 >
-                                    {KeyGas.BAR}
+                                                                    BarA
+
                                 </p>
                             </div>
                         ),

@@ -2314,7 +2314,7 @@ setActive(Active?.value || false);
                                         top: 5,
                                     }}
                                 >
-                                    {KeyGas.BAR}
+                                    BarA
                                 </p>
                             </div>
                         ),
