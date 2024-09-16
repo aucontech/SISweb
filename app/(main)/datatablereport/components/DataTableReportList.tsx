@@ -40,7 +40,9 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
         let { device, tags, dates } = filters;
         if (!tags || tags.length === 0) {
             setLoading(false);
-            return [];
+            setTableData([]);
+            setColumns([]);
+            return;
         }
         let tagNames = tags.map((tag: any) => tag.key);
         // console.log(dates);
@@ -65,8 +67,6 @@ const DataTableReportList: React.FC<Props> = ({ filters }) => {
             getTimesSeriesData("DEVICE", device?.id.id, reqParams)
                 .then((resp) => resp.data)
                 .then((res) => {
-                    console.log(res);
-                    // console.log(tags);
                     const tagUnitLookup: { [key: string]: string } = {};
                     tags.forEach((tag: any) => {
                         tagUnitLookup[tag.key] = tag.unit ? tag.unit.value : "";

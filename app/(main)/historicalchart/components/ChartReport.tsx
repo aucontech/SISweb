@@ -106,7 +106,11 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
     const _fetchDataTimeseries = useCallback(async ({ filters }) => {
         setLoading(true);
         let { device, tags, dates, agg, interval } = filters;
-
+        if (!tags || tags.length === 0) {
+            setLoading(false);
+            setChartData({ labels: [], datasets: [] });
+            return;
+        }
         if (
             dates &&
             dates.length === 2 &&
@@ -124,11 +128,6 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
                 orderBy: "ASC",
                 limit: 50000,
             };
-            if (tags && tags.length === 0) {
-                setLoading(false);
-                setChartData({ labels: [], datasets: [] });
-                return;
-            }
 
             if (agg && agg.value !== "NONE" && interval) {
                 reqParams = {
