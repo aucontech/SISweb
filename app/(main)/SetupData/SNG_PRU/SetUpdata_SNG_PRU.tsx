@@ -5489,7 +5489,14 @@ checked={maintainPLC_Conn_STT}
   
 
           ]
-
+          const formatValue = (value:any) => {
+            return value !== null
+                ? new Intl.NumberFormat('en-US', {
+                      maximumFractionDigits: 2,
+                      useGrouping: true, 
+                  }).format(parseFloat(value))
+                : "";
+        };
 
           const Calorimeter = [
 
@@ -5501,7 +5508,7 @@ checked={maintainPLC_Conn_STT}
             
             modbus: <span style={combineCss.CSSWIS_Calorimeter}>AI1	 </span> ,
             
-            value: <span style={combineCss.CSSWIS_Calorimeter} > {WIS_Calorimeter}  (kcal/Nm³)</span> , 
+            value: <span style={combineCss.CSSWIS_Calorimeter} > {formatValue(WIS_Calorimeter)}  (kcal/Nm³)</span> , 
             high: <InputText 
             disabled={AuthInputHighLow}
             
@@ -5528,7 +5535,7 @@ checked={maintainPLC_Conn_STT}
             
             modbus: <span style={combineCss.CSSCalorific_Calorimeter}>AI3	 </span> ,
             
-            value: <span style={combineCss.CSSCalorific_Calorimeter} > {Calorific_Calorimeter}  (kcal/Nm³)</span> , 
+            value: <span style={combineCss.CSSCalorific_Calorimeter} > {formatValue(Calorific_Calorimeter)}  (kcal/Nm³)</span> , 
             high: <InputText 
             disabled={AuthInputHighLow}
             
@@ -5555,7 +5562,7 @@ checked={maintainPLC_Conn_STT}
             
             modbus: <span style={combineCss.CSSSpecific_Calorimeter}>AI2	 </span> ,
             
-            value: <span style={combineCss.CSSSpecific_Calorimeter} > {Specific_Calorimeter} </span> , 
+            value: <span style={combineCss.CSSSpecific_Calorimeter} > {formatValue(Specific_Calorimeter)} </span> , 
             high: <InputText 
             disabled={AuthInputHighLow}
             

@@ -3818,15 +3818,7 @@ const handleCheckboxChangePLC = (e:any) => {
                 
             },
       };
-      const EVC_01_Flow_at_Base_Conditionformat = EVC_01_Flow_at_Base_Condition !== null ? parseFloat(EVC_01_Flow_at_Base_Condition).toFixed(2) : "";
-      const EVC_01_Flow_at_Measurement_Conditionformat = EVC_01_Flow_at_Measurement_Condition !== null ? parseFloat(EVC_01_Flow_at_Measurement_Condition).toFixed(2) : "";
-      const EVC_01_Volume_at_Base_Conditionformat = EVC_01_Volume_at_Base_Condition !== null ? parseFloat(EVC_01_Volume_at_Base_Condition).toFixed(2) : "";
-      const EVC_01_Volume_at_Measurement_Conditionformat = EVC_01_Volume_at_Measurement_Condition !== null ? parseFloat(EVC_01_Volume_at_Measurement_Condition).toFixed(2) : "";
-
-      const VBTodayformat = EVC_01_Vb_of_Current_Day !== null ? parseFloat(EVC_01_Vb_of_Current_Day).toFixed(2) : "";
-      const VMTodayformat = EVC_01_Vm_of_Current_Day !== null ? parseFloat(EVC_01_Vm_of_Current_Day).toFixed(2) : "";
-      const VBLastdayformat = EVC_01_Vb_of_Last_Day !== null ? parseFloat(EVC_01_Vb_of_Last_Day).toFixed(2) : "";
-      const VMLastdayformat = EVC_01_Vm_of_Last_Day !== null ? parseFloat(EVC_01_Vm_of_Last_Day).toFixed(2) : "";
+   
 
 
     const modbusEVC1 = {
@@ -3937,7 +3929,14 @@ const handleCheckboxChangePLC = (e:any) => {
          <p style={{fontSize:15}}>Maintain PLC</p>  </div> )} </span>
     };
     
-
+    const formatValue = (value:any) => {
+        return value !== null
+            ? new Intl.NumberFormat('en-US', {
+                  maximumFractionDigits: 2,
+                  useGrouping: true, 
+              }).format(parseFloat(value))
+            : "";
+    };
       const dataEVC01 = [
 
         { 
@@ -3948,7 +3947,7 @@ const handleCheckboxChangePLC = (e:any) => {
 
         name: <span style={combineCss.CSS_Rebattery}>{TagName.EVC_01_Remain_Battery_Service_Life}</span> ,
 
-        value: <span style={combineCss.CSS_Rebattery} > {EVC_01_Remain_Battery_Service_Life} {nameValue.month} </span>, 
+        value: <span style={combineCss.CSS_Rebattery} > {formatValue(EVC_01_Remain_Battery_Service_Life)} {nameValue.month} </span>, 
         high: <InputText  
  disabled={AuthInputHighLow}
         
@@ -3974,7 +3973,7 @@ const handleCheckboxChangePLC = (e:any) => {
     name: <span style={combineCss.CSS_Temperature}>{TagName.EVC_01_Temperature} </span> ,
     modbus: <span style={combineCss.CSS_Temperature}>{modbusEVC1.TT}</span> ,
 
-    value: <span style={combineCss.CSS_Temperature} > {EVC_01_Temperature} {nameValue.C}</span>, 
+    value: <span style={combineCss.CSS_Temperature} > {formatValue(EVC_01_Temperature)} {nameValue.C}</span>, 
     high: <InputText  
  disabled={AuthInputHighLow}
     
@@ -3999,7 +3998,7 @@ const handleCheckboxChangePLC = (e:any) => {
         modbus: <span style={combineCss.CSSEVC_01_Pressure}>{modbusEVC1.PT}</span> ,
 
         name: <span style={combineCss.CSSEVC_01_Pressure}>{TagName.Output_Pressure} </span> ,
-        value: <span style={combineCss.CSSEVC_01_Pressure} > {EVC_01_Pressure} {nameValue.Bara}</span> , 
+        value: <span style={combineCss.CSSEVC_01_Pressure} > {formatValue(EVC_01_Pressure)} {nameValue.Bara}</span> , 
         high: <InputText  
  disabled={AuthInputHighLow}
         
@@ -4026,7 +4025,7 @@ const handleCheckboxChangePLC = (e:any) => {
         name: <span  style={combineCss.CSS_EVC_01_Volume_at_Base_Condition}>{TagName.SVA} </span> ,
         // modbus: <span  style={combineCss.CSS_EVC_01_Volume_at_Base_Condition}>40854	 </span> ,
 
-        value: <span style={combineCss.CSS_EVC_01_Volume_at_Base_Condition} >  {EVC_01_Volume_at_Base_Conditionformat}  {nameValue.Sm3}</span> , 
+        value: <span style={combineCss.CSS_EVC_01_Volume_at_Base_Condition} >  {formatValue(EVC_01_Volume_at_Base_Condition)}  {nameValue.Sm3}</span> , 
          high: <InputText  
  disabled={AuthInputHighLow}
          
@@ -4052,7 +4051,7 @@ const handleCheckboxChangePLC = (e:any) => {
         name: <span style={combineCss.CSS_EVC_01_Volume_at_Measurement_Condition}>{TagName.GVA}	 </span> ,
         // modbus: <span  style={combineCss.CSS_EVC_01_Volume_at_Measurement_Condition}>40872	 </span> ,
 
-        value: <span style={combineCss.CSS_EVC_01_Volume_at_Measurement_Condition} > {EVC_01_Volume_at_Measurement_Conditionformat} {nameValue.m3}</span> , 
+        value: <span style={combineCss.CSS_EVC_01_Volume_at_Measurement_Condition} > {formatValue(EVC_01_Volume_at_Measurement_Condition)} {nameValue.m3}</span> , 
          high: <InputText  
  disabled={AuthInputHighLow}
          
@@ -4078,7 +4077,7 @@ const handleCheckboxChangePLC = (e:any) => {
 
         name: <span style={combineCss.CSS_EVC_01_Flow_at_Base_Condition}>{TagName.SVF}	 </span> ,
 
-        value: <span style={combineCss.CSS_EVC_01_Flow_at_Base_Condition} > {EVC_01_Flow_at_Base_Conditionformat}  {nameValue.Sm3h}  </span> , 
+        value: <span style={combineCss.CSS_EVC_01_Flow_at_Base_Condition} > {formatValue(EVC_01_Flow_at_Base_Condition)}  {nameValue.Sm3h}  </span> , 
          high: <InputText  
  disabled={AuthInputHighLow}
          
@@ -4105,7 +4104,7 @@ const handleCheckboxChangePLC = (e:any) => {
         name: <span style={combineCss.CSS_EVC_01_Flow_at_Measurement_Condition}>{TagName.GVF} </span> ,
 
 
-        value: <span style={combineCss.CSS_EVC_01_Flow_at_Measurement_Condition} > {EVC_01_Flow_at_Measurement_Conditionformat}  {nameValue.m3h}</span> , 
+        value: <span style={combineCss.CSS_EVC_01_Flow_at_Measurement_Condition} > {formatValue(EVC_01_Flow_at_Measurement_Condition)}  {nameValue.m3h}</span> , 
          high: <InputText  
  disabled={AuthInputHighLow}
          
@@ -4136,7 +4135,7 @@ const handleCheckboxChangePLC = (e:any) => {
 
         name: <span style={combineCss.CSS_EVC_01_Vb_of_Current_Day}> {TagName.Vb_Today}</span> ,
 
-        value: <span style={combineCss.CSS_EVC_01_Vb_of_Current_Day} > {VBTodayformat} {nameValue.Sm3}</span>, 
+        value: <span style={combineCss.CSS_EVC_01_Vb_of_Current_Day} > {formatValue(EVC_01_Vb_of_Current_Day)} {nameValue.Sm3}</span>, 
         high: <InputText  
  disabled={AuthInputHighLow}
         
@@ -4161,7 +4160,7 @@ const handleCheckboxChangePLC = (e:any) => {
         modbus: <span style={combineCss.CSS_EVC_01_Vm_of_Current_Day}>{modbusEVC1.VM_TODAY}</span> ,
 
         name: <span style={combineCss.CSS_EVC_01_Vm_of_Current_Day}>{TagName.Vm_Today}</span> ,
-        value: <span style={combineCss.CSS_EVC_01_Vm_of_Current_Day} > {VMTodayformat} {nameValue.m3}</span>, 
+        value: <span style={combineCss.CSS_EVC_01_Vm_of_Current_Day} > {formatValue(EVC_01_Vm_of_Current_Day)} {nameValue.m3}</span>, 
         high: <InputText  
  disabled={AuthInputHighLow}
         
@@ -4187,7 +4186,7 @@ const handleCheckboxChangePLC = (e:any) => {
 
        name: <span style={combineCss.CSS_EVC_01_Vb_of_Last_Day}> {TagName.Vb_Yesterday}</span> ,
 
-       value: <span style={combineCss.CSS_EVC_01_Vb_of_Last_Day} > {VBLastdayformat} {nameValue.Sm3}</span>, 
+       value: <span style={combineCss.CSS_EVC_01_Vb_of_Last_Day} > {formatValue(EVC_01_Vb_of_Last_Day)} {nameValue.Sm3}</span>, 
        high: <InputText  
  disabled={AuthInputHighLow}
        
@@ -4213,7 +4212,7 @@ const handleCheckboxChangePLC = (e:any) => {
 
         name: <span style={combineCss.CSS_EVC_01_Vm_of_Last_Day}> {TagName.Vm_Yesterday} </span> ,
 
-        value: <span style={combineCss.CSS_EVC_01_Vm_of_Last_Day} > {VMLastdayformat} {nameValue.m3}</span>, 
+        value: <span style={combineCss.CSS_EVC_01_Vm_of_Last_Day} > {formatValue(EVC_01_Vm_of_Last_Day)} {nameValue.m3}</span>, 
         high: <InputText  
  disabled={AuthInputHighLow}
         
@@ -4239,7 +4238,7 @@ const handleCheckboxChangePLC = (e:any) => {
 
         name: <span style={combineCss.CSS_EVC_01_Conn_STT}> {TagName.EVC_01_Conn_STT} </span> ,
 
-        value: <span style={combineCss.CSS_EVC_01_Conn_STT} > {EVC_01_Conn_STT} {DataEVC_01_Conn_STT}</span>, 
+        value: <span style={combineCss.CSS_EVC_01_Conn_STT} > {formatValue(EVC_01_Conn_STT)} {DataEVC_01_Conn_STT}</span>, 
         high: <InputText  
  disabled={AuthInputHighLow}
         
@@ -4262,15 +4261,6 @@ const handleCheckboxChangePLC = (e:any) => {
       ]
 
 
-      const EVC_02_Flow_at_Base_Conditionformat = EVC_02_Flow_at_Base_Condition !== null ? parseFloat(EVC_02_Flow_at_Base_Condition).toFixed(2) : "";
-      const EVC_02_Flow_at_Measurement_Conditionformat = EVC_02_Flow_at_Measurement_Condition !== null ? parseFloat(EVC_02_Flow_at_Measurement_Condition).toFixed(2) : "";
-      const EVC_02_Volume_at_Base_Conditionformat = EVC_02_Volume_at_Base_Condition !== null ? parseFloat(EVC_02_Volume_at_Base_Condition).toFixed(2) : "";
-      const EVC_02_Volume_at_Measurement_Conditionformat = EVC_02_Volume_at_Measurement_Condition !== null ? parseFloat(EVC_02_Volume_at_Measurement_Condition).toFixed(2) : "";
-
-      const VBTodayformat2 = EVC_02_Vb_of_Current_Day !== null ? parseFloat(EVC_02_Vb_of_Current_Day).toFixed(2) : "";
-      const VMTodayformat2 = EVC_02_Vm_of_Current_Day !== null ? parseFloat(EVC_02_Vm_of_Current_Day).toFixed(2) : "";
-      const VBLastdayformat2 = EVC_02_Vb_of_Last_Day !== null ? parseFloat(EVC_02_Vb_of_Last_Day).toFixed(2) : "";
-      const VmLastdayformat2 = EVC_02_Vm_of_Last_Day !== null ? parseFloat(EVC_02_Vm_of_Last_Day).toFixed(2) : "";
 
       const c = EVC_02_Vm_of_Last_Day !== null ? parseFloat(EVC_02_Vm_of_Last_Day).toFixed(2) : "";
 
@@ -4284,7 +4274,7 @@ const handleCheckboxChangePLC = (e:any) => {
 
         name: <span style={combineCss.CSS_EVC_02_Remain_Battery_Service_Life}>{TagName.EVC_01_Remain_Battery_Service_Life}</span> ,
 
-        value: <span style={combineCss.CSS_EVC_02_Remain_Battery_Service_Life} > {EVC_02_Remain_Battery_Service_Life} {nameValue.month}</span>, 
+        value: <span style={combineCss.CSS_EVC_02_Remain_Battery_Service_Life} > {formatValue(EVC_02_Remain_Battery_Service_Life)} {nameValue.month}</span>, 
         high: <InputText  
  disabled={AuthInputHighLow}
         
@@ -4310,7 +4300,7 @@ const handleCheckboxChangePLC = (e:any) => {
     
     name: <span style={combineCss.CSS_EVC_02_Temperature}>{TagName.EVC_01_Temperature}</span> ,
     
-    value: <span style={combineCss.CSS_EVC_02_Temperature} > {EVC_02_Temperature}  {nameValue.C}</span>, 
+    value: <span style={combineCss.CSS_EVC_02_Temperature} > {formatValue(EVC_02_Temperature)}  {nameValue.C}</span>, 
     high: <InputText  
     disabled={AuthInputHighLow}
     
@@ -4335,7 +4325,7 @@ const handleCheckboxChangePLC = (e:any) => {
     modbus: <span style={combineCss.CSSEVC_02_Pressure}>{modbusEVC2.PT}</span> ,
 
     name: <span style={combineCss.CSSEVC_02_Pressure}>{TagName.Output_Pressure}</span> ,
-    value: <span style={combineCss.CSSEVC_02_Pressure} > {EVC_02_Pressure} {nameValue.Bara}</span> , 
+    value: <span style={combineCss.CSSEVC_02_Pressure} > {formatValue(EVC_02_Pressure)} {nameValue.Bara}</span> , 
     high: <InputText  
 disabled={AuthInputHighLow}
     
@@ -4361,7 +4351,7 @@ modbus: <span style={combineCss.CSS_EVC_02_Volume_at_Base_Condition}>{modbusEVC2
 
 name: <span style={combineCss.CSS_EVC_02_Volume_at_Base_Condition}>{TagName.SVA}	 </span> ,
 
-value: <span style={combineCss.CSS_EVC_02_Volume_at_Base_Condition} > {EVC_02_Volume_at_Base_Conditionformat} {nameValue.Sm3}</span> , 
+value: <span style={combineCss.CSS_EVC_02_Volume_at_Base_Condition} > {formatValue(EVC_02_Volume_at_Base_Condition)} {nameValue.Sm3}</span> , 
  high: <InputText  
 disabled={AuthInputHighLow}
  
@@ -4387,7 +4377,7 @@ modbus: <span style={combineCss.CSS_EVC_02_Volume_at_Measurement_Condition}>{mod
 
 name: <span style={combineCss.CSS_EVC_02_Volume_at_Measurement_Condition}>{TagName.GVA}	 </span> ,
 
-value: <span style={combineCss.CSS_EVC_02_Volume_at_Measurement_Condition} > {EVC_02_Volume_at_Measurement_Conditionformat} {nameValue.m3}</span> , 
+value: <span style={combineCss.CSS_EVC_02_Volume_at_Measurement_Condition} > {formatValue(EVC_02_Volume_at_Measurement_Condition)} {nameValue.m3}</span> , 
  high: <InputText  
 disabled={AuthInputHighLow}
  
@@ -4413,7 +4403,7 @@ disabled={AuthInputHighLow}
 
         name: <span style={combineCss.CSS_EVC_02_Flow_at_Base_Condition}>{TagName.SVF}	 </span> ,
 
-        value: <span style={combineCss.CSS_EVC_02_Flow_at_Base_Condition} > {EVC_02_Flow_at_Base_Conditionformat} {nameValue.Sm3h} </span> , 
+        value: <span style={combineCss.CSS_EVC_02_Flow_at_Base_Condition} > {formatValue(EVC_02_Flow_at_Base_Condition)} {nameValue.Sm3h} </span> , 
          high: <InputText  
  disabled={AuthInputHighLow}
          
@@ -4439,7 +4429,7 @@ disabled={AuthInputHighLow}
 
         name: <span style={combineCss.CSS_EVC_02_Flow_at_Measurement_Condition}>{TagName.GVF}	 </span> ,
 
-        value: <span style={combineCss.CSS_EVC_02_Flow_at_Measurement_Condition} > {EVC_02_Flow_at_Measurement_Conditionformat} {nameValue.m3h} </span> , 
+        value: <span style={combineCss.CSS_EVC_02_Flow_at_Measurement_Condition} > {formatValue(EVC_02_Flow_at_Measurement_Condition)} {nameValue.m3h} </span> , 
          high: <InputText  
  disabled={AuthInputHighLow}
          
@@ -4472,7 +4462,7 @@ disabled={AuthInputHighLow}
 
         name: <span style={combineCss.CSS_EVC_02_Vb_of_Current_Day}> {TagName.Vb_Today}</span> ,
 
-        value: <span style={combineCss.CSS_EVC_02_Vb_of_Current_Day} > {VBTodayformat2} {nameValue.Sm3}</span>, 
+        value: <span style={combineCss.CSS_EVC_02_Vb_of_Current_Day} > {formatValue(EVC_02_Vb_of_Current_Day)} {nameValue.Sm3}</span>, 
         high: <InputText  
  disabled={AuthInputHighLow}
         
@@ -4499,7 +4489,7 @@ disabled={AuthInputHighLow}
 
         name: <span style={combineCss.CSS_EVC_02_Vm_of_Current_Day}> {TagName.Vm_Today}</span> ,
 
-        value: <span style={combineCss.CSS_EVC_02_Vm_of_Current_Day} > {VMTodayformat2} {nameValue.m3}</span>, 
+        value: <span style={combineCss.CSS_EVC_02_Vm_of_Current_Day} > {formatValue(EVC_02_Vm_of_Current_Day)} {nameValue.m3}</span>, 
         high: <InputText  
  disabled={AuthInputHighLow}
         
@@ -4526,7 +4516,7 @@ disabled={AuthInputHighLow}
 
         name: <span style={combineCss.CSS_EVC_02_Vb_of_Last_Day}> {TagName.Vb_Yesterday}</span> ,
 
-        value: <span style={combineCss.CSS_EVC_02_Vb_of_Last_Day} > {VBLastdayformat2} {nameValue.Sm3}</span>, 
+        value: <span style={combineCss.CSS_EVC_02_Vb_of_Last_Day} > {formatValue(EVC_02_Vb_of_Last_Day)} {nameValue.Sm3}</span>, 
         high: <InputText  
  disabled={AuthInputHighLow}
         
@@ -4552,7 +4542,7 @@ disabled={AuthInputHighLow}
 
         name: <span style={combineCss.CSS_EVC_02_Vm_of_Last_Day}> {TagName.Vm_Yesterday}</span> ,
 
-        value: <span style={combineCss.CSS_EVC_02_Vm_of_Last_Day} > {VmLastdayformat2} {nameValue.m3}</span>, 
+        value: <span style={combineCss.CSS_EVC_02_Vm_of_Last_Day} > {formatValue(EVC_02_Vm_of_Last_Day)} {nameValue.m3}</span>, 
         high: <InputText  
  disabled={AuthInputHighLow}
         
@@ -4577,7 +4567,7 @@ disabled={AuthInputHighLow}
 
     name: <span style={combineCss.CSS_EVC_02_Conn_STT}> {TagName.EVC_02_Conn_STT} </span> ,
 
-    value: <span style={combineCss.CSS_EVC_02_Conn_STT} > {EVC_02_Conn_STT} {DataEVC_02_Conn_STT}</span>, 
+    value: <span style={combineCss.CSS_EVC_02_Conn_STT} > {formatValue(EVC_02_Conn_STT)} {DataEVC_02_Conn_STT}</span>, 
     high: <InputText  
 disabled={AuthInputHighLow}
     

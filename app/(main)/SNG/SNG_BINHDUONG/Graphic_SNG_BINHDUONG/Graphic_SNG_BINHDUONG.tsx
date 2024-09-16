@@ -97,275 +97,222 @@ export default function Graphic_SNG_BD() {
     const totalWidth = 50;
 
 
-    useEffect(() => {
+//=====================================================================================
+  
+const [resetKey, setResetKey] = useState(0);
+const [isOnline, setIsOnline] = useState(navigator.onLine);
 
-        const connectWebSocket = () => {
-            const token = localStorage.getItem('accessToken');
-            const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
-        ws.current = new WebSocket(url);
+const [cmdId, setCmdId] = useState(1); // Track cmdId for requests
 
-        const obj1 = {
-            attrSubCmds: [],
-            tsSubCmds: [
-                {
-                    entityType: "DEVICE",
-                    entityId: id_SNG_BinhDuong,
-                    scope: "LATEST_TELEMETRY",
-                    cmdId: 1,
-                },
-            ],
-        };
-        const obj_PCV_PSV = {
-            entityDataCmds: [
-                {
-                    cmdId: 1,
-                    latestCmd: {
-                        keys: [
-                            {
-                                type: "ATTRIBUTE",
-                                key: "active",
-                            },
-                        ],
-                    },
-                    query: {
-                        entityFilter: {
-                            type: "singleEntity",
-                            singleEntity: {
-                                entityType: "DEVICE",
-                                id: id_SNG_BinhDuong,
-                            },
-                        },
-                        pageLink: {
-                            pageSize: 1,
-                            page: 0,
-                            sortOrder: {
-                                key: {
-                                    type: "ENTITY_FIELD",
-                                    key: "createdTime",
-                                },
-                                direction: "DESC",
-                            },
-                        },
-                        entityFields: [
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "name",
-                            },
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "label",
-                            },
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "additionalInfo",
-                            },
-                        ],
-                        latestValues: [
-                            {
-                                type: "ATTRIBUTE",
-                                key: "active",
-                            },
-                        ],
-                    },
-                },
-            ],
+const connectWebSocket = (cmdId: number) => {
+    const token = localStorage.getItem('accessToken');
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+    ws.current = new WebSocket(url);
+    const obj1 = {
+        attrSubCmds: [],
+        tsSubCmds: [
+            {
+                entityType: "DEVICE",
+                entityId: id_SNG_BinhDuong,
+                scope: "LATEST_TELEMETRY",
+                cmdId: cmdId, // Use dynamic cmdId for new requests
+            },
+        ],
+    };
+
+    if (ws.current) {
+        ws.current.onopen = () => {
+            console.log("WebSocket connected");
+            setTimeout(() => {
+                ws.current?.send(JSON.stringify(obj1));
+            });
         };
 
-        if (ws.current) {
-            ws.current.onopen = () => {
-                console.log("WebSocket connected");
-                setTimeout(() => {
-                    ws.current?.send(JSON.stringify(obj1));
-                }); 
-            };
+        ws.current.onclose = () => {
+            console.log("WebSocket connection closed.");
+        };
 
-            ws.current.onclose = () => {
-                console.log("WebSocket connection closed. Reconnecting in 10 seconds...");
-                setTimeout(() => {
-                    connectWebSocket(); 
-                }, 10000);
-            };
-        }
+        ws.current.onmessage = (event) => {
+            let dataReceived = JSON.parse(event.data);
+            if (dataReceived.update !== null) {
+                setData(prevData => [...prevData, dataReceived]);
+               
+                const keys = Object.keys(dataReceived.data);
+                const stateMap: StateMap = {
+              
+                    PT_2004: setPT_2004,
+                    PT_2005: setPT_2005,
+                    TT_2003: setTT_2003,
+                    TT_2004: setTT_2004,
+                    WB_1001: setWB_1001,
+                    TG_2005: setTG_2005,
+
+                    GD_2002: setGD_2002,
+                    GD_2003: setGD_2003,
+                    GD_2004: setGD_2004,
+
+                    GD_2005: setGD_2005,
+                    GD_2006: setGD_2006,
+
+
+                    TM_2002_SNG: setTM_2002_SNG,
+                
+                    TM_2003_SNG: setTM_2003_SNG,
+
+
+                    TOTAL_SNG: setTOTAL_SNG,
+              
+                    
+                    GD1_STATUS: setGD1_STATUS,
+                    GD2_STATUS: setGD2_STATUS,
+                    GD3_STATUS: setGD3_STATUS,
+                    GD4_STATUS: setGD4_STATUS,
+                    GD5_STATUS: setGD5_STATUS,
+
+
+                    ESD: setESD,
+                    HR_BC: setHR_BC,
+                    SD: setSD,
+                    VAPORIZER_1: setVAPORIZER_1,
+                    VAPORIZER_2: setVAPORIZER_2,
+                    VAPORIZER_3: setVAPORIZER_3,
+
+                    VAPORIZER_4: setVAPORIZER_4,
+                    COOLING_V: setCOOLING_V,
+                    FCV_2001: setFCV_2001,
+
+
+
+
+                
+                    HV_1001: setHV_1001,
+                    RATIO_MODE: setRATIO_MODE,
+                    FCV_MODE: setFCV_MODE,
+                    TOTAL_CNG: setTOTAL_CNG,
+
+                    TM_2002_CNG: setTM2002_CNG,
+                    TM_2003_CNG: setTM2003_CNG,
+                    WB_Setpoint: setWB_Setpoint,
+                    WIS_Calorimeter: setWIS_Calorimeter,
+                    CVS_Calorimeter: setCVS_Calorimeter,
+
+                    SG_Calorimeter: setSG_Calorimeter,
+
+           
+                    SDV_2004: setSDV_2004,
+                    SDV_2003: setSDV_2003,
+                    TD_4072_Conn_STT: setTD_4072_Conn_STT,
+                    PLC_Conn_STT: setPLC_Conn_STT,
+                    PERCENT_LPG: setPERCENT_LPG,
+                    PERCENT_AIR: setPERCENT_AIR,
+                };
+                const valueStateMap: ValueStateMap = {
+                    PLC_Conn_STT: setPLC_STTValue,
+                };
+
+              
+                keys.forEach((key) => {
+                 
+                    if (stateMap[key]) {
+                        const value = dataReceived.data[key][0][1];
+                        const slicedValue = value;
+                        stateMap[key]?.(slicedValue);
+                    }
+                    if (valueStateMap[key]) {
+                        const value = dataReceived.data[key][0][0];
+
+                        const date = new Date(value);
+                        const formattedDate = `${date
+                            .getDate()
+                            .toString()
+                            .padStart(2, "0")}-${(date.getMonth() + 1)
+                            .toString()
+                            .padStart(2, "0")}-${date.getFullYear()} ${date
+                            .getHours()
+                            .toString()
+                            .padStart(2, "0")}:${date
+                            .getMinutes()
+                            .toString()
+                            .padStart(2, "0")}:${date
+                            .getSeconds()
+                            .toString()
+                            .padStart(2, "0")}`;
+                        valueStateMap[key]?.(formattedDate); // Set formatted timestamp
+                    }
+                });
+            }
+
+            if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                const ballValue =
+                    dataReceived.data.data[0].latest.ATTRIBUTE.active.value;
+                setActive(ballValue);
+            } else if (
+                dataReceived.update &&
+                dataReceived.update?.length > 0
+            ) {
+                const updatedData =
+                    dataReceived.update[0].latest.ATTRIBUTE.setActive.value;
+                setActive(updatedData);
+            }
+            fetchData();
+        };
+
+    }
+};
+useEffect(() => {
+    fetchData()
+},[isOnline])
+
+useEffect(() => {
+    if (isOnline) {
+        // Initial connection
+        connectWebSocket(cmdId);
+        fetchData()
     }
 
-    connectWebSocket(); 
-    
-    const interval = setInterval(() => {
-        console.log("Resetting WebSocket connection...");
+    return () => {
+        if (ws.current) {
+            console.log("Cleaning up WebSocket connection.");
+            ws.current.close();
+        }
+    };
+}, [isOnline, cmdId]); // Reconnect if isOnline or cmdId changes
 
-        ws.current?.close(); 
-        connectWebSocket();  
-    }, 60000); 
+
+useEffect(() => {
+    const handleOnline = () => {
+        setIsOnline(true);
+        console.log('Back online. Reconnecting WebSocket with new cmdId.');
+        setCmdId(prevCmdId => prevCmdId + 1); // Increment cmdId on reconnect
+        fetchData()
+
+    };
+
+    const handleOffline = () => {
+        setIsOnline(false);
+        console.log('Offline detected. Closing WebSocket.');
+        if (ws.current) {
+            ws.current.close(); // Close WebSocket when offline
+        }
+    };
+
+    // Attach event listeners for online/offline status
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
 
     return () => {
-        clearInterval(interval); 
-        ws.current?.close(); 
+        // Cleanup event listeners on unmount
+        window.removeEventListener('online', handleOnline);
+        window.removeEventListener('offline', handleOffline);
     };
-    }, []);
-
-    useEffect(() => {
-        if (ws.current) {
-            ws.current.onmessage = (event) => {
-                let dataReceived = JSON.parse(event.data);
-                if (dataReceived.update !== null) {
-                    setData(prevData => [...prevData, dataReceived]);
-                   
-                    const keys = Object.keys(dataReceived.data);
-                    const stateMap: StateMap = {
-                  
-                        PT_2004: setPT_2004,
-                        PT_2005: setPT_2005,
-                        TT_2003: setTT_2003,
-                        TT_2004: setTT_2004,
-                        WB_1001: setWB_1001,
-                        TG_2005: setTG_2005,
-
-                        GD_2002: setGD_2002,
-                        GD_2003: setGD_2003,
-                        GD_2004: setGD_2004,
-
-                        GD_2005: setGD_2005,
-                        GD_2006: setGD_2006,
+}, []);
 
 
-                        TM_2002_SNG: setTM_2002_SNG,
-                    
-                        TM_2003_SNG: setTM_2003_SNG,
-
-
-                        TOTAL_SNG: setTOTAL_SNG,
-                  
-                        
-                        GD1_STATUS: setGD1_STATUS,
-                        GD2_STATUS: setGD2_STATUS,
-                        GD3_STATUS: setGD3_STATUS,
-                        GD4_STATUS: setGD4_STATUS,
-                        GD5_STATUS: setGD5_STATUS,
-
-
-                        ESD: setESD,
-                        HR_BC: setHR_BC,
-                        SD: setSD,
-                        VAPORIZER_1: setVAPORIZER_1,
-                        VAPORIZER_2: setVAPORIZER_2,
-                        VAPORIZER_3: setVAPORIZER_3,
-
-                        VAPORIZER_4: setVAPORIZER_4,
-                        COOLING_V: setCOOLING_V,
-                        FCV_2001: setFCV_2001,
+//============================GD =============================
 
 
 
-
-                    
-                        HV_1001: setHV_1001,
-                        RATIO_MODE: setRATIO_MODE,
-                        FCV_MODE: setFCV_MODE,
-                        TOTAL_CNG: setTOTAL_CNG,
-
-                        TM2002_CNG: setTM2002_CNG,
-                        TM2003_CNG: setTM2003_CNG,
-                        WB_Setpoint: setWB_Setpoint,
-                        WIS_Calorimeter: setWIS_Calorimeter,
-                        CVS_Calorimeter: setCVS_Calorimeter,
-
-                        SG_Calorimeter: setSG_Calorimeter,
-
-               
-                        SDV_2004: setSDV_2004,
-                        SDV_2003: setSDV_2003,
-                        TD_4072_Conn_STT: setTD_4072_Conn_STT,
-                        PLC_Conn_STT: setPLC_Conn_STT,
-                        PERCENT_LPG: setPERCENT_LPG,
-                        PERCENT_AIR: setPERCENT_AIR,
-                    };
-                    const valueStateMap: ValueStateMap = {
-                        PLC_Conn_STT: setPLC_STTValue,
-                    };
-
-                  
-                    keys.forEach((key) => {
-                     
-                        if (stateMap[key]) {
-                            const value = dataReceived.data[key][0][1];
-                            const slicedValue = value;
-                            stateMap[key]?.(slicedValue);
-                        }
-                        if (valueStateMap[key]) {
-                            const value = dataReceived.data[key][0][0];
-
-                            const date = new Date(value);
-                            const formattedDate = `${date
-                                .getDate()
-                                .toString()
-                                .padStart(2, "0")}-${(date.getMonth() + 1)
-                                .toString()
-                                .padStart(2, "0")}-${date.getFullYear()} ${date
-                                .getHours()
-                                .toString()
-                                .padStart(2, "0")}:${date
-                                .getMinutes()
-                                .toString()
-                                .padStart(2, "0")}:${date
-                                .getSeconds()
-                                .toString()
-                                .padStart(2, "0")}`;
-                            valueStateMap[key]?.(formattedDate); // Set formatted timestamp
-                        }
-                    });
-                }
-
-                if (dataReceived.data && dataReceived.data.data?.length > 0) {
-                    const ballValue =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.active.value;
-                    setActive(ballValue);
-                } else if (
-                    dataReceived.update &&
-                    dataReceived.update?.length > 0
-                ) {
-                    const updatedData =
-                        dataReceived.update[0].latest.ATTRIBUTE.setActive.value;
-                    setActive(updatedData);
-                }
-                fetchData();
-            };
-        }
-    }, [data]);
-
-
-    const [resetKey, setResetKey] = useState(0);
-    const [isOnline, setIsOnline] = useState(navigator.onLine);
-    const [wasOffline, setWasOffline] = useState(false); // Theo dõi trạng thái offline trước đó
-
-    useEffect(() => {
-        // Hàm cập nhật trạng thái online/offline
-        const handleOnlineStatus = () => {
-            const currentStatus = navigator.onLine;
-            setIsOnline(currentStatus);
-
-            if (!currentStatus) {
-                // Khi mất kết nối, đặt trạng thái offline
-                console.log("Mất kết nối internet.");
-                setWasOffline(true);
-            } else if (currentStatus && wasOffline) {
-                // Khi có lại kết nối và trước đó là offline, reset component
-                console.log("Kết nối internet được khôi phục. Reset component...");
-                setResetKey(prevKey => prevKey + 1); // Reset component
-                setWasOffline(false); // Reset lại để chỉ reset 1 lần khi online trở lại
-            }
-        };
-
-        // Lắng nghe sự kiện thay đổi trạng thái online/offline
-        window.addEventListener('online', handleOnlineStatus);
-        window.addEventListener('offline', handleOnlineStatus);
-
-        return () => {
-            // Dọn dẹp sự kiện khi component unmount
-            window.removeEventListener('online', handleOnlineStatus);
-            window.removeEventListener('offline', handleOnlineStatus);
-        };
-    }, [wasOffline]);
-
+    
     const ValueGas = {
         SVF: "SVF",
         GVF: "GVF",

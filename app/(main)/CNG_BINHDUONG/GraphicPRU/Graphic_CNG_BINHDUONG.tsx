@@ -15,6 +15,7 @@ import {
     ArrowRight,
     BlackTriangle,
     DownArrow,
+    FIQ,
     GD,
     GaugeTemperature,
     PCV,
@@ -34,6 +35,7 @@ import { httpApi } from "@/api/http.api";
 import { Toast } from "primereact/toast";
 import { SDV_OFF, SDV_ON } from "../../Graphic/MEIKO/GraphicMeiko/iconSVG";
 import { nameValue } from "../../SetupData/namValue";
+import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 
 interface StateMap {
     [key: string]:
@@ -92,13 +94,15 @@ export default function Graphic_CNG_BINHDUONG() {
 
     const [alarmMessage, setAlarmMessage] = useState<string | null>(null);
 
-    useEffect(() => {
+    const [resetKey, setResetKey] = useState(0);
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
 
-        const connectWebSocket = () => {
-            const token = localStorage.getItem('accessToken');
-            const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+    const [cmdId, setCmdId] = useState(1); // Track cmdId for requests
+
+    const connectWebSocket = (cmdId: number) => {
+        const token = localStorage.getItem("accessToken");
+        const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
         ws.current = new WebSocket(url);
-
         const obj1 = {
             attrSubCmds: [],
             tsSubCmds: [
@@ -106,7 +110,7 @@ export default function Graphic_CNG_BINHDUONG() {
                     entityType: "DEVICE",
                     entityId: id_CNG_BinhDuong,
                     scope: "LATEST_TELEMETRY",
-                    cmdId: 1,
+                    cmdId: cmdId, // Use dynamic cmdId for new requests
                 },
             ],
         };
@@ -230,41 +234,19 @@ export default function Graphic_CNG_BINHDUONG() {
                 console.log("WebSocket connected");
                 setTimeout(() => {
                     ws.current?.send(JSON.stringify(obj1));
-                }); 
+                    ws.current?.send(JSON.stringify(obj_PCV_PSV));
+                });
             };
 
             ws.current.onclose = () => {
-                console.log("WebSocket connection closed. Reconnecting in 10 seconds...");
-                setTimeout(() => {
-                    connectWebSocket(); 
-                }, 10000);
+                console.log("WebSocket connection closed.");
             };
-        }
-    }
 
-    connectWebSocket(); 
-    
-    const interval = setInterval(() => {
-        console.log("Resetting WebSocket connection...");
-
-        ws.current?.close(); 
-        connectWebSocket();  
-    }, 60000); 
-
-    return () => {
-        clearInterval(interval); 
-        ws.current?.close(); 
-    };
-    }, []);
-
-    useEffect(() => {
-        if (ws.current) {
             ws.current.onmessage = (event) => {
                 let dataReceived = JSON.parse(event.data);
                 if (dataReceived.update !== null) {
-                    setData(prevData => [...prevData, dataReceived]);
+                    setData((prevData) => [...prevData, dataReceived]);
 
-                  
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
                         EVC_01_Flow_at_Base_Condition:
@@ -345,7 +327,240 @@ export default function Graphic_CNG_BINHDUONG() {
                     };
 
                     keys.forEach((key) => {
-                      
+                        if (stateMap[key]) {
+                            const value = dataReceived.data[key][0][1];
+                            const slicedValue = value;
+                            stateMap[key]?.(slicedValue);
+                        }
+                        if (valueStateMap[key]) {
+                            const value = dataReceived.data[key][0][0];
+
+                            const date = new Date(value);
+                            const formattedDate = `${date
+                                .getDate()
+                                .toString()
+                                .padStart(2, "0")}-${(date.getMonth() + 1)
+                                .toString()
+                                .padStart(2, "0")} ${date
+                                .getHours()
+                                .toString()
+                                .padStart(2, "0")}:${date
+                                .getMinutes()
+                                .toString()
+                                .padStart(2, "0")}:${date
+                                .getSeconds()
+                                .toString()
+                                .padStart(2, "0")}`;
+                            valueStateMap[key]?.(formattedDate);
+                        }
+                    });
+                }
+
+                if (dataReceived.data && dataReceived.data.data?.length > 0) {
+                    const ballValue =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_2001A
+                            .value;
+                    setPCV_2001A(ballValue);
+                    const ballValueB =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_2001B
+                            .value;
+                    setPCV_2001B(ballValueB);
+                    const ballValue2B =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_2002B
+                            .value;
+                    setPCV_2002B(ballValue2B);
+                    const ballValue2A =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_2002A
+                            .value;
+                    setPCV_2002A(ballValue2A);
+
+                    const ballValueS =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_2001A
+                            .value;
+                    setPSV_2001A(ballValueS);
+                    const ballValueSB =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_2001B
+                            .value;
+                    setPSV_2001B(ballValueSB);
+                    const ballValueS2B =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_2002B
+                            .value;
+                    setPSV_2002B(ballValueS2B);
+                    const ballValueS2A =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_2002A
+                            .value;
+                    setPSV_2002A(ballValueS2A);
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update?.length > 0
+                ) {
+                    const updatedData =
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_2001A.value;
+                    setPCV_2001A(updatedData);
+                    const updatedDataB =
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_2001B.value;
+                    setPCV_2001B(updatedDataB);
+
+                    const ballValue2B =
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_2002A.value;
+                    setPCV_2002A(ballValue2B);
+                    const updatedEVC_01_Volume_at_Base_ConditionA =
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_2002B.value;
+                    setPCV_2002B(updatedEVC_01_Volume_at_Base_ConditionA);
+
+                    const updatedDataS =
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_2001A.value;
+                    setPSV_2001A(updatedDataS);
+                    const updatedDataSB =
+                        dataReceived.update[0].latest.ATTRIBUTE.PSV_2001B.value;
+                    setPSV_2001B(updatedDataSB);
+
+                    const ballValueS2B =
+                        dataReceived.update[0].latest.ATTRIBUTE.PSV_2002A.value;
+                    setPSV_2002A(ballValueS2B);
+                    const updatedDataS2A =
+                        dataReceived.update[0].latest.ATTRIBUTE.PSV_2002B.value;
+                    setPSV_2002B(updatedDataS2A);
+                }
+
+                fetchData();
+            };
+        }
+    };
+    useEffect(() => {
+        fetchData();
+    }, [isOnline]);
+
+    useEffect(() => {
+        if (isOnline) {
+            // Initial connection
+            connectWebSocket(cmdId);
+            fetchData();
+        }
+
+        return () => {
+            if (ws.current) {
+                console.log("Cleaning up WebSocket connection.");
+                ws.current.close();
+            }
+        };
+    }, [isOnline, cmdId]); // Reconnect if isOnline or cmdId changes
+
+    useEffect(() => {
+        const handleOnline = () => {
+            setIsOnline(true);
+            console.log("Back online. Reconnecting WebSocket with new cmdId.");
+            setCmdId((prevCmdId) => prevCmdId + 1); // Increment cmdId on reconnect
+            fetchData();
+        };
+
+        const handleOffline = () => {
+            setIsOnline(false);
+            console.log("Offline detected. Closing WebSocket.");
+            if (ws.current) {
+                ws.current.close(); // Close WebSocket when offline
+            }
+        };
+
+        // Attach event listeners for online/offline status
+        window.addEventListener("online", handleOnline);
+        window.addEventListener("offline", handleOffline);
+
+        return () => {
+            // Cleanup event listeners on unmount
+            window.removeEventListener("online", handleOnline);
+            window.removeEventListener("offline", handleOffline);
+        };
+    }, []);
+
+    //============================GD =============================
+    useEffect(() => {
+        if (ws.current) {
+            ws.current.onmessage = (event) => {
+                let dataReceived = JSON.parse(event.data);
+                if (dataReceived.update !== null) {
+                    setData((prevData) => [...prevData, dataReceived]);
+
+                    const keys = Object.keys(dataReceived.data);
+                    const stateMap: StateMap = {
+                        EVC_01_Flow_at_Base_Condition:
+                            setEVC_01_Flow_at_Base_Condition,
+                        EVC_01_Flow_at_Measurement_Condition:
+                            setEVC_01_Flow_at_Measurement_Condition,
+                        EVC_01_Volume_at_Base_Condition:
+                            setEVC_01_Volume_at_Base_Condition,
+                        EVC_01_Volume_at_Measurement_Condition:
+                            setEVC_01_Volume_at_Measurement_Condition,
+                        EVC_01_Pressure: setEVC_01_Pressure,
+
+                        EVC_01_Temperature: setEVC_01_Temperature,
+                        EVC_01_Vm_of_Last_Day: setEVC_01_Vm_of_Last_Day,
+                        EVC_01_Vb_of_Last_Day: setEVC_01_Vb_of_Last_Day,
+                        EVC_01_Vm_of_Current_Day: setEVC_01_Vm_of_Current_Day,
+                        EVC_01_Vb_of_Current_Day: setEVC_01_Vb_of_Current_Day,
+
+                        EVC_01_Remain_Battery_Service_Life:
+                            setEVC_01_Remain_Battery_Service_Life,
+
+                        EVC_02_Flow_at_Base_Condition:
+                            setEVC_02_Flow_at_Base_Condition,
+                        EVC_02_Flow_at_Measurement_Condition:
+                            setEVC_02_Flow_at_Measurement_Condition,
+                        EVC_02_Volume_at_Base_Condition:
+                            setEVC_02_Volume_at_Base_Condition,
+                        EVC_02_Volume_at_Measurement_Condition:
+                            setEVC_02_Volume_at_Measurement_Condition,
+                        EVC_02_Pressure: setEVC_02_Pressure,
+
+                        EVC_02_Temperature: setEVC_02_Temperature,
+                        EVC_02_Vm_of_Last_Day: setEVC_02_Vm_of_Last_Day,
+                        EVC_02_Vb_of_Last_Day: setEVC_02_Vb_of_Last_Day,
+                        EVC_02_Vm_of_Current_Day: setEVC_02_Vm_of_Current_Day,
+                        EVC_02_Vb_of_Current_Day: setEVC_02_Vb_of_Current_Day,
+
+                        EVC_02_Remain_Battery_Service_Life:
+                            setEVC_02_Remain_Battery_Service_Life,
+
+                        PIT_2006: setPIT_2006,
+
+                        PIT_2007: setPIT_2007,
+                        PT_2001: setPT_2001,
+                        PT_2002: setPT_2002,
+                        PT_2003: setPT_2003,
+
+                        TT_2002: setTT_2002,
+                        TT_2001: setTT_2001,
+
+                        GD_2001: setGD_2001,
+
+                        Water_PG: setWater_PG,
+                        Water_LSW: setWater_LSW,
+                        PUMP_1: setPUMP_1,
+                        PUMP_2: setPUMP_2,
+                        HEATER_1: setHEATER_1,
+                        HEATER_2: setHEATER_2,
+
+                        BOILER: setBOILER,
+
+                        GD_STATUS: setGD_STATUS,
+
+                        HR_BC: setHR_BC,
+                        ESD_2001: setESD_2001,
+                        SD_2001: setSD_2001,
+                        SD_2002: setSD_2002,
+                        SDV_2001A: setSDV_2001A,
+                        SDV_2001B: setSDV_2001B,
+                        SDV_2002: setSDV_2002,
+                        PLC_Conn_STT: setPLC_Conn_STT,
+                        EVC_01_Conn_STT: setEVC_01_Conn_STT,
+                        EVC_02_Conn_STT: setEVC_02_Conn_STT,
+                    };
+                    const valueStateMap: ValueStateMap = {
+                        EVC_01_Conn_STT: setEVC_01_Conn_STTValue,
+                        EVC_02_Conn_STT: setEVC_02_Conn_STTValue,
+                    };
+
+                    keys.forEach((key) => {
                         if (stateMap[key]) {
                             const value = dataReceived.data[key][0][1];
                             const slicedValue = value;
@@ -446,40 +661,6 @@ export default function Graphic_CNG_BINHDUONG() {
             };
         }
     }, [data]);
-
-    const [resetKey, setResetKey] = useState(0);
-    const [isOnline, setIsOnline] = useState(navigator.onLine);
-    const [wasOffline, setWasOffline] = useState(false); // Theo dõi trạng thái offline trước đó
-
-    useEffect(() => {
-        // Hàm cập nhật trạng thái online/offline
-        const handleOnlineStatus = () => {
-            const currentStatus = navigator.onLine;
-            setIsOnline(currentStatus);
-
-            if (!currentStatus) {
-                // Khi mất kết nối, đặt trạng thái offline
-                console.log("Mất kết nối internet.");
-                setWasOffline(true);
-            } else if (currentStatus && wasOffline) {
-                // Khi có lại kết nối và trước đó là offline, reset component
-                console.log("Kết nối internet được khôi phục. Reset component...");
-                setResetKey(prevKey => prevKey + 1); // Reset component
-                setWasOffline(false); // Reset lại để chỉ reset 1 lần khi online trở lại
-            }
-        };
-
-        // Lắng nghe sự kiện thay đổi trạng thái online/offline
-        window.addEventListener('online', handleOnlineStatus);
-        window.addEventListener('offline', handleOnlineStatus);
-
-        return () => {
-            // Dọn dẹp sự kiện khi component unmount
-            window.removeEventListener('online', handleOnlineStatus);
-            window.removeEventListener('offline', handleOnlineStatus);
-        };
-    }, [wasOffline]);
-
 
     const fetchData = async () => {
         try {
@@ -1227,6 +1408,16 @@ export default function Graphic_CNG_BINHDUONG() {
             setmaintainESD_2001(ESD_2001_Maintain?.value || false);
             setmaintainSD_2001(SD_2001_Maintain?.value || false);
             setmaintainSD_2002(SD_2002_Maintain?.value || false);
+
+            const Line_Duty_01 = res.data.find(
+                (item: any) => item.key === "Line_Duty_01"
+            );
+
+            setLineduty1901(Line_Duty_01?.value || null);
+            const Line_Duty_02 = res.data.find(
+                (item: any) => item.key === "Line_Duty_02"
+            );
+            setLineduty1902(Line_Duty_02?.value || null);
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -3002,13 +3193,47 @@ export default function Graphic_CNG_BINHDUONG() {
         maintainPLC_Conn_STT,
     ]);
 
+    //======================================================================
+
+    const [lineDuty1901, setLineduty1901] = useState<boolean>(false);
+    const [lineDuty1902, setLineduty1902] = useState<boolean>(true);
+
+    const ChangeStatusFIQ = async () => {
+        try {
+            const newValue1 = !lineDuty1901;
+            const newValue2 = !lineDuty1902;
+
+            await httpApi.post(
+                `/plugins/telemetry/DEVICE/${id_CNG_BinhDuong}/SERVER_SCOPE`,
+                { Line_Duty_01: newValue1, Line_Duty_02: newValue2 }
+            );
+            setLineduty1901(newValue1);
+            setLineduty1902(newValue2);
+
+            toast.current?.show({
+                severity: "info",
+                detail: "Success ",
+                life: 3000,
+            });
+            fetchData();
+        } catch (error) {}
+    };
+    const confirmLineDuty = () => {
+        confirmDialog({
+            header: "Comfirmation",
+            message: "Are you sure to change Line Duty?",
+            icon: "pi pi-info-circle",
+            accept: () => ChangeStatusFIQ(),
+        });
+    };
+
     // ===================================================================================================================
 
-    const formatValue = (value:any) => {
+    const formatValue = (value: any) => {
         return value !== null
-            ? new Intl.NumberFormat('en-US', {
+            ? new Intl.NumberFormat("en-US", {
                   maximumFractionDigits: 2,
-                  useGrouping: true, 
+                  useGrouping: true,
               }).format(parseFloat(value))
             : "";
     };
@@ -3063,7 +3288,9 @@ export default function Graphic_CNG_BINHDUONG() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {formatValue(EVC_01_Flow_at_Base_Condition)}
+                                        {formatValue(
+                                            EVC_01_Flow_at_Base_Condition
+                                        )}
                                     </p>
                                 </div>
                                 <p
@@ -3130,7 +3357,9 @@ export default function Graphic_CNG_BINHDUONG() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {formatValue(EVC_01_Flow_at_Measurement_Condition)}
+                                        {formatValue(
+                                            EVC_01_Flow_at_Measurement_Condition
+                                        )}
                                     </p>
                                 </div>
                                 <p
@@ -3194,7 +3423,9 @@ export default function Graphic_CNG_BINHDUONG() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {formatValue(EVC_01_Volume_at_Base_Condition)}
+                                        {formatValue(
+                                            EVC_01_Volume_at_Base_Condition
+                                        )}
                                     </p>
                                 </div>
                                 <p
@@ -3262,7 +3493,9 @@ export default function Graphic_CNG_BINHDUONG() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {formatValue(EVC_01_Volume_at_Measurement_Condition)}
+                                        {formatValue(
+                                            EVC_01_Volume_at_Measurement_Condition
+                                        )}
                                     </p>
                                 </div>
                                 <p
@@ -3327,7 +3560,9 @@ export default function Graphic_CNG_BINHDUONG() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {formatValue(EVC_02_Flow_at_Base_Condition)}
+                                        {formatValue(
+                                            EVC_02_Flow_at_Base_Condition
+                                        )}
                                     </p>
                                 </div>
                                 <p
@@ -3394,7 +3629,9 @@ export default function Graphic_CNG_BINHDUONG() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {formatValue(EVC_02_Flow_at_Measurement_Condition)}
+                                        {formatValue(
+                                            EVC_02_Flow_at_Measurement_Condition
+                                        )}
                                     </p>
                                 </div>
                                 <p
@@ -3459,7 +3696,9 @@ export default function Graphic_CNG_BINHDUONG() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {formatValue(EVC_02_Volume_at_Base_Condition)}
+                                        {formatValue(
+                                            EVC_02_Volume_at_Base_Condition
+                                        )}
                                     </p>
                                 </div>
                                 <p
@@ -3526,7 +3765,9 @@ export default function Graphic_CNG_BINHDUONG() {
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {formatValue(EVC_02_Volume_at_Measurement_Condition)}
+                                        {formatValue(
+                                            EVC_02_Volume_at_Measurement_Condition
+                                        )}
                                     </p>
                                 </div>
                                 <p
@@ -4717,6 +4958,75 @@ export default function Graphic_CNG_BINHDUONG() {
                     },
                 };
             }
+
+            if (node.id === "FIQ_2001A_line") {
+                return {
+                    ...node,
+                    data: {
+                        ...node.data,
+                        label: (
+                            <div
+                                style={{
+                                    fontSize: 25,
+                                    fontWeight: 600,
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                }}
+                                onClick={confirmLineDuty}
+                            >
+                                FIQ-2001A
+                                {lineDuty1901 && (
+                                    <span style={{ marginLeft: 25 }}>
+                                        <i
+                                            className="pi pi-check"
+                                            style={{
+                                                fontSize: 35,
+                                                color: "green",
+                                                fontWeight: 700,
+                                            }}
+                                        ></i>
+                                    </span>
+                                )}
+                            </div>
+                        ),
+                    },
+                };
+            }
+            if (node.id === "FIQ_2001B_line") {
+                return {
+                    ...node,
+                    data: {
+                        ...node.data,
+                        label: (
+                            <div
+                                style={{
+                                    fontSize: 25,
+                                    fontWeight: 600,
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                }}
+                                onClick={confirmLineDuty}
+                            >
+                                FIQ-2001B
+                                {lineDuty1902 && (
+                                    <span style={{ marginLeft: 30 }}>
+                                        <i
+                                            className="pi pi-check"
+                                            style={{
+                                                fontSize: 35,
+                                                color: "green",
+                                                fontWeight: 700,
+                                            }}
+                                        ></i>
+                                    </span>
+                                )}
+                            </div>
+                        ),
+                    },
+                };
+            }
             return node;
         });
         setNodes(updatedNodes);
@@ -4947,14 +5257,14 @@ export default function Graphic_CNG_BINHDUONG() {
         maintainPLC_Conn_STT,
     ]);
 
-    // const storedPositionString = localStorage.getItem("positionPRU");
+    // const storedPositionString = localStorage.getItem("positionCNG_BINHDUONG");
 
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
     //     : {
-                const initialPositions = {
+              const initialPositions = {
               AlarmCenter: { x: -914.1523303275185, y: 750.7002523253735 },
-              Arrow10: { x: -545.9342380564901, y: 1235.848639932193 },
+              Arrow10: { x: -450.1273892235929, y: 1235.2124555688624 },
               BallVavleLine2_Bottom: {
                   x: -1752.748552461399,
                   y: 1398.7809179318454,
@@ -4989,11 +5299,11 @@ export default function Graphic_CNG_BINHDUONG() {
               },
               DownArrow: { x: -2443.3288674803475, y: 1576.7373833505735 },
               EVC_01_Flow_at_Base_Condition: {
-                  x: -1300.2117083264288,
-                  y: 751.5293893652726,
+                  x: -1288.545041659762,
+                  y: 751.1960560319393,
               },
               EVC_01_Flow_at_Measurement_Condition: {
-                  x: -1300.4747755822623,
+                  x: -1288.4747755822623,
                   y: 812.9342555162998,
               },
               EVC_01_Pressure_COL: {
@@ -5001,8 +5311,8 @@ export default function Graphic_CNG_BINHDUONG() {
                   y: 1463.468095326561,
               },
               EVC_01_Pressure_DATA: {
-                  x: -1300.5518647911813,
-                  y: 874.307982790011,
+                  x: -1288.5518647911813,
+                  y: 874.6413161233444,
               },
               EVC_01_Pressure_IMG: {
                   x: -1455.2210748964526,
@@ -5021,36 +5331,36 @@ export default function Graphic_CNG_BINHDUONG() {
                   y: 1427.2945127887838,
               },
               EVC_01_Temperature_DATA: {
-                  x: -1651.9839445793107,
-                  y: 873.7849536634603,
+                  x: -1639.9839445793107,
+                  y: 874.4516203301271,
               },
               EVC_01_Temperature_NONE: {
                   x: -1362.8266325377226,
                   y: 977.2539852046791,
               },
               EVC_01_Volume_at_Base_Condition: {
-                  x: -1651.3638601651735,
+                  x: -1640.03052683184,
                   y: 751.2185853413771,
               },
               EVC_01_Volume_at_Measurement_Condition: {
-                  x: -1651.889586160885,
+                  x: -1639.889586160885,
                   y: 812.6874699639815,
               },
               EVC_02_Flow_at_Base_Condition: {
-                  x: -1304.5045612961057,
-                  y: 1526.246568287584,
+                  x: -1288.5933134621641,
+                  y: 1571.7093988220463,
               },
               EVC_02_Flow_at_Measurement_Condition: {
-                  x: -1304.6902205234626,
-                  y: 1587.58097045636,
+                  x: -1288.6902205234624,
+                  y: 1633.2476371230268,
               },
               EVC_02_Pressure_COL: {
                   x: -1425.0343776799361,
                   y: 1050.2965580409796,
               },
               EVC_02_Pressure_DATA: {
-                  x: -1304.6862397428831,
-                  y: 1648.7497951092391,
+                  x: -1289.0195730762166,
+                  y: 1694.4386364711129,
               },
               EVC_02_Pressure_IMG: {
                   x: -1457.3119231476958,
@@ -5069,27 +5379,29 @@ export default function Graphic_CNG_BINHDUONG() {
                   y: 1007.3441734368228,
               },
               EVC_02_Temperature_DATA: {
-                  x: -1655.6231376798764,
-                  y: 1649.0182904812473,
+                  x: -1640.2898043465432,
+                  y: 1694.6097028887507,
               },
               EVC_02_Temperature_NONE: {
                   x: -1361.3563019384721,
                   y: 1396.8762550311894,
               },
               EVC_02_Volume_at_Base_Condition: {
-                  x: -1655.441578959918,
-                  y: 1526.3262726240537,
+                  x: -1640.067500591515,
+                  y: 1571.455769825182,
               },
               EVC_02_Volume_at_Measurement_Condition: {
-                  x: -1655.518638620903,
-                  y: 1587.742152328961,
+                  x: -1640.1853052875697,
+                  y: 1633.0754856622943,
               },
-              FIQ_2001A: { x: -1376.2594215963863, y: 1088.2610822726886 },
-              FIQ_2001B: { x: -1380.2615237408395, y: 1420.5100867355798 },
-              GD_2001: { x: -989.3020106788827, y: 1318.7155007722488 },
-              GD_IMG: { x: -902.3496415151986, y: 1386.2752067158738 },
+              FIQ_2001A: { x: -1328.079248110901, y: 1049.3497080637314 },
+              FIQ_2001A_line: { x: -1640.3720324854337, y: 695.3761875658004 },
+              FIQ_2001B: { x: -1329.4253599609215, y: 1381.4722998781535 },
+              FIQ_2001B_line: { x: -1639.8588031644051, y: 1515.9916131233235 },
+              GD_2001: { x: -945.6398042701333, y: 1315.7043141233696 },
+              GD_IMG: { x: -857.1818417820095, y: 1381.758426742555 },
               Header: { x: -2332.820092483261, y: 618.7682137524797 },
-              PCV_2001A: { x: -1665.7844277685667, y: 1385.7773786629382 },
+              PCV_2001A: { x: -1673.5593489572227, y: 1371.2484352950794 },
               PCV_2001A_DATA: { x: -2176.7614327112715, y: 1112.5071028689867 },
               PCV_2001A_SmallBallVavle: {
                   x: -1590.1177892854255,
@@ -5100,7 +5412,7 @@ export default function Graphic_CNG_BINHDUONG() {
                   x: -1644.8538756176888,
                   y: 1406.5995698502961,
               },
-              PCV_2001B: { x: -1669.8784398823414, y: 1053.5272267454795 },
+              PCV_2001B: { x: -1677.123410373879, y: 1039.0520129027036 },
               PCV_2001B_DATA: { x: -2177.4401131198783, y: 1440.677624590498 },
               PCV_2001B_SmallBallVavle: {
                   x: -1589.286173260068,
@@ -5111,8 +5423,8 @@ export default function Graphic_CNG_BINHDUONG() {
               PCV_2002A_DATA: { x: -1731.4336378655782, y: 1114.188843577389 },
               PCV_2002B_DATA: { x: -1729.5277879482157, y: 1442.9905914561587 },
               PCV_line1_Bottom: {
-                  x: -2104.034533951213,
-                  y: 1053.5239302001773,
+                  x: -2110.034533951213,
+                  y: 1039.5239302001773,
               },
               PCV_line1_Bottom_SmallBallVavle: {
                   x: -2021.0842967435187,
@@ -5126,7 +5438,7 @@ export default function Graphic_CNG_BINHDUONG() {
                   x: -2009.774232806013,
                   y: 1437.5474817836612,
               },
-              PCV_line1_Top: { x: -2104.9832598487465, y: 1385.9379139706925 },
+              PCV_line1_Top: { x: -2111.649926515413, y: 1371.2712473040258 },
               PCV_line1_Top_SmallBallVavle: {
                   x: -2020.758188887233,
                   y: 1058.572245211475,
@@ -5249,19 +5561,19 @@ export default function Graphic_CNG_BINHDUONG() {
               PT_2002_DATA: { x: -2067.9964811841455, y: 1526.3956606647857 },
               PT_2002_IMG: { x: -1971.8531774900027, y: 1019.033781469687 },
               PT_2002_NONE: { x: -1943.220994341128, y: 1393.0940219176825 },
-              PT_2003: { x: -804.9838255763632, y: 1193.6908985163677 },
-              PT_2003_COL: { x: -772.6201142386359, y: 1255.823965495775 },
-              PT_2003_DATA: { x: -881.5805709775428, y: 1097.9621390192506 },
+              PT_2003: { x: -742.0101421228649, y: 1192.0966280491907 },
+              PT_2003_COL: { x: -709.6464307851375, y: 1254.2296950285977 },
+              PT_2003_DATA: { x: -825.6912645861574, y: 1132.5084741841129 },
               PT_2003_NONE: { x: -629.1520213626982, y: 1210.0446422285258 },
               SDV_2001A: { x: -2366.3636954964386, y: 1046.6978648787797 },
               SDV_2001A_Name: { x: -2383.319090652285, y: 1021.7959995852489 },
               SDV_2001B: { x: -2364.216934032177, y: 1378.662715302721 },
               SDV_2001B_Name: { x: -2383.0887467126913, y: 1353.984343990213 },
-              SDV_2002: { x: -654.0856743065801, y: 1208.5938789238871 },
-              SDV_2002_Name: { x: -674.9837678308808, y: 1182.0376431738848 },
-              TT_2001: { x: -1024.6693805861637, y: 1196.2161585621343 },
-              TT_2001_COL: { x: -1001.6514199634926, y: 1243.4512827449053 },
-              TT_2001_DATA: { x: -1107.1297683556631, y: 1099.0937179243501 },
+              SDV_2002: { x: -548.0666882392982, y: 1208.5938789238871 },
+              SDV_2002_Name: { x: -569.7619169971873, y: 1179.646237473119 },
+              TT_2001: { x: -999.161053111329, y: 1197.0132937957233 },
+              TT_2001_COL: { x: -975.3459572550692, y: 1241.0598770441397 },
+              TT_2001_DATA: { x: -1066.9923215916738, y: 1132.6071527911554 },
               TT_2001_NONE: { x: -610.2603899665803, y: 1209.4943855440024 },
               bor1: { x: -2436.5855686504956, y: 1039.1608637258034 },
               bor2: { x: -983.1512218888312, y: 1025.8994423073616 },
@@ -5274,11 +5586,11 @@ export default function Graphic_CNG_BINHDUONG() {
               line4: { x: -2082.153208656881, y: 1430.8103326059108 },
               line5: { x: -1647.2085647611, y: 1098.3740496757796 },
               line6: { x: -1643.3489136999835, y: 1430.6385004862382 },
-              line7: { x: -1336.2923834627995, y: 1098.3096365331119 },
-              line8: { x: -1334.9498607206287, y: 1430.742252363529 },
+              line7: { x: -1299.1833022795545, y: 1098.3096365331119 },
+              line8: { x: -1299.2089689663812, y: 1430.7422523635291 },
               line9: { x: -925.9976477005001, y: 1260.4714803086474 },
-              line9none: { x: -1148.3698628173815, y: 1260.4228327419648 },
-              line10: { x: -531.9035836581911, y: 1260.593609780011 },
+              line9none: { x: -1125.7031961507148, y: 1260.4228327419648 },
+              line10: { x: -435.45022039397213, y: 1260.593609780011 },
               line10none: { x: -880.6662088366958, y: 1260.3787384164796 },
               percent: { x: -405.6683476271253, y: 1298.7587875755169 },
               timeUpdate3: { x: -2305.9237339446345, y: 702.7171281735419 },
@@ -5419,17 +5731,15 @@ export default function Graphic_CNG_BINHDUONG() {
             position: positions.FIQ_2001A,
             type: "custom",
             data: {
-                label: <div>FIQ-2001A</div>,
+                label: <div>{FIQ}</div>,
             },
             sourcePosition: Position.Top,
             targetPosition: Position.Bottom,
             style: {
-                fontSize: 18,
-                fontWeight: 600,
-                padding: 5,
-
-                background: "white",
-                borderRadius: 5,
+                background: background,
+                height: 1,
+                width: 1,
+                border: background,
             },
         },
 
@@ -5438,17 +5748,49 @@ export default function Graphic_CNG_BINHDUONG() {
             position: positions.FIQ_2001B,
             type: "custom",
             data: {
-                label: <div>FIQ-2001B</div>,
+                label: <div>{FIQ}</div>,
             },
             sourcePosition: Position.Bottom,
             targetPosition: Position.Bottom,
             style: {
-                fontSize: 18,
-                fontWeight: 600,
-                padding: 5,
+                background: background,
+                height: 1,
+                width: 1,
+                border: background,
+            },
+        },
 
-                background: "white",
-                borderRadius: 5,
+        {
+            id: "FIQ_2001A_line",
+            position: positions.FIQ_2001A_line,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+            sourcePosition: Position.Top,
+            targetPosition: Position.Bottom,
+            style: {
+                background: "#ffffaa",
+                border: "1px solid white",
+                width: 700,
+                height: 55,
+            },
+        },
+
+        {
+            id: "FIQ_2001B_line",
+            position: positions.FIQ_2001B_line,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+            sourcePosition: Position.Bottom,
+            targetPosition: Position.Bottom,
+            style: {
+                background: "#ffffaa",
+                border: "1px solid white",
+                width: 700,
+                height: 55,
             },
         },
 
@@ -5790,6 +6132,41 @@ export default function Graphic_CNG_BINHDUONG() {
             },
 
             sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 10,
+                height: 10,
+                background: "none",
+            },
+        },
+
+        {
+            id: "line7_none",
+            position: positions.line7,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 10,
+                height: 10,
+                background: "none",
+            },
+        },
+        {
+            id: "line8_none",
+            position: positions.line8,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Bottom,
             targetPosition: Position.Left,
             style: {
                 border: "none",
@@ -8070,10 +8447,7 @@ export default function Graphic_CNG_BINHDUONG() {
             position: positions.AlarmCenter,
             type: "custom",
             data: {
-                label: (
-                    <div>
-                    </div>
-                ),
+                label: <div></div>,
             },
 
             sourcePosition: Position.Left,
@@ -8822,7 +9196,10 @@ export default function Graphic_CNG_BINHDUONG() {
     // };
 
     // useEffect(() => {
-    //     localStorage.setItem("positionPRU", JSON.stringify(positions));
+    //     localStorage.setItem(
+    //         "positionCNG_BINHDUONG",
+    //         JSON.stringify(positions)
+    //     );
     // }, [positions]);
 
     return (
@@ -8830,9 +9207,11 @@ export default function Graphic_CNG_BINHDUONG() {
             {/* <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
             </Button> */}
-            <div
 
-            key={resetKey}
+            <Toast ref={toast} />
+            <ConfirmDialog />
+            <div
+                key={resetKey}
                 style={{
                     // width: "100%",
                     height: "100%",

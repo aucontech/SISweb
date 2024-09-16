@@ -49,9 +49,18 @@ export default function ScoreCard_VREC() {
         setIsVisible(!isVisible);
     };
 
-    useEffect(() => {
-        ws.current = new WebSocket(url);
 
+
+
+    const [resetKey, setResetKey] = useState(0);
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+    const [cmdId, setCmdId] = useState(1); // Track cmdId for requests
+ 
+    const connectWebSocket = (cmdId: number) => {
+        const token = localStorage.getItem('accessToken');
+        const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+        ws.current = new WebSocket(url);
         const obj1 = {
             attrSubCmds: [],
             tsSubCmds: [
@@ -59,7 +68,7 @@ export default function ScoreCard_VREC() {
                     entityType: "DEVICE",
                     entityId: id_VREC,
                     scope: "LATEST_TELEMETRY",
-                    cmdId: 1,
+                    cmdId: cmdId, // Use dynamic cmdId for new requests
                 },
             ],
         };
@@ -76,31 +85,14 @@ export default function ScoreCard_VREC() {
                 console.log("WebSocket connection closed.");
             };
 
-            return () => {
-                console.log("Cleaning up WebSocket connection.");
-                ws.current?.close();
-            };
-        }
-    }, []);
-
-    useEffect(() => {
-        if (ws.current) {
             ws.current.onmessage = (evt) => {
                 let dataReceived = JSON.parse(evt.data);
                 if (dataReceived.update !== null) {
-                    setData([...data, dataReceived]);
-                    const formatValue = (value: any) => {
-                        return value !== null
-                            ? new Intl.NumberFormat("en-US", {
-                                  minimumFractionDigits: 2, // Đảm bảo có 2 chữ số sau dấu thập phân
-                                  maximumFractionDigits: 2, // Không nhiều hơn 2 chữ số thập phân
-                                  useGrouping: true, // Phân cách phần ngàn bằng dấu phẩy
-                              }).format(parseFloat(value))
-                            : "";
-                    };
+                    setData(prevData => [...prevData, dataReceived]);
                     const keys = Object.keys(dataReceived.data);
                     const stateMap: StateMap = {
-
+                     
+                        FC_Lithium_Battery_Status: setFC_Lithium_Battery_Status,
                         FC_Battery_Voltage: setFC_Battery_Voltage,
                         FC_System_Voltage: setFC_System_Voltage,
                         FC_Charger_Voltage: setFC_Charger_Voltage,
@@ -134,18 +126,7 @@ export default function ScoreCard_VREC() {
                         GD1: setGD1,
                         GD2: setGD2,
                         PT1: setPT1,
-                   
-
-                    };
-                    const valueStateMap: ValueStateMap = {
-                        FC_Conn_STT: setFC_Conn_STTValue,
-                        PLC_Conn_STT: setConn_STTValue,
-                    };
-
-                    const stateMap2: StateMap2 = {
-                        DI_ZSO_1: setDI_ZSO_1,
-                        DI_ZSC_1: setDI_ZSC_1,
-                        FC_Lithium_Battery_Status: setFC_Lithium_Battery_Status,
+                    
 
                         DI_UPS_BATTERY: setDI_UPS_BATTERY,
                         DI_UPS_CHARGING: setDI_UPS_CHARGING,
@@ -162,22 +143,25 @@ export default function ScoreCard_VREC() {
                         DO_BC_01: setDO_BC_01,
                         DO_SV_01: setDO_SV_01,
 
-
+                        DI_ZSC_1: setDI_ZSC_1,
+                        DI_ZSO_1: setDI_ZSO_1,
+                       
                         FC_Conn_STT: setFC_STT01,
                         PLC_Conn_STT: setPLC_Conn_STT,
                     };
+
+                    const valueStateMap: ValueStateMap = {
+                        FC_Conn_STT: setFC_Conn_STTValue,
+                        PLC_Conn_STT: setConn_STTValue,
+                    };
+                   
                     keys.forEach((key) => {
+                       
                         if (stateMap[key]) {
                             const value = dataReceived.data[key][0][1];
-                            const formattedValue = formatValue(value);
-                            stateMap[key]?.(formattedValue);
-                        }
-                        if (stateMap2[key]) {
-                            const value = dataReceived.data[key][0][1];
                             const slicedValue = value;
-                            stateMap2[key]?.(slicedValue);
+                            stateMap[key]?.(slicedValue);
                         }
-
                         if (valueStateMap[key]) {
                             const value = dataReceived.data[key][0][0];
 
@@ -187,7 +171,7 @@ export default function ScoreCard_VREC() {
                                 .toString()
                                 .padStart(2, "0")}-${(date.getMonth() + 1)
                                 .toString()
-                                .padStart(2, "0")}-${date.getFullYear()} ${date
+                                .padStart(2, "0")} ${date
                                 .getHours()
                                 .toString()
                                 .padStart(2, "0")}:${date
@@ -197,14 +181,66 @@ export default function ScoreCard_VREC() {
                                 .getSeconds()
                                 .toString()
                                 .padStart(2, "0")}`;
-                            valueStateMap[key]?.(formattedDate); // Set formatted timestamp
+                            valueStateMap[key]?.(formattedDate);
                         }
                     });
                 }
-                fetchData()
+
+             
+                fetchData();
             };
         }
-    }, [data]);
+    };
+    useEffect(() => {
+        fetchData()
+    },[isOnline])
+    
+    useEffect(() => {
+        if (isOnline) {
+            // Initial connection
+            connectWebSocket(cmdId);
+            fetchData()
+        }
+
+        return () => {
+            if (ws.current) {
+                console.log("Cleaning up WebSocket connection.");
+                ws.current.close();
+            }
+        };
+    }, [isOnline, cmdId]); // Reconnect if isOnline or cmdId changes
+    
+
+    useEffect(() => {
+        const handleOnline = () => {
+            setIsOnline(true);
+            console.log('Back online. Reconnecting WebSocket with new cmdId.');
+            setCmdId(prevCmdId => prevCmdId + 1); // Increment cmdId on reconnect
+            fetchData()
+
+        };
+
+        const handleOffline = () => {
+            setIsOnline(false);
+            console.log('Offline detected. Closing WebSocket.');
+            if (ws.current) {
+                ws.current.close(); // Close WebSocket when offline
+            }
+        };
+
+        // Attach event listeners for online/offline status
+        window.addEventListener('online', handleOnline);
+        window.addEventListener('offline', handleOffline);
+
+        return () => {
+            // Cleanup event listeners on unmount
+            window.removeEventListener('online', handleOnline);
+            window.removeEventListener('offline', handleOffline);
+        };
+    }, []);
+
+
+    //============================GD =============================
 
 
     const fetchData = async () => {
@@ -2473,178 +2509,151 @@ useEffect(() => {
         
           };
 
-
-          const dataFC1 = [
-            {
-                name: <span>{tagNameFC.FC_Lithium_Battery_Status}</span>,
-                FC1: <span style={combineCss.CSSFC_Lithium_Battery_Status}>{FC_Lithium_Battery_Status} {DataFC_Lithium_Battery_Status}</span>,
-    
-            },
-            {
-                name: <span>{tagNameFC.Battery_Voltage}</span>,
-                FC1: <span style={combineCss.CSSFC_Battery_Voltage}>{FC_Battery_Voltage}</span>,
-    
-            },
-            {
-                name: <span>{tagNameFC.System_Voltage}</span>,
-                FC1: <span style={combineCss.CSSFC_System_Voltage}>{FC_System_Voltage}</span>,
-    
-            },
-            {
-                name: <span>{tagNameFC.Charger_Voltage}</span>,
-                FC1: <span style={combineCss.CSSFC_Charger_Voltage}>{FC_Charger_Voltage}</span>,
-    
-            },
-        ];
-
-    const dataFC = [
-        {
-            name: <span>{tagNameFC.InputPressure}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure}>{FC_01_Current_Values_Static_Pressure}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure}>{FC_02_Current_Values_Static_Pressure}</span>,
-
-        },
-        {
-            name: <span>{tagNameFC.Temperature}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Current_Values_Temperature}>{FC_01_Current_Values_Temperature}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Current_Values_Temperature}>{FC_02_Current_Values_Temperature}</span>,
-
-        },
-        {
-            name: <span>{tagNameFC.SVF}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate}>{FC_01_Current_Values_Flow_Rate}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate}>{FC_02_Current_Values_Flow_Rate}</span>,
-
-        },
-        {
-            name: <span>{tagNameFC.GVF}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>{FC_01_Current_Values_Uncorrected_Flow_Rate}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}>{FC_02_Current_Values_Uncorrected_Flow_Rate}</span>,
-
-        },
-        {
-            name: <span>{tagNameFC.SVA}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>{FC_01_Accumulated_Values_Uncorrected_Volume}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}>{FC_02_Accumulated_Values_Uncorrected_Volume}</span>,
-
-        },
-        {
-            name: <span>{tagNameFC.GVA}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume}>{FC_01_Accumulated_Values_Volume}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume}>{FC_02_Accumulated_Values_Volume}</span>,
-
-        },
-     
-        {
-            name: <span>{tagNameFC.VbToday}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Today_Values_Volume}>{FC_01_Today_Values_Volume}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Today_Values_Volume}>{FC_02_Today_Values_Volume}</span>,
-
-        },
-        {
-            name: <span>{tagNameFC.VmToday}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}>{FC_01_Today_Values_Uncorrected_Volume}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}>{FC_02_Today_Values_Uncorrected_Volume}</span>,
-
-        },
-        {
-            name: <span>{tagNameFC.VbLastDay}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume}>{FC_01_Yesterday_Values_Volume}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume}>{FC_02_Yesterday_Values_Volume}</span>,
-
-        },
-        {
-            name: <span>{tagNameFC.VmLastDay}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}>{FC_01_Yesterday_Values_Uncorrected_Volume}</span>,
-            FC1902: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}>{FC_02_Yesterday_Values_Uncorrected_Volume}</span>,
-
-        },
-      
-    ];
-
-    const dataPLC = [
-        {
-            name: <span>{tagNamePLC.PT01}</span>,
-            PLC: <span style={combineCss.CSSPT1}> {PT1}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.GD1}</span>,
-            PLC: <span style={combineCss.CSSGD1}>{} {GD1}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.GD2}</span>,
-            PLC: <span style={combineCss.CSSGD2}> {GD2}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.ZSO}</span>,
-            PLC: <span style={combineCss.CSSDI_ZSO_1}>{DI_ZSO_1} {DataZSO_1}</span>,
-        },
-      
-        {
-            name: <span>{tagNamePLC.ZSC}</span>,
-            PLC: <span style={combineCss.CSSDI_ZSC_1}>{DI_ZSC_1} {DataZSC_1}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.MAP}</span>,
-            PLC: <span style={combineCss.CSSDI_MAP_1}> {DI_MAP_1} {DataMap1}</span>,
-        },
-      
-        {
-            name: <span>{tagNamePLC.UPS_BATTERY}</span>,
-            PLC: <span style={combineCss.CSSDI_UPS_BATTERY}> {DI_UPS_BATTERY} {DataBattery}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.UPS_CHARGING}</span>,
-            PLC: <span style={combineCss.CSSDI_UPS_CHARGING}> {DI_UPS_CHARGING} {DataCharging}</span>,
-        },
-
-     
-        {
-            name: <span>{tagNamePLC.UPS_ALARM}</span>,
-            PLC: <span style={combineCss.CSSDI_UPS_ALARM}>{DI_UPS_ALARM} {DataAlarm}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.Smoker_Detected}</span>,
-            PLC: <span style={combineCss.DataSmoker_Detected}>{DI_SD_1} {DataSmoker_Detected}</span>,
-        },
-     
-        {
-            name: <span>{tagNamePLC.UPS_MODE}</span>,
-            PLC: <span style={combineCss.CSSUPS_Mode}> {UPS_Mode} {DataMode}</span>,
-        },
+          const formatValue = (value:any) => {
+            return value !== null
+                ? new Intl.NumberFormat('en-US', {
+                      maximumFractionDigits: 2,
+                      useGrouping: true, 
+                  }).format(parseFloat(value))
+                : "";
+        };
 
 
-        {
-            name: <span>{tagNamePLC.SELECT_SW}</span>,
-            PLC: <span style={combineCss.CSSDI_SELECT_SW}>{DI_SELECT_SW} {DataDI_SELECT_SW}</span>,
-        },
+   const dataFC1 = [
+    {
+        name: <span>{tagNameFC.FC_Lithium_Battery_Status}</span>,
+        FC1: <span style={combineCss.CSSFC_Lithium_Battery_Status}>{formatValue(FC_Lithium_Battery_Status)} {DataFC_Lithium_Battery_Status}</span>,
+    },
+    {
+        name: <span>{tagNameFC.Battery_Voltage}</span>,
+        FC1: <span style={combineCss.CSSFC_Battery_Voltage}>{formatValue(FC_Battery_Voltage)}</span>,
+    },
+    {
+        name: <span>{tagNameFC.System_Voltage}</span>,
+        FC1: <span style={combineCss.CSSFC_System_Voltage}>{formatValue(FC_System_Voltage)}</span>,
+    },
+    {
+        name: <span>{tagNameFC.Charger_Voltage}</span>,
+        FC1: <span style={combineCss.CSSFC_Charger_Voltage}>{formatValue(FC_Charger_Voltage)}</span>,
+    },
+];
 
-        {
-            name: <span>{tagNamePLC.RESET}</span>,
-            PLC: <span style={combineCss.CSSDI_RESET}>{DI_RESET} {DataRESET}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.EmergencyNO}</span>,
-            PLC: <span style={combineCss.CSSEmergency_NO}> {Emergency_NO} {DataEmergency_NO}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.EmergencyNC}</span>,
-            PLC: <span style={combineCss.CSSEmergency_NC}>{Emergency_NC} {DataEmergency_NC}</span>,
-        },
-     
-        {
-            name: <span>{tagNamePLC.HORN}</span>,
-            PLC: <span style={combineCss.CSSDO_HR_01}>{DO_HR_01} {DataHorn}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.BEACON}</span>,
-            PLC: <span style={combineCss.CSSDO_BC_01}> {DO_BC_01} {DataBeacon}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.DO_SV_01}</span>,
-            PLC: <span style={combineCss.CSSDO_SV_01}> {DO_SV_01} {DataDO_SV_01}</span>,
-        },
-    ];
+const dataFC = [
+    {
+        name: <span>{tagNameFC.InputPressure}</span>,
+        FC1901: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure}>{formatValue(FC_01_Current_Values_Static_Pressure)}</span>,
+        FC1902: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure}>{formatValue(FC_02_Current_Values_Static_Pressure)}</span>,
+    },
+    {
+        name: <span>{tagNameFC.Temperature}</span>,
+        FC1901: <span style={combineCss.CSSFC_01_Current_Values_Temperature}>{formatValue(FC_01_Current_Values_Temperature)}</span>,
+        FC1902: <span style={combineCss.CSSFC_02_Current_Values_Temperature}>{formatValue(FC_02_Current_Values_Temperature)}</span>,
+    },
+    {
+        name: <span>{tagNameFC.SVF}</span>,
+        FC1901: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate}>{formatValue(FC_01_Current_Values_Flow_Rate)}</span>,
+        FC1902: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate}>{formatValue(FC_02_Current_Values_Flow_Rate)}</span>,
+    },
+    {
+        name: <span>{tagNameFC.GVF}</span>,
+        FC1901: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>{formatValue(FC_01_Current_Values_Uncorrected_Flow_Rate)}</span>,
+        FC1902: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}>{formatValue(FC_02_Current_Values_Uncorrected_Flow_Rate)}</span>,
+    },
+    {
+        name: <span>{tagNameFC.SVA}</span>,
+        FC1901: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>{formatValue(FC_01_Accumulated_Values_Uncorrected_Volume)}</span>,
+        FC1902: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}>{formatValue(FC_02_Accumulated_Values_Uncorrected_Volume)}</span>,
+    },
+    {
+        name: <span>{tagNameFC.GVA}</span>,
+        FC1901: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume}>{formatValue(FC_01_Accumulated_Values_Volume)}</span>,
+        FC1902: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume}>{formatValue(FC_02_Accumulated_Values_Volume)}</span>,
+    },
+    {
+        name: <span>{tagNameFC.VbToday}</span>,
+        FC1901: <span style={combineCss.CSSFC_01_Today_Values_Volume}>{formatValue(FC_01_Today_Values_Volume)}</span>,
+        FC1902: <span style={combineCss.CSSFC_02_Today_Values_Volume}>{formatValue(FC_02_Today_Values_Volume)}</span>,
+    },
+    {
+        name: <span>{tagNameFC.VmToday}</span>,
+        FC1901: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}>{formatValue(FC_01_Today_Values_Uncorrected_Volume)}</span>,
+        FC1902: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}>{formatValue(FC_02_Today_Values_Uncorrected_Volume)}</span>,
+    },
+    {
+        name: <span>{tagNameFC.VbLastDay}</span>,
+        FC1901: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume}>{formatValue(FC_01_Yesterday_Values_Volume)}</span>,
+        FC1902: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume}>{formatValue(FC_02_Yesterday_Values_Volume)}</span>,
+    },
+    {
+        name: <span>{tagNameFC.VmLastDay}</span>,
+        FC1901: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}>{formatValue(FC_01_Yesterday_Values_Uncorrected_Volume)}</span>,
+        FC1902: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}>{formatValue(FC_02_Yesterday_Values_Uncorrected_Volume)}</span>,
+    },
+];
+
+const dataPLC = [
+    {
+        name: <span>{tagNamePLC.PT01}</span>,
+        PLC: <span style={combineCss.CSSPT1}>{formatValue(PT1)}</span>,
+    },
+    {
+        name: <span>{tagNamePLC.GD1}</span>,
+        PLC: <span style={combineCss.CSSGD1}>{formatValue(GD1)}</span>,
+    },
+    {
+        name: <span>{tagNamePLC.GD2}</span>,
+        PLC: <span style={combineCss.CSSGD2}>{formatValue(GD2)}</span>,
+    },
+    {
+        name: <span>{tagNamePLC.ZSO}</span>,
+        PLC: <span style={combineCss.CSSDI_ZSO_1}>{formatValue(DI_ZSO_1)} {DataZSO_1}</span>,
+    },
+    {
+        name: <span>{tagNamePLC.ZSC}</span>,
+        PLC: <span style={combineCss.CSSDI_ZSC_1}>{formatValue(DI_ZSC_1)} {DataZSC_1}</span>,
+    },
+    {
+        name: <span>{tagNamePLC.MAP}</span>,
+        PLC: <span style={combineCss.CSSDI_MAP_1}>{formatValue(DI_MAP_1)} {DataMap1}</span>,
+    },
+    {
+        name: <span>{tagNamePLC.UPS_BATTERY}</span>,
+        PLC: <span style={combineCss.CSSDI_UPS_BATTERY}>{formatValue(DI_UPS_BATTERY)} {DataBattery}</span>,
+    },
+    {
+        name: <span>{tagNamePLC.UPS_CHARGING}</span>,
+        PLC: <span style={combineCss.CSSDI_UPS_CHARGING}>{formatValue(DI_UPS_CHARGING)} {DataCharging}</span>,
+    },
+    {
+        name: <span>{tagNamePLC.UPS_ALARM}</span>,
+        PLC: <span style={combineCss.CSSDI_UPS_ALARM}>{formatValue(DI_UPS_ALARM)} {DataAlarm}</span>,
+    },
+    {
+        name: <span>{tagNamePLC.Smoker_Detected}</span>,
+        PLC: <span style={combineCss.DataSmoker_Detected}>{formatValue(DI_SD_1)} {DataSmoker_Detected}</span>,
+    },
+    {
+        name: <span>{tagNamePLC.UPS_MODE}</span>,
+        PLC: <span style={combineCss.CSSUPS_Mode}>{formatValue(UPS_Mode)} {DataMode}</span>,
+    },
+    {
+        name: <span>{tagNamePLC.SELECT_SW}</span>,
+        PLC: <span style={combineCss.CSSDI_SELECT_SW}>{formatValue(DI_SELECT_SW)} {DataDI_SELECT_SW}</span>,
+    },
+    {
+        name: <span>{tagNamePLC.RESET}</span>,
+        PLC: <span style={combineCss.CSSDI_RESET}>{formatValue(DI_RESET)} {DataRESET}</span>,
+    },
+    {
+        name: <span>{tagNamePLC.EmergencyNO}</span>,
+        PLC: <span style={combineCss.CSSEmergency_NO}>{formatValue(Emergency_NO)} {DataEmergency_NO}</span>,
+    },
+    {
+        name: <span>{tagNamePLC.EmergencyNC}</span>,
+        PLC: <span style={combineCss.CSSEmergency_NC}>{formatValue(Emergency_NC)} {DataEmergency_NC}</span>,
+    },
+];
+
 
     const [ShowMore,setShowMore] = useState(false)
 

@@ -53,9 +53,9 @@ export default function GraphicSogec() {
     }, [isFullscreen]);
 
     const [activeComponent, setActiveComponent] = useState<React.ReactNode>(
-        <VrecTest />
+        <GraphicLGDS />
     );
-    const [NG, setNG] = useState<string>("Test111");
+    const [NG, setNG] = useState<string>("LGDS");
     const [SNG, setSNG] = useState<string>("SNG");
 
     const [CNG, setCNG] = useState<string>("CNG");

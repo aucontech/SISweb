@@ -264,7 +264,7 @@ const tankGas = (
 );
 
 const PCV = (
-    <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"viewBox="0 0 49.11 64" width="53px" height="53px">
+    <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"viewBox="0 0 49.11 64" width="70px" height="70px">
     <defs>
       <clipPath id="clip-path">
         <rect x="17.62" width="31.49" height="4.48" style={{fill: "none"}}/>

@@ -49,150 +49,205 @@ export default function ScoreCard_Yoshino() {
         setIsVisible(!isVisible);
     };
 
-    useEffect(() => {
-        ws.current = new WebSocket(url);
 
-        const obj1 = {
-            attrSubCmds: [],
-            tsSubCmds: [
-                {
-                    entityType: "DEVICE",
-                    entityId: id_YOSHINO,
-                    scope: "LATEST_TELEMETRY",
-                    cmdId: 1,
-                },
-            ],
+     //=====================================================================================
+  
+ const [resetKey, setResetKey] = useState(0);
+ const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+ const [cmdId, setCmdId] = useState(1); // Track cmdId for requests
+
+ const connectWebSocket = (cmdId: number) => {
+     const token = localStorage.getItem('accessToken');
+     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+     ws.current = new WebSocket(url);
+     const obj1 = {
+         attrSubCmds: [],
+         tsSubCmds: [
+             {
+                 entityType: "DEVICE",
+                 entityId: id_YOSHINO,
+                 scope: "LATEST_TELEMETRY",
+                 cmdId: cmdId, // Use dynamic cmdId for new requests
+             },
+         ],
+     };
+
+     if (ws.current) {
+         ws.current.onopen = () => {
+             console.log("WebSocket connected");
+             setTimeout(() => {
+                 ws.current?.send(JSON.stringify(obj1));
+             });
+         };
+
+         ws.current.onclose = () => {
+             console.log("WebSocket connection closed.");
+         };
+
+         ws.current.onmessage = (evt) => {
+            let dataReceived = JSON.parse(evt.data);
+            if (dataReceived.update !== null) {
+                setData(prevData => [...prevData, dataReceived]);
+    
+             
+                const keys = Object?.keys(dataReceived.data);
+                const stateMap: StateMap = {
+
+                    FC_Battery_Voltage: setFC_Battery_Voltage,
+                    FC_System_Voltage: setFC_System_Voltage,
+                    FC_Charger_Voltage: setFC_Charger_Voltage,
+
+
+                    FC_01_Current_Values_Flow_Rate: setFC_01_Current_Values_Flow_Rate,
+                    FC_01_Current_Values_Uncorrected_Flow_Rate: setFC_01_Current_Values_Uncorrected_Flow_Rate,
+                    FC_01_Accumulated_Values_Uncorrected_Volume: setFC_01_Accumulated_Values_Uncorrected_Volume,
+                    FC_01_Accumulated_Values_Volume: setFC_01_Accumulated_Values_Volume,
+                    FC_01_Current_Values_Static_Pressure: setFC_01_Current_Values_Static_Pressure,
+
+                    FC_01_Current_Values_Temperature: setFC_01_Current_Values_Temperature,
+                    FC_01_Yesterday_Values_Uncorrected_Volume: setFC_01_Yesterday_Values_Uncorrected_Volume,
+                    FC_01_Yesterday_Values_Volume: setFC_01_Yesterday_Values_Volume,
+                    FC_01_Today_Values_Uncorrected_Volume: setFC_01_Today_Values_Uncorrected_Volume,
+                    FC_01_Today_Values_Volume: setFC_01_Today_Values_Volume,
+
+                    FC_02_Current_Values_Flow_Rate: setFC_02_Current_Values_Flow_Rate,
+                    FC_02_Current_Values_Uncorrected_Flow_Rate: setFC_02_Current_Values_Uncorrected_Flow_Rate,
+                    FC_02_Accumulated_Values_Uncorrected_Volume: setFC_02_Accumulated_Values_Uncorrected_Volume,
+                    FC_02_Accumulated_Values_Volume: setFC_02_Accumulated_Values_Volume,
+                    FC_02_Current_Values_Static_Pressure: setFC_02_Current_Values_Static_Pressure,
+
+                    FC_02_Current_Values_Temperature: setFC_02_Current_Values_Temperature,
+                    FC_02_Yesterday_Values_Uncorrected_Volume: setFC_02_Yesterday_Values_Uncorrected_Volume,
+                    FC_02_Yesterday_Values_Volume: setFC_02_Yesterday_Values_Volume,
+                    FC_02_Today_Values_Uncorrected_Volume: setFC_02_Today_Values_Uncorrected_Volume,
+                    FC_02_Today_Values_Volume: setFC_02_Today_Values_Volume,
+
+
+                    GD1: setGD1,
+                    GD2: setGD2,
+                    PT1: setPT1,
+                 
+
+                    DI_ZSO_1: setDI_ZSO_1,
+                    DI_ZSC_1: setDI_ZSC_1,
+                    FC_Lithium_Battery_Status: setFC_Lithium_Battery_Status,
+
+                    DI_UPS_BATTERY: setDI_UPS_BATTERY,
+                    DI_UPS_CHARGING: setDI_UPS_CHARGING,
+                    DI_UPS_ALARM: setDI_UPS_ALARM,
+                    UPS_Mode: setUPS_Mode,
+                    DI_MAP_1: setDI_MAP_1,
+                    
+                    DI_SELECT_SW: setDI_SELECT_SW,
+                    DI_RESET: setDI_RESET,
+                    Emergency_NO: setEmergency_NO,
+                    Emergency_NC: setEmergency_NC,
+                    DI_SD_1: setDI_SD_1,
+                    DO_HR_01: setDO_HR_01,
+                    DO_BC_01: setDO_BC_01,
+                    DO_SV_01: setDO_SV_01,
+
+                 
+                    FC_Conn_STT: setFC_STT01,
+                    PLC_Conn_STT: setPLC_Conn_STT,
+               
+
+                };
+
+                const valueStateMap: ValueStateMap = {
+                    FC_Conn_STT: setFC_Conn_STTValue,
+                    PLC_Conn_STT: setConn_STTValue,
+                };
+                keys.forEach((key) => {
+              
+                    if (stateMap[key]) {
+                        const value = dataReceived.data[key][0][1];
+                        const slicedValue = value;
+                        stateMap[key]?.(slicedValue);
+                    }
+            
+                    if (valueStateMap[key]) {
+                        const value = dataReceived.data[key][0][0];
+    
+                        const date = new Date(value);
+                        const formattedDate = `${date
+                            .getDate()
+                            .toString()
+                            .padStart(2, "0")}-${(date.getMonth() + 1)
+                            .toString()
+                            .padStart(2, "0")} ${date
+                            .getHours()
+                            .toString()
+                            .padStart(2, "0")}:${date
+                            .getMinutes()
+                            .toString()
+                            .padStart(2, "0")}:${date
+                            .getSeconds()
+                            .toString()
+                            .padStart(2, "0")}`;
+                        valueStateMap[key]?.(formattedDate);
+                    }
+                });
+            }
+    
+            
+        fetchData();
+              
         };
 
-        if (ws.current) {
-            ws.current.onopen = () => {
-                console.log("WebSocket connected");
-                setTimeout(() => {
-                    ws.current?.send(JSON.stringify(obj1));
-                });
-            };
+     }
+ };
+ useEffect(() => {
+     fetchData()
+ },[isOnline])
+ 
+ useEffect(() => {
+     if (isOnline) {
+         // Initial connection
+         connectWebSocket(cmdId);
+         fetchData()
+     }
 
-            ws.current.onclose = () => {
-                console.log("WebSocket connection closed.");
-            };
+     return () => {
+         if (ws.current) {
+             console.log("Cleaning up WebSocket connection.");
+             ws.current.close();
+         }
+     };
+ }, [isOnline, cmdId]); // Reconnect if isOnline or cmdId changes
+ 
 
-            return () => {
-                console.log("Cleaning up WebSocket connection.");
-                ws.current?.close();
-            };
-        }
-    }, []);
+ useEffect(() => {
+     const handleOnline = () => {
+         setIsOnline(true);
+         console.log('Back online. Reconnecting WebSocket with new cmdId.');
+         setCmdId(prevCmdId => prevCmdId + 1); // Increment cmdId on reconnect
+         fetchData()
 
-    useEffect(() => {
-        if (ws.current) {
-            ws.current.onmessage = (evt) => {
-                let dataReceived = JSON.parse(evt.data);
-                if (dataReceived.update !== null) {
-                    setData([...data, dataReceived]);
-                  
-                    const keys = Object.keys(dataReceived.data);
-                    const stateMap: StateMap = {
+     };
 
-                        FC_Battery_Voltage: setFC_Battery_Voltage,
-                        FC_System_Voltage: setFC_System_Voltage,
-                        FC_Charger_Voltage: setFC_Charger_Voltage,
+     const handleOffline = () => {
+         setIsOnline(false);
+         console.log('Offline detected. Closing WebSocket.');
+         if (ws.current) {
+             ws.current.close(); // Close WebSocket when offline
+         }
+     };
 
+     // Attach event listeners for online/offline status
+     window.addEventListener('online', handleOnline);
+     window.addEventListener('offline', handleOffline);
 
-                        FC_01_Current_Values_Flow_Rate: setFC_01_Current_Values_Flow_Rate,
-                        FC_01_Current_Values_Uncorrected_Flow_Rate: setFC_01_Current_Values_Uncorrected_Flow_Rate,
-                        FC_01_Accumulated_Values_Uncorrected_Volume: setFC_01_Accumulated_Values_Uncorrected_Volume,
-                        FC_01_Accumulated_Values_Volume: setFC_01_Accumulated_Values_Volume,
-                        FC_01_Current_Values_Static_Pressure: setFC_01_Current_Values_Static_Pressure,
-
-                        FC_01_Current_Values_Temperature: setFC_01_Current_Values_Temperature,
-                        FC_01_Yesterday_Values_Uncorrected_Volume: setFC_01_Yesterday_Values_Uncorrected_Volume,
-                        FC_01_Yesterday_Values_Volume: setFC_01_Yesterday_Values_Volume,
-                        FC_01_Today_Values_Uncorrected_Volume: setFC_01_Today_Values_Uncorrected_Volume,
-                        FC_01_Today_Values_Volume: setFC_01_Today_Values_Volume,
-
-                        FC_02_Current_Values_Flow_Rate: setFC_02_Current_Values_Flow_Rate,
-                        FC_02_Current_Values_Uncorrected_Flow_Rate: setFC_02_Current_Values_Uncorrected_Flow_Rate,
-                        FC_02_Accumulated_Values_Uncorrected_Volume: setFC_02_Accumulated_Values_Uncorrected_Volume,
-                        FC_02_Accumulated_Values_Volume: setFC_02_Accumulated_Values_Volume,
-                        FC_02_Current_Values_Static_Pressure: setFC_02_Current_Values_Static_Pressure,
-
-                        FC_02_Current_Values_Temperature: setFC_02_Current_Values_Temperature,
-                        FC_02_Yesterday_Values_Uncorrected_Volume: setFC_02_Yesterday_Values_Uncorrected_Volume,
-                        FC_02_Yesterday_Values_Volume: setFC_02_Yesterday_Values_Volume,
-                        FC_02_Today_Values_Uncorrected_Volume: setFC_02_Today_Values_Uncorrected_Volume,
-                        FC_02_Today_Values_Volume: setFC_02_Today_Values_Volume,
+     return () => {
+         // Cleanup event listeners on unmount
+         window.removeEventListener('online', handleOnline);
+         window.removeEventListener('offline', handleOffline);
+     };
+ }, []);
 
 
-                        GD1: setGD1,
-                        GD2: setGD2,
-                        PT1: setPT1,
-                     
-
-                        DI_ZSO_1: setDI_ZSO_1,
-                        DI_ZSC_1: setDI_ZSC_1,
-                        FC_Lithium_Battery_Status: setFC_Lithium_Battery_Status,
-
-                        DI_UPS_BATTERY: setDI_UPS_BATTERY,
-                        DI_UPS_CHARGING: setDI_UPS_CHARGING,
-                        DI_UPS_ALARM: setDI_UPS_ALARM,
-                        UPS_Mode: setUPS_Mode,
-                        DI_MAP_1: setDI_MAP_1,
-                        
-                        DI_SELECT_SW: setDI_SELECT_SW,
-                        DI_RESET: setDI_RESET,
-                        Emergency_NO: setEmergency_NO,
-                        Emergency_NC: setEmergency_NC,
-                        DI_SD_1: setDI_SD_1,
-                        DO_HR_01: setDO_HR_01,
-                        DO_BC_01: setDO_BC_01,
-                        DO_SV_01: setDO_SV_01,
-
-                     
-                        FC_Conn_STT: setFC_STT01,
-                        PLC_Conn_STT: setPLC_Conn_STT,
-                   
-
-                    };
-
-                    const valueStateMap: ValueStateMap = {
-                        FC_Conn_STT: setFC_Conn_STTValue,
-                        PLC_Conn_STT: setConn_STTValue,
-                    };
-                    keys.forEach((key) => {
-                      
-
-                        if (stateMap[key]) {
-                            const value = dataReceived.data[key][0][1];
-                            const slicedValue = value;
-                            stateMap[key]?.(slicedValue);
-                        }
-                        if (valueStateMap[key]) {
-                            const value = dataReceived.data[key][0][0];
-
-                            const date = new Date(value);
-                            const formattedDate = `${date
-                                .getDate()
-                                .toString()
-                                .padStart(2, "0")}-${(date.getMonth() + 1)
-                                .toString()
-                                .padStart(2, "0")}-${date.getFullYear()} ${date
-                                .getHours()
-                                .toString()
-                                .padStart(2, "0")}:${date
-                                .getMinutes()
-                                .toString()
-                                .padStart(2, "0")}:${date
-                                .getSeconds()
-                                .toString()
-                                .padStart(2, "0")}`;
-                            valueStateMap[key]?.(formattedDate); // Set formatted timestamp
-                        }
-                    });
-                }
-                fetchData()
-            };
-        }
-    }, [data]);
+ //============================GD =============================
 
 
     const fetchData = async () => {

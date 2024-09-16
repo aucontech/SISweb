@@ -102,13 +102,15 @@ export default function Graphic_SNG_HUNGYEN() {
 
     const [alarmMessage, setAlarmMessage] = useState<string | null>(null);
 
-    useEffect(() => {
-        const connectWebSocket = () => {
-            const token = localStorage.getItem('accessToken');
-            const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
-            
-        ws.current = new WebSocket(url);
+    const [resetKey, setResetKey] = useState(0);
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
 
+    const [cmdId, setCmdId] = useState(1); // Track cmdId for requests
+ 
+    const connectWebSocket = (cmdId: number) => {
+        const token = localStorage.getItem('accessToken');
+        const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+        ws.current = new WebSocket(url);
         const obj1 = {
             attrSubCmds: [],
             tsSubCmds: [
@@ -116,62 +118,7 @@ export default function Graphic_SNG_HUNGYEN() {
                     entityType: "DEVICE",
                     entityId: id_SNG_HungYen,
                     scope: "LATEST_TELEMETRY",
-                    cmdId: 1,
-                },
-            ],
-        };
-        const obj_PCV_PSV = {
-            entityDataCmds: [
-                {
-                    cmdId: 1,
-                    latestCmd: {
-                        keys: [
-                            {
-                                type: "ATTRIBUTE",
-                                key: "active",
-                            },
-                        ],
-                    },
-                    query: {
-                        entityFilter: {
-                            type: "singleEntity",
-                            singleEntity: {
-                                entityType: "DEVICE",
-                                id: id_SNG_HungYen,
-                            },
-                        },
-                        pageLink: {
-                            pageSize: 1,
-                            page: 0,
-                            sortOrder: {
-                                key: {
-                                    type: "ENTITY_FIELD",
-                                    key: "createdTime",
-                                },
-                                direction: "DESC",
-                            },
-                        },
-                        entityFields: [
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "name",
-                            },
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "label",
-                            },
-                            {
-                                type: "ENTITY_FIELD",
-                                key: "additionalInfo",
-                            },
-                        ],
-                        latestValues: [
-                            {
-                                type: "ATTRIBUTE",
-                                key: "active",
-                            },
-                        ],
-                    },
+                    cmdId: cmdId, // Use dynamic cmdId for new requests
                 },
             ],
         };
@@ -181,7 +128,6 @@ export default function Graphic_SNG_HUNGYEN() {
                 console.log("WebSocket connected");
                 setTimeout(() => {
                     ws.current?.send(JSON.stringify(obj1));
-                    ws.current?.send(JSON.stringify(obj_PCV_PSV));
                 });
             };
 
@@ -189,28 +135,6 @@ export default function Graphic_SNG_HUNGYEN() {
                 console.log("WebSocket connection closed.");
             };
 
-          
-        }
-
-    }
-    connectWebSocket(); 
-    
-    const interval = setInterval(() => {
-        console.log("Resetting WebSocket connection...");
-
-        ws.current?.close(); 
-        connectWebSocket();  
-    }, 60000); 
-
-    return () => {
-        clearInterval(interval); 
-        ws.current?.close(); 
-    };
-
-    }, []);
-
-    useEffect(() => {
-        if (ws.current) {
             ws.current.onmessage = (event) => {
                 let dataReceived = JSON.parse(event.data);
                 if (dataReceived.update !== null) {
@@ -335,44 +259,64 @@ export default function Graphic_SNG_HUNGYEN() {
                 }
                 fetchData();
             };
+
         }
-    }, [data]);
+    };
+    useEffect(() => {
+        fetchData()
+    },[isOnline])
+    
+    useEffect(() => {
+        if (isOnline) {
+            // Initial connection
+            connectWebSocket(cmdId);
+            fetchData()
+        }
 
-
-
-
-    const [resetKey, setResetKey] = useState(0);
-    const [isOnline, setIsOnline] = useState(navigator.onLine);
-    const [wasOffline, setWasOffline] = useState(false); // Theo dõi trạng thái offline trước đó
+        return () => {
+            if (ws.current) {
+                console.log("Cleaning up WebSocket connection.");
+                ws.current.close();
+            }
+        };
+    }, [isOnline, cmdId]); // Reconnect if isOnline or cmdId changes
+    
 
     useEffect(() => {
-        // Hàm cập nhật trạng thái online/offline
-        const handleOnlineStatus = () => {
-            const currentStatus = navigator.onLine;
-            setIsOnline(currentStatus);
+        const handleOnline = () => {
+            setIsOnline(true);
+            console.log('Back online. Reconnecting WebSocket with new cmdId.');
+            setCmdId(prevCmdId => prevCmdId + 1); // Increment cmdId on reconnect
+            fetchData()
 
-            if (!currentStatus) {
-                // Khi mất kết nối, đặt trạng thái offline
-                console.log("Mất kết nối internet.");
-                setWasOffline(true);
-            } else if (currentStatus && wasOffline) {
-                // Khi có lại kết nối và trước đó là offline, reset component
-                console.log("Kết nối internet được khôi phục. Reset component...");
-                setResetKey(prevKey => prevKey + 1); // Reset component
-                setWasOffline(false); // Reset lại để chỉ reset 1 lần khi online trở lại
+        };
+
+        const handleOffline = () => {
+            setIsOnline(false);
+            console.log('Offline detected. Closing WebSocket.');
+            if (ws.current) {
+                ws.current.close(); // Close WebSocket when offline
             }
         };
 
-        // Lắng nghe sự kiện thay đổi trạng thái online/offline
-        window.addEventListener('online', handleOnlineStatus);
-        window.addEventListener('offline', handleOnlineStatus);
+        // Attach event listeners for online/offline status
+        window.addEventListener('online', handleOnline);
+        window.addEventListener('offline', handleOffline);
 
         return () => {
-            // Dọn dẹp sự kiện khi component unmount
-            window.removeEventListener('online', handleOnlineStatus);
-            window.removeEventListener('offline', handleOnlineStatus);
+            // Cleanup event listeners on unmount
+            window.removeEventListener('online', handleOnline);
+            window.removeEventListener('offline', handleOffline);
         };
-    }, [wasOffline]);
+    }, []);
+
+
+    //============================GD =============================
+   
+
+
+
+    
 
 
     const ValueGas = {

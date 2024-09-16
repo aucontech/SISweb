@@ -99,154 +99,151 @@ export default function Graphic_MEIKO() {
    
 
 
-       
-    useEffect(() => {
-        const connectWebSocket = () => {
-            const token = localStorage.getItem('accessToken');
-            const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
-            
-            ws.current = new WebSocket(url);
-    
-            const obj1 = {
-                attrSubCmds: [],
-                tsSubCmds: [
-                    {
-                        entityType: "DEVICE",
-                        entityId: id_THACHTHAT,
-                        scope: "LATEST_TELEMETRY",
-                        cmdId: 1,
-                    },
-                ],
-            };
-    
-            if (ws.current) {
-                ws.current.onopen = () => {
-                    console.log("WebSocket connected");
-                    setTimeout(() => {
-                        ws.current?.send(JSON.stringify(obj1));
-                    }); 
-                };
-    
-                ws.current.onclose = () => {
-                    console.log("WebSocket connection closed. Reconnecting in 10 seconds...");
-                    setTimeout(() => {
-                        connectWebSocket(); 
-                    }, 10000);
-                };
-            }
-        };
-    
-        connectWebSocket(); 
-    
-        const interval = setInterval(() => {
-            console.log("Resetting WebSocket connection...");
-    
-            ws.current?.close(); 
-            connectWebSocket();  
-        }, 60000); 
-    
-        return () => {
-            clearInterval(interval); 
-            ws.current?.close(); 
-        };
-    }, []); 
-    
-    
-    
-    useEffect(() => {
-        if (ws.current) {
-            ws.current.onmessage = (event) => {
-                try {
-                    let dataReceived = JSON.parse(event.data);
-                    if (dataReceived.update !== null) {
-                        setData(prevData => [...prevData, dataReceived]);
+   //=====================================================================================
+  
+   const [resetKey, setResetKey] = useState(0);
+   const [isOnline, setIsOnline] = useState(navigator.onLine);
 
-    
-                        const keys = Object.keys(dataReceived.data);
-                        const stateMap: StateMap =  {
-                            Tank_01_Level: setTank_01_Level,
-                            Tank_01_Volume: setTank_01_Volume,
-                            Tank_01_Mass: setTank_01_Mass,
-                            Tank_PT_301: setTank_PT_301,
-                            Tank_TT_301: setTank_TT_301,
-                            Pipe_Temp: setPipe_Temp,
-                            Pipe_Press: setPipe_Press,
-                            Flow_Meter_Total: setFlow_Meter_Total,
-                            Consumption_Flow: setConsumption_Flow,
-                            Flow_Velocity: setFlow_Velocity,
-                            V1_Flow_Meter: setV1_Flow_Meter,
-                            V2_Flow_Meter: setV2_Flow_Meter,
-                            GD_101_High: setGD_101_High,
-                            GD_101_Low: setGD_101_Low,
-                            GD_102_High: setGD_102_High,
-                            GD_102_Low: setGD_102_Low,
-                            GD_103_High: setGD_103_High,
-                            GD_103_Low: setGD_103_Low,
-                            SDV_301: setSDV_301,
-                            SDV_302: setSDV_302,
-                            VP_301: setVP_301,
-                            VP_302: setVP_302,
-                            VP_303: setVP_303,
-                            PLC_Conn_STT: setPLC_Conn_STT,
+   const [cmdId, setCmdId] = useState(1); // Track cmdId for requests
 
-                        };
-    
-                        const valueStateMap: ValueStateMap = {
-                            PLC_Conn_STT: setPLC_STTValue,
-                        };
-    
-                        keys.forEach((key) => {
-                            if (stateMap[key]) {
-                                const value = dataReceived.data[key][0][1];
-                                stateMap[key]?.(value);
-                            }
-                            if (valueStateMap[key]) {
-                                const value = dataReceived.data[key][0][0];
-                                const formattedDate = formatDate(value)
-                                valueStateMap[key]?.(formattedDate);
-                            }
-                        });
-                    }
-                } catch (error) {
-                    console.error("Error handling WebSocket message:", error);
+   const connectWebSocket = (cmdId: number) => {
+       const token = localStorage.getItem('accessToken');
+       const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+       ws.current = new WebSocket(url);
+       const obj1 = {
+           attrSubCmds: [],
+           tsSubCmds: [
+               {
+                   entityType: "DEVICE",
+                   entityId: id_THACHTHAT,
+                   scope: "LATEST_TELEMETRY",
+                   cmdId: cmdId, // Use dynamic cmdId for new requests
+               },
+           ],
+       };
+
+       if (ws.current) {
+           ws.current.onopen = () => {
+               console.log("WebSocket connected");
+               setTimeout(() => {
+                   ws.current?.send(JSON.stringify(obj1));
+               });
+           };
+
+           ws.current.onclose = () => {
+               console.log("WebSocket connection closed.");
+           };
+
+           ws.current.onmessage = (event) => {
+            try {
+                let dataReceived = JSON.parse(event.data);
+                if (dataReceived.update !== null) {
+                    setData(prevData => [...prevData, dataReceived]);
+
+
+                    const keys = Object.keys(dataReceived.data);
+                    const stateMap: StateMap =  {
+                        Tank_01_Level: setTank_01_Level,
+                        Tank_01_Volume: setTank_01_Volume,
+                        Tank_01_Mass: setTank_01_Mass,
+                        Tank_PT_301: setTank_PT_301,
+                        Tank_TT_301: setTank_TT_301,
+                        Pipe_Temp: setPipe_Temp,
+                        Pipe_Press: setPipe_Press,
+                        Flow_Meter_Total: setFlow_Meter_Total,
+                        Consumption_Flow: setConsumption_Flow,
+                        Flow_Velocity: setFlow_Velocity,
+                        V1_Flow_Meter: setV1_Flow_Meter,
+                        V2_Flow_Meter: setV2_Flow_Meter,
+                        GD_101_High: setGD_101_High,
+                        GD_101_Low: setGD_101_Low,
+                        GD_102_High: setGD_102_High,
+                        GD_102_Low: setGD_102_Low,
+                        GD_103_High: setGD_103_High,
+                        GD_103_Low: setGD_103_Low,
+                        SDV_301: setSDV_301,
+                        SDV_302: setSDV_302,
+                        VP_301: setVP_301,
+                        VP_302: setVP_302,
+                        VP_303: setVP_303,
+                        PLC_Conn_STT: setPLC_Conn_STT,
+
+                    };
+
+                    const valueStateMap: ValueStateMap = {
+                        PLC_Conn_STT: setPLC_STTValue,
+                    };
+
+                    keys.forEach((key) => {
+                        if (stateMap[key]) {
+                            const value = dataReceived.data[key][0][1];
+                            stateMap[key]?.(value);
+                        }
+                        if (valueStateMap[key]) {
+                            const value = dataReceived.data[key][0][0];
+                            const formattedDate = formatDate(value)
+                            valueStateMap[key]?.(formattedDate);
+                        }
+                    });
                 }
-            };
-            fetchData()
-        }
-    }, [data]);
-    
-    const [resetKey, setResetKey] = useState(0);
-    const [isOnline, setIsOnline] = useState(navigator.onLine);
-    const [wasOffline, setWasOffline] = useState(false); // Theo dõi trạng thái offline trước đó
-
-    useEffect(() => {
-        // Hàm cập nhật trạng thái online/offline
-        const handleOnlineStatus = () => {
-            const currentStatus = navigator.onLine;
-            setIsOnline(currentStatus);
-
-            if (!currentStatus) {
-                // Khi mất kết nối, đặt trạng thái offline
-                console.log("Mất kết nối internet.");
-                setWasOffline(true);
-            } else if (currentStatus && wasOffline) {
-                // Khi có lại kết nối và trước đó là offline, reset component
-                console.log("Kết nối internet được khôi phục. Reset component...");
-                setResetKey(prevKey => prevKey + 1); // Reset component
-                setWasOffline(false); // Reset lại để chỉ reset 1 lần khi online trở lại
+            } catch (error) {
+                console.error("Error handling WebSocket message:", error);
             }
         };
 
-        // Lắng nghe sự kiện thay đổi trạng thái online/offline
-        window.addEventListener('online', handleOnlineStatus);
-        window.addEventListener('offline', handleOnlineStatus);
+       }
+   };
+   useEffect(() => {
+       fetchData()
+   },[isOnline])
+   
+   useEffect(() => {
+       if (isOnline) {
+           // Initial connection
+           connectWebSocket(cmdId);
+           fetchData()
+       }
 
-        return () => {
-            // Dọn dẹp sự kiện khi component unmount
-            window.removeEventListener('online', handleOnlineStatus);
-            window.removeEventListener('offline', handleOnlineStatus);
-        };
-    }, [wasOffline]);
+       return () => {
+           if (ws.current) {
+               console.log("Cleaning up WebSocket connection.");
+               ws.current.close();
+           }
+       };
+   }, [isOnline, cmdId]); // Reconnect if isOnline or cmdId changes
+   
+
+   useEffect(() => {
+       const handleOnline = () => {
+           setIsOnline(true);
+           console.log('Back online. Reconnecting WebSocket with new cmdId.');
+           setCmdId(prevCmdId => prevCmdId + 1); // Increment cmdId on reconnect
+           fetchData()
+
+       };
+
+       const handleOffline = () => {
+           setIsOnline(false);
+           console.log('Offline detected. Closing WebSocket.');
+           if (ws.current) {
+               ws.current.close(); // Close WebSocket when offline
+           }
+       };
+
+       // Attach event listeners for online/offline status
+       window.addEventListener('online', handleOnline);
+       window.addEventListener('offline', handleOffline);
+
+       return () => {
+           // Cleanup event listeners on unmount
+           window.removeEventListener('online', handleOnline);
+           window.removeEventListener('offline', handleOffline);
+       };
+   }, []);
+
+
+   //============================GD =============================
+
 
     const ValueGas = {
         SVF: "SVF",
