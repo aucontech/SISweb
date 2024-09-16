@@ -2199,7 +2199,7 @@ export default function GraphicNITORI() {
                                         top: 5,
                                     }}
                                 >
-                                    BarG
+                                    BarA
                                 </p>
                             </div>
                         ),

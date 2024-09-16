@@ -2448,7 +2448,7 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-1403 :
+                                        PT-1803:
                                     </p>
                                     <p
                                         style={{
@@ -2528,7 +2528,7 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
                                         top: 5,
                                     }}
                                 >
-                                    BarG
+                                    BarA
                                 </p>
                             </div>
                         ),
@@ -2590,7 +2590,7 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
                                         top: 5,
                                     }}
                                 >
-                                    BarG
+                                    BarA
                                 </p>
                             </div>
                         ),

@@ -2581,7 +2581,7 @@ const confirmLineDuty = () => {
                                         top: 5,
                                     }}
                                 >
-                                    BarG
+                                    BarA
                                 </p>
                             </div>
                         ),
@@ -2650,7 +2650,7 @@ const confirmLineDuty = () => {
                                         top: 5,
                                     }}
                                 >
-                                    BarG
+                                    BarA
                                 </p>
                             </div>
                         ),

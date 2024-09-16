@@ -2523,7 +2523,7 @@ useEffect(() => {
                                         top: 5,
                                     }}
                                 >
-                                    BarG
+                                    BarA
                                 </p>
                             </div>
                         ),
@@ -2585,7 +2585,7 @@ useEffect(() => {
                                         top: 5,
                                     }}
                                 >
-                                    BarG
+                                    BarA
                                 </p>
                             </div>
                         ),
