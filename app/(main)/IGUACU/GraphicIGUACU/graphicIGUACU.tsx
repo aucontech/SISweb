@@ -2685,7 +2685,7 @@ useEffect(() => {
 
                                 <div style={{}}>
                                     <p style={{ marginLeft: 5 }}>
-                                        {active === "true" ? (
+                                        {active === true ? (
                                             <span
                                                 style={{
                                                     color: "#25d125",

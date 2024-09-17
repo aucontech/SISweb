@@ -145,26 +145,26 @@ export default function ScoreCard_Nitori() {
                        }
                
                        if (valueStateMap[key]) {
-                           const value = dataReceived.data[key][0][0];
-   
-                           const date = new Date(value);
-                           const formattedDate = `${date
-                               .getDate()
-                               .toString()
-                               .padStart(2, "0")}-${(date.getMonth() + 1)
-                               .toString()
-                               .padStart(2, "0")} ${date
-                               .getHours()
-                               .toString()
-                               .padStart(2, "0")}:${date
-                               .getMinutes()
-                               .toString()
-                               .padStart(2, "0")}:${date
-                               .getSeconds()
-                               .toString()
-                               .padStart(2, "0")}`;
-                           valueStateMap[key]?.(formattedDate);
-                       }
+                        const value = dataReceived.data[key][0][0];
+
+                        const date = new Date(value);
+                        const formattedDate = `${date
+                            .getDate()
+                            .toString()
+                            .padStart(2, "0")}-${(date.getMonth() + 1)
+                            .toString()
+                            .padStart(2, "0")}-${date.getFullYear()} ${date
+                            .getHours()
+                            .toString()
+                            .padStart(2, "0")}:${date
+                            .getMinutes()
+                            .toString()
+                            .padStart(2, "0")}:${date
+                            .getSeconds()
+                            .toString()
+                            .padStart(2, "0")}`;
+                        valueStateMap[key]?.(formattedDate); // Set formatted timestamp
+                    }
                    });
                }
    
@@ -1995,7 +1995,7 @@ useEffect(() => {
                         }}
                     >
                       
-                      <div style={{  fontWeight: 500 , display:'flex',paddingRight:20}}>
+                      <div style={{  fontWeight: 500 , display:'flex',}}>
                         {Conn_STTValue}
                         </div>
                         <div  onClick={handleShowMore} >

@@ -234,18 +234,7 @@ export default function GraphicZOCV() {
                     });
                 }
 
-                if (dataReceived.data && dataReceived.data.data?.length > 0) {
-                    const ballValue =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.active.value;
-                    setActive(ballValue);
-                } else if (
-                    dataReceived.update &&
-                    dataReceived.update?.length > 0
-                ) {
-                    const updatedData =
-                        dataReceived.update[0].latest.ATTRIBUTE.setActive.value;
-                    setActive(updatedData);
-                }
+             
                 fetchData();
             };
 
@@ -2190,13 +2179,6 @@ export default function GraphicZOCV() {
 
 
 
-
-         
- const Active = res.data.find(
-    (item: any) => item.key === "active"
-);
-setActive(Active?.value || false);
-
             
 
             // ===================================================================================================================
@@ -2321,8 +2303,19 @@ setActive(Active?.value || false);
             
             setLineduty1901(Line_Duty_01?.value || null);
             const Line_Duty_02 = res.data.find((item: any) => item.key === "Line_Duty_02");
+
+
+
             setLineduty1902(Line_Duty_02?.value || null);
 
+
+
+            const Active = res.data.find(
+                (item: any) => item.key === "active"
+            );
+            setActive(Active?.value || false);
+            
+            
 
             // ===================================================================================================================
         } catch (error) {
@@ -3312,7 +3305,7 @@ setActive(Active?.value || false);
                                 <div style={{}}>
                                     <p style={{ marginLeft: 5 }}>
                                         <p style={{ marginLeft: 5 }}>
-                                            {active === "true" ? (
+                                            {active === true ? (
                                                 <span
                                                     style={{
                                                         color: "#25d125",

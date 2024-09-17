@@ -257,18 +257,7 @@ const connectWebSocket = (cmdId: number) => {
                 });
             }
 
-            if (dataReceived.data && dataReceived.data.data?.length > 0) {
-                const ballValue =
-                    dataReceived.data.data[0].latest.ATTRIBUTE.active.value;
-                setActive(ballValue);
-            } else if (
-                dataReceived.update &&
-                dataReceived.update?.length > 0
-            ) {
-                const updatedData =
-                    dataReceived.update[0].latest.ATTRIBUTE.setActive.value;
-                setActive(updatedData);
-            }
+          
             fetchData();
         };
 
@@ -2850,6 +2839,13 @@ useEffect(() => {
             setLineduty1902(Line_Duty_02?.value || null);
 
 
+            const Active = res.data.find(
+                (item: any) => item.key === "active"
+            );
+            setActive(Active?.value || false);
+            
+            
+
 
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -3905,7 +3901,7 @@ useEffect(() => {
 
                                 <div style={{}}>
                                     <p style={{ marginLeft: 10 }}>
-                                        {active === "true" ? (
+                                        {active === true ? (
                                             <span
                                                 style={{
                                                     color: "#25d125",
