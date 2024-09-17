@@ -2677,7 +2677,7 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
                                 <div style={{}}>
                                     <p style={{ marginLeft: 5 }}>
                                         <p style={{ marginLeft: 5 }}>
-                                            {active === "true" ? (
+                                            {active === true ? (
                                                 <span
                                                     style={{
                                                         color: "#25d125",

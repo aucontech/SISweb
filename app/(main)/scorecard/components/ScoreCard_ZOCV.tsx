@@ -161,7 +161,7 @@ export default function ScoreCard_ZOCV() {
 
                         if (valueStateMap[key]) {
                             const value = dataReceived.data[key][0][0];
-
+    
                             const date = new Date(value);
                             const formattedDate = `${date
                                 .getDate()
@@ -2110,7 +2110,7 @@ const dataFC = [
                         }}
                     >
                      
-                        <div style={{  fontWeight: 500 , display:'flex',paddingRight:20}}>
+                        <div style={{  fontWeight: 500 , display:'flex',}}>
                         {Conn_STTValue}
                         </div>
                         <div  onClick={handleShowMore} >

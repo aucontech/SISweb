@@ -188,7 +188,7 @@ const connectWebSocket = (cmdId: number) => {
                             .toString()
                             .padStart(2, "0")}-${(date.getMonth() + 1)
                             .toString()
-                            .padStart(2, "0")} ${date
+                            .padStart(2, "0")}-${date.getFullYear()} ${date
                             .getHours()
                             .toString()
                             .padStart(2, "0")}:${date
@@ -198,7 +198,7 @@ const connectWebSocket = (cmdId: number) => {
                             .getSeconds()
                             .toString()
                             .padStart(2, "0")}`;
-                        valueStateMap[key]?.(formattedDate);
+                        valueStateMap[key]?.(formattedDate); // Set formatted timestamp
                     }
                 });
             }

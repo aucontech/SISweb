@@ -180,7 +180,7 @@ export default function ScoreCard_CNG_HUNGYEN() {
                             .toString()
                             .padStart(2, "0")}-${(date.getMonth() + 1)
                             .toString()
-                            .padStart(2, "0")} ${date
+                            .padStart(2, "0")}-${date.getFullYear()} ${date
                             .getHours()
                             .toString()
                             .padStart(2, "0")}:${date
@@ -190,7 +190,7 @@ export default function ScoreCard_CNG_HUNGYEN() {
                             .getSeconds()
                             .toString()
                             .padStart(2, "0")}`;
-                        valueStateMap[key]?.(formattedDate);
+                        valueStateMap[key]?.(formattedDate); // Set formatted timestamp
                     }
                 });
             }
@@ -2605,14 +2605,14 @@ useEffect(() => {
                 evc1902: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day}>{formatValue(EVC_02_Vb_of_Current_Day)}</span>,
             },
             {
-                name: <span>{tagNameEVC.VbLastDay}</span>,
-                evc1901: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day}>{formatValue(EVC_01_Vb_of_Last_Day)}</span>,
-                evc1902: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day}>{formatValue(EVC_02_Vb_of_Last_Day)}</span>,
-            },
-            {
                 name: <span>{tagNameEVC.VmToday}</span>,
                 evc1901: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day}>{formatValue(EVC_01_Vm_of_Current_Day)}</span>,
                 evc1902: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day}>{formatValue(EVC_02_Vm_of_Current_Day)}</span>,
+            },
+            {
+                name: <span>{tagNameEVC.VbLastDay}</span>,
+                evc1901: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day}>{formatValue(EVC_01_Vb_of_Last_Day)}</span>,
+                evc1902: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day}>{formatValue(EVC_02_Vb_of_Last_Day)}</span>,
             },
             {
                 name: <span>{tagNameEVC.VmLastDay}</span>,
@@ -2626,8 +2626,8 @@ useEffect(() => {
             },
         ];
         
-
-    const dataPLC = [
+        
+        const dataPLC = [
         {
             name: <span>{tagNamePLC.PIT_3001A}</span>,
             PLC: <span style={combineCss.CSSPIT_3001A}> {formatValue(PIT_3001A)}</span>,
@@ -2648,18 +2648,18 @@ useEffect(() => {
             name: <span>{tagNamePLC.PT_3003}</span>,
             PLC: <span style={combineCss.CSSPT_3003}> {formatValue(PT_3003)} {DataPT_3003}</span>,
         },
-      
-
+        
+        
         {
             name: <span>{tagNamePLC.TT_3002}</span>,
             PLC: <span style={combineCss.CSSTT_3002}>{formatValue(TT_3002)} {DataTT_3002}</span>,
         },
-      
+        
         {
             name: <span>{tagNamePLC.TT_3001}</span>,
             PLC: <span style={combineCss.CSSTT_3001}>{formatValue(TT_3001)} {DataTT_3001}</span>,
         },
-      
+        
         {
             name: <span>{tagNamePLC.GD_3001}</span>,
             PLC: <span style={combineCss.CSSGD_3001}> {formatValue(GD_3001)} {DataBattery}</span>,
@@ -2668,13 +2668,13 @@ useEffect(() => {
             name: <span>{tagNamePLC.SDV_3001A}</span>,
             PLC: <span style={combineCss.CSSSDV_3001A}> {SDV_3001A} {DataCharging}</span>,
         },
-
-     
+        
+        
         {
             name: <span>{tagNamePLC.SDV_3001B}</span>,
             PLC: <span style={combineCss.CSSSDV_3001B}>{SDV_3001B} {DataAlarm}</span>,
         },
-
+        
         // {
         //     name: <span>{tagNamePLC.Smoker_Detected}</span>,
         //     PLC: <span style={combineCss.CSSDI_SD_1}>{DI_SD_1} {DataSmoker_Detected}</span>,
@@ -2683,13 +2683,13 @@ useEffect(() => {
             name: <span>{tagNamePLC.SDV_3002}</span>,
             PLC: <span style={combineCss.CSSSDV_3002}> {SDV_3002} {DataMode}</span>,
         },
-
-
+        
+        
         {
             name: <span>{tagNamePLC.Water_PG}</span>,
             PLC: <span style={combineCss.CSSWater_PG}>{formatValue(Water_PG)} {DataWater_PG}</span>,
         },
-
+        
         {
             name: <span>{tagNamePLC.Water_LSW}</span>,
             PLC: <span style={combineCss.CSSWater_LSW}>{formatValue(Water_LSW)} {DataWater_LSW}</span>,
@@ -2702,8 +2702,8 @@ useEffect(() => {
             name: <span>{tagNamePLC.PUMP_2}</span>,
             PLC: <span style={combineCss.CSSPUMP_2}>{formatValue(PUMP_2)} {DataPUMP_2}</span>,
         },
-     
-
+        
+        
         {
             name: <span>{tagNamePLC.HEATER_1}</span>,
             PLC: <span style={combineCss.CSSHEATER_1}>{formatValue(HEATER_1)} {DataHEATER_1}</span>,
@@ -2712,17 +2712,17 @@ useEffect(() => {
             name: <span>{tagNamePLC.HEATER_2}</span>,
             PLC: <span style={combineCss.CSSHEATER_2}> {formatValue(HEATER_2)} {DataHEATER_2}</span>,
         },
-   
-
-    
+        
+        
+        
         {
             name: <span>{tagNamePLC.BOILER}</span>,
             PLC: <span style={combineCss.CSSBOILER}> {formatValue(BOILER)} {DataBOILER}</span>,
         },
-
-
-
-
+        
+        
+        
+        
         {
             name: <span>{tagNamePLC.GD_STATUS}</span>,
             PLC: <span style={combineCss.CSSGD_STATUS}>{GD_STATUS} {DataGD_STATUS}</span>,
@@ -2731,9 +2731,9 @@ useEffect(() => {
             name: <span>{tagNamePLC.HR_BC}</span>,
             PLC: <span style={combineCss.CSSHR_BC}> {formatValue(HR_BC)} {DataHR_BC}</span>,
         },
-    
-     
-
+        
+        
+        
         {
             name: <span>{tagNamePLC.ESD_3001}</span>,
             PLC: <span style={combineCss.CSSESD_3001}>{formatValue(ESD_3001)} {DataESD_3001}</span>,
@@ -2742,14 +2742,14 @@ useEffect(() => {
             name: <span>{tagNamePLC.SD_3001}</span>,
             PLC: <span style={combineCss.CSSSD_3001}> {formatValue(SD_3001)} {DataSD_3001}</span>,
         },
-   
-
-    
+        
+        
+        
         {
             name: <span>{tagNamePLC.SD_3002}</span>,
             PLC: <span style={combineCss.CSSSD_3002}> {formatValue(SD_3002)} {DataSD_3002}</span>,
         },
-    ];
+        ];
 
     return (
         <div >
