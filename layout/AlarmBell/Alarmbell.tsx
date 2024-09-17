@@ -5,7 +5,6 @@ import { Button } from "primereact/button";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import styles from "./AlarmBell.module.css";
-//import { readToken } from "@/service/localStorage";
 import { readToken, readUser } from "@/service/localStorage";
 import "./AlarmBellCssBlink.css";
 import { ProgressSpinner } from "primereact/progressspinner";
@@ -67,13 +66,12 @@ export default function Alarmbell() {
             setCurrentUser(user);
         }
     }, []);
-    
+
     const sendData = useCallback((data: any) => {
         if (ws.current && ws.current.readyState === WebSocket.OPEN) {
             ws.current.send(data);
         }
     }, []);
-
 
     const _fetchAttributeData = useCallback(
         async (deviceId: string, key: string) => {
@@ -161,6 +159,7 @@ export default function Alarmbell() {
                                     direction: "DESC",
                                 },
                                 timeWindow: 60480000 * 2 * 2 * 2,
+                                // timeWindow: 60480000,
                             },
                             alarmFields: [
                                 {
@@ -226,6 +225,10 @@ export default function Alarmbell() {
                 ) {
                     handleStopAudio();
                     setNotifications([]);
+                    notificationsQueue.current.push({
+                        alarms: [],
+                        alarmCount: 0,
+                    });
                     setLoading(false);
                     setAlarmCount(0);
                 }
@@ -286,20 +289,22 @@ export default function Alarmbell() {
         isProcessing.current = true;
 
         while (notificationsQueue.current.length > 0) {
-            // Duyệt từng phần tử trong hàng đợi
-            const item = notificationsQueue.current.shift(); // Lấy phần tử đầu tiên
+            const item = notificationsQueue.current.shift(); // Get the first item
 
-            if (item) {
-                const processedAlarms = await processNotification(item.alarms);
-                setNotifications(processedAlarms);
-                setAlarmCount(item.alarmCount);
+            // Skip empty alarms
+            if (!item || item.alarmCount === 0) {
+                setAlarmCount(0);
+                setNotifications([]);
+                continue;
             }
 
-            // Tạm dừng 1 giây trước khi xử lý phần tử tiếp theo
+            const processedAlarms = await processNotification(item.alarms);
+            setNotifications(processedAlarms);
+            setAlarmCount(item.alarmCount);
+
             await new Promise((resolve) => setTimeout(resolve, 1000));
         }
 
-        // Khi hàng đợi đã được xử lý hết
         isProcessing.current = false;
     }, [processNotification]);
 
