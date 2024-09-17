@@ -51,159 +51,7 @@ export default function ScoreCard_IGUACU() {
     const handleClick = () => {
         setIsVisible(!isVisible);
     };
-
-    useEffect(() => {
-        ws.current = new WebSocket(url);
-
-        const obj1 = {
-            attrSubCmds: [],
-            tsSubCmds: [
-                {
-                    entityType: "DEVICE",
-                    entityId: id_IGUECU,
-                    scope: "LATEST_TELEMETRY",
-                    cmdId: 1,
-                },
-            ],
-        };
-
-        if (ws.current) {
-            ws.current.onopen = () => {
-                console.log("WebSocket connected");
-                setTimeout(() => {
-                    ws.current?.send(JSON.stringify(obj1));
-                });
-            };
-
-            ws.current.onclose = () => {
-                console.log("WebSocket connection closed.");
-            };
-
-            return () => {
-                console.log("Cleaning up WebSocket connection.");
-                ws.current?.close();
-            };
-        }
-    }, []);
-
-    useEffect(() => {
-        if (ws.current) {
-            ws.current.onmessage = (evt) => {
-                let dataReceived = JSON.parse(evt.data);
-                if (dataReceived.update !== null) {
-                    setData([...data, dataReceived]);
-                   
-                    const keys = Object.keys(dataReceived.data);
-                    const stateMap: StateMap = {
-                        EVC_01_Flow_at_Base_Condition: setEVC_01_Flow_at_Base_Condition,
-                        EVC_01_Flow_at_Measurement_Condition: setEVC_01_Flow_at_Measurement_Condition,
-                        EVC_01_Volume_at_Base_Condition: setEVC_01_Volume_at_Base_Condition,
-                        EVC_01_Volume_at_Measurement_Condition: setEVC_01_Volume_at_Measurement_Condition,
-                        EVC_01_Pressure: setEVC_01_Pressure,
-
-                        EVC_01_Temperature: setEVC_01_Temperature,
-                        EVC_01_Vm_of_Last_Day: setEVC_01_Vm_of_Last_Day,
-                        EVC_01_Vb_of_Last_Day: setEVC_01_Vb_of_Last_Day,
-                        EVC_01_Vm_of_Current_Day: setEVC_01_Vm_of_Current_Day,
-                        EVC_01_Vb_of_Current_Day: setEVC_01_Vb_of_Current_Day,
-
-
-
-
-                        EVC_02_Flow_at_Base_Condition: setEVC_02_Flow_at_Base_Condition,
-                        EVC_02_Flow_at_Measurement_Condition: setEVC_02_Flow_at_Measurement_Condition,
-                        EVC_02_Volume_at_Base_Condition: setEVC_02_Volume_at_Base_Condition,
-                        EVC_02_Volume_at_Measurement_Condition: setEVC_02_Volume_at_Measurement_Condition,
-                        EVC_02_Pressure: setEVC_02_Pressure,
-
-                        EVC_02_Temperature: setEVC_02_Temperature,
-                        EVC_02_Vm_of_Last_Day: setEVC_02_Vm_of_Last_Day,
-                        EVC_02_Vb_of_Last_Day: setEVC_02_Vb_of_Last_Day,
-                        EVC_02_Vm_of_Current_Day: setEVC_02_Vm_of_Current_Day,
-                        EVC_02_Vb_of_Current_Day: setEVC_02_Vb_of_Current_Day,
-
-
-
-
-                        GD1: setGD1,
-                        GD2: setGD2,
-                        GD3: setGD3,
-
-                        PT1: setPT1,
-                        DI_ZSO_1: setDI_ZSO_1,
-                        DI_ZSC_1: setDI_ZSC_1,
-                        EVC_01_Remain_Battery_Service_Life: setEVC_01_Remain_Battery_Service_Life,
-                        EVC_02_Remain_Battery_Service_Life: setEVC_02_Remain_Battery_Service_Life,
-
-                        DI_UPS_BATTERY: setDI_UPS_BATTERY,
-                        DI_UPS_CHARGING: setDI_UPS_CHARGING,
-                        DI_UPS_ALARM: setDI_UPS_ALARM,
-                        UPS_Mode: setUPS_Mode,
-                        DI_MAP_1: setDI_MAP_1,
-                        
-                        DI_SELECT_SW: setDI_SELECT_SW,
-                        DI_RESET: setDI_RESET,
-                        Emergency_NO: setEmergency_NO,
-                        Emergency_NC: setEmergency_NC,
-                        DI_SD_1: setDI_SD_1,
-                        DO_HR_01: setDO_HR_01,
-                        DO_BC_01: setDO_BC_01,
-                        DO_SV_01: setDO_SV_01,
-
-
-                        EVC_01_Conn_STT: setEVC_STT01,
-                        EVC_02_Conn_STT: setEVC_STT02,
-
-                        PLC_Conn_STT: setPLC_Conn_STT,
-                    };
-
-
-                    const stateMap2: StateMap2 = { 
-                     
-
-                    }
-                    const valueStateMap: ValueStateMap = {
-                        EVC_01_Conn_STT: setFC_Conn_STTValue,
-                        PLC_Conn_STT: setConn_STTValue,
-                    };
-                    keys.forEach((key) => {
-                      
-
-                        if (stateMap[key]) {
-                            const value = dataReceived.data[key][0][1];
-                            const slicedValue = value;
-                            stateMap[key]?.(slicedValue);
-                        }
-
-                        if (valueStateMap[key]) {
-                            const value = dataReceived.data[key][0][0];
-
-                            const date = new Date(value);
-                            const formattedDate = `${date
-                                .getDate()
-                                .toString()
-                                .padStart(2, "0")}-${(date.getMonth() + 1)
-                                .toString()
-                                .padStart(2, "0")}-${date.getFullYear()} ${date
-                                .getHours()
-                                .toString()
-                                .padStart(2, "0")}:${date
-                                .getMinutes()
-                                .toString()
-                                .padStart(2, "0")}:${date
-                                .getSeconds()
-                                .toString()
-                                .padStart(2, "0")}`;
-                            valueStateMap[key]?.(formattedDate); // Set formatted timestamp
-                        }
-                    });
-                }
-                fetchData()
-            };
-        }
-    }, [data]);
-
-
+  
 
     //=====================================================================================
   
@@ -311,7 +159,7 @@ const connectWebSocket = (cmdId: number) => {
                 };
 
 
-             
+              
                 const valueStateMap: ValueStateMap = {
                     EVC_01_Conn_STT: setFC_Conn_STTValue,
                     PLC_Conn_STT: setConn_STTValue,
@@ -333,7 +181,7 @@ const connectWebSocket = (cmdId: number) => {
                             .toString()
                             .padStart(2, "0")}-${(date.getMonth() + 1)
                             .toString()
-                            .padStart(2, "0")} ${date
+                            .padStart(2, "0")}-${date.getFullYear()} ${date
                             .getHours()
                             .toString()
                             .padStart(2, "0")}:${date
@@ -343,7 +191,7 @@ const connectWebSocket = (cmdId: number) => {
                             .getSeconds()
                             .toString()
                             .padStart(2, "0")}`;
-                        valueStateMap[key]?.(formattedDate);
+                        valueStateMap[key]?.(formattedDate); // Set formatted timestamp
                     }
                 });
             }

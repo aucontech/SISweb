@@ -125,8 +125,8 @@ export const edgePRU = [
         },
     },
     {
-        id: "line_Top_6-line6",
-        source: "line_Top_6",
+        id: "line_Top_7-line6",
+        source: "line_Top_7",
         target: "line6",
         type: "smoothstep",
 
@@ -152,6 +152,17 @@ export const edgePRU = [
 
         style: {
             ...styleLine4,
+        },
+    },
+
+    {
+        id: "line_Top_6-line_Top_7",
+        source: "line_Top_6",
+        target: "line_Top_7",
+        type: "smoothstep",
+
+        style: {
+            ...styleLine1,
         },
     },
     // {

@@ -164,14 +164,14 @@ export default function ScoreCard_VREC() {
                         }
                         if (valueStateMap[key]) {
                             const value = dataReceived.data[key][0][0];
-
+    
                             const date = new Date(value);
                             const formattedDate = `${date
                                 .getDate()
                                 .toString()
                                 .padStart(2, "0")}-${(date.getMonth() + 1)
                                 .toString()
-                                .padStart(2, "0")} ${date
+                                .padStart(2, "0")}-${date.getFullYear()} ${date
                                 .getHours()
                                 .toString()
                                 .padStart(2, "0")}:${date
@@ -181,7 +181,7 @@ export default function ScoreCard_VREC() {
                                 .getSeconds()
                                 .toString()
                                 .padStart(2, "0")}`;
-                            valueStateMap[key]?.(formattedDate);
+                            valueStateMap[key]?.(formattedDate); // Set formatted timestamp
                         }
                     });
                 }

@@ -153,7 +153,7 @@ export default function ScoreCard_Meiko() {
                                 .toString()
                                 .padStart(2, "0")}-${(date.getMonth() + 1)
                                 .toString()
-                                .padStart(2, "0")} ${date
+                                .padStart(2, "0")}-${date.getFullYear()} ${date
                                 .getHours()
                                 .toString()
                                 .padStart(2, "0")}:${date
@@ -163,7 +163,7 @@ export default function ScoreCard_Meiko() {
                                 .getSeconds()
                                 .toString()
                                 .padStart(2, "0")}`;
-                            valueStateMap[key]?.(formattedDate);
+                            valueStateMap[key]?.(formattedDate); // Set formatted timestamp
                         }
                     });
                 }

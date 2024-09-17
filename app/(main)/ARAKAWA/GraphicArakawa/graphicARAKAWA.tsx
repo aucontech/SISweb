@@ -2464,7 +2464,7 @@ setActive(Active?.value || false);
                                 <div style={{}}>
                                     <p style={{ marginLeft: 10 }}>
                                         <p>
-                                            {active === "true" ? (
+                                            {active === true ? (
                                                 <span
                                                     style={{
                                                         color: "#25d125",

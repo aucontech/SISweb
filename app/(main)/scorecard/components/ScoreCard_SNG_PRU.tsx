@@ -114,7 +114,7 @@ export default function ScoreCard_SNG_PRU() {
 
                         if (valueStateMap[key]) {
                             const value = dataReceived.data[key][0][0];
-
+    
                             const date = new Date(value);
                             const formattedDate = `${date
                                 .getDate()

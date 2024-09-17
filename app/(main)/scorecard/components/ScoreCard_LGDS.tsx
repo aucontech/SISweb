@@ -170,14 +170,14 @@ export default function ScoreCard_LGDS() {
                         
                                 if (valueStateMap[key]) {
                                     const value = dataReceived.data[key][0][0];
-        
+            
                                     const date = new Date(value);
                                     const formattedDate = `${date
                                         .getDate()
                                         .toString()
                                         .padStart(2, "0")}-${(date.getMonth() + 1)
                                         .toString()
-                                        .padStart(2, "0")} ${date
+                                        .padStart(2, "0")}-${date.getFullYear()} ${date
                                         .getHours()
                                         .toString()
                                         .padStart(2, "0")}:${date
@@ -187,7 +187,7 @@ export default function ScoreCard_LGDS() {
                                         .getSeconds()
                                         .toString()
                                         .padStart(2, "0")}`;
-                                    valueStateMap[key]?.(formattedDate);
+                                    valueStateMap[key]?.(formattedDate); // Set formatted timestamp
                                 }
                 fetchData();
 
@@ -3271,7 +3271,7 @@ const dataFC = [
                         }}
                     >
                         
-                        <div style={{  fontWeight: 500,display:'flex',paddingRight:20 }}>
+                        <div style={{  fontWeight: 500,display:'flex', }}>
                            {FC_Conn_STTValue}
                         </div>
                         <div  onClick={handleShowMore} >
@@ -3396,7 +3396,7 @@ const dataFC = [
 
                     <Column
                             field="FC1901"
-                            header={FC_STT01 === "1" ? (
+                            header={FC_Conn_STT === "1" ? (
 
                                 <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center',  position:'relative', right:30}}>
                                 {DotGreen} <p style={{marginLeft:5}}>FC-1001</p>
@@ -3412,7 +3412,7 @@ const dataFC = [
                         <Column
                         style={{display:'flex', justifyContent:'flex-end'}}
                             field="FC1902"
-                            header={FC_STT01 === "1" ? (
+                            header={FC_Conn_STT === "1" ? (
 
                                 <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
                                 {DotGreen} <p style={{marginLeft:5}}>FC-1002</p>
