@@ -5708,19 +5708,7 @@ checked={maintainPLC_Conn_STT}
    <Column field="update" header="Update" /> 
 
 </DataTable>
-{/* <div  style={{ width: "100%",  borderRadius: 5, marginTop:20 }}>
-                <h4>Station - Configuration </h4>
-                <DataTable value={Configuration} size={"small"} selectionMode="single" >
-                    <Column field="Name" header="Name" />
 
-                    <Column field="Value" header="Value" />
-
-                    {TECH_OPER ? " " : 
-                         <Column field="Update" header="Update" />  
-
-}
-                </DataTable>
-            </div> */}
 </div>
 <br />
 <br />

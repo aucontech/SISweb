@@ -35,121 +35,132 @@ export default function GraphicSogec() {
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
   const [isFirstRender, setIsFirstRender] = useState(true); // Track the first render
 
-  useEffect(() => {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
+  // useEffect(() => {
+  //   if (timeoutId) {
+  //     clearTimeout(timeoutId);
+  //   }
 
-    const stationList = {
-      'LGDS': <SetUpdata_LGDS />,
-      'ZOCV': <SetUpdata_ZOVC />,
-      'KOA': <SetUpdata_KOA />,
-      'NITORI': <SetUpdata_NITORI />,
-      'YOSHINO': <SetUpdata_YOSHINO />,
-      'IGUACU': <SetUpdata_IGUACU />,
-      'ARAKAWA': <SetUpdata_ARAKAWA />,
-      'SPMCV': <SetUpdata_SPMCV />,
-      'VREC': <SetUpdata_VREC />,
-      'OTSUKA': <LowHighData />,
+    // const stationList = {
+    //   'LGDS': <SetUpdata_LGDS />,
+    //   'ZOCV': <SetUpdata_ZOVC />,
+    //   'KOA': <SetUpdata_KOA />,
+    //   'NITORI': <SetUpdata_NITORI />,
+    //   'YOSHINO': <SetUpdata_YOSHINO />,
+    //   'IGUACU': <SetUpdata_IGUACU />,
+    //   'ARAKAWA': <SetUpdata_ARAKAWA />,
+    //   'SPMCV': <SetUpdata_SPMCV />,
+    //   'VREC': <SetUpdata_VREC />,
+    //   'OTSUKA': <LowHighData />,
 
       
-      'MEIKO': <SetUpdata_Meiko />,
+    //   'MEIKO': <SetUpdata_Meiko />,
 
 
-      'SNG': <SetUpdata_SNG_PRU />,
+    //   'SNG': <SetUpdata_SNG_PRU />,
 
-      'SNG BINH DUONG': <SetUpdata_SNG_BINHDUONG />,
-      'SNG HUNG YEN': <SetUpdata_HUNGYEN_SNG />,
-      'CNG PHU MY 3': <SetUpdata_PRU />,
-      'CNG BINH DUONG': <SetUpdata_CNG_BINHDUONG />,
-      'CNG HUNG YEN': <SetUpdata_HUNGYEN />,
-    };
-    const stationGroup = {
-      NG: ['LGDS', 'ZOCV', 'KOA', 'NITORI', 'YOSHINO', 'IGUACU', 'ARAKAWA', 'SPMCV', 'VREC', 'OTSUKA'],
-      LPG: ['MEIKO'],
-      SNG : ['SNG BINH DUONG','SNG HUNG YEN',"SNG"],
-      CNG:["CNG PHU MY 3",'CNG BINH DUONG','CNG HUNG YEN']
-    };
-    const newTimeoutId = setTimeout(() => {
-      const normalizedSearchTerm = searchItem?.replace(/\s+/g, '').toUpperCase();
-      if (isFirstRender) {
-        setActiveComponent(<SetUpdata_LGDS />);
-        setNG("LGDS")
+    //   'SNG BINH DUONG': <SetUpdata_SNG_BINHDUONG />,
+    //   'SNG HUNG YEN': <SetUpdata_HUNGYEN_SNG />,
+    //   'CNG PHU MY 3': <SetUpdata_PRU />,
+    //   'CNG BINH DUONG': <SetUpdata_CNG_BINHDUONG />,
+    //   'CNG HUNG YEN': <SetUpdata_HUNGYEN />,
+    // };
+    // const stationGroup = {
+    //   NG: ['LGDS', 'ZOCV', 'KOA', 'NITORI', 'YOSHINO', 'IGUACU', 'ARAKAWA', 'SPMCV', 'VREC', 'OTSUKA'],
+    //   LPG: ['MEIKO'],
+    //   SNG : ['SNG BINH DUONG','SNG HUNG YEN',"SNG"],
+    //   CNG:["CNG PHU MY 3",'CNG BINH DUONG','CNG HUNG YEN']
+    // };
+    // const newTimeoutId = setTimeout(() => {
+    //   const normalizedSearchTerm = searchItem?.replace(/\s+/g, '').toUpperCase();
+    //   if (isFirstRender) {
+    //     setActiveComponent(<SetUpdata_LGDS />);
+    //     setNG("LGDS")
 
-        setLPG("LPG");
-        setCNG("CNG");
-        setSNG("SNG");
-        setIsFirstRender(false); 
-        return; 
-      }
-      const filteredList = Object.keys(stationList).filter(key => {
-        const normalizedKey = key.replace(/\s+/g, '').toUpperCase();
-        return normalizedKey.includes(normalizedSearchTerm);
-      });
+    //     setLPG("LPG");
+    //     setCNG("CNG");
+    //     setSNG("SNG");
+    //     setIsFirstRender(false); 
+    //     return; 
+    //   }
+    //   const filteredList = Object.keys(stationList).filter(key => {
+    //     const normalizedKey = key.replace(/\s+/g, '').toUpperCase();
+    //     return normalizedKey.includes(normalizedSearchTerm);
+    //   });
     
-      if (searchItem === '') {
-        setActiveComponent(<SetUpdata_LGDS />);
-        setNG("LGDS")
+    //   if (searchItem === '') {
+    //     setActiveComponent(<SetUpdata_LGDS />);
+    //     setNG("LGDS")
 
-        setLPG("LPG")
-        setCNG("CNG")
-        setSNG("SNG")
+    //     setLPG("LPG")
+    //     setCNG("CNG")
+    //     setSNG("SNG")
 
-      } else if (filteredList.length === 1) {
-        const selectedKey = filteredList[0] as keyof typeof stationList;
-        setActiveComponent(stationList[selectedKey]);
+    //   } else if (filteredList.length === 1) {
+    //     const selectedKey = filteredList[0] as keyof typeof stationList;
+    //     setActiveComponent(stationList[selectedKey]);
     
-        let groupName: string | undefined;
-        for (const [group, stations] of Object.entries(stationGroup)) {
-          if (stations.includes(selectedKey)) {
-            groupName = group;
-            break;
-          }
-        }
+    //     let groupName: string | undefined;
+    //     for (const [group, stations] of Object.entries(stationGroup)) {
+    //       if (stations.includes(selectedKey)) {
+    //         groupName = group;
+    //         break;
+    //       }
+    //     }
     
-        if (groupName === 'SNG') {
-          setSNG(selectedKey);
-          setNG('NG');
-          setCNG('CNG');
-          setLPG('LPG');
-        } else if (groupName === 'CNG') {
-          setCNG(selectedKey);
-          setNG('NG');
-          setSNG('SNG');
-          setLPG('LPG');
-        } else if (groupName === 'NG') {
-          setNG(selectedKey);
-          setCNG('CNG');
-          setSNG('SNG');
-          setLPG('LPG');
-        } else if (groupName === 'LPG') {
-          setLPG(selectedKey);
-          setNG("NG");
-          setCNG('CNG');
-          setSNG("SNG");
-        } 
-      }
+    //     if (groupName === 'SNG') {
+    //       setSNG(selectedKey);
+    //       setNG('NG');
+    //       setCNG('CNG');
+    //       setLPG('LPG');
+    //     } else if (groupName === 'CNG') {
+    //       setCNG(selectedKey);
+    //       setNG('NG');
+    //       setSNG('SNG');
+    //       setLPG('LPG');
+    //     } else if (groupName === 'NG') {
+    //       setNG(selectedKey);
+    //       setCNG('CNG');
+    //       setSNG('SNG');
+    //       setLPG('LPG');
+    //     } else if (groupName === 'LPG') {
+    //       setLPG(selectedKey);
+    //       setNG("NG");
+    //       setCNG('CNG');
+    //       setSNG("SNG");
+    //     } 
+    //   }
     
       
-      else if (normalizedSearchTerm === 'SNG' || normalizedSearchTerm === "SNG ") {
-        setActiveComponent(stationList['SNG']);
-        setSNG('SNG');
-      }  else {
-        setActiveComponent(<h2 style={{ textAlign: 'center' }}>Multiple matches found. Refine your search.</h2>);
-        setNG("NG")
+    //   else if (normalizedSearchTerm === 'SNG' || normalizedSearchTerm === "SNG ") {
+    //     setActiveComponent(stationList['SNG']);
+    //     setSNG('SNG');
+    //   }  else {
+    //     setActiveComponent(<h2 style={{ textAlign: 'center' }}>Multiple matches found. Refine your search.</h2>);
+    //     setNG("NG")
 
-        setLPG("LPG")
-        setCNG("CNG")
-        setSNG("SNG")
+    //     setLPG("LPG")
+    //     setCNG("CNG")
+    //     setSNG("SNG")
      
-      }
-    }, 1000);
+    //   }
+    // }, 1000);
     
   
     
-    setTimeoutId(newTimeoutId);
-  }, [searchItem]);
+  //   setTimeoutId(newTimeoutId);
+  // }, [searchItem]);
 
+  // const InputSearch = () => {
+  //   return <div>
+  //   <InputText
+  //         type="text"
+  //         value={searchItem}
+  //         onChange={handleSearchChange}
+  //         placeholder="Search..."
+  //         style={{ marginBottom: '1rem', padding: '0.5rem', width: '100%' }}
+  //       />
+  //   </div>
+  // }
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setSearchItem(e.target.value);
     };
@@ -162,7 +173,7 @@ export default function GraphicSogec() {
       }
       if (newLabel) {
         setNG(newLabel);
-        setSearchItem(newLabel); 
+        // setSearchItem(newLabel); 
       }
       setCNG('CNG');
       setSNG('SNG');
@@ -219,17 +230,6 @@ export default function GraphicSogec() {
     };
     
 
-const InputSearch = () => {
-  return <div>
-  <InputText
-        type="text"
-        value={searchItem}
-        onChange={handleSearchChange}
-        placeholder="Search..."
-        style={{ marginBottom: '1rem', padding: '0.5rem', width: '100%' }}
-      />
-  </div>
-}
 
 
   const items = [
