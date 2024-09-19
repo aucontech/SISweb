@@ -35,8 +35,6 @@ export default function ScoreCard_Yoshino() {
     const [isVisible, setIsVisible] = useState(false);
 
 
-    const [FC_STT01, setFC_STT01] = useState<any | null>(null);
-    const [PLC_Conn_STT, setPLC_Conn_STT] = useState<any | null>(null);
 
     const [FC_Conn_STTValue, setFC_Conn_STTValue] = useState<string | null>(
         null
@@ -149,7 +147,7 @@ export default function ScoreCard_Yoshino() {
                     DO_SV_01: setDO_SV_01,
 
                  
-                    FC_Conn_STT: setFC_STT01,
+                    FC_Conn_STT: setFC_Conn_STT,
                     PLC_Conn_STT: setPLC_Conn_STT,
                
 
@@ -604,8 +602,26 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
                 (item: any) => item.key === "DI_SD_1_Maintain"
             );
 
- // =================================================================================================================== 
 
+            const FC_Conn_STT_High = res.data.find((item: any) => item.key === "FC_Conn_STT_High");
+            setFC_Conn_STT_High(FC_Conn_STT_High?.value || null);
+            const FC_Conn_STT_Low = res.data.find((item: any) => item.key === "FC_Conn_STT_Low");
+            setFC_Conn_STT_Low(FC_Conn_STT_Low?.value || null);
+            const FC_Conn_STT_Maintain = res.data.find(
+                (item: any) => item.key === "FC_Conn_STT_Maintain"
+            );
+            const PLC_Conn_STT_High = res.data.find((item: any) => item.key === "PLC_Conn_STT_High");
+            setPLC_Conn_STT_High(PLC_Conn_STT_High?.value || null);
+            const PLC_Conn_STT_Low = res.data.find((item: any) => item.key === "PLC_Conn_STT_Low");
+            setPLC_Conn_STT_Low(PLC_Conn_STT_Low?.value || null);
+            const PLC_Conn_STT_Maintain = res.data.find(
+                (item: any) => item.key === "PLC_Conn_STT_Maintain"
+            );
+
+ // =================================================================================================================== 
+ setMaintainFC_Conn_STT(FC_Conn_STT_Maintain?.value || false);
+
+ setMaintainPLC_Conn_STT(PLC_Conn_STT_Maintain?.value || false);
 
  setMaintainFC_Charger_Voltage(FC_Charger_Voltage_Maintain?.value || false);
 
@@ -1700,6 +1716,50 @@ useEffect(() => {
     
       
 
+
+              // =================================================================================================================== 
+
+              const [FC_Conn_STT, setFC_Conn_STT] = useState<string | null>(null);
+
+const [FC_Conn_STT_High, setFC_Conn_STT_High] = useState<number | null>(null);
+const [FC_Conn_STT_Low, setFC_Conn_STT_Low] = useState<number | null>(null);
+const [exceedThresholdFC_Conn_STT, setExceedThresholdFC_Conn_STT] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+
+const [maintainFC_Conn_STT, setMaintainFC_Conn_STT] = useState<boolean>(false);
+
+useEffect(() => {
+    const FC_Conn_STTValue = parseFloat(FC_Conn_STT as any);
+    const highValue = FC_Conn_STT_High ?? NaN;
+    const lowValue = FC_Conn_STT_Low ?? NaN;
+
+    if (!isNaN(FC_Conn_STTValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainFC_Conn_STT) {
+        setExceedThresholdFC_Conn_STT(FC_Conn_STTValue >= highValue || FC_Conn_STTValue <= lowValue);
+    }
+}, [FC_Conn_STT, FC_Conn_STT_High, FC_Conn_STT_Low, maintainFC_Conn_STT]);
+
+
+              // =================================================================================================================== 
+
+              // PLC_Conn_STT
+const [PLC_Conn_STT, setPLC_Conn_STT] = useState<string | null>(null);
+
+const [PLC_Conn_STT_High, setPLC_Conn_STT_High] = useState<number | null>(null);
+const [PLC_Conn_STT_Low, setPLC_Conn_STT_Low] = useState<number | null>(null);
+const [exceedThresholdPLC_Conn_STT, setExceedThresholdPLC_Conn_STT] = useState(false); 
+const [maintainPLC_Conn_STT, setMaintainPLC_Conn_STT] = useState<boolean>(false);
+
+useEffect(() => {
+    const PLC_Conn_STTValue = parseFloat(PLC_Conn_STT as any);
+    const highValue = PLC_Conn_STT_High ?? NaN;
+    const lowValue = PLC_Conn_STT_Low ?? NaN;
+
+    if (!isNaN(PLC_Conn_STTValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPLC_Conn_STT) {
+        setExceedThresholdPLC_Conn_STT(PLC_Conn_STTValue >= highValue || PLC_Conn_STTValue <= lowValue);
+    }
+}, [PLC_Conn_STT, PLC_Conn_STT_High, PLC_Conn_STT_Low, maintainPLC_Conn_STT]);
+
+
+
     // =================================================================================================================== 
     const tagNameFC = {
         FC_Lithium_Battery_Status: "Lithium Battery Status (0:Yes - 1: No)",
@@ -1719,6 +1779,10 @@ useEffect(() => {
         VmToday: "Gross Volume Vm Today (m³)",
         VmLastDay: "Gross Volume Vm Yesterday (m³)",
         ReBattery: "Remainning Battery (Months)",
+
+
+        FC_Conn_STT: "FC-1401 Connection Status (0: Not Init - 1: COM OK - 2: Error)",
+        PLC_Conn_STT: "PLC Connection Status (0: Not Init - 1: COM OK - 2: Error)",
     };
 
     const tagNamePLC = {
@@ -1801,6 +1865,10 @@ const DataDI_SD_1 = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Detec
             : Emergency_NC === "1"
             ? " Normal"
             : null;
+
+
+            const DataFC_Conn_STT  = FC_Conn_STT === "0" ? "Not Init" : FC_Conn_STT === "1" ? "COM OK" : FC_Conn_STT === "2" ? "Error" : null;
+            const DataPLC_Conn_STT  = PLC_Conn_STT === "0" ? "Not Init" : PLC_Conn_STT === "1" ? "COM OK" : PLC_Conn_STT === "2" ? "Error" : null;
 
 
 
@@ -2499,6 +2567,33 @@ const DataDI_SD_1 = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Detec
                     ? 18
                     : ""
                 },
+
+                CSSFC_Conn_STT : {
+                    color:exceedThresholdFC_Conn_STT && !maintainFC_Conn_STT
+                    ? "#ff5656"
+                    : maintainFC_Conn_STT
+                    ? "orange"
+                    : "" ,
+                    fontWeight: (exceedThresholdFC_Conn_STT || maintainFC_Conn_STT)
+                    ? 600
+                    : "",
+                    fontSize: (exceedThresholdFC_Conn_STT || maintainFC_Conn_STT)
+                    ? 18
+                    : ""
+                },
+                CSSPLC_Conn_STT : {
+                    color:exceedThresholdPLC_Conn_STT && !maintainPLC_Conn_STT
+                    ? "#ff5656"
+                    : maintainPLC_Conn_STT
+                    ? "orange"
+                    : "" ,
+                    fontWeight: (exceedThresholdPLC_Conn_STT || maintainPLC_Conn_STT)
+                    ? 600
+                    : "",
+                    fontSize: (exceedThresholdPLC_Conn_STT || maintainPLC_Conn_STT)
+                    ? 18
+                    : ""
+                },
         
           };
 
@@ -2533,6 +2628,19 @@ const DataDI_SD_1 = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Detec
     
             },
         ];
+
+        const STT = [
+            {
+                name: <span>{tagNameFC.FC_Conn_STT}</span>,
+                STT: <span style={combineCss.CSSFC_Conn_STT}>{formatValue(FC_Conn_STT)} {DataFC_Conn_STT}</span>,
+    
+            },
+            {
+                name: <span>{tagNameFC.PLC_Conn_STT}</span>,
+                STT: <span style={combineCss.CSSPLC_Conn_STT}>{formatValue(PLC_Conn_STT)} {DataPLC_Conn_STT}</span>,
+    
+            },
+        ]
 
         const dataFC = [
             {
@@ -2674,46 +2782,27 @@ const DataDI_SD_1 = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Detec
     }
     return (
         <div >
-            <div  >
-                <div
-                    style={{
-                        background: "#64758B",
-                        color: "white",
-                        borderRadius: "10px 10px 0 0",
-                        display:'flex',
-                        justifyContent:'space-between'
-
-                    }}
-                >
-                    <div
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            padding: "5px 5px 0px 5px",
-                        }}
-                    >
-                        <div style={{ fontSize: 30, fontWeight: 700 }}>
-                            {" "}
+          <div className="Container_Scorecard1" >
+                   <div className="Container_Scorecard2" >
+                        <div className="Container_Name" >
                             YOSHINO
                         </div>
-
-                       
                     </div>
                     <div
-                        style={{
-                            alignItems: "center",
-                           padding:5,
-                           display:'flex'
+                    className="Container_Time_Show" >
+                        
+                        <div className="Container_Time" >
+                        {FC_Conn_STTValue}
 
-                        }}
-                    >
-                       
-                        <div style={{  fontWeight: 500,display:'flex' }}>
-                          {FC_Conn_STTValue}
                         </div>
-                        <div  onClick={handleShowMore} >
-                    {ShowMore ? <span style={{cursor:"pointer",  }}>{Up}</span>  : <span style={{cursor:"pointer"}}>{Down}</span>}
+                        <div className="Container_Show"  onClick={handleShowMore} >
+                    {ShowMore ?
+                    
+                    <span style={{fontSize:'2rem',cursor:'pointer'}}  className="pi pi-arrow-circle-down"></span>
+                     :
+                    <span style={{fontSize:'2rem',cursor:'pointer'}}  className="pi pi-arrow-circle-up"></span>}
+
+
                     </div>
                     </div>
                     
@@ -2730,7 +2819,7 @@ const DataDI_SD_1 = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Detec
      
                     <Column
                             field="FC1901"
-                            header={FC_STT01 === "1" ? (
+                            header={FC_Conn_STT === "1" ? (
 
                                 <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center',  position:'relative', right:30}}>
                                 {DotGreen} <p style={{marginLeft:5}}>FC-1401</p>
@@ -2747,7 +2836,7 @@ const DataDI_SD_1 = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Detec
                         style={{display:'flex', justifyContent:'flex-end'}}
 
                             field="FC1902"
-                            header={FC_STT01 === "1" ? (
+                            header={FC_Conn_STT === "1" ? (
                                 <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
                                 {DotGreen} <p style={{marginLeft:5}}>FC-1402</p>
    
@@ -2788,7 +2877,7 @@ const DataDI_SD_1 = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Detec
                         style={{display:'flex', justifyContent:'flex-end'}}
 
                             field="FC1"
-                            header={FC_STT01 === "1" ? (
+                            header={FC_Conn_STT === "1" ? (
 
                                 <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
                                 {DotGreen} <p style={{marginLeft:5}}>FC</p>
@@ -2798,6 +2887,30 @@ const DataDI_SD_1 = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Detec
                             ) : (
                                 <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
                                 {DotRed}  <p style={{marginLeft:5}}>FC</p>
+                             </div>
+                            )}
+                        ></Column>
+
+                    
+                    </DataTable>
+
+
+                    <DataTable value={STT} size="small" selectionMode="single">
+                        <Column  field="name" header={<span className="id556" > Status</span>}></Column>
+                        <Column
+                        style={{display:'flex', justifyContent:'flex-end'}}
+
+                            field="STT"
+                            header={FC_Conn_STT === "1" ? (
+
+                                <div style={{  padding:11,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                               <p style={{marginLeft:5}}></p>
+   
+                               </div>
+                                
+                            ) : (
+                                <div style={{ padding:11, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
+                                 <p style={{marginLeft:5}}></p>
                              </div>
                             )}
                         ></Column>
@@ -2817,7 +2930,7 @@ const DataDI_SD_1 = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Detec
      
                     <Column
                             field="FC1901"
-                            header={FC_STT01 === "1" ? (
+                            header={FC_Conn_STT === "1" ? (
 
                                 <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center',  position:'relative', right:30}}>
                                 {DotGreen} <p style={{marginLeft:5}}>FC-1401</p>
@@ -2834,7 +2947,7 @@ const DataDI_SD_1 = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Detec
                         style={{display:'flex', justifyContent:'flex-end'}}
 
                             field="FC1902"
-                            header={FC_STT01 === "1" ? (
+                            header={FC_Conn_STT === "1" ? (
                                 <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
                                 {DotGreen} <p style={{marginLeft:5}}>FC-1402</p>
    
@@ -2856,6 +2969,5 @@ const DataDI_SD_1 = DI_SD_1 === "0" ? "Normal" : DI_SD_1 === "1" ? "Smoker Detec
 
         
 
-        </div>
     );
 }

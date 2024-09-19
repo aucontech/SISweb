@@ -280,10 +280,6 @@ export default function Graphic_MEIKO() {
             );
 
 
-
-    
-          
-
             const VP_303_High = res.data.find((item: any) => item.key === "VP_303_High");
             setVP_303_High(VP_303_High?.value || null);
             const VP_303_Low = res.data.find((item: any) => item.key === "VP_303_Low");
@@ -391,7 +387,6 @@ export default function Graphic_MEIKO() {
             const Pipe_Temp_Maintain = res.data.find(
                 (item: any) => item.key === "Pipe_Temp_Maintain"
             );
-
 
            
             const V2_Flow_Meter_High = res.data.find((item: any) => item.key === "V2_Flow_Meter_High");
@@ -511,8 +506,8 @@ export default function Graphic_MEIKO() {
             setMaintainV1_Flow_Meter(V1_Flow_Meter_Maintain?.value || false);
             
             setMaintainV2_Flow_Meter(V2_Flow_Meter_Maintain?.value || false);
-
             setMaintainPipe_Temp(Pipe_Temp_Maintain?.value || false);
+
 
             setMaintainTank_TT_301(Tank_TT_301_Maintain?.value || false);
 
@@ -800,25 +795,24 @@ useEffect(() => {
 
  // =================================================================================================================== 
 
-const [Pipe_Temp, setPipe_Temp] = useState<string | null>(null);
+ const [Pipe_Temp, setPipe_Temp] = useState<string | null>(null);
 
-const [Pipe_Temp_High, setPipe_Temp_High] = useState<number | null>(null);
-const [Pipe_Temp_Low, setPipe_Temp_Low] = useState<number | null>(null);
-const [exceedThresholdPipe_Temp, setExceedThresholdPipe_Temp] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-const [maintainPipe_Temp, setMaintainPipe_Temp] = useState<boolean>(false);
-
-useEffect(() => {
-    const Pipe_TempValue = parseFloat(Pipe_Temp as any);
-    const highValue = Pipe_Temp_High ?? NaN;
-    const lowValue = Pipe_Temp_Low ?? NaN;
-
-    if (!isNaN(Pipe_TempValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPipe_Temp) {
-        setExceedThresholdPipe_Temp(Pipe_TempValue >= highValue || Pipe_TempValue <= lowValue);
-    }
-}, [Pipe_Temp, Pipe_Temp_High, Pipe_Temp_Low, maintainPipe_Temp]);
-
-
-
+ const [Pipe_Temp_High, setPipe_Temp_High] = useState<number | null>(null);
+ const [Pipe_Temp_Low, setPipe_Temp_Low] = useState<number | null>(null);
+ const [exceedThresholdPipe_Temp, setExceedThresholdPipe_Temp] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+ const [maintainPipe_Temp, setMaintainPipe_Temp] = useState<boolean>(false);
+ 
+ useEffect(() => {
+     const Pipe_TempValue = parseFloat(Pipe_Temp as any);
+     const highValue = Pipe_Temp_High ?? NaN;
+     const lowValue = Pipe_Temp_Low ?? NaN;
+ 
+     if (!isNaN(Pipe_TempValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPipe_Temp) {
+         setExceedThresholdPipe_Temp(Pipe_TempValue >= highValue || Pipe_TempValue <= lowValue);
+     }
+ }, [Pipe_Temp, Pipe_Temp_High, Pipe_Temp_Low, maintainPipe_Temp]);
+ 
+ 
 
 // =================================================================================================================== 
 
@@ -1467,248 +1461,10 @@ const formatValue = (value:any) => {
                 };
             }
 
-            if (node.id === "TT_LINE3_TOP_DATA") {
-                const roundedPT02 =
-                    Pipe_Temp !== null ? parseFloat(Pipe_Temp).toFixed(2) : "";
+       
 
-                return {
-                    ...node,
-                    data: {
-                        ...node.data,
-                        label: (
-                            <div
-                                style={{
-                                    borderRadius: 5,
-                                    fontSize: 25,
-                                    fontWeight: 600,
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    position: "relative",
-                                    backgroundColor:
-                                        exceedThresholdPipe_Temp &&
-                                        !maintainPipe_Temp
-                                            ? "#ff5656"
-                                            : maintainPipe_Temp
-                                            ? "orange"
-                                            : "transparent",
-                                    cursor: "pointer",
-                                }}
-                                // onClick={() => confirmPT_1902()}
-                            >
-                                <div
-                                    style={{
-                                        display: "flex",
-                                        justifyContent: "space-between",
-                                        position: "relative",
-                                        top: 5,
-                                    }}
-                                >
-                                    <p style={{ color: colorNameValue }}>
-                                        {ValueGas.EVC_01_Temperature} :
-                                    </p>
-                                    <p
-                                        style={{
-                                            color: colorData,
-                                            marginLeft: 15,
-                                        }}
-                                    >
-                                        {formatValue(Pipe_Temp)}
-                                    </p>
-                                </div>
-                                <p
-                                    style={{
-                                        color: colorNameValue,
-                                        position: "relative",
-                                        top: 5,
-                                    }}
-                                >
-                                    {KeyGas.BARG}
-                                </p>
-                            </div>
-                        ),
-                    },
-                };
-            }
-            if (node.id === "TT_LINE3_BOTTOM_DATA") {
-                const roundedPT02 =
-                    Pipe_Press !== null
-                        ? parseFloat(Pipe_Press).toFixed(2)
-                        : "";
+        
 
-                return {
-                    ...node,
-                    data: {
-                        ...node.data,
-                        label: (
-                            <div
-                                style={{
-                                    borderRadius: 5,
-                                    fontSize: 25,
-                                    fontWeight: 600,
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    position: "relative",
-                                    backgroundColor:
-                                        exceedThresholdPipe_Press &&
-                                        !maintainPipe_Press
-                                            ? "#ff5656"
-                                            : maintainPipe_Press
-                                            ? "orange"
-                                            : "transparent",
-                                    cursor: "pointer",
-                                }}
-                                // onClick={() => confirmPT_1902()}
-                            >
-                                <div
-                                    style={{
-                                        display: "flex",
-                                        justifyContent: "space-between",
-                                        position: "relative",
-                                        top: 5,
-                                    }}
-                                >
-                                    <p style={{ color: colorNameValue }}>
-                                        {ValueGas.EVC_02_Temperature} :
-                                    </p>
-                                    <p
-                                        style={{
-                                            color: colorData,
-                                            marginLeft: 15,
-                                        }}
-                                    >
-                                        {formatValue(Pipe_Press)}
-                                    </p>
-                                </div>
-                                <p
-                                    style={{
-                                        color: colorNameValue,
-                                        position: "relative",
-                                        top: 5,
-                                    }}
-                                >
-                                    {KeyGas.BARG}
-                                </p>
-                            </div>
-                        ),
-                    },
-                };
-            }
-
-            if (node.id === "PCV_line2_Top_DATA") {
-                return {
-                    ...node,
-                    data: {
-                        ...node.data,
-                        label: (
-                            <div
-                                style={{
-                                    fontSize: 15,
-                                    color: "white",
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    fontWeight: 400,
-                                }}
-                            >
-                                <p style={{ color: colorNameValue }}>
-                                    PCV 6001A
-                                </p>
-                                <p style={{ color: colorData }}>
-                                    {" "}
-                                    {PCV_6001A}{" "}
-                                </p>
-                                <p style={{ color: colorNameValue }}>Bar</p>
-                            </div>
-                        ),
-                    },
-                };
-            }
-
-            if (node.id === "PCV_line2_Bottom_DATA") {
-                return {
-                    ...node,
-                    data: {
-                        ...node.data,
-                        label: (
-                            <div
-                                style={{
-                                    fontSize: 15,
-                                    color: "white",
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    fontWeight: 400,
-                                }}
-                            >
-                                <p style={{ color: colorNameValue }}>
-                                    PCV 6001B
-                                </p>
-                                <p style={{ color: colorData }}>
-                                    {" "}
-                                    {formatValue(PCV_6001B)}{" "}
-                                </p>
-                                <p style={{ color: colorNameValue }}>Bar</p>
-                            </div>
-                        ),
-                    },
-                };
-            }
-
-            if (node.id === "PCV_line3_Top_DATA") {
-                return {
-                    ...node,
-                    data: {
-                        ...node.data,
-                        label: (
-                            <div
-                                style={{
-                                    fontSize: 15,
-                                    color: "white",
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    fontWeight: 400,
-                                }}
-                            >
-                                <p style={{ color: colorNameValue }}>
-                                    PCV 6002A
-                                </p>
-                                <p style={{ color: colorData }}>
-                                    {" "}
-                                    {formatValue(PCV_6002A)}{" "}
-                                </p>
-                                <p style={{ color: colorNameValue }}>Bar</p>
-                            </div>
-                        ),
-                    },
-                };
-            }
-
-            if (node.id === "PCV_line3_Bottom_DATA") {
-                return {
-                    ...node,
-                    data: {
-                        ...node.data,
-                        label: (
-                            <div
-                                style={{
-                                    fontSize: 20,
-                                    color: "white",
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    fontWeight: 500,
-                                }}
-                            >
-                                <p style={{ color: colorNameValue }}>
-                                    PCV 6002B
-                                </p>
-                                <p style={{ color: colorData }}>
-                                    {" "}
-                                    {formatValue(PCV_6002B)}{" "}
-                                </p>
-                                <p style={{ color: colorNameValue }}>Bar</p>
-                            </div>
-                        ),
-                    },
-                };
-            }
 
             if (node.id === "GAUGE1_DATA") {
                 return {
@@ -1725,16 +1481,16 @@ const formatValue = (value:any) => {
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThresholdPipe_Temp &&
-                                        !maintainPipe_Temp
-                                            ? "#ff5656"
-                                            : exceedThresholdPipe_Temp
-                                            ? "orange"
-                                            : "transparent",
-                                    cursor: "pointer",
+                                    exceedThresholdPipe_Temp &&
+                                    !maintainPipe_Temp
+                                        ? "#ff5656"
+                                        : maintainPipe_Temp
+                                        ? "orange"
+                                        : "transparent",
+                                cursor: "pointer",
                                 }}
                             >
-                                <p style={{ color: colorNameValue }}>TT-301</p>
+                                <p style={{ color: colorNameValue }}>TT-301:</p>
                                 <p style={{ color: colorData }}> {formatValue(Pipe_Temp)}</p>
                                 <p style={{ color: colorNameValue }}>°C</p>
                             </div>

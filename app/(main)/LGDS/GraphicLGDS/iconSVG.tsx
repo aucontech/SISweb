@@ -1769,70 +1769,145 @@ const WhiteTriangleRightTank = (
 );
 
 const PCV_LGDS = (
-    <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" width="50px" height="50px" viewBox="0 0 60.18 100.8">
-  <polygon points="29.48 31.21 33.08 31.21 33.08 50.24 29.48 50.24 29.48 31.21 29.48 31.21" fill="#ccc;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="30.7 31.21 31.87 31.21 31.87 50.24 30.7 50.24 30.7 31.21 30.7 31.21" fill="#fff;fill-rule: evenodd"/>
-  <polygon points="10.42 58.27 12.8 58.27 12.8 59.48 10.42 59.48 10.42 58.27 10.42 58.27" fill="#999;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="16.4 34.19 6.54 34.19 6.54 41.05 16.4 41.05 16.4 34.19 16.4 34.19" fill="#999;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="27.71 27.66 34.86 27.66 34.86 31.21 27.71 31.21 27.71 27.66 27.71 27.66" fill="#999;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="21.73 34.19 23.55 34.19 23.55 43.1 21.73 43.1 21.73 34.19 21.73 34.19" fill="#999;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="21.16 40.73 21.16 40.16 25.32 40.16 25.32 29.43 37.52 29.43 37.52 30.04 25.93 30.04 25.93 40.73 21.16 40.73 21.16 40.73" fill="#4c4c4c;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="27.71 54.11 34.86 54.11 34.86 55.32 27.71 55.32 27.71 54.11 27.71 54.11" fill="#4c4c4c;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="16.4 35.4 24.11 35.4 24.11 36.57 16.4 36.57 16.4 35.4 16.4 35.4" fill="#4c4c4c;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="38.73 24.07 43.5 24.07 43.5 34.19 38.73 34.19 38.73 24.07 38.73 24.07" fill="#ccc;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="21.73 96.05 41.12 96.05 41.12 100.81 21.73 100.81 21.73 96.05 21.73 96.05" fill="#666;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="53.03 86.53 53.03 94.88 48.27 94.88 48.27 86.53 53.03 86.53 53.03 86.53" fill="#666;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="14.58 86.53 14.58 94.88 9.81 94.88 9.81 86.53 14.58 86.53 14.58 86.53" fill="#666;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="21.73 61.25 41.12 61.25 41.12 66.01 21.73 66.01 21.73 61.25 21.73 61.25" fill="#666;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="25.32 55.32 37.52 55.32 37.52 58.87 25.32 58.87 25.32 55.32 25.32 55.32" fill="#666;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="28.88 55.32 34.86 55.32 34.86 58.87 28.88 58.87 28.88 55.32 28.88 55.32" fill="#999;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="25.32 61.25 34.86 61.25 34.86 66.01 25.32 66.01 25.32 61.25 25.32 61.25" fill="#999;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="53.03 77.02 53.03 86.53 48.27 86.53 48.27 77.02 53.03 77.02 53.03 77.02" fill="#999;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="14.58 77.02 14.58 86.53 9.81 86.53 9.81 77.02 14.58 77.02 14.58 77.02" fill="#999;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="27.1 96.05 36.92 96.05 36.92 100.81 27.1 100.81 27.1 96.05 27.1 96.05" fill="#999;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="16.96 27.66 18.18 25.16 20.76 23.31 22.34 22.58 25.73 22.86 28.96 22.9 30.09 22.9 30.09 26.45 22.34 26.45 19.95 28.27 19.95 56.49 22.9 58.27 41.12 58.27 42.89 55.28 42.89 28.27 40.51 26.45 32.47 26.45 32.47 22.9 32.55 22.74 33.73 22.54 34.33 22.5 35.02 22.5 38.65 22.62 40.51 22.58 42.98 23.83 45.28 25.97 45.72 26.77 45.88 27.66 45.88 28.95 45.88 57.7 44.39 60.36 42.01 61.21 41.12 61.25 39.87 61.25 21.73 61.25 18.46 60.36 17.09 58.55 16.96 57.7 16.96 56.41 16.96 27.66 16.96 27.66" fill="blue;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="28.88 50.56 33.97 50.56 33.97 54.11 28.88 54.11 28.88 50.56 28.88 50.56" fill="#b2b2b2;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="2.38 11.89 60.18 11.89 60.18 14.27 2.38 14.27 2.38 11.89 2.38 11.89" fill="#0000e5;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="55.41 7.14 55.41 8.51 55.41 9.23 55.41 9.48 55.41 10.52 55.41 11.89 55.29 11.89 7.55 11.89 7.43 11.89 7.43 10.52 7.43 7.14 9.37 4.8 9.81 4.76 11.15 4.76 53.03 4.76 55.38 6.69 55.41 7.14 55.41 7.14" fill="blue;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="7.43 21.69 7.43 20.32 7.43 19.6 7.43 19.35 7.43 18.31 7.43 16.93 7.55 16.93 55.29 16.93 55.41 16.93 55.41 18.31 55.41 21.69 53.48 24.03 53.03 24.07 51.7 24.07 9.81 24.07 7.47 22.14 7.43 21.69 7.43 21.69" fill="#00c;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="2.38 14.27 60.18 14.27 60.18 16.93 2.38 16.93 2.38 14.27 2.38 14.27" fill="#00c;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="3.55 11.89 5.94 11.89 5.94 10.69 3.55 10.69 3.55 11.89 3.55 11.89" fill="#4c4cff;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="56.59 11.89 58.97 11.89 58.97 10.69 56.59 10.69 56.59 11.89 56.59 11.89" fill="#4c4cff;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="30.09 11.89 32.47 11.89 32.47 10.69 30.09 10.69 30.09 11.89 30.09 11.89" fill="#4c4cff;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="12.2 11.89 14.58 11.89 14.58 10.69 12.2 10.69 12.2 11.89 12.2 11.89" fill="#4c4cff;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="20.56 11.89 22.94 11.89 22.94 10.69 20.56 10.69 20.56 11.89 20.56 11.89" fill="#4c4cff;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="39.91 11.89 42.29 11.89 42.29 10.69 39.91 10.69 39.91 11.89 39.91 11.89" fill="#4c4cff;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="48.27 11.89 50.65 11.89 50.65 10.69 48.27 10.69 48.27 11.89 48.27 11.89" fill="#4c4cff;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="3.55 18.14 6.26 18.14 6.26 16.93 3.55 16.93 3.55 18.14 3.55 18.14" fill="#00c;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="56.59 18.14 59.29 18.14 59.29 16.93 56.59 16.93 56.59 18.14 56.59 18.14" fill="#00c;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="30.09 18.14 32.76 18.14 32.76 16.93 30.09 16.93 30.09 18.14 30.09 18.14" fill="#00c;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="11.91 18.14 14.58 18.14 14.58 16.93 11.91 16.93 11.91 18.14 11.91 18.14" fill="#00c;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="20.56 18.14 23.22 18.14 23.22 16.93 20.56 16.93 20.56 18.14 20.56 18.14" fill="#00c;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="39.91 18.14 42.29 18.14 42.29 16.93 39.91 16.93 39.91 18.14 39.91 18.14" fill="#00c;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="48.27 18.14 50.65 18.14 50.65 16.93 48.27 16.93 48.27 18.14 48.27 18.14" fill="#00c;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="26.5 24.07 36.03 24.07 36.03 27.66 26.5 27.66 26.5 24.07 26.5 24.07" fill="#00c;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="21.73 66.01 41.12 66.01 41.12 69.59 21.73 69.59 21.73 66.01 21.73 66.01" fill="#999;fill-rule: evenodd"/>
-  <polygon points="23.55 66.01 39.3 66.01 39.3 69.59 23.55 69.59 23.55 66.01 23.55 66.01" fill="#b2b2b2;fill-rule: evenodd"/>
-  <polygon points="25.93 66.01 36.92 66.01 36.92 69.59 25.93 69.59 25.93 66.01 25.93 66.01" fill="#ccc;fill-rule: evenodd"/>
-  <polygon points="28.31 66.01 34.25 66.01 34.25 69.59 28.31 69.59 28.31 66.01 28.31 66.01" fill="#e5e5e5;fill-rule: evenodd"/>
-  <polygon points="30.7 66.01 31.87 66.01 31.87 69.59 30.7 69.59 30.7 66.01 30.7 66.01" fill="#fff;fill-rule: evenodd"/>
-  <polyline points="21.73 66.01 41.12 66.01 41.12 69.59 21.73 69.59 21.73 66.01" fill="none;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px"/>
-  <polygon points="6.54 48.75 6.54 50.56 7.75 50.56 7.75 49.96 15.19 49.96 15.19 50.56 16.4 50.56 16.4 48.75 6.54 48.75 6.54 48.75" fill="#b2b2b2;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="7.75 49.96 15.19 49.96 15.19 58.27 7.75 58.27 7.75 49.96 7.75 49.96" fill="#b2b2b2;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="21.73 69.59 21.73 71.97 20.56 73.14 15.79 73.14 14.58 71.97 14.58 93.67 15.79 92.5 20.56 92.5 21.73 93.67 21.73 96.05 41.12 96.05 41.12 93.67 42.29 92.5 47.05 92.5 48.27 93.67 48.27 71.97 47.05 73.14 42.29 73.14 41.12 71.97 41.12 69.59 21.73 69.59 21.73 69.59" fill="#b2b2b2;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="53.03 70.77 53.03 77.02 48.27 77.02 48.27 70.77 53.03 70.77 53.03 70.77" fill="#ccc;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="14.58 70.77 14.58 77.02 9.81 77.02 9.81 70.77 14.58 70.77 14.58 70.77" fill="#ccc;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="15.19 86.53 21.73 86.53 21.73 91.89 15.19 91.89 15.19 86.53 15.19 86.53" fill="#999;fill-rule: evenodd"/>
-  <polygon points="22.34 92.5 40.51 92.5 40.51 95.44 22.34 95.44 22.34 92.5 22.34 92.5" fill="#999;fill-rule: evenodd"/>
-  <polygon points="39.91 91.29 39.58 90 39.42 89.03 39.3 87.98 39.18 86.89 39.1 85.81 39.06 84.68 39.02 83.55 39.02 81.77 39.06 80.56 39.14 79.43 39.22 78.31 39.34 77.26 39.5 76.25 39.7 75.28 39.78 74.8 39.91 74.35 39.5 74.47 38.61 74.68 37.64 74.88 36.59 75.08 35.46 75.24 34.29 75.36 33.08 75.48 31.87 75.52 30.7 75.52 29.57 75.48 28.43 75.36 27.3 75.24 26.21 75.08 25.2 74.88 24.23 74.68 23.35 74.47 22.94 74.35 23.06 74.8 23.27 75.77 23.43 76.73 23.55 77.78 23.67 78.87 23.75 80 23.79 81.17 23.83 82.38 23.83 84.11 23.79 85.24 23.71 86.37 23.63 87.46 23.51 88.51 23.35 89.51 23.14 90.44 23.06 90.89 22.94 91.29 23.35 91.17 24.23 90.97 25.2 90.81 26.21 90.68 27.3 90.56 28.43 90.48 29.57 90.44 30.7 90.4 32.47 90.4 33.69 90.44 34.9 90.52 36.03 90.6 37.12 90.72 38.13 90.89 39.06 91.09 39.91 91.29 39.91 91.29" fill="#999;fill-rule: evenodd"/>
-  <polygon points="41.12 86.53 47.66 86.53 47.66 91.89 41.12 91.89 41.12 86.53 41.12 86.53" fill="#999;fill-rule: evenodd"/>
-  <polygon points="41.12 29.43 41.92 29.8 42.29 30.64 41.92 31.45 41.12 31.81 40.27 31.45 39.91 30.64 40.27 29.8 41.12 29.43 41.12 29.43" fill="#666;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="16.4 41.05 6.54 41.05 6.54 48.75 16.4 48.75 16.4 41.05 16.4 41.05" fill="#666;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="12.2 34.19 10.02 30.77 8.36 28.31 6.66 25.81 5.05 23.39 3.19 20.08 2.38 16.93 2.38 6.69 3.55 4.15 6.58 3.15 9.81 2.98 24.72 2.98 28.88 2.98 28.88 0.6 28.43 0.6 27.95 0.6 27.43 0.6 9.25 0.6 6.3 0.81 3.11 1.61 0.65 3.59 0.04 5.28 0 5.93 0 6.69 0 18.14 1.21 21.57 2.83 24.68 4.68 27.54 6.66 30.32 8.6 33.19 9.25 34.19 9.57 34.19 12.2 34.19 12.2 34.19" fill="#ffedcc;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="33.65 4.76 33.65 0 28.88 0 28.88 3.55 30.09 3.55 30.09 4.76 33.65 4.76 33.65 4.76" fill="#c93;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <polygon points="27.71 0 24.72 0 24.72 3.55 27.71 3.55 27.71 0 27.71 0" fill="#c93;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px;fill-rule: evenodd"/>
-  <line x1="30.09" y1="3.55" x2="31.26" y2="2.38" fill="none;stroke: #000;stroke-linecap: square;stroke-miterlimit: 10;stroke-width: 0px"/>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" width="110px" height="110px" viewBox="0 0 60.18 100.8">
+  <defs>
+  <style>
+      {`
+        .cls-1, .cls-13 {
+          fill: #ccc;
+        }
+
+        .cls-1, .cls-10, .cls-15, .cls-16, .cls-17, .cls-3, .cls-4, .cls-5, .cls-6, .cls-7, .cls-8, .cls-9 {
+          stroke: #000;
+          stroke-linecap: square;
+          stroke-miterlimit: 10;
+          stroke-width: 0;
+        }
+
+        .cls-1, .cls-10, .cls-11, .cls-12, .cls-13, .cls-14, .cls-16, .cls-17, .cls-2, .cls-3, .cls-4, .cls-5, .cls-6, .cls-7, .cls-8, .cls-9 {
+          fill-rule: evenodd;
+        }
+
+        .cls-2 {
+          fill: #fff;
+        }
+
+        .cls-11, .cls-3 {
+          fill: #999;
+        }
+
+        .cls-4 {
+          fill: #4c4c4c;
+        }
+
+        .cls-5 {
+          fill: #666;
+        }
+
+        .cls-6 {
+          fill: blue;
+        }
+
+        .cls-12, .cls-7 {
+          fill: #b2b2b2;
+        }
+
+        .cls-8 {
+          fill: #0000e5;
+        }
+
+        .cls-9 {
+          fill: #00c;
+        }
+
+        .cls-10 {
+          fill: #4c4cff;
+        }
+
+        .cls-14 {
+          fill: #e5e5e5;
+        }
+
+        .cls-15 {
+          fill: none;
+        }
+
+        .cls-16 {
+          fill: #ffedcc;
+        }
+
+        .cls-17 {
+          fill: #c93;
+        }
+      `}
+    </style>
+
+  </defs>
+  <polygon className="cls-1" points="29.48 31.21 33.08 31.21 33.08 50.24 29.48 50.24 29.48 31.21 29.48 31.21"/>
+  <polygon className="cls-2" points="30.7 31.21 31.87 31.21 31.87 50.24 30.7 50.24 30.7 31.21 30.7 31.21"/>
+  <polygon className="cls-3" points="10.42 58.27 12.8 58.27 12.8 59.48 10.42 59.48 10.42 58.27 10.42 58.27"/>
+  <polygon className="cls-3" points="16.4 34.19 6.54 34.19 6.54 41.05 16.4 41.05 16.4 34.19 16.4 34.19"/>
+  <polygon className="cls-3" points="27.71 27.66 34.86 27.66 34.86 31.21 27.71 31.21 27.71 27.66 27.71 27.66"/>
+  <polygon className="cls-3" points="21.73 34.19 23.55 34.19 23.55 43.1 21.73 43.1 21.73 34.19 21.73 34.19"/>
+  <polygon className="cls-4" points="21.16 40.73 21.16 40.16 25.32 40.16 25.32 29.43 37.52 29.43 37.52 30.04 25.93 30.04 25.93 40.73 21.16 40.73 21.16 40.73"/>
+  <polygon className="cls-4" points="27.71 54.11 34.86 54.11 34.86 55.32 27.71 55.32 27.71 54.11 27.71 54.11"/>
+  <polygon className="cls-4" points="16.4 35.4 24.11 35.4 24.11 36.57 16.4 36.57 16.4 35.4 16.4 35.4"/>
+  <polygon className="cls-1" points="38.73 24.07 43.5 24.07 43.5 34.19 38.73 34.19 38.73 24.07 38.73 24.07"/>
+  <polygon className="cls-5" points="21.73 96.05 41.12 96.05 41.12 100.81 21.73 100.81 21.73 96.05 21.73 96.05"/>
+  <polygon className="cls-5" points="53.03 86.53 53.03 94.88 48.27 94.88 48.27 86.53 53.03 86.53 53.03 86.53"/>
+  <polygon className="cls-5" points="14.58 86.53 14.58 94.88 9.81 94.88 9.81 86.53 14.58 86.53 14.58 86.53"/>
+  <polygon className="cls-5" points="21.73 61.25 41.12 61.25 41.12 66.01 21.73 66.01 21.73 61.25 21.73 61.25"/>
+  <polygon className="cls-5" points="25.32 55.32 37.52 55.32 37.52 58.87 25.32 58.87 25.32 55.32 25.32 55.32"/>
+  <polygon className="cls-3" points="28.88 55.32 34.86 55.32 34.86 58.87 28.88 58.87 28.88 55.32 28.88 55.32"/>
+  <polygon className="cls-3" points="25.32 61.25 34.86 61.25 34.86 66.01 25.32 66.01 25.32 61.25 25.32 61.25"/>
+  <polygon className="cls-3" points="53.03 77.02 53.03 86.53 48.27 86.53 48.27 77.02 53.03 77.02 53.03 77.02"/>
+  <polygon className="cls-3" points="14.58 77.02 14.58 86.53 9.81 86.53 9.81 77.02 14.58 77.02 14.58 77.02"/>
+  <polygon className="cls-3" points="27.1 96.05 36.92 96.05 36.92 100.81 27.1 100.81 27.1 96.05 27.1 96.05"/>
+  <polygon className="cls-6" points="16.96 27.66 18.18 25.16 20.76 23.31 22.34 22.58 25.73 22.86 28.96 22.9 30.09 22.9 30.09 26.45 22.34 26.45 19.95 28.27 19.95 56.49 22.9 58.27 41.12 58.27 42.89 55.28 42.89 28.27 40.51 26.45 32.47 26.45 32.47 22.9 32.55 22.74 33.73 22.54 34.33 22.5 35.02 22.5 38.65 22.62 40.51 22.58 42.98 23.83 45.28 25.97 45.72 26.77 45.88 27.66 45.88 28.95 45.88 57.7 44.39 60.36 42.01 61.21 41.12 61.25 39.87 61.25 21.73 61.25 18.46 60.36 17.09 58.55 16.96 57.7 16.96 56.41 16.96 27.66 16.96 27.66"/>
+  <polygon className="cls-7" points="28.88 50.56 33.97 50.56 33.97 54.11 28.88 54.11 28.88 50.56 28.88 50.56"/>
+  <polygon className="cls-8" points="2.38 11.89 60.18 11.89 60.18 14.27 2.38 14.27 2.38 11.89 2.38 11.89"/>
+  <polygon className="cls-6" points="55.41 7.14 55.41 8.51 55.41 9.23 55.41 9.48 55.41 10.52 55.41 11.89 55.29 11.89 7.55 11.89 7.43 11.89 7.43 10.52 7.43 7.14 9.37 4.8 9.81 4.76 11.15 4.76 53.03 4.76 55.38 6.69 55.41 7.14 55.41 7.14"/>
+  <polygon className="cls-9" points="7.43 21.69 7.43 20.32 7.43 19.6 7.43 19.35 7.43 18.31 7.43 16.93 7.55 16.93 55.29 16.93 55.41 16.93 55.41 18.31 55.41 21.69 53.48 24.03 53.03 24.07 51.7 24.07 9.81 24.07 7.47 22.14 7.43 21.69 7.43 21.69"/>
+  <polygon className="cls-9" points="2.38 14.27 60.18 14.27 60.18 16.93 2.38 16.93 2.38 14.27 2.38 14.27"/>
+  <polygon className="cls-10" points="3.55 11.89 5.94 11.89 5.94 10.69 3.55 10.69 3.55 11.89 3.55 11.89"/>
+  <polygon className="cls-10" points="56.59 11.89 58.97 11.89 58.97 10.69 56.59 10.69 56.59 11.89 56.59 11.89"/>
+  <polygon className="cls-10" points="30.09 11.89 32.47 11.89 32.47 10.69 30.09 10.69 30.09 11.89 30.09 11.89"/>
+  <polygon className="cls-10" points="12.2 11.89 14.58 11.89 14.58 10.69 12.2 10.69 12.2 11.89 12.2 11.89"/>
+  <polygon className="cls-10" points="20.56 11.89 22.94 11.89 22.94 10.69 20.56 10.69 20.56 11.89 20.56 11.89"/>
+  <polygon className="cls-10" points="39.91 11.89 42.29 11.89 42.29 10.69 39.91 10.69 39.91 11.89 39.91 11.89"/>
+  <polygon className="cls-10" points="48.27 11.89 50.65 11.89 50.65 10.69 48.27 10.69 48.27 11.89 48.27 11.89"/>
+  <polygon className="cls-9" points="3.55 18.14 6.26 18.14 6.26 16.93 3.55 16.93 3.55 18.14 3.55 18.14"/>
+  <polygon className="cls-9" points="56.59 18.14 59.29 18.14 59.29 16.93 56.59 16.93 56.59 18.14 56.59 18.14"/>
+  <polygon className="cls-9" points="30.09 18.14 32.76 18.14 32.76 16.93 30.09 16.93 30.09 18.14 30.09 18.14"/>
+  <polygon className="cls-9" points="11.91 18.14 14.58 18.14 14.58 16.93 11.91 16.93 11.91 18.14 11.91 18.14"/>
+  <polygon className="cls-9" points="20.56 18.14 23.22 18.14 23.22 16.93 20.56 16.93 20.56 18.14 20.56 18.14"/>
+  <polygon className="cls-9" points="39.91 18.14 42.29 18.14 42.29 16.93 39.91 16.93 39.91 18.14 39.91 18.14"/>
+  <polygon className="cls-9" points="48.27 18.14 50.65 18.14 50.65 16.93 48.27 16.93 48.27 18.14 48.27 18.14"/>
+  <polygon className="cls-9" points="26.5 24.07 36.03 24.07 36.03 27.66 26.5 27.66 26.5 24.07 26.5 24.07"/>
+  <polygon className="cls-11" points="21.73 66.01 41.12 66.01 41.12 69.59 21.73 69.59 21.73 66.01 21.73 66.01"/>
+  <polygon className="cls-12" points="23.55 66.01 39.3 66.01 39.3 69.59 23.55 69.59 23.55 66.01 23.55 66.01"/>
+  <polygon className="cls-13" points="25.93 66.01 36.92 66.01 36.92 69.59 25.93 69.59 25.93 66.01 25.93 66.01"/>
+  <polygon className="cls-14" points="28.31 66.01 34.25 66.01 34.25 69.59 28.31 69.59 28.31 66.01 28.31 66.01"/>
+  <polygon className="cls-2" points="30.7 66.01 31.87 66.01 31.87 69.59 30.7 69.59 30.7 66.01 30.7 66.01"/>
+  <polyline className="cls-15" points="21.73 66.01 41.12 66.01 41.12 69.59 21.73 69.59 21.73 66.01"/>
+  <polygon className="cls-7" points="6.54 48.75 6.54 50.56 7.75 50.56 7.75 49.96 15.19 49.96 15.19 50.56 16.4 50.56 16.4 48.75 6.54 48.75 6.54 48.75"/>
+  <polygon className="cls-7" points="7.75 49.96 15.19 49.96 15.19 58.27 7.75 58.27 7.75 49.96 7.75 49.96"/>
+  <polygon className="cls-7" points="21.73 69.59 21.73 71.97 20.56 73.14 15.79 73.14 14.58 71.97 14.58 93.67 15.79 92.5 20.56 92.5 21.73 93.67 21.73 96.05 41.12 96.05 41.12 93.67 42.29 92.5 47.05 92.5 48.27 93.67 48.27 71.97 47.05 73.14 42.29 73.14 41.12 71.97 41.12 69.59 21.73 69.59 21.73 69.59"/>
+  <polygon className="cls-1" points="53.03 70.77 53.03 77.02 48.27 77.02 48.27 70.77 53.03 70.77 53.03 70.77"/>
+  <polygon className="cls-1" points="14.58 70.77 14.58 77.02 9.81 77.02 9.81 70.77 14.58 70.77 14.58 70.77"/>
+  <polygon className="cls-11" points="15.19 86.53 21.73 86.53 21.73 91.89 15.19 91.89 15.19 86.53 15.19 86.53"/>
+  <polygon className="cls-11" points="22.34 92.5 40.51 92.5 40.51 95.44 22.34 95.44 22.34 92.5 22.34 92.5"/>
+  <polygon className="cls-11" points="39.91 91.29 39.58 90 39.42 89.03 39.3 87.98 39.18 86.89 39.1 85.81 39.06 84.68 39.02 83.55 39.02 81.77 39.06 80.56 39.14 79.43 39.22 78.31 39.34 77.26 39.5 76.25 39.7 75.28 39.78 74.8 39.91 74.35 39.5 74.47 38.61 74.68 37.64 74.88 36.59 75.08 35.46 75.24 34.29 75.36 33.08 75.48 31.87 75.52 30.7 75.52 29.57 75.48 28.43 75.36 27.3 75.24 26.21 75.08 25.2 74.88 24.23 74.68 23.35 74.47 22.94 74.35 23.06 74.8 23.27 75.77 23.43 76.73 23.55 77.78 23.67 78.87 23.75 80 23.79 81.17 23.83 82.38 23.83 84.11 23.79 85.24 23.71 86.37 23.63 87.46 23.51 88.51 23.35 89.51 23.14 90.44 23.06 90.89 22.94 91.29 23.35 91.17 24.23 90.97 25.2 90.81 26.21 90.68 27.3 90.56 28.43 90.48 29.57 90.44 30.7 90.4 32.47 90.4 33.69 90.44 34.9 90.52 36.03 90.6 37.12 90.72 38.13 90.89 39.06 91.09 39.91 91.29 39.91 91.29"/>
+  <polygon className="cls-11" points="41.12 86.53 47.66 86.53 47.66 91.89 41.12 91.89 41.12 86.53 41.12 86.53"/>
+  <polygon className="cls-5" points="41.12 29.43 41.92 29.8 42.29 30.64 41.92 31.45 41.12 31.81 40.27 31.45 39.91 30.64 40.27 29.8 41.12 29.43 41.12 29.43"/>
+  <polygon className="cls-5" points="16.4 41.05 6.54 41.05 6.54 48.75 16.4 48.75 16.4 41.05 16.4 41.05"/>
+  <polygon className="cls-16" points="12.2 34.19 10.02 30.77 8.36 28.31 6.66 25.81 5.05 23.39 3.19 20.08 2.38 16.93 2.38 6.69 3.55 4.15 6.58 3.15 9.81 2.98 24.72 2.98 28.88 2.98 28.88 0.6 28.43 0.6 27.95 0.6 27.43 0.6 9.25 0.6 6.3 0.81 3.11 1.61 0.65 3.59 0.04 5.28 0 5.93 0 6.69 0 18.14 1.21 21.57 2.83 24.68 4.68 27.54 6.66 30.32 8.6 33.19 9.25 34.19 9.57 34.19 12.2 34.19 12.2 34.19"/>
+  <polygon className="cls-17" points="33.65 4.76 33.65 0 28.88 0 28.88 3.55 30.09 3.55 30.09 4.76 33.65 4.76 33.65 4.76"/>
+  <polygon className="cls-17" points="27.71 0 24.72 0 24.72 3.55 27.71 3.55 27.71 0 27.71 0"/>
+  <line className="cls-15" x1="30.09" y1="3.55" x2="31.26" y2="2.38"/>
+  <line className="cls-15" x1="41.12" y1="29.43" x2="41.12" y2="31.81"/>
 </svg>
+
 
 )
 

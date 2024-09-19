@@ -8,7 +8,6 @@ import SetAttribute1 from "../../OTSUKA/title-OTK";
 import { httpApi } from "@/api/http.api";
 import { DotGreen, DotRed } from "./SVG_Scorecard";
 
-import "./ScoreCard.css"
 import { nameValue } from "../../SetupData/namValue";
 
 interface StateMap {
@@ -2760,20 +2759,30 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
 
     ];
 
+
+    const formatValue = (value:any) => {
+        return value !== null
+            ? new Intl.NumberFormat('en-US', {
+                  maximumFractionDigits: 2,
+                  useGrouping: true, 
+              }).format(parseFloat(value))
+            : "";
+    };
+
     const TD_CON_STT = [
         {
             name: <span>{tagNamePLC.WIS_Calorimeter}</span>,
-            PLC: <span style={combineCss.CSSWIS_Calorimeter}> {WIS_Calorimeter} </span>,
+            PLC: <span style={combineCss.CSSWIS_Calorimeter}> {formatValue(WIS_Calorimeter)} </span>,
         },
         
         {
             name: <span>{tagNamePLC.Calorific_Calorimeter}</span>,
-            PLC: <span style={combineCss.CSSCalorific_Calorimeter}>{Calorific_Calorimeter} </span>,
+            PLC: <span style={combineCss.CSSCalorific_Calorimeter}>{formatValue(Calorific_Calorimeter)} </span>,
         },
 
         {
             name: <span>{tagNamePLC.Specific_Calorimeter}</span>,
-            PLC: <span style={combineCss.CSSSpecific_Calorimeter}> {Specific_Calorimeter}</span>,
+            PLC: <span style={combineCss.CSSSpecific_Calorimeter}> {formatValue(Specific_Calorimeter)}</span>,
         },
 
      

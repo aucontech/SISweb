@@ -8,7 +8,6 @@ import SetAttribute1 from "../../OTSUKA/title-OTK";
 import { httpApi } from "@/api/http.api";
 import { DotGreen, DotRed } from "./SVG_Scorecard";
 
-import "./ScoreCard.css"
 import { Down, Up } from "../SVG_Scorecard";
 
 interface StateMap {
@@ -35,8 +34,6 @@ export default function ScoreCard_SPMCV() {
     const [isVisible, setIsVisible] = useState(false);
 
 
-    const [EVC_STT01, setEVC_STT01] = useState<any | null>(null);
-    const [PLC_Conn_STT, setPLC_Conn_STT] = useState<any | null>(null);
 
     const [FC_Conn_STTValue, setFC_Conn_STTValue] = useState<string | null>(
         null
@@ -130,7 +127,7 @@ export default function ScoreCard_SPMCV() {
                         DO_SV_01: setDO_SV_01,
 
 
-                        EVC_01_Conn_STT: setEVC_STT01,
+                        EVC_01_Conn_STT: setEVC_01_Conn_STT,
                         PLC_Conn_STT: setPLC_Conn_STT,
 
                     };
@@ -477,8 +474,26 @@ export default function ScoreCard_SPMCV() {
                 (item: any) => item.key === "DI_SD_1_Maintain"
             );
 
+            const EVC_01_Conn_STT_High = res.data.find((item: any) => item.key === "EVC_01_Conn_STT_High");
+            setEVC_01_Conn_STT_High(EVC_01_Conn_STT_High?.value || null);
+            const EVC_01_Conn_STT_Low = res.data.find((item: any) => item.key === "EVC_01_Conn_STT_Low");
+            setEVC_01_Conn_STT_Low(EVC_01_Conn_STT_Low?.value || null);
+            const EVC_01_Conn_STT_Maintain = res.data.find(
+                (item: any) => item.key === "EVC_01_Conn_STT_Maintain"
+            );
+            const PLC_Conn_STT_High = res.data.find((item: any) => item.key === "PLC_Conn_STT_High");
+            setPLC_Conn_STT_High(PLC_Conn_STT_High?.value || null);
+            const PLC_Conn_STT_Low = res.data.find((item: any) => item.key === "PLC_Conn_STT_Low");
+            setPLC_Conn_STT_Low(PLC_Conn_STT_Low?.value || null);
+            const PLC_Conn_STT_Maintain = res.data.find(
+                (item: any) => item.key === "PLC_Conn_STT_Maintain"
+            );
+
  // =================================================================================================================== 
 
+ setMaintainEVC_01_Conn_STT(EVC_01_Conn_STT_Maintain?.value || false);
+
+ setMaintainPLC_Conn_STT(PLC_Conn_STT_Maintain?.value || false);
 
 
             
@@ -1217,6 +1232,50 @@ useEffect(() => {
             }
         }, [DI_SD_1, DI_SD_1_High, DI_SD_1_Low, maintainDI_SD_1]);
 
+
+          // =================================================================================================================== 
+          const [EVC_01_Conn_STT, setEVC_01_Conn_STT] = useState<string | null>(null);
+     
+          const [EVC_01_Conn_STT_High, setEVC_01_Conn_STT_High] = useState<number | null>(null);
+          const [EVC_01_Conn_STT_Low, setEVC_01_Conn_STT_Low] = useState<number | null>(null);
+          const [exceedThresholdEVC_01_Conn_STT, setexceedThresholdEVC_01_Conn_STT] = useState(false); 
+          const [maintainEVC_01_Conn_STT, setMaintainEVC_01_Conn_STT] = useState<boolean>(false);
+          
+          useEffect(() => {
+              const EVC_01_Conn_STTValue = parseFloat(EVC_01_Conn_STT as any);
+              const highValue = EVC_01_Conn_STT_High ?? NaN;
+              const lowValue = EVC_01_Conn_STT_Low ?? NaN;
+          
+              if (!isNaN(EVC_01_Conn_STTValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainEVC_01_Conn_STT) {
+                  setexceedThresholdEVC_01_Conn_STT(EVC_01_Conn_STTValue >= highValue || EVC_01_Conn_STTValue <= lowValue);
+              }
+          }, [EVC_01_Conn_STT, EVC_01_Conn_STT_High, EVC_01_Conn_STT_Low, maintainEVC_01_Conn_STT]);
+          
+
+          // =================================================================================================================== 
+ 
+ 
+ const [PLC_Conn_STT, setPLC_Conn_STT] = useState<string | null>(null);
+
+ const [PLC_Conn_STT_High, setPLC_Conn_STT_High] = useState<number | null>(null);
+ const [PLC_Conn_STT_Low, setPLC_Conn_STT_Low] = useState<number | null>(null);
+ const [exceedThresholdPLC_Conn_STT, setexceedThresholdPLC_Conn_STT] = useState(false); 
+ const [maintainPLC_Conn_STT, setMaintainPLC_Conn_STT] = useState<boolean>(false);
+ 
+ useEffect(() => {
+     const PLC_Conn_STTValue = parseFloat(PLC_Conn_STT as any);
+     const highValue = PLC_Conn_STT_High ?? NaN;
+     const lowValue = PLC_Conn_STT_Low ?? NaN;
+ 
+     if (!isNaN(PLC_Conn_STTValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPLC_Conn_STT) {
+         setexceedThresholdPLC_Conn_STT(PLC_Conn_STTValue >= highValue || PLC_Conn_STTValue <= lowValue);
+     }
+ }, [PLC_Conn_STT, PLC_Conn_STT_High, PLC_Conn_STT_Low, maintainPLC_Conn_STT]);
+ 
+
+ 
+          // =================================================================================================================== 
+          
      //======================================================================================================================
     const tagNameEVC = {
         Output: "Output Pressure (BarA)",
@@ -1230,6 +1289,9 @@ useEffect(() => {
         VmToday: "Gross Volume Vm Today (m³)",
         VmLastDay: "Gross Volume Vm Yesterday (m³)",
         ReBattery: "Remain Battery Service Life (Months)",
+
+        EVC_01_Conn_STT: "EVC-1701 Connection Status (0: Not Init - 1: COM OK - 2: Error)",
+        PLC_Conn_STT: "PLC Connection Status (0: Not Init - 1: COM OK - 2: Error)",
     };
 
     const tagNamePLC = {
@@ -1303,14 +1365,11 @@ useEffect(() => {
             ? " Normal"
             : null;
 
+            const DataEVC_01_Conn_STT  = EVC_01_Conn_STT === "0" ? "Not Init" : EVC_01_Conn_STT === "1" ? "COM OK" : EVC_01_Conn_STT === "2" ? "Error" : null;
+            const DataPLC_Conn_STT  = PLC_Conn_STT === "0" ? "Not Init" : PLC_Conn_STT === "1" ? "COM OK" : PLC_Conn_STT === "2" ? "Error" : null;
 
 
             const combineCss = {
-
-
-
-    
-
 
                 CSSEVC_01_Remain_Battery_Service_Life : {
                     color:exceedThresholdEVC_01_Remain_Battery_Service_Life && !maintainEVC_01_Remain_Battery_Service_Life
@@ -1760,6 +1819,33 @@ useEffect(() => {
                     ? 18
                     : ""
                 },
+
+                CSSEVC_01_Conn_STT : {
+                    color:exceedThresholdEVC_01_Conn_STT && !maintainEVC_01_Conn_STT
+                    ? "#ff5656"
+                    : maintainEVC_01_Conn_STT
+                    ? "orange"
+                    : "" ,
+                    fontWeight: (exceedThresholdEVC_01_Conn_STT || maintainEVC_01_Conn_STT)
+                    ? 600
+                    : "",
+                    fontSize: (exceedThresholdEVC_01_Conn_STT || maintainEVC_01_Conn_STT)
+                    ? 18
+                    : ""
+                },
+                CSSPLC_Conn_STT : {
+                    color:exceedThresholdPLC_Conn_STT && !maintainPLC_Conn_STT
+                    ? "#ff5656"
+                    : maintainPLC_Conn_STT
+                    ? "orange"
+                    : "" ,
+                    fontWeight: (exceedThresholdPLC_Conn_STT || maintainPLC_Conn_STT)
+                    ? 600
+                    : "",
+                    fontSize: (exceedThresholdPLC_Conn_STT || maintainPLC_Conn_STT)
+                    ? 18
+                    : ""
+                },
         
           };
           const formatValue = (value:any) => {
@@ -1819,7 +1905,17 @@ useEffect(() => {
             },
         ];
     
+        const STT = [
 
+            {
+                name: <span>{tagNameEVC.EVC_01_Conn_STT}</span>,
+                STT: <span style={combineCss.CSSEVC_01_Conn_STT}>{formatValue(EVC_01_Conn_STT)} {DataEVC_01_Conn_STT}</span>,
+            },
+            {
+                name: <span>{tagNameEVC.PLC_Conn_STT}</span>,
+                STT: <span style={combineCss.CSSPLC_Conn_STT}>{formatValue(PLC_Conn_STT)} {DataPLC_Conn_STT}</span>,
+            },
+        ]
 
         const dataEVC02 = [
             {
@@ -1944,48 +2040,29 @@ useEffect(() => {
 
     return (
         <div >
-            <div  >
-                <div
-                    style={{
-                        background: "#64758B",
-                        color: "white",
-                        borderRadius: "10px 10px 0 0",
-                        display:'flex',
-                        justifyContent:'space-between'
-                    }}
-                >
-                    <div
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            padding: "5px 5px 0px 5px",
-                        }}
-                    >
-                        <div style={{ fontSize: 30, fontWeight: 700 }}>
-                            {" "}
+                <div className="Container_Scorecard1" >
+                   <div className="Container_Scorecard2" >
+                        <div className="Container_Name" >
                             SPMCV
                         </div>
-
-                        
-                       
                     </div>
                     <div
-                        style={{
-                            alignItems: "center",
-                            padding:5,
-                            display:'flex' 
-                        }}
-                    >
-                      
-                        <div style={{  fontWeight: 500,display:'flex' }}>
+                    className="Container_Time_Show" >
+                        
+                        <div className="Container_Time" >
                            {FC_Conn_STTValue}
                         </div>
-                        <div  onClick={handleShowMore} >
-                    {ShowMore ? <span style={{cursor:"pointer",  }}>{Up}</span>  : <span style={{cursor:"pointer"}}>{Down}</span>}
+                        <div className="Container_Show"  onClick={handleShowMore} >
+                    {ShowMore ?
+                    
+                    <span style={{fontSize:'2rem',cursor:'pointer'}}  className="pi pi-arrow-circle-down"></span>
+                     :
+                    <span style={{fontSize:'2rem',cursor:'pointer'}}  className="pi pi-arrow-circle-up"></span>}
+
+
                     </div>
                     </div>
-                 
+                    
                 </div>
 
 
@@ -1996,7 +2073,7 @@ useEffect(() => {
                     <Column
                         style={{display:'flex', justifyContent:'flex-end'}}
                         field="evc1901"
-                        header={EVC_STT01 === "1" ? (
+                        header={EVC_01_Conn_STT === "1" ? (
                             <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center',}}>
                             {DotGreen} <p>EVC-1701</p>
                            </div>
@@ -2028,6 +2105,28 @@ useEffect(() => {
                             )}
                         ></Column>
                     </DataTable>
+
+
+                    <DataTable value={STT} size="small" selectionMode="single">
+                        <Column  field="name" header={<span className="id556" > Status</span>}></Column>
+                        <Column
+                        style={{display:'flex', justifyContent:'flex-end'}}
+
+                            field="STT"
+                            header={PLC_Conn_STT === "1" ? (
+
+                                <div style={{ padding:11,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                                 <p style={{marginLeft:5}}></p>
+   
+                               </div>
+                                
+                            ) : (
+                                <div style={{  padding:11, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
+                                 <p style={{marginLeft:5}}></p>
+                             </div>
+                            )}
+                        ></Column>
+                    </DataTable>
                     </div> 
                 
                 : 
@@ -2037,7 +2136,7 @@ useEffect(() => {
                     <Column
                         style={{display:'flex', justifyContent:'flex-end'}}
                         field="evc1901"
-                        header={EVC_STT01 === "1" ? (
+                        header={EVC_01_Conn_STT === "1" ? (
                             <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center',}}>
                             {DotGreen} <p>EVC-1701</p>
                            </div>
@@ -2055,6 +2154,5 @@ useEffect(() => {
 
         
 
-        </div>
     );
 }

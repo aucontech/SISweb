@@ -302,11 +302,11 @@ export default function GraphicSogec() {
                     className=""
                     style={{
                         position: "absolute",
-                        top: "100px",
-                        right: "40px",
+                        top: "70px",
+                        right: "30px",
                         cursor: "pointer",
-                        width: 40,
-                        height: 40,
+                        width: 25,
+                        height: 25,
                         textAlign: "center",
                         justifyContent: "center",
                         borderRadius: "5px",
@@ -314,7 +314,7 @@ export default function GraphicSogec() {
                 >
                     <MdOutlineZoomOutMap
                         style={{ marginTop: 3 }}
-                        size={35}
+                        size={30}
                         className="GraphicSogec"
                         onClick={handleFullscreenToggle}
                     />

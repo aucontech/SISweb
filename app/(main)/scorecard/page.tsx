@@ -23,9 +23,11 @@ import ScoreCard_SNG_HUNGYEN from "./components/ScoreCard_SNG_HUNGYEN";
 import ScoreCard_CNG_PRU from "./components/ScoreCard_CNG_PRU";
 import ScoreCard_CNG_BINHDUONG from "./components/ScoreCard_CNG_BINHDUONG";
 import ScoreCard_CNG_HUNGYEN from "./components/ScoreCard_CNG_HUNGYEN";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MultiSelect } from "primereact/multiselect";
 import LPG_Scorecard from "./LPG_Scorecard/LPG_Scorecard";
+
+import "./ScoreCard.css"
 
 interface stationOptions {
   label: string;
@@ -42,6 +44,7 @@ type StationListType = {
 const ScoreCard = () => {
     const [selectedStations, setSelectedStations] = useState<string[]>([]);
     const [activeIndex, setActiveIndex] = useState(0);
+    const [isScrolled, setIsScrolled] = useState(false);
   
     const stationList: StationListType = {
       LGDS: <ScoreCard_LGDS />,
@@ -74,7 +77,15 @@ const ScoreCard = () => {
         setActiveIndex(4); // Switch to the station tab
       }
     };
-  
+    const panelFooterTemplate = () => {
+      const length = selectedStations ? selectedStations.length : 0;
+
+      return (
+          <div className="py-2 px-3">
+              <b>{length}</b> item{length > 1 ? 's' : ''} selected.
+          </div>
+      );
+  };
     const InputSearch = () => {
       return (
         <div>
@@ -86,21 +97,29 @@ const ScoreCard = () => {
             placeholder="Select stations"
             display="chip"
             className="p-multiselect-custom"
-            style={{height:51}}
+            panelFooterTemplate={panelFooterTemplate}
+            style={{height:51,alignItems:'center'}}
+
           />
         </div>
       );
     };
-  
+
+
     return (
-      <div>
+      <div >
         <div
           style={{
-            display: "flex",
-            justifyContent: "space-between",
+           
+        
+            position: "sticky",
+      top: 63, 
+      zIndex: 99999, // 
+      background:'white',
+      boxShadow: '2px 2x 3px rgba(0, 0, 0, 0.5)', 
           }}
         >
-          <div style={{width:'100%'}}>
+          <div style={{display:'flex',justifyContent:'space-between', zIndex:9999,  height:51 }}>
             <TabView
               activeIndex={activeIndex}
               onTabChange={(e) => setActiveIndex(e.index)}
@@ -112,12 +131,13 @@ const ScoreCard = () => {
               <TabPanel header="LPG" />
               <TabPanel  header={<span className="pi pi-fw pi-table"></span>} />
             </TabView>
+          <div style={{ marginLeft: "auto", }}>{InputSearch()}</div>
+
           </div>
   
-          <div style={{ marginLeft: "auto",marginBottom:40 }}>{InputSearch()}</div>
         </div>
   
-        <div>
+        <div style={{marginTop:5}}  >
   {activeIndex === 0 && <NG_Scorecard />}
   {activeIndex === 1 && <SNG_Scorecard />}
   {activeIndex === 2 && <CNG_Scorecard />}

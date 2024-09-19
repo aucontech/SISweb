@@ -327,12 +327,12 @@ const InputSearch = () => {
 
 
   return (
-    <>
-      <div
+    <div >
+      {/* <div
                     className=""
                     style={{
                         position: "absolute",
-                        top: "100px",
+                        top: "80px",
                         right: "40px",
                         cursor: "pointer",
                         textAlign: "center",
@@ -341,9 +341,13 @@ const InputSearch = () => {
                     }}
                 >
                    {InputSearch()}
-                </div>
-      <MegaMenu model={items} style={{ borderRadius: 5 }} />
+                </div> */}
+
+                <div style={{position:'sticky', top:63, zIndex:9999}}>
+      <MegaMenu model={items} style={{ borderRadius: 5, background:'white' }} />
+      </div>
+
       {activeComponent}
-    </>
+    </div>
   );
 }
