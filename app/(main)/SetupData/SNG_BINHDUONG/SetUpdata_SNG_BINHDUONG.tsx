@@ -51,16 +51,10 @@ export default function SetUpdata_SNG_BINHDUONG() {
     const userData = Authorization ? JSON.parse(Authorization) : null;
      const userId = userData?.id?.id;
     
-    const AuthUpdate = userId === UserTechnican.A  ||
-    userId === UserTechnican.Q ||
-     userId ===  UserTechnican.N ||
-      userId === UserTechnican.T  ||
-       userId === UserTechnican.TN ||
-        userId === UserTechnican.DT ||
-        userId === UserTechnican.KL ; 
+
     
     
-    const AuthInput = userId !== UserTechnican.A  && 
+    const TECH_OPER = userId !== UserTechnican.A  && 
     userId !== UserTechnican.Q &&
     userId !==  UserTechnican.N &&
      userId !== UserTechnican.T  &&
@@ -79,7 +73,7 @@ export default function SetUpdata_SNG_BINHDUONG() {
             userId !== UserTechnican.KL ;
 
 
-            const AuthInputHighLow = userId !== UserTechnican.A  && 
+            const TECHNIAN_AUTH = userId !== UserTechnican.A  && 
             userId !== UserTechnican.Q &&
             userId !==  UserTechnican.N &&
              userId !== UserTechnican.T  &&
@@ -4406,20 +4400,23 @@ const ChangeMaintainSDV_2003 = async () => {
          
   const mainCategoryFC = {
     EVC01: 'EVC01 -  Parameter & Configuration',
-    Calorimeter: <span  style={{display:'flex',textAlign:'center', justifyContent:'space-between'  }}> Calorimeter -  Parameter & Configuration  {!AuthInput && ( <div style={{display:'flex' , textAlign:'center', alignItems:'center',}}>  
+    Calorimeter: <span  style={{display:'flex',textAlign:'center', justifyContent:'space-between'  }}> Calorimeter -  Parameter & Configuration   <div style={{display:'flex' , textAlign:'center', alignItems:'center',}}>  
     <Checkbox
+    disabled={TECH_OPER}
         style={{ marginRight: 5 }}
         onChange={handleCheckboxChangeTD}
         checked={checkMaintainingTD}
     />
-<p style={{fontSize:15}}>Maintain Calorimeter</p>  </div> )}  </span>   ,
-    PLC:  <span  style={{display:'flex',textAlign:'center', justifyContent:'space-between'  }}> PLC -  Parameter & Configuration  {!AuthInput && ( <div style={{display:'flex' , textAlign:'center', alignItems:'center',}}>  
+<p style={{fontSize:15}}>Maintain Calorimeter</p>  </div>  </span>   ,
+    PLC:  <span  style={{display:'flex',textAlign:'center', justifyContent:'space-between'  }}> PLC -  Parameter & Configuration   <div style={{display:'flex' , textAlign:'center', alignItems:'center',}}>  
     <Checkbox
+    disabled={TECH_OPER}
+
         style={{ marginRight: 5 }}
         onChange={handleCheckboxChangePLC}
         checked={checkMaintainingPLC}
     />
-<p style={{fontSize:15}}>Maintain PLC </p>  </div> )}  </span> ,
+<p style={{fontSize:15}}>Maintain PLC </p>  </div>  </span> ,
 };
 
 
@@ -4443,16 +4440,16 @@ const formatValue = (value:any) => {
     
             value: <span style={combineCss.CSSPT_2004} > {formatValue(PT_2004)} {nameValue.BARG} </span> , 
              high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
              
              style={combineCss.CSSPT_2004}   placeholder='High' step="0.1" type='number' value={inputValuePT_2004} onChange={handleInputChangePT_2004} inputMode="decimal" />, 
              low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
              
              style={combineCss.CSSPT_2004}   placeholder='Low' step="0.1" type='number' value={inputValue2PT_2004} onChange={handleInputChange2PT_2004} inputMode="decimal" />,
              update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
              Maintain:   <Checkbox  
-             disabled={AuthInput} 
+             disabled={TECH_OPER} 
              style={{ marginRight: 20, }}
              onChange={ChangeMaintainPT_2004}
              checked={maintainPT_2004}
@@ -4470,16 +4467,16 @@ disabled={AuthInputHighLow}
     
             value: <span style={combineCss.CSSPT_2005} > {formatValue(PT_2005)}  {nameValue.BARG}</span> , 
              high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
              
              style={combineCss.CSSPT_2005}   placeholder='High' step="0.1" type='number' value={inputValuePT_2005} onChange={handleInputChangePT_2005} inputMode="decimal" />, 
              low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
              
              style={combineCss.CSSPT_2005}   placeholder='Low' step="0.1" type='number' value={inputValue2PT_2005} onChange={handleInputChange2PT_2005} inputMode="decimal" />,
              update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
              Maintain:   <Checkbox  
-             disabled={AuthInput} 
+             disabled={TECH_OPER} 
              style={{ marginRight: 20, }}
              onChange={ChangeMaintainPT_2005}
              checked={maintainPT_2005}
@@ -4497,16 +4494,16 @@ disabled={AuthInputHighLow}
    
            value: <span style={combineCss.CSSTT_2003} > {formatValue(TT_2003)}  {nameValue.C}</span> , 
             high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
             
             style={combineCss.CSSTT_2003}   placeholder='High' step="0.1" type='number' value={inputValueTT_2003} onChange={handleInputChangeTT_2003} inputMode="decimal" />, 
             low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
             
             style={combineCss.CSSTT_2003}   placeholder='Low' step="0.1" type='number' value={inputValue2TT_2003} onChange={handleInputChange2TT_2003} inputMode="decimal" />,
             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
             Maintain:   <Checkbox  
-            disabled={AuthInput} 
+            disabled={TECH_OPER} 
             style={{ marginRight: 20, }}
             onChange={ChangeMaintainTT_2003}
             checked={maintainTT_2003}
@@ -4525,16 +4522,16 @@ disabled={AuthInputHighLow}
   
           value: <span style={combineCss.CSSTT_2004} > {formatValue(TT_2004)} {nameValue.C}</span> , 
            high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
            
            style={combineCss.CSSTT_2004}   placeholder='High' step="0.1" type='number' value={inputValueTT_2004} onChange={handleInputChangeTT_2004} inputMode="decimal" />, 
            low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
            
            style={combineCss.CSSTT_2004}   placeholder='Low' step="0.1" type='number' value={inputValue2TT_2004} onChange={handleInputChange2TT_2004} inputMode="decimal" />,
            update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
            Maintain:   <Checkbox  
-           disabled={AuthInput} 
+           disabled={TECH_OPER} 
            style={{ marginRight: 20, }}
            onChange={ChangeMaintainTT_2004}
            checked={maintainTT_2004}
@@ -4553,16 +4550,16 @@ disabled={AuthInputHighLow}
  
          value: <span style={combineCss.CSSTG_2005} > {formatValue(TG_2005)} {nameValue.C}</span> , 
           high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
           
           style={combineCss.CSSTG_2005}   placeholder='High' step="0.1" type='number' value={inputValueTG_2005} onChange={handleInputChangeTG_2005} inputMode="decimal" />, 
           low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
           
           style={combineCss.CSSTG_2005}   placeholder='Low' step="0.1" type='number' value={inputValue2TG_2005} onChange={handleInputChange2TG_2005} inputMode="decimal" />,
           update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
           Maintain:   <Checkbox  
-          disabled={AuthInput} 
+          disabled={TECH_OPER} 
           style={{ marginRight: 20, }}
           onChange={ChangeMaintainTG_2005}
           checked={maintainTG_2005}
@@ -4580,16 +4577,16 @@ disabled={AuthInputHighLow}
 
         value: <span style={combineCss.CSSWB_1001} > {formatValue(WB_1001)} (MJ/Sm³)</span> , 
          high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
          
          style={combineCss.CSSWB_1001}   placeholder='High' step="0.1" type='number' value={inputValueWB_1001} onChange={handleInputChangeWB_1001} inputMode="decimal" />, 
          low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
          
          style={combineCss.CSSWB_1001}   placeholder='Low' step="0.1" type='number' value={inputValue2WB_1001} onChange={handleInputChange2WB_1001} inputMode="decimal" />,
          update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
          Maintain:   <Checkbox  
-         disabled={AuthInput} 
+         disabled={TECH_OPER} 
          style={{ marginRight: 20, }}
          onChange={ChangeMaintainWB_1001}
          checked={maintainWB_1001}
@@ -4609,16 +4606,16 @@ disabled={AuthInputHighLow}
 
        value: <span style={combineCss.CSSGD_2002} > {formatValue(GD_2002)} {nameValue.LEL}</span> , 
         high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
         
         style={combineCss.CSSGD_2002}   placeholder='High' step="0.1" type='number' value={inputValueGD_2002} onChange={handleInputChangeGD_2002} inputMode="decimal" />, 
         low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
         
         style={combineCss.CSSGD_2002}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_2002} onChange={handleInputChange2GD_2002} inputMode="decimal" />,
         update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
         Maintain:   <Checkbox  
-        disabled={AuthInput} 
+        disabled={TECH_OPER} 
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainGD_2002}
         checked={maintainGD_2002}
@@ -4636,16 +4633,16 @@ disabled={AuthInputHighLow}
 
       value: <span style={combineCss.CSSGD_2003} > {formatValue(GD_2003)} {nameValue.LEL}</span> , 
        high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
        
        style={combineCss.CSSGD_2003}   placeholder='High' step="0.1" type='number' value={inputValueGD_2003} onChange={handleInputChangeGD_2003} inputMode="decimal" />, 
        low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
        
        style={combineCss.CSSGD_2003}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_2003} onChange={handleInputChange2GD_2003} inputMode="decimal" />,
        update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
        Maintain:   <Checkbox  
-       disabled={AuthInput} 
+       disabled={TECH_OPER} 
        style={{ marginRight: 20, }}
        onChange={ChangeMaintainGD_2003}
        checked={maintainGD_2003}
@@ -4664,16 +4661,16 @@ disabled={AuthInputHighLow}
 
        value: <span style={combineCss.CSSGD_2004} > {formatValue(GD_2004)} {nameValue.LEL}</span> , 
         high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
         
         style={combineCss.CSSGD_2004}   placeholder='High' step="0.1" type='number' value={inputValueGD_2004} onChange={handleInputChangeGD_2004} inputMode="decimal" />, 
         low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
         
         style={combineCss.CSSGD_2004}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_2004} onChange={handleInputChange2GD_2004} inputMode="decimal" />,
         update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
         Maintain:   <Checkbox  
-        disabled={AuthInput} 
+        disabled={TECH_OPER} 
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainGD_2004}
         checked={maintainGD_2004}
@@ -4693,16 +4690,16 @@ disabled={AuthInputHighLow}
 
       value: <span style={combineCss.CSSGD_2005} > {formatValue(GD_2005)} {nameValue.LEL}</span> , 
        high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
        
        style={combineCss.CSSGD_2005}   placeholder='High' step="0.1" type='number' value={inputValueGD_2005} onChange={handleInputChangeGD_2005} inputMode="decimal" />, 
        low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
        
        style={combineCss.CSSGD_2005}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_2005} onChange={handleInputChange2GD_2005} inputMode="decimal" />,
        update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
        Maintain:   <Checkbox  
-       disabled={AuthInput} 
+       disabled={TECH_OPER} 
        style={{ marginRight: 20, }}
        onChange={ChangeMaintainGD_2005}
        checked={maintainGD_2005}
@@ -4722,16 +4719,16 @@ disabled={AuthInputHighLow}
 
      value: <span style={combineCss.CSSGD_2006} > {formatValue(GD_2006)} {nameValue.LEL}</span> , 
       high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
       
       style={combineCss.CSSGD_2006}   placeholder='High' step="0.1" type='number' value={inputValueGD_2006} onChange={handleInputChangeGD_2006} inputMode="decimal" />, 
       low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
       
       style={combineCss.CSSGD_2006}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_2006} onChange={handleInputChange2GD_2006} inputMode="decimal" />,
       update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
       Maintain:   <Checkbox  
-      disabled={AuthInput} 
+      disabled={TECH_OPER} 
       style={{ marginRight: 20, }}
       onChange={ChangeMaintainGD_2006}
       checked={maintainGD_2006}
@@ -4750,16 +4747,16 @@ disabled={AuthInputHighLow}
        
            value: <span style={combineCss.CSSTM_2002_SNG} > {formatValue(TM_2002_SNG)} (Sm³/h)</span> , 
             high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
             
             style={combineCss.CSSTM_2002_SNG}   placeholder='High' step="0.1" type='number' value={inputValueTM_2002_SNG} onChange={handleInputChangeTM_2002_SNG} inputMode="decimal" />, 
             low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
             
             style={combineCss.CSSTM_2002_SNG}   placeholder='Low' step="0.1" type='number' value={inputValue2TM_2002_SNG} onChange={handleInputChange2TM_2002_SNG} inputMode="decimal" />,
             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
             Maintain:   <Checkbox  
-            disabled={AuthInput} 
+            disabled={TECH_OPER} 
             style={{ marginRight: 20, }}
             onChange={ChangeMaintainTM_2002_SNG}
             checked={maintainTM_2002_SNG}
@@ -4783,16 +4780,16 @@ disabled={AuthInputHighLow}
 
    value: <span style={combineCss.CSSTM_2003_SNG} > {formatValue(TM_2003_SNG)} (Sm³/h)</span> , 
     high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
     
     style={combineCss.CSSTM_2003_SNG}   placeholder='High' step="0.1" type='number' value={inputValueTM_2003_SNG} onChange={handleInputChangeTM_2003_SNG} inputMode="decimal" />, 
     low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
     
     style={combineCss.CSSTM_2003_SNG}   placeholder='Low' step="0.1" type='number' value={inputValue2TM_2003_SNG} onChange={handleInputChange2TM_2003_SNG} inputMode="decimal" />,
     update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
     Maintain:   <Checkbox  
-    disabled={AuthInput} 
+    disabled={TECH_OPER} 
     style={{ marginRight: 20, }}
     onChange={ChangeMaintainTM_2003_SNG}
     checked={maintainTM_2003_SNG}
@@ -4811,16 +4808,16 @@ disabled={AuthInputHighLow}
 
   value: <span style={combineCss.CSSTOTAL_SNG} > {formatValue(TOTAL_SNG)} (Sm³)</span> , 
    high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
    
    style={combineCss.CSSTOTAL_SNG}   placeholder='High' step="0.1" type='number' value={inputValueTOTAL_SNG} onChange={handleInputChangeTOTAL_SNG} inputMode="decimal" />, 
    low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
    
    style={combineCss.CSSTOTAL_SNG}   placeholder='Low' step="0.1" type='number' value={inputValue2TOTAL_SNG} onChange={handleInputChange2TOTAL_SNG} inputMode="decimal" />,
    update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
    Maintain:   <Checkbox  
-   disabled={AuthInput} 
+   disabled={TECH_OPER} 
    style={{ marginRight: 20, }}
    onChange={ChangeMaintainTOTAL_SNG}
    checked={maintainTOTAL_SNG}
@@ -4839,16 +4836,16 @@ disabled={AuthInputHighLow}
 
  value: <span style={combineCss.CSSSDV_2004} > {formatValue(SDV_2004)} {DataSDV_2004} </span> , 
   high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
   
   style={combineCss.CSSSDV_2004}   placeholder='High' step="0.1" type='number' value={inputValueSDV_2004} onChange={handleInputChangeSDV_2004} inputMode="decimal" />, 
   low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
   
   style={combineCss.CSSSDV_2004}   placeholder='Low' step="0.1" type='number' value={inputValue2SDV_2004} onChange={handleInputChange2SDV_2004} inputMode="decimal" />,
   update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
   Maintain:   <Checkbox  
-  disabled={AuthInput} 
+  disabled={TECH_OPER} 
   style={{ marginRight: 20, }}
   onChange={ChangeMaintainSDV_2004}
   checked={maintainSDV_2004}
@@ -4866,16 +4863,16 @@ disabled={AuthInputHighLow}
 
   value: <span style={combineCss.CSSSDV_2003} > {formatValue(SDV_2003)} {DataSDV_2003}</span> , 
    high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
    
    style={combineCss.CSSSDV_2003}   placeholder='High' step="0.1" type='number' value={inputValueSDV_2003} onChange={handleInputChangeSDV_2003} inputMode="decimal" />, 
    low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
    
    style={combineCss.CSSSDV_2003}   placeholder='Low' step="0.1" type='number' value={inputValue2SDV_2003} onChange={handleInputChange2SDV_2003} inputMode="decimal" />,
    update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
    Maintain:   <Checkbox  
-   disabled={AuthInput} 
+   disabled={TECH_OPER} 
    style={{ marginRight: 20, }}
    onChange={ChangeMaintainSDV_2003}
    checked={maintainSDV_2003}
@@ -4894,16 +4891,16 @@ disabled={AuthInputHighLow}
 
  value: <span style={combineCss.CSSGD1_STATUS} > {formatValue(GD1_STATUS)} {DataGD1_STATUS}</span> , 
   high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
   
   style={combineCss.CSSGD1_STATUS}   placeholder='High' step="0.1" type='number' value={inputValueGD1_STATUS} onChange={handleInputChangeGD1_STATUS} inputMode="decimal" />, 
   low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
   
   style={combineCss.CSSGD1_STATUS}   placeholder='Low' step="0.1" type='number' value={inputValue2GD1_STATUS} onChange={handleInputChange2GD1_STATUS} inputMode="decimal" />,
   update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
   Maintain:   <Checkbox  
-  disabled={AuthInput} 
+  disabled={TECH_OPER} 
   style={{ marginRight: 20, }}
   onChange={ChangeMaintainGD1_STATUS}
   checked={maintainGD1_STATUS}
@@ -4924,16 +4921,16 @@ disabled={AuthInputHighLow}
 
 value: <span style={combineCss.CSSGD2_STATUS} > {formatValue(GD2_STATUS)} {DataGD2_STATUS}</span> , 
  high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
  
  style={combineCss.CSSGD2_STATUS}   placeholder='High' step="0.1" type='number' value={inputValueGD2_STATUS} onChange={handleInputChangeGD2_STATUS} inputMode="decimal" />, 
  low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
  
  style={combineCss.CSSGD2_STATUS}   placeholder='Low' step="0.1" type='number' value={inputValue2GD2_STATUS} onChange={handleInputChange2GD2_STATUS} inputMode="decimal" />,
  update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
  Maintain:   <Checkbox  
- disabled={AuthInput} 
+ disabled={TECH_OPER} 
  style={{ marginRight: 20, }}
  onChange={ChangeMaintainGD2_STATUS}
  checked={maintainGD2_STATUS}
@@ -4951,16 +4948,16 @@ disabled={AuthInputHighLow}
 
  value: <span style={combineCss.CSSGD3_STATUS} > {formatValue(GD3_STATUS)} {DataGD3_STATUS}</span> , 
   high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
   
   style={combineCss.CSSGD3_STATUS}   placeholder='High' step="0.1" type='number' value={inputValueGD3_STATUS} onChange={handleInputChangeGD3_STATUS} inputMode="decimal" />, 
   low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
   
   style={combineCss.CSSGD3_STATUS}   placeholder='Low' step="0.1" type='number' value={inputValue2GD3_STATUS} onChange={handleInputChange2GD3_STATUS} inputMode="decimal" />,
   update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
   Maintain:   <Checkbox  
-  disabled={AuthInput} 
+  disabled={TECH_OPER} 
   style={{ marginRight: 20, }}
   onChange={ChangeMaintainGD3_STATUS}
   checked={maintainGD3_STATUS}
@@ -4979,16 +4976,16 @@ disabled={AuthInputHighLow}
 
 value: <span style={combineCss.CSSGD4_STATUS} > {formatValue(GD4_STATUS)} {DataGD4_STATUS}</span> , 
  high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
  
  style={combineCss.CSSGD4_STATUS}   placeholder='High' step="0.1" type='number' value={inputValueGD4_STATUS} onChange={handleInputChangeGD4_STATUS} inputMode="decimal" />, 
  low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
  
  style={combineCss.CSSGD4_STATUS}   placeholder='Low' step="0.1" type='number' value={inputValue2GD4_STATUS} onChange={handleInputChange2GD4_STATUS} inputMode="decimal" />,
  update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
  Maintain:   <Checkbox  
- disabled={AuthInput} 
+ disabled={TECH_OPER} 
  style={{ marginRight: 20, }}
  onChange={ChangeMaintainGD4_STATUS}
  checked={maintainGD4_STATUS}
@@ -5007,16 +5004,16 @@ modbus: <span style={combineCss.CSSGD5_STATUS}>40041 </span> ,
 
 value: <span style={combineCss.CSSGD5_STATUS} > {formatValue(GD5_STATUS)} {DataGD5_STATUS}</span> , 
 high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
 
 style={combineCss.CSSGD5_STATUS}   placeholder='High' step="0.1" type='number' value={inputValueGD5_STATUS} onChange={handleInputChangeGD5_STATUS} inputMode="decimal" />, 
 low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
 
 style={combineCss.CSSGD5_STATUS}   placeholder='Low' step="0.1" type='number' value={inputValue2GD5_STATUS} onChange={handleInputChange2GD5_STATUS} inputMode="decimal" />,
 update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
 Maintain:   <Checkbox  
-disabled={AuthInput} 
+disabled={TECH_OPER} 
 style={{ marginRight: 20, }}
 onChange={ChangeMaintainGD5_STATUS}
 checked={maintainGD5_STATUS}
@@ -5034,16 +5031,16 @@ checked={maintainGD5_STATUS}
     
             value: <span style={combineCss.CSSESD} > {formatValue(ESD)} {DataESD}</span> , 
              high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
              
              style={combineCss.CSSESD}   placeholder='High' step="0.1" type='number' value={inputValueESD} onChange={handleInputChangeESD} inputMode="decimal" />, 
              low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
              
              style={combineCss.CSSESD}   placeholder='Low' step="0.1" type='number' value={inputValue2ESD} onChange={handleInputChange2ESD} inputMode="decimal" />,
              update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
              Maintain:   <Checkbox  
-             disabled={AuthInput} 
+             disabled={TECH_OPER} 
              style={{ marginRight: 20, }}
              onChange={ChangeMaintainESD}
              checked={maintainESD}
@@ -5060,16 +5057,16 @@ disabled={AuthInputHighLow}
             
             value: <span style={combineCss.CSSHR_BC} > {formatValue(HR_BC)} {DataHR_BC}</span> , 
             high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
             
             style={combineCss.CSSHR_BC}   placeholder='High' step="0.1" type='number' value={inputValueHR_BC} onChange={handleInputChangeHR_BC} inputMode="decimal" />, 
             low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
             
             style={combineCss.CSSHR_BC}   placeholder='Low' step="0.1" type='number' value={inputValue2HR_BC} onChange={handleInputChange2HR_BC} inputMode="decimal" />,
             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
             Maintain:   <Checkbox  
-            disabled={AuthInput} 
+            disabled={TECH_OPER} 
             style={{ marginRight: 20, }}
             onChange={ChangeMaintainHR_BC}
             checked={maintainHR_BC}
@@ -5087,16 +5084,16 @@ modbus: <span style={combineCss.CSSSD}>40047	</span> ,
 
 value: <span style={combineCss.CSSSD} > {formatValue(SD)} {DataSD}</span> , 
 high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
 
 style={combineCss.CSSSD}   placeholder='High' step="0.1" type='number' value={inputValueSD} onChange={handleInputChangeSD} inputMode="decimal" />, 
 low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
 
 style={combineCss.CSSSD}   placeholder='Low' step="0.1" type='number' value={inputValue2SD} onChange={handleInputChange2SD} inputMode="decimal" />,
 update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
 Maintain:   <Checkbox  
-disabled={AuthInput} 
+disabled={TECH_OPER} 
 style={{ marginRight: 20, }}
 onChange={ChangeMaintainSD}
 checked={maintainSD}
@@ -5114,16 +5111,16 @@ checked={maintainSD}
     
             value: <span style={combineCss.CSSVAPORIZER_1} > {formatValue(VAPORIZER_1)} {DataVAPORIZER_1} </span> , 
              high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
              
              style={combineCss.CSSVAPORIZER_1}   placeholder='High' step="0.1" type='number' value={inputValueVAPORIZER_1} onChange={handleInputChangeVAPORIZER_1} inputMode="decimal" />, 
              low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
              
              style={combineCss.CSSVAPORIZER_1}   placeholder='Low' step="0.1" type='number' value={inputValue2VAPORIZER_1} onChange={handleInputChange2VAPORIZER_1} inputMode="decimal" />,
              update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
              Maintain:   <Checkbox  
-             disabled={AuthInput} 
+             disabled={TECH_OPER} 
              style={{ marginRight: 20, }}
              onChange={ChangeMaintainVAPORIZER_1}
              checked={maintainVAPORIZER_1}
@@ -5141,16 +5138,16 @@ disabled={AuthInputHighLow}
     
             value: <span style={combineCss.CSSVAPORIZER_2} > {formatValue(VAPORIZER_2)} {DataVAPORIZER_2} </span> , 
              high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
              
              style={combineCss.CSSVAPORIZER_2}   placeholder='High' step="0.1" type='number' value={inputValueVAPORIZER_2} onChange={handleInputChangeVAPORIZER_2} inputMode="decimal" />, 
              low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
              
              style={combineCss.CSSVAPORIZER_2}   placeholder='Low' step="0.1" type='number' value={inputValue2VAPORIZER_2} onChange={handleInputChange2VAPORIZER_2} inputMode="decimal" />,
              update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
              Maintain:   <Checkbox  
-             disabled={AuthInput} 
+             disabled={TECH_OPER} 
              style={{ marginRight: 20, }}
              onChange={ChangeMaintainVAPORIZER_2}
              checked={maintainVAPORIZER_2}
@@ -5169,16 +5166,16 @@ disabled={AuthInputHighLow}
     
             value: <span style={combineCss.CSSVAPORIZER_3} > {formatValue(VAPORIZER_3)} {DataVAPORIZER_3} </span> , 
              high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
              
              style={combineCss.CSSVAPORIZER_3}   placeholder='High' step="0.1" type='number' value={inputValueVAPORIZER_3} onChange={handleInputChangeVAPORIZER_3} inputMode="decimal" />, 
              low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
              
              style={combineCss.CSSVAPORIZER_3}   placeholder='Low' step="0.1" type='number' value={inputValue2VAPORIZER_3} onChange={handleInputChange2VAPORIZER_3} inputMode="decimal" />,
              update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
              Maintain:   <Checkbox  
-             disabled={AuthInput} 
+             disabled={TECH_OPER} 
              style={{ marginRight: 20, }}
              onChange={ChangeMaintainVAPORIZER_3}
              checked={maintainVAPORIZER_3}
@@ -5196,16 +5193,16 @@ disabled={AuthInputHighLow}
    
            value: <span style={combineCss.CSSVAPORIZER_4} > {formatValue(VAPORIZER_4)} {DataVAPORIZER_4} </span> , 
             high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
             
             style={combineCss.CSSVAPORIZER_4}   placeholder='High' step="0.1" type='number' value={inputValueVAPORIZER_4} onChange={handleInputChangeVAPORIZER_4} inputMode="decimal" />, 
             low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
             
             style={combineCss.CSSVAPORIZER_4}   placeholder='Low' step="0.1" type='number' value={inputValue2VAPORIZER_4} onChange={handleInputChange2VAPORIZER_4} inputMode="decimal" />,
             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
             Maintain:   <Checkbox  
-            disabled={AuthInput} 
+            disabled={TECH_OPER} 
             style={{ marginRight: 20, }}
             onChange={ChangeMaintainVAPORIZER_4}
             checked={maintainVAPORIZER_4}
@@ -5225,16 +5222,16 @@ disabled={AuthInputHighLow}
   
           value: <span style={combineCss.CSSCOOLING_V} > {formatValue(COOLING_V)} {DataCOOLING_V}</span> , 
            high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
            
            style={combineCss.CSSCOOLING_V}   placeholder='High' step="0.1" type='number' value={inputValueCOOLING_V} onChange={handleInputChangeCOOLING_V} inputMode="decimal" />, 
            low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
            
            style={combineCss.CSSCOOLING_V}   placeholder='Low' step="0.1" type='number' value={inputValue2COOLING_V} onChange={handleInputChange2COOLING_V} inputMode="decimal" />,
            update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
            Maintain:   <Checkbox  
-           disabled={AuthInput} 
+           disabled={TECH_OPER} 
            style={{ marginRight: 20, }}
            onChange={ChangeMaintainCOOLING_V}
            checked={maintainCOOLING_V}
@@ -5257,16 +5254,16 @@ disabled={AuthInputHighLow}
 
         value: <span style={combineCss.CSSFCV_2001} > {formatValue(FCV_2001)} (%) </span> , 
          high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
          
          style={combineCss.CSSFCV_2001}   placeholder='High' step="0.1" type='number' value={inputValueFCV_2001} onChange={handleInputChangeFCV_2001} inputMode="decimal" />, 
          low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
          
          style={combineCss.CSSFCV_2001}   placeholder='Low' step="0.1" type='number' value={inputValue2FCV_2001} onChange={handleInputChange2FCV_2001} inputMode="decimal" />,
          update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
          Maintain:   <Checkbox  
-         disabled={AuthInput} 
+         disabled={TECH_OPER} 
          style={{ marginRight: 20, }}
          onChange={ChangeMaintainFCV_2001}
          checked={maintainFCV_2001}
@@ -5286,16 +5283,16 @@ disabled={AuthInputHighLow}
 
        value: <span style={combineCss.CSSPERCENT_LPG} > {formatValue(PERCENT_LPG)} (%)</span> , 
         high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
         
         style={combineCss.CSSPERCENT_LPG}   placeholder='High' step="0.1" type='number' value={inputValuePERCENT_LPG} onChange={handleInputChangePERCENT_LPG} inputMode="decimal" />, 
         low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
         
         style={combineCss.CSSPERCENT_LPG}   placeholder='Low' step="0.1" type='number' value={inputValue2PERCENT_LPG} onChange={handleInputChange2PERCENT_LPG} inputMode="decimal" />,
         update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
         Maintain:   <Checkbox  
-        disabled={AuthInput} 
+        disabled={TECH_OPER} 
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainPERCENT_LPG}
         checked={maintainPERCENT_LPG}
@@ -5316,16 +5313,16 @@ disabled={AuthInputHighLow}
 
       value: <span style={combineCss.CSSPERCENT_AIR} > {formatValue(PERCENT_AIR)} (%)</span> , 
        high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
        
        style={combineCss.CSSPERCENT_AIR}   placeholder='High' step="0.1" type='number' value={inputValuePERCENT_AIR} onChange={handleInputChangePERCENT_AIR} inputMode="decimal" />, 
        low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
        
        style={combineCss.CSSPERCENT_AIR}   placeholder='Low' step="0.1" type='number' value={inputValue2PERCENT_AIR} onChange={handleInputChange2PERCENT_AIR} inputMode="decimal" />,
        update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
        Maintain:   <Checkbox  
-       disabled={AuthInput} 
+       disabled={TECH_OPER} 
        style={{ marginRight: 20, }}
        onChange={ChangeMaintainPERCENT_AIR}
        checked={maintainPERCENT_AIR}
@@ -5345,16 +5342,16 @@ disabled={AuthInputHighLow}
 
      value: <span style={combineCss.CSSHV_1001} > {formatValue(HV_1001)} (MJ/Sm³)</span> , 
       high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
       
       style={combineCss.CSSHV_1001}   placeholder='High' step="0.1" type='number' value={inputValueHV_1001} onChange={handleInputChangeHV_1001} inputMode="decimal" />, 
       low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
       
       style={combineCss.CSSHV_1001}   placeholder='Low' step="0.1" type='number' value={inputValue2HV_1001} onChange={handleInputChange2HV_1001} inputMode="decimal" />,
       update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
       Maintain:   <Checkbox  
-      disabled={AuthInput} 
+      disabled={TECH_OPER} 
       style={{ marginRight: 20, }}
       onChange={ChangeMaintainHV_1001}
       checked={maintainHV_1001}
@@ -5372,16 +5369,16 @@ disabled={AuthInputHighLow}
     
     value: <span style={combineCss.CSSRATIO_MODE} > {formatValue(RATIO_MODE)} {DataRATIO_MODE}</span> , 
      high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
      
      style={combineCss.CSSRATIO_MODE}   placeholder='High' step="0.1" type='number' value={inputValueRATIO_MODE} onChange={handleInputChangeRATIO_MODE} inputMode="decimal" />, 
      low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
      
      style={combineCss.CSSRATIO_MODE}   placeholder='Low' step="0.1" type='number' value={inputValue2RATIO_MODE} onChange={handleInputChange2RATIO_MODE} inputMode="decimal" />,
      update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
      Maintain:   <Checkbox  
-     disabled={AuthInput} 
+     disabled={TECH_OPER} 
      style={{ marginRight: 20, }}
      onChange={ChangeMaintainRATIO_MODE}
      checked={maintainRATIO_MODE}
@@ -5401,16 +5398,16 @@ disabled={AuthInputHighLow}
 
     value: <span style={combineCss.CSSFCV_MODE} > {formatValue(FCV_MODE)} {DataFCV_MODE}</span> , 
      high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
      
      style={combineCss.CSSFCV_MODE}   placeholder='High' step="0.1" type='number' value={inputValueFCV_MODE} onChange={handleInputChangeFCV_MODE} inputMode="decimal" />, 
      low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
      
      style={combineCss.CSSFCV_MODE}   placeholder='Low' step="0.1" type='number' value={inputValue2FCV_MODE} onChange={handleInputChange2FCV_MODE} inputMode="decimal" />,
      update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
      Maintain:   <Checkbox  
-     disabled={AuthInput} 
+     disabled={TECH_OPER} 
      style={{ marginRight: 20, }}
      onChange={ChangeMaintainFCV_MODE}
      checked={maintainFCV_MODE}
@@ -5430,16 +5427,16 @@ disabled={AuthInputHighLow}
 
    value: <span style={combineCss.CSSTOTAL_CNG} > {formatValue(TOTAL_CNG)} (Sm³)</span> , 
     high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
     
     style={combineCss.CSSTOTAL_CNG}   placeholder='High' step="0.1" type='number' value={inputValueTOTAL_CNG} onChange={handleInputChangeTOTAL_CNG} inputMode="decimal" />, 
     low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
     
     style={combineCss.CSSTOTAL_CNG}   placeholder='Low' step="0.1" type='number' value={inputValue2TOTAL_CNG} onChange={handleInputChange2TOTAL_CNG} inputMode="decimal" />,
     update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
     Maintain:   <Checkbox  
-    disabled={AuthInput} 
+    disabled={TECH_OPER} 
     style={{ marginRight: 20, }}
     onChange={ChangeMaintainTOTAL_CNG}
     checked={maintainTOTAL_CNG}
@@ -5458,16 +5455,16 @@ disabled={AuthInputHighLow}
 
   value: <span style={combineCss.CSSTM_2002_CNG} > {formatValue(TM_2002_CNG)} (Sm³/h)</span> , 
    high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
    
    style={combineCss.CSSTM_2002_CNG}   placeholder='High' step="0.1" type='number' value={inputValueTM_2002_CNG} onChange={handleInputChangeTM_2002_CNG} inputMode="decimal" />, 
    low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
    
    style={combineCss.CSSTM_2002_CNG}   placeholder='Low' step="0.1" type='number' value={inputValue2TM_2002_CNG} onChange={handleInputChange2TM_2002_CNG} inputMode="decimal" />,
    update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
    Maintain:   <Checkbox  
-   disabled={AuthInput} 
+   disabled={TECH_OPER} 
    style={{ marginRight: 20, }}
    onChange={ChangeMaintainTM_2002_CNG}
    checked={maintainTM_2002_CNG}
@@ -5486,16 +5483,16 @@ disabled={AuthInputHighLow}
 
  value: <span style={combineCss.CSSTM_2003_CNG} > {formatValue(TM_2003_CNG)} (Sm³/h)</span> , 
   high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
   
   style={combineCss.CSSTM_2003_CNG}   placeholder='High' step="0.1" type='number' value={inputValueTM_2003_CNG} onChange={handleInputChangeTM_2003_CNG} inputMode="decimal" />, 
   low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
   
   style={combineCss.CSSTM_2003_CNG}   placeholder='Low' step="0.1" type='number' value={inputValue2TM_2003_CNG} onChange={handleInputChange2TM_2003_CNG} inputMode="decimal" />,
   update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
   Maintain:   <Checkbox  
-  disabled={AuthInput} 
+  disabled={TECH_OPER} 
   style={{ marginRight: 20, }}
   onChange={ChangeMaintainTM_2003_CNG}
   checked={maintainTM_2003_CNG}
@@ -5513,16 +5510,16 @@ disabled={AuthInputHighLow}
 
   value: <span style={combineCss.CSSWB_Setpoint} > {formatValue(WB_Setpoint)} (MJ/Sm³)</span> , 
    high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
    
    style={combineCss.CSSWB_Setpoint}   placeholder='High' step="0.1" type='number' value={inputValueWB_Setpoint} onChange={handleInputChangeWB_Setpoint} inputMode="decimal" />, 
    low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
    
    style={combineCss.CSSWB_Setpoint}   placeholder='Low' step="0.1" type='number' value={inputValue2WB_Setpoint} onChange={handleInputChange2WB_Setpoint} inputMode="decimal" />,
    update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
    Maintain:   <Checkbox  
-   disabled={AuthInput} 
+   disabled={TECH_OPER} 
    style={{ marginRight: 20, }}
    onChange={ChangeMaintainWB_Setpoint}
    checked={maintainWB_Setpoint}
@@ -5542,16 +5539,16 @@ modbus: <span style={combineCss.CSSPLC_Conn_STT}>Status</span> ,
 
 value: <span style={combineCss.CSSPLC_Conn_STT} > {formatValue(PLC_Conn_STT)} {DataPLC_Conn_STT}</span> , 
 high: <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
 
 style={combineCss.CSSPLC_Conn_STT}   placeholder='High' step="0.1" type='number' value={inputValuePLC_Conn_STT} onChange={handleInputChangePLC_Conn_STT} inputMode="decimal" />, 
 low:  <InputText 
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
 
 style={combineCss.CSSPLC_Conn_STT}   placeholder='Low' step="0.1" type='number' value={inputValue2PLC_Conn_STT} onChange={handleInputChange2PLC_Conn_STT} inputMode="decimal" />,
 update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
 Maintain:   <Checkbox  
-disabled={AuthInput} 
+disabled={TECH_OPER} 
 style={{ marginRight: 20, }}
 onChange={ChangeMaintainPLC_Conn_STT}
 checked={maintainPLC_Conn_STT}
@@ -5576,16 +5573,16 @@ checked={maintainPLC_Conn_STT}
             
             value: <span style={combineCss.CSSWIS_Calorimeter} > {formatValue(WIS_Calorimeter)}  (MJ/Sm³)</span> , 
             high: <InputText 
-            disabled={AuthInputHighLow}
+            disabled={TECHNIAN_AUTH}
             
             style={combineCss.CSSWIS_Calorimeter}   placeholder='High' step="0.1" type='number' value={inputValueWIS_Calorimeter} onChange={handleInputChangeWIS_Calorimeter} inputMode="decimal" />, 
             low:  <InputText 
-            disabled={AuthInputHighLow}
+            disabled={TECHNIAN_AUTH}
             
             style={combineCss.CSSWIS_Calorimeter}   placeholder='Low' step="0.1" type='number' value={inputValue2WIS_Calorimeter} onChange={handleInputChange2WIS_Calorimeter} inputMode="decimal" />,
             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
             Maintain:   <Checkbox  
-            disabled={AuthInput} 
+            disabled={TECH_OPER} 
             style={{ marginRight: 20, }}
             onChange={ChangeMaintainWIS_Calorimeter}
             checked={maintainWIS_Calorimeter}
@@ -5604,16 +5601,16 @@ checked={maintainPLC_Conn_STT}
             
             value: <span style={combineCss.CSSCVS_Calorimeter} > {formatValue(CVS_Calorimeter)}  (MJ/Sm³)</span> , 
             high: <InputText 
-            disabled={AuthInputHighLow}
+            disabled={TECHNIAN_AUTH}
             
             style={combineCss.CSSCVS_Calorimeter}   placeholder='High' step="0.1" type='number' value={inputValueCVS_Calorimeter} onChange={handleInputChangeCVS_Calorimeter} inputMode="decimal" />, 
             low:  <InputText 
-            disabled={AuthInputHighLow}
+            disabled={TECHNIAN_AUTH}
             
             style={combineCss.CSSCVS_Calorimeter}   placeholder='Low' step="0.1" type='number' value={inputValue2CVS_Calorimeter} onChange={handleInputChange2CVS_Calorimeter} inputMode="decimal" />,
             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
             Maintain:   <Checkbox  
-            disabled={AuthInput} 
+            disabled={TECH_OPER} 
             style={{ marginRight: 20, }}
             onChange={ChangeMaintainCVS_Calorimeter}
             checked={maintainCVS_Calorimeter}
@@ -5631,16 +5628,16 @@ checked={maintainPLC_Conn_STT}
             
             value: <span style={combineCss.CSSSG_Calorimeter} > {formatValue(SG_Calorimeter)} (rel)</span> , 
             high: <InputText 
-            disabled={AuthInputHighLow}
+            disabled={TECHNIAN_AUTH}
             
             style={combineCss.CSSSG_Calorimeter}   placeholder='High' step="0.1" type='number' value={inputValueSG_Calorimeter} onChange={handleInputChangeSG_Calorimeter} inputMode="decimal" />, 
             low:  <InputText 
-            disabled={AuthInputHighLow}
+            disabled={TECHNIAN_AUTH}
             
             style={combineCss.CSSSG_Calorimeter}   placeholder='Low' step="0.1" type='number' value={inputValue2SG_Calorimeter} onChange={handleInputChange2SG_Calorimeter} inputMode="decimal" />,
             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
             Maintain:   <Checkbox  
-            disabled={AuthInput} 
+            disabled={TECH_OPER} 
             style={{ marginRight: 20, }}
             onChange={ChangeMaintainSG_Calorimeter}
             checked={maintainSG_Calorimeter}
@@ -5658,16 +5655,16 @@ checked={maintainPLC_Conn_STT}
             
             value: <span style={combineCss.CSSTD_4072_Conn_STT} > {formatValue(TD_4072_Conn_STT)} {DataTD_4072_Conn_STT}</span> , 
             high: <InputText 
-            disabled={AuthInputHighLow}
+            disabled={TECHNIAN_AUTH}
             
             style={combineCss.CSSTD_4072_Conn_STT}   placeholder='High' step="0.1" type='number' value={inputValueTD_4072_Conn_STT} onChange={handleInputChangeTD_4072_Conn_STT} inputMode="decimal" />, 
             low:  <InputText 
-            disabled={AuthInputHighLow}
+            disabled={TECHNIAN_AUTH}
             
             style={combineCss.CSSTD_4072_Conn_STT}   placeholder='Low' step="0.1" type='number' value={inputValue2TD_4072_Conn_STT} onChange={handleInputChange2TD_4072_Conn_STT} inputMode="decimal" />,
             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
             Maintain:   <Checkbox  
-            disabled={AuthInput} 
+            disabled={TECH_OPER} 
             style={{ marginRight: 20, }}
             onChange={ChangeMaintainTD_4072_Conn_STT}
             checked={maintainTD_4072_Conn_STT}
@@ -5795,14 +5792,12 @@ checked={maintainPLC_Conn_STT}
     const maintainHeader = (
         <div>
 
-            {!AuthInput && (
                 <Checkbox  
-                disabled={AuthInput} 
+                disabled={TECH_OPER} 
                     style={{ marginRight: 5 }}
                     onChange={handleCheckboxChange}
                     checked={handleCheckboxChangeALL}
                 />
-            )} 
             Maintain
 
         </div>
@@ -5811,55 +5806,54 @@ checked={maintainPLC_Conn_STT}
 
        //=========================================================================
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',  borderRadius:10,marginTop:10 }}>
-        <audio ref={audioRef}>
-            <source src="/audios/mixkit-police-siren-us-1643-_1_.mp3" type="audio/mpeg" />
-        </audio>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',  borderRadius:10, }}>
+   
         <Toast ref={toast} />
 
         <ConfirmDialog />
 
 <h2>SNG BINH DUONG</h2>
 
-   
+<div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+  <div style={{ width: '100%' }}>
+    <DataTable 
+       rowGroupMode="subheader"
+       size={'small'}      resizableColumns
+       tableStyle={{ minWidth: '50rem' }} 
+      value={combinedData}  
+      groupRowsBy="mainCategory"  
+       sortOrder={1} 
+       rowGroupHeaderTemplate={mainCategoryTemplate} >
+      <Column field="timeUpdate" header="Time Update" />
+      <Column field="modbus" header="Modbus" />
+      <Column field="name" header="Name" />
+      <Column field="value" header="Value" />
+      <Column field="high" header="High" />
+      <Column field="low" header="Low" />
+        <Column field="Maintain" header={maintainHeader} />
+     <Column field="update" header="Update"     
+style={{ width: '45px' }} 
+/>  
+    </DataTable>
+  </div>
 
-<div style={{width:'100%' , borderRadius:5 }}>
-
-        
-
-<DataTable rowGroupMode="subheader"
-                size={'small'}      resizableColumns
-        tableStyle={{ minWidth: '50rem' }}   value={combinedData}  groupRowsBy="mainCategory"  
-        sortOrder={1}   rowGroupHeaderTemplate={mainCategoryTemplate}   >
-{/* <Column field="modbus" header="Modbus" /> */}
-<Column field="timeUpdate" header="Time Update" />
-
-<Column field="modbus" header="Modbus" />
-
-<Column field="name" header="Name" />
-
-<Column field="value" header="Value" />
-<Column  field="high" header="High" />
-<Column field="low" header="Low" />
-{AuthInput ? " " :  <Column field="Maintain" header={maintainHeader} />
-}
-      {AuthInput ?  " " : <Column field="update" header="Update" /> }
-
-</DataTable>
-<div  style={{ width: "100%",  borderRadius: 5, marginTop:20 }}>
-                <h4>Station - Configuration </h4>
-                <DataTable value={Configuration} size={"small"} selectionMode="single" >
-                    <Column field="Name" header="Name" />
-
-                    <Column field="Value" header="Value" />
-
-                    {AuthInput ? " " : 
-                         <Column field="Update" header="Update" />  
-
-}
-                </DataTable>
-            </div>
+  <div style={{ width: '100%', borderRadius: 5,}}>
+    <h4>Station - Configuration</h4>
+    <DataTable value={Configuration} size={'small'} selectionMode="single">
+      <Column field="Name" header="Name" />
+     
+      <Column field="Value" header="value" />
+    
+      <Column
+        field="Update" 
+        header={<div style={{position:'relative', right:45}}>Update</div>} 
+        style={{ display: 'flex', justifyContent: 'flex-end',right:45}} 
+      />  
+    </DataTable>
+  </div>
 </div>
+
+
 <br />
 <br />
 

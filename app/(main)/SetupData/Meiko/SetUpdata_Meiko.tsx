@@ -47,16 +47,10 @@ export default function SetUpdata_Meiko() {
     const Authorization = localStorage.getItem('user');
     const userData = Authorization ? JSON.parse(Authorization) : null;
      const userId = userData?.id?.id;
-    const AuthUpdate = userId === UserTechnican.A  ||
-    userId === UserTechnican.Q ||
-     userId ===  UserTechnican.N ||
-      userId === UserTechnican.T  ||    
-       userId === UserTechnican.TN ||
-        userId === UserTechnican.DT ||
-        userId === UserTechnican.KL ; 
+  
     
     
-    const AuthInput = userId !== UserTechnican.A  && 
+    const TECH_OPER = userId !== UserTechnican.A  && 
     userId !== UserTechnican.Q &&
     userId !==  UserTechnican.N &&
      userId !== UserTechnican.T  &&
@@ -66,16 +60,9 @@ export default function SetUpdata_Meiko() {
         userId !== UserOperator.VHPM3 &&
         userId !== UserOperator.TTVHpm3 ; 
 
-        const AuthUpdatePCV = userId !== UserTechnican.A  &&
-        userId !== UserTechnican.Q &&
-         userId !==  UserTechnican.N &&
-          userId !== UserTechnican.T  &&
-           userId !== UserTechnican.TN &&
-            userId !== UserTechnican.DT &&
-            userId !== UserTechnican.KL ;
+      
 
-
-            const AuthInputHighLow = userId !== UserTechnican.A  && 
+            const TECHNIAN_AUTH = userId !== UserTechnican.A  && 
             userId !== UserTechnican.Q &&
             userId !==  UserTechnican.N &&
              userId !== UserTechnican.T  &&
@@ -547,6 +534,7 @@ export default function SetUpdata_Meiko() {
             console.error("Error fetching data:", error);
             }
         };
+
 
  // =================================================================================================================== 
 
@@ -1688,6 +1676,140 @@ const ChangeMaintainTank_PT_301 = async () => {
                          // =================================================================================================================== 
         
 
+
+
+        const handleMainTainPLC = async (checked: any) => {
+            try {
+                // Set all new variables to the checked value
+                const newMaintainVP_303 = checked;
+                const newMaintainVP_302 = checked;
+                const newMaintainVP_301 = checked;
+                const newMaintainGD_103_High = checked;
+                const newMaintainGD_102_High = checked;
+                const newMaintainGD_101_High = checked;
+                const newMaintainGD_103_Low = checked;
+                const newMaintainGD_102_Low = checked;
+                const newMaintainGD_101_Low = checked;
+                const newMaintainSDV_301 = checked;
+                const newMaintainSDV_302 = checked;
+                const newMaintainV1_Flow_Meter = checked;
+                const newMaintainV2_Flow_Meter = checked;
+                const newMaintainPipe_Temp = checked;
+                const newMaintainPipe_Press = checked;
+                const newMaintainTank_TT_301 = checked;
+                const newMaintainTank_PT_301 = checked;
+                const newMaintainTank_01_Volume = checked;
+                const newMaintainTank_01_Mass = checked;
+                const newMaintainTank_01_Level = checked;
+                const newMaintainConsumption_Flow = checked;
+                const newMaintainFlow_Velocity = checked;
+                const newMaintainPLC_Conn_STT = checked;
+        
+                // Send the data using the API
+                await httpApi.post(
+                    `/plugins/telemetry/DEVICE/${id_THACHTHAT}/SERVER_SCOPE`,
+                    {
+                    
+                        VP_303_Maintain: newMaintainVP_303,
+                        VP_302_Maintain: newMaintainVP_302,
+                        VP_301_Maintain: newMaintainVP_301,
+                        GD_103_High_Maintain: newMaintainGD_103_High,
+                        GD_102_High_Maintain: newMaintainGD_102_High,
+                        GD_101_High_Maintain: newMaintainGD_101_High,
+                        GD_103_Low_Maintain: newMaintainGD_103_Low,
+                        GD_102_Low_Maintain: newMaintainGD_102_Low,
+                        GD_101_Low_Maintain: newMaintainGD_101_Low,
+                        SDV_301_Maintain: newMaintainSDV_301,
+                        SDV_302_Maintain: newMaintainSDV_302,
+                        V1_Flow_Meter_Maintain: newMaintainV1_Flow_Meter,
+                        V2_Flow_Meter_Maintain: newMaintainV2_Flow_Meter,
+                        Pipe_Temp_Maintain: newMaintainPipe_Temp,
+                        Pipe_Press_Maintain: newMaintainPipe_Press,
+                        Tank_TT_301_Maintain: newMaintainTank_TT_301,
+                        Tank_PT_301_Maintain: newMaintainTank_PT_301,
+                        Tank_01_Volume_Maintain: newMaintainTank_01_Volume,
+                        Tank_01_Mass_Maintain: newMaintainTank_01_Mass,
+                        Tank_01_Level_Maintain: newMaintainTank_01_Level,
+                        Consumption_Flow_Maintain: newMaintainConsumption_Flow,
+                        Flow_Velocity_Maintain: newMaintainFlow_Velocity,
+                        PLC_Conn_STT_Maintain: newMaintainPLC_Conn_STT
+                    }
+                );
+        
+                // Update the states locally, just like Mode_ATS and ATS_Auto_Man
+                setMaintainVP_303(newMaintainVP_303);
+                setMaintainVP_302(newMaintainVP_302);
+                setMaintainVP_301(newMaintainVP_301);
+                setMaintainGD_103_High(newMaintainGD_103_High);
+                setMaintainGD_102_High(newMaintainGD_102_High);
+                setMaintainGD_101_High(newMaintainGD_101_High);
+                setMaintainGD_103_Low(newMaintainGD_103_Low);
+                setMaintainGD_102_Low(newMaintainGD_102_Low);
+                setMaintainGD_101_Low(newMaintainGD_101_Low);
+                setMaintainSDV_301(newMaintainSDV_301);
+                setMaintainSDV_302(newMaintainSDV_302);
+                setMaintainV1_Flow_Meter(newMaintainV1_Flow_Meter);
+                setMaintainV2_Flow_Meter(newMaintainV2_Flow_Meter);
+                setMaintainPipe_Temp(newMaintainPipe_Temp);
+                setMaintainPipe_Press(newMaintainPipe_Press);
+                setMaintainTank_TT_301(newMaintainTank_TT_301);
+                setMaintainTank_PT_301(newMaintainTank_PT_301);
+                setMaintainTank_01_Volume(newMaintainTank_01_Volume);
+                setMaintainTank_01_Mass(newMaintainTank_01_Mass);
+                setMaintainTank_01_Level(newMaintainTank_01_Level);
+                setMaintainConsumption_Flow(newMaintainConsumption_Flow);
+                setMaintainFlow_Velocity(newMaintainFlow_Velocity);
+                setMaintainPLC_Conn_STT(newMaintainPLC_Conn_STT);
+        
+            } catch (error) {
+                console.error('Error updating maintain telemetry values:', error);
+            }
+        };
+        const handleCheckboxChangePLC = (e:any) => {
+            const isChecked = e.checked;
+        
+            handleMainTainPLC(isChecked);
+        };
+
+
+        const checkMaintainingPLC = 
+        maintainVP_303 === true &&
+              maintainVP_302 === true &&
+              maintainVP_301 === true &&
+              maintainGD_103_High === true &&
+              maintainGD_102_High === true &&
+              maintainGD_101_High === true &&
+              maintainGD_103_Low === true &&
+              maintainGD_102_Low === true &&
+              maintainGD_101_Low === true &&
+              maintainSDV_301 === true &&
+              maintainSDV_302 === true &&
+              maintainV1_Flow_Meter === true &&
+              maintainV2_Flow_Meter === true &&
+              maintainPipe_Temp === true &&
+              maintainPipe_Press === true &&
+              maintainTank_TT_301 === true &&
+              maintainTank_PT_301 === true &&
+              maintainTank_01_Volume === true &&
+              maintainTank_01_Mass === true &&
+              maintainTank_01_Level === true &&
+              maintainConsumption_Flow === true &&
+              maintainFlow_Velocity === true &&
+              maintainPLC_Conn_STT === true;
+          
+              const maintainHeader = (
+                <div>
+        
+                        <Checkbox disabled={TECH_OPER}
+                            style={{ marginRight: 5 }}
+                            onChange={handleCheckboxChangePLC}
+                            checked={checkMaintainingPLC}
+                        />
+                    Maintain
+        
+                </div>
+            );
+
     const handleButtonClick = async () => {
         try {
             await httpApi.post(
@@ -2246,10 +2368,10 @@ const formatValue = (value:any) => {
             modbus: <span style={combineCss.CSSV1_Flow_Meter}>400001	 </span> ,
        
            value: <span style={combineCss.CSSV1_Flow_Meter} > {formatValue(V1_Flow_Meter)} {nameValue.m3}</span> , 
-            high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSV1_Flow_Meter}   placeholder='High' step="0.1" type='number' value={inputValueV1_Flow_Meter} onChange={handleInputChangeV1_Flow_Meter} inputMode="decimal" />, 
-            low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSV1_Flow_Meter}   placeholder='Low' step="0.1" type='number' value={inputValue2V1_Flow_Meter} onChange={handleInputChange2V1_Flow_Meter} inputMode="decimal" />,
-            update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
-            Maintain:   <Checkbox disabled={AuthInput} 
+            high: <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSV1_Flow_Meter}   placeholder='High' step="0.1" type='number' value={inputValueV1_Flow_Meter} onChange={handleInputChangeV1_Flow_Meter} inputMode="decimal" />, 
+            low:  <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSV1_Flow_Meter}   placeholder='Low' step="0.1" type='number' value={inputValue2V1_Flow_Meter} onChange={handleInputChange2V1_Flow_Meter} inputMode="decimal" />,
+            update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={TECHNIAN_AUTH} />,
+            Maintain:   <Checkbox disabled={TECH_OPER} 
             style={{ marginRight: 20, }}
             onChange={ChangeMaintainV1_Flow_Meter}
             checked={maintainV1_Flow_Meter}
@@ -2267,10 +2389,10 @@ const formatValue = (value:any) => {
            modbus: <span style={combineCss.CSSV2_Flow_Meter}>400003	 </span> ,
        
           value: <span style={combineCss.CSSV2_Flow_Meter} > {formatValue(V2_Flow_Meter)} {nameValue.m3}</span> , 
-           high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSV2_Flow_Meter}   placeholder='High' step="0.1" type='number' value={inputValueV2_Flow_Meter} onChange={handleInputChangeV2_Flow_Meter} inputMode="decimal" />, 
-           low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSV2_Flow_Meter}   placeholder='Low' step="0.1" type='number' value={inputValue2V2_Flow_Meter} onChange={handleInputChange2V2_Flow_Meter} inputMode="decimal" />,
-           update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
-           Maintain:   <Checkbox disabled={AuthInput} 
+           high: <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSV2_Flow_Meter}   placeholder='High' step="0.1" type='number' value={inputValueV2_Flow_Meter} onChange={handleInputChangeV2_Flow_Meter} inputMode="decimal" />, 
+           low:  <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSV2_Flow_Meter}   placeholder='Low' step="0.1" type='number' value={inputValue2V2_Flow_Meter} onChange={handleInputChange2V2_Flow_Meter} inputMode="decimal" />,
+           update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={TECHNIAN_AUTH} />,
+           Maintain:   <Checkbox disabled={TECH_OPER} 
            style={{ marginRight: 20, }}
            onChange={ChangeMaintainV2_Flow_Meter}
            checked={maintainV2_Flow_Meter}
@@ -2288,10 +2410,10 @@ const formatValue = (value:any) => {
           modbus: <span style={combineCss.CSSPipe_Temp}>400005	 </span> ,
        
          value: <span style={combineCss.CSSPipe_Temp} > {formatValue(Pipe_Temp)} {nameValue.C}</span> , 
-          high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSPipe_Temp}   placeholder='High' step="0.1" type='number' value={inputValuePipe_Temp} onChange={handleInputChangePipe_Temp} inputMode="decimal" />, 
-          low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSPipe_Temp}   placeholder='Low' step="0.1" type='number' value={inputValue2Pipe_Temp} onChange={handleInputChange2Pipe_Temp} inputMode="decimal" />,
-          update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
-          Maintain:   <Checkbox disabled={AuthInput} 
+          high: <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSPipe_Temp}   placeholder='High' step="0.1" type='number' value={inputValuePipe_Temp} onChange={handleInputChangePipe_Temp} inputMode="decimal" />, 
+          low:  <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSPipe_Temp}   placeholder='Low' step="0.1" type='number' value={inputValue2Pipe_Temp} onChange={handleInputChange2Pipe_Temp} inputMode="decimal" />,
+          update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={TECHNIAN_AUTH} />,
+          Maintain:   <Checkbox disabled={TECH_OPER} 
           style={{ marginRight: 20, }}
           onChange={ChangeMaintainPipe_Temp}
           checked={maintainPipe_Temp}
@@ -2309,10 +2431,10 @@ const formatValue = (value:any) => {
          modbus: <span style={combineCss.CSSPipe_Press}>400007	 </span> ,
        
         value: <span style={combineCss.CSSPipe_Press} > {formatValue(Pipe_Press)} ( Bar )</span> , 
-         high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSPipe_Press}   placeholder='High' step="0.1" type='number' value={inputValuePipe_Press} onChange={handleInputChangePipe_Press} inputMode="decimal" />, 
-         low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSPipe_Press}   placeholder='Low' step="0.1" type='number' value={inputValue2Pipe_Press} onChange={handleInputChange2Pipe_Press} inputMode="decimal" />,
-         update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
-         Maintain:   <Checkbox disabled={AuthInput} 
+         high: <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSPipe_Press}   placeholder='High' step="0.1" type='number' value={inputValuePipe_Press} onChange={handleInputChangePipe_Press} inputMode="decimal" />, 
+         low:  <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSPipe_Press}   placeholder='Low' step="0.1" type='number' value={inputValue2Pipe_Press} onChange={handleInputChange2Pipe_Press} inputMode="decimal" />,
+         update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={TECHNIAN_AUTH} />,
+         Maintain:   <Checkbox disabled={TECH_OPER} 
          style={{ marginRight: 20, }}
          onChange={ChangeMaintainPipe_Press}
          checked={maintainPipe_Press}
@@ -2329,10 +2451,10 @@ const formatValue = (value:any) => {
           modbus: <span style={combineCss.CSSTank_TT_301}>400009	 </span> ,
        
          value: <span style={combineCss.CSSTank_TT_301} > {formatValue(Tank_TT_301)} {nameValue.C}</span> , 
-          high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSTank_TT_301}   placeholder='High' step="0.1" type='number' value={inputValueTank_TT_301} onChange={handleInputChangeTank_TT_301} inputMode="decimal" />, 
-          low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSTank_TT_301}   placeholder='Low' step="0.1" type='number' value={inputValue2Tank_TT_301} onChange={handleInputChange2Tank_TT_301} inputMode="decimal" />,
-          update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
-          Maintain:   <Checkbox disabled={AuthInput} 
+          high: <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSTank_TT_301}   placeholder='High' step="0.1" type='number' value={inputValueTank_TT_301} onChange={handleInputChangeTank_TT_301} inputMode="decimal" />, 
+          low:  <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSTank_TT_301}   placeholder='Low' step="0.1" type='number' value={inputValue2Tank_TT_301} onChange={handleInputChange2Tank_TT_301} inputMode="decimal" />,
+          update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={TECHNIAN_AUTH} />,
+          Maintain:   <Checkbox disabled={TECH_OPER} 
           style={{ marginRight: 20, }}
           onChange={ChangeMaintainTank_TT_301}
           checked={maintainTank_TT_301}
@@ -2350,10 +2472,10 @@ const formatValue = (value:any) => {
          modbus: <span style={combineCss.CSSTank_PT_301}>400011	 </span> ,
        
         value: <span style={combineCss.CSSTank_PT_301} > {formatValue(Tank_PT_301)} ( Bar )</span> , 
-         high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSTank_PT_301}   placeholder='High' step="0.1" type='number' value={inputValueTank_PT_301} onChange={handleInputChangeTank_PT_301} inputMode="decimal" />, 
-         low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSTank_PT_301}   placeholder='Low' step="0.1" type='number' value={inputValue2Tank_PT_301} onChange={handleInputChange2Tank_PT_301} inputMode="decimal" />,
-         update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
-         Maintain:   <Checkbox disabled={AuthInput} 
+         high: <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSTank_PT_301}   placeholder='High' step="0.1" type='number' value={inputValueTank_PT_301} onChange={handleInputChangeTank_PT_301} inputMode="decimal" />, 
+         low:  <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSTank_PT_301}   placeholder='Low' step="0.1" type='number' value={inputValue2Tank_PT_301} onChange={handleInputChange2Tank_PT_301} inputMode="decimal" />,
+         update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={TECHNIAN_AUTH} />,
+         Maintain:   <Checkbox disabled={TECH_OPER} 
          style={{ marginRight: 20, }}
          onChange={ChangeMaintainTank_PT_301}
          checked={maintainTank_PT_301}
@@ -2373,10 +2495,10 @@ const formatValue = (value:any) => {
         modbus: <span style={combineCss.CSSTank_01_Volume}>400013	 </span> ,
        
        value: <span style={combineCss.CSSTank_01_Volume} > {formatValue(Tank_01_Volume)} ( L )</span> , 
-        high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSTank_01_Volume}   placeholder='High' step="0.1" type='number' value={inputValueTank_01_Volume} onChange={handleInputChangeTank_01_Volume} inputMode="decimal" />, 
-        low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSTank_01_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2Tank_01_Volume} onChange={handleInputChange2Tank_01_Volume} inputMode="decimal" />,
-        update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
-        Maintain:   <Checkbox disabled={AuthInput} 
+        high: <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSTank_01_Volume}   placeholder='High' step="0.1" type='number' value={inputValueTank_01_Volume} onChange={handleInputChangeTank_01_Volume} inputMode="decimal" />, 
+        low:  <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSTank_01_Volume}   placeholder='Low' step="0.1" type='number' value={inputValue2Tank_01_Volume} onChange={handleInputChange2Tank_01_Volume} inputMode="decimal" />,
+        update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={TECHNIAN_AUTH} />,
+        Maintain:   <Checkbox disabled={TECH_OPER} 
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainTank_01_Volume}
         checked={maintainTank_01_Volume}
@@ -2393,10 +2515,10 @@ const formatValue = (value:any) => {
          modbus: <span style={combineCss.CSSTank_01_Mass}>400015	 </span> ,
        
         value: <span style={combineCss.CSSTank_01_Mass} > {formatValue(Tank_01_Mass)} ( Kg )</span> , 
-         high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSTank_01_Mass}   placeholder='High' step="0.1" type='number' value={inputValueTank_01_Mass} onChange={handleInputChangeTank_01_Mass} inputMode="decimal" />, 
-         low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSTank_01_Mass}   placeholder='Low' step="0.1" type='number' value={inputValue2Tank_01_Mass} onChange={handleInputChange2Tank_01_Mass} inputMode="decimal" />,
-         update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
-         Maintain:   <Checkbox disabled={AuthInput} 
+         high: <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSTank_01_Mass}   placeholder='High' step="0.1" type='number' value={inputValueTank_01_Mass} onChange={handleInputChangeTank_01_Mass} inputMode="decimal" />, 
+         low:  <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSTank_01_Mass}   placeholder='Low' step="0.1" type='number' value={inputValue2Tank_01_Mass} onChange={handleInputChange2Tank_01_Mass} inputMode="decimal" />,
+         update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={TECHNIAN_AUTH} />,
+         Maintain:   <Checkbox disabled={TECH_OPER} 
          style={{ marginRight: 20, }}
          onChange={ChangeMaintainTank_01_Mass}
          checked={maintainTank_01_Mass}
@@ -2414,10 +2536,10 @@ const formatValue = (value:any) => {
         modbus: <span style={combineCss.CSSTank_01_Level}>400017	 </span> ,
        
        value: <span style={combineCss.CSSTank_01_Level} > {formatValue(Tank_01_Level)} ( % )</span> , 
-        high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSTank_01_Level}   placeholder='High' step="0.1" type='number' value={inputValueTank_01_Level} onChange={handleInputChangeTank_01_Level} inputMode="decimal" />, 
-        low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSTank_01_Level}   placeholder='Low' step="0.1" type='number' value={inputValue2Tank_01_Level} onChange={handleInputChange2Tank_01_Level} inputMode="decimal" />,
-        update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
-        Maintain:   <Checkbox disabled={AuthInput} 
+        high: <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSTank_01_Level}   placeholder='High' step="0.1" type='number' value={inputValueTank_01_Level} onChange={handleInputChangeTank_01_Level} inputMode="decimal" />, 
+        low:  <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSTank_01_Level}   placeholder='Low' step="0.1" type='number' value={inputValue2Tank_01_Level} onChange={handleInputChange2Tank_01_Level} inputMode="decimal" />,
+        update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={TECHNIAN_AUTH} />,
+        Maintain:   <Checkbox disabled={TECH_OPER} 
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainTank_01_Level}
         checked={maintainTank_01_Level}
@@ -2436,10 +2558,10 @@ const formatValue = (value:any) => {
             modbus: <span style={combineCss.CSSConsumption_Flow}>400019	 </span> ,
           
            value: <span style={combineCss.CSSConsumption_Flow} > {formatValue(Consumption_Flow)} {nameValue.m3}</span> , 
-            high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSConsumption_Flow}   placeholder='High' step="0.1" type='number' value={inputValueConsumption_Flow} onChange={handleInputChangeConsumption_Flow} inputMode="decimal" />, 
-            low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSConsumption_Flow}   placeholder='Low' step="0.1" type='number' value={inputValue2Consumption_Flow} onChange={handleInputChange2Consumption_Flow} inputMode="decimal" />,
-            update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
-            Maintain:   <Checkbox disabled={AuthInput} 
+            high: <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSConsumption_Flow}   placeholder='High' step="0.1" type='number' value={inputValueConsumption_Flow} onChange={handleInputChangeConsumption_Flow} inputMode="decimal" />, 
+            low:  <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSConsumption_Flow}   placeholder='Low' step="0.1" type='number' value={inputValue2Consumption_Flow} onChange={handleInputChange2Consumption_Flow} inputMode="decimal" />,
+            update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={TECHNIAN_AUTH} />,
+            Maintain:   <Checkbox disabled={TECH_OPER} 
             style={{ marginRight: 20, }}
             onChange={ChangeMaintainConsumption_Flow}
             checked={maintainConsumption_Flow}
@@ -2457,10 +2579,10 @@ const formatValue = (value:any) => {
            modbus: <span style={combineCss.CSSFlow_Velocity}>400021	 </span> ,
           
           value: <span style={combineCss.CSSFlow_Velocity} > {formatValue(Flow_Velocity)} {nameValue.m3h}</span> , 
-           high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSFlow_Velocity}   placeholder='High' step="0.1" type='number' value={inputValueFlow_Velocity} onChange={handleInputChangeFlow_Velocity} inputMode="decimal" />, 
-           low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSFlow_Velocity}   placeholder='Low' step="0.1" type='number' value={inputValue2Flow_Velocity} onChange={handleInputChange2Flow_Velocity} inputMode="decimal" />,
-           update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
-           Maintain:   <Checkbox disabled={AuthInput} 
+           high: <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSFlow_Velocity}   placeholder='High' step="0.1" type='number' value={inputValueFlow_Velocity} onChange={handleInputChangeFlow_Velocity} inputMode="decimal" />, 
+           low:  <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSFlow_Velocity}   placeholder='Low' step="0.1" type='number' value={inputValue2Flow_Velocity} onChange={handleInputChange2Flow_Velocity} inputMode="decimal" />,
+           update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={TECHNIAN_AUTH} />,
+           Maintain:   <Checkbox disabled={TECH_OPER} 
            style={{ marginRight: 20, }}
            onChange={ChangeMaintainFlow_Velocity}
            checked={maintainFlow_Velocity}
@@ -2478,10 +2600,10 @@ const formatValue = (value:any) => {
              modbus: <span style={combineCss.CSSVP_303}>500009	 </span> ,
     
             value: <span style={combineCss.CSSVP_303} > {formatValue(VP_303)} {DataVP_303}</span> , 
-             high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSVP_303}   placeholder='High' step="0.1" type='number' value={inputValueVP_303} onChange={handleInputChangeVP_303} inputMode="decimal" />, 
-             low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSVP_303}   placeholder='Low' step="0.1" type='number' value={inputValue2VP_303} onChange={handleInputChange2VP303} inputMode="decimal" />,
-             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
-             Maintain:   <Checkbox disabled={AuthInput} 
+             high: <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSVP_303}   placeholder='High' step="0.1" type='number' value={inputValueVP_303} onChange={handleInputChangeVP_303} inputMode="decimal" />, 
+             low:  <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSVP_303}   placeholder='Low' step="0.1" type='number' value={inputValue2VP_303} onChange={handleInputChange2VP303} inputMode="decimal" />,
+             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={TECHNIAN_AUTH} />,
+             Maintain:   <Checkbox disabled={TECH_OPER} 
              style={{ marginRight: 20, }}
              onChange={ChangeMaintainVP_303}
              checked={maintainVP_303}
@@ -2499,10 +2621,10 @@ const formatValue = (value:any) => {
              modbus: <span style={combineCss.CSSVP_302}>500011	 </span> ,
     
             value: <span style={combineCss.CSSVP_302} > {formatValue(VP_302)} {DataVP_302}</span> , 
-             high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSVP_302}   placeholder='High' step="0.1" type='number' value={inputValueVP_302} onChange={handleInputChangeVP_302} inputMode="decimal" />, 
-             low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSVP_302}   placeholder='Low' step="0.1" type='number' value={inputValue2VP_302} onChange={handleInputChange2VP_302} inputMode="decimal" />,
-             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
-             Maintain:   <Checkbox disabled={AuthInput} 
+             high: <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSVP_302}   placeholder='High' step="0.1" type='number' value={inputValueVP_302} onChange={handleInputChangeVP_302} inputMode="decimal" />, 
+             low:  <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSVP_302}   placeholder='Low' step="0.1" type='number' value={inputValue2VP_302} onChange={handleInputChange2VP_302} inputMode="decimal" />,
+             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={TECHNIAN_AUTH} />,
+             Maintain:   <Checkbox disabled={TECH_OPER} 
              style={{ marginRight: 20, }}
              onChange={ChangeMaintainVP_302}
              checked={maintainVP_302}
@@ -2519,10 +2641,10 @@ const formatValue = (value:any) => {
              modbus: <span style={combineCss.CSSVP_301}>500013	 </span> ,
     
             value: <span style={combineCss.CSSVP_301} > {formatValue(VP_301)} {DataVP_301}</span> , 
-             high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSVP_301}   placeholder='High' step="0.1" type='number' value={inputValueVP_301} onChange={handleInputChangeVP_301} inputMode="decimal" />, 
-             low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSVP_301}   placeholder='Low' step="0.1" type='number' value={inputValue2VP_301} onChange={handleInputChange2VP_301} inputMode="decimal" />,
-             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
-             Maintain:   <Checkbox disabled={AuthInput} 
+             high: <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSVP_301}   placeholder='High' step="0.1" type='number' value={inputValueVP_301} onChange={handleInputChangeVP_301} inputMode="decimal" />, 
+             low:  <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSVP_301}   placeholder='Low' step="0.1" type='number' value={inputValue2VP_301} onChange={handleInputChange2VP_301} inputMode="decimal" />,
+             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={TECHNIAN_AUTH} />,
+             Maintain:   <Checkbox disabled={TECH_OPER} 
              style={{ marginRight: 20, }}
              onChange={ChangeMaintainVP_301}
              checked={maintainVP_301}
@@ -2540,10 +2662,10 @@ const formatValue = (value:any) => {
              modbus: <span style={combineCss.CSSGD_103_High}>300015	 </span> ,
     
             value: <span style={combineCss.CSSGD_103_High} > {formatValue(GD_103_High)} {DataGD_103_High}</span> , 
-             high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSGD_103_High}   placeholder='High' step="0.1" type='number' value={inputValueGD_103_High} onChange={handleInputChangeGD_103_High} inputMode="decimal" />, 
-             low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSGD_103_High}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_103_High} onChange={handleInputChange2GD_103_High} inputMode="decimal" />,
-             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
-             Maintain:   <Checkbox disabled={AuthInput} 
+             high: <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSGD_103_High}   placeholder='High' step="0.1" type='number' value={inputValueGD_103_High} onChange={handleInputChangeGD_103_High} inputMode="decimal" />, 
+             low:  <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSGD_103_High}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_103_High} onChange={handleInputChange2GD_103_High} inputMode="decimal" />,
+             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={TECHNIAN_AUTH} />,
+             Maintain:   <Checkbox disabled={TECH_OPER} 
              style={{ marginRight: 20, }}
              onChange={ChangeMaintainGD_103_High}
              checked={maintainGD_103_High}
@@ -2560,10 +2682,10 @@ const formatValue = (value:any) => {
             modbus: <span style={combineCss.CSSGD_102_High}>300017	 </span> ,
    
            value: <span style={combineCss.CSSGD_102_High} > {formatValue(GD_102_High)} {DataGD_102_High}</span> , 
-            high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSGD_102_High}   placeholder='High' step="0.1" type='number' value={inputValueGD_102_High} onChange={handleInputChangeGD_102_High} inputMode="decimal" />, 
-            low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSGD_102_High}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_102_High} onChange={handleInputChange2GD_102_High} inputMode="decimal" />,
-            update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
-            Maintain:   <Checkbox disabled={AuthInput} 
+            high: <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSGD_102_High}   placeholder='High' step="0.1" type='number' value={inputValueGD_102_High} onChange={handleInputChangeGD_102_High} inputMode="decimal" />, 
+            low:  <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSGD_102_High}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_102_High} onChange={handleInputChange2GD_102_High} inputMode="decimal" />,
+            update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={TECHNIAN_AUTH} />,
+            Maintain:   <Checkbox disabled={TECH_OPER} 
             style={{ marginRight: 20, }}
             onChange={ChangeMaintainGD_102_High}
             checked={maintainGD_102_High}
@@ -2581,10 +2703,10 @@ const formatValue = (value:any) => {
            modbus: <span style={combineCss.CSSGD_101_High}>300019	 </span> ,
   
           value: <span style={combineCss.CSSGD_101_High} > {formatValue(GD_101_High)} {DataGD_101_High}</span> , 
-           high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSGD_101_High}   placeholder='High' step="0.1" type='number' value={inputValueGD_101_High} onChange={handleInputChangeGD_101_High} inputMode="decimal" />, 
-           low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSGD_101_High}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_101_High} onChange={handleInputChange2GD_101_High} inputMode="decimal" />,
-           update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
-           Maintain:   <Checkbox disabled={AuthInput} 
+           high: <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSGD_101_High}   placeholder='High' step="0.1" type='number' value={inputValueGD_101_High} onChange={handleInputChangeGD_101_High} inputMode="decimal" />, 
+           low:  <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSGD_101_High}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_101_High} onChange={handleInputChange2GD_101_High} inputMode="decimal" />,
+           update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={TECHNIAN_AUTH} />,
+           Maintain:   <Checkbox disabled={TECH_OPER} 
            style={{ marginRight: 20, }}
            onChange={ChangeMaintainGD_101_High}
            checked={maintainGD_101_High}
@@ -2604,10 +2726,10 @@ const formatValue = (value:any) => {
           modbus: <span style={combineCss.CSSGD_103_Low}>300021	 </span> ,
  
          value: <span style={combineCss.CSSGD_103_Low} > {formatValue(GD_103_Low)} {DataGD_103_Low}</span> , 
-          high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSGD_103_Low}   placeholder='High' step="0.1" type='number' value={inputValueGD_103_Low} onChange={handleInputChangeGD_103_Low} inputMode="decimal" />, 
-          low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSGD_103_Low}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_103_Low} onChange={handleInputChange2GD_103_Low} inputMode="decimal" />,
-          update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
-          Maintain:   <Checkbox disabled={AuthInput} 
+          high: <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSGD_103_Low}   placeholder='High' step="0.1" type='number' value={inputValueGD_103_Low} onChange={handleInputChangeGD_103_Low} inputMode="decimal" />, 
+          low:  <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSGD_103_Low}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_103_Low} onChange={handleInputChange2GD_103_Low} inputMode="decimal" />,
+          update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={TECHNIAN_AUTH} />,
+          Maintain:   <Checkbox disabled={TECH_OPER} 
           style={{ marginRight: 20, }}
           onChange={ChangeMaintainGD_103_Low}
           checked={maintainGD_103_Low}
@@ -2624,10 +2746,10 @@ const formatValue = (value:any) => {
          modbus: <span style={combineCss.CSSGD_102_Low}>300023	 </span> ,
 
         value: <span style={combineCss.CSSGD_102_Low} > {formatValue(GD_102_Low)} {DataGD_102_Low}</span> , 
-         high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSGD_102_Low}   placeholder='High' step="0.1" type='number' value={inputValueGD_102_Low} onChange={handleInputChangeGD_102_Low} inputMode="decimal" />, 
-         low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSGD_102_Low}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_102_Low} onChange={handleInputChange2GD_102_Low} inputMode="decimal" />,
-         update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
-         Maintain:   <Checkbox disabled={AuthInput} 
+         high: <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSGD_102_Low}   placeholder='High' step="0.1" type='number' value={inputValueGD_102_Low} onChange={handleInputChangeGD_102_Low} inputMode="decimal" />, 
+         low:  <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSGD_102_Low}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_102_Low} onChange={handleInputChange2GD_102_Low} inputMode="decimal" />,
+         update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={TECHNIAN_AUTH} />,
+         Maintain:   <Checkbox disabled={TECH_OPER} 
          style={{ marginRight: 20, }}
          onChange={ChangeMaintainGD_102_Low}
          checked={maintainGD_102_Low}
@@ -2645,10 +2767,10 @@ const formatValue = (value:any) => {
         modbus: <span style={combineCss.CSSGD_101_Low}>300025	 </span> ,
 
        value: <span style={combineCss.CSSGD_101_Low} > {formatValue(GD_101_Low)} {DataGD_101_Low}</span> , 
-        high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSGD_101_Low}   placeholder='High' step="0.1" type='number' value={inputValueGD_101_Low} onChange={handleInputChangeGD_101_Low} inputMode="decimal" />, 
-        low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSGD_101_Low}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_101_Low} onChange={handleInputChange2GD_101_Low} inputMode="decimal" />,
-        update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
-        Maintain:   <Checkbox disabled={AuthInput} 
+        high: <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSGD_101_Low}   placeholder='High' step="0.1" type='number' value={inputValueGD_101_Low} onChange={handleInputChangeGD_101_Low} inputMode="decimal" />, 
+        low:  <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSGD_101_Low}   placeholder='Low' step="0.1" type='number' value={inputValue2GD_101_Low} onChange={handleInputChange2GD_101_Low} inputMode="decimal" />,
+        update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={TECHNIAN_AUTH} />,
+        Maintain:   <Checkbox disabled={TECH_OPER} 
         style={{ marginRight: 20, }}
         onChange={ChangeMaintainGD_101_Low}
         checked={maintainGD_101_Low}
@@ -2667,10 +2789,10 @@ const formatValue = (value:any) => {
        modbus: <span style={combineCss.CSSSDV_301}>500001	 </span> ,
 
       value: <span style={combineCss.CSSSDV_301} > {formatValue(SDV_301)} {DataSDV_301}</span> , 
-       high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSSDV_301}   placeholder='High' step="0.1" type='number' value={inputValueSDV_301} onChange={handleInputChangeSDV_301} inputMode="decimal" />, 
-       low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSSDV_301}   placeholder='Low' step="0.1" type='number' value={inputValue2SDV_301} onChange={handleInputChange2SDV_301} inputMode="decimal" />,
-       update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
-       Maintain:   <Checkbox disabled={AuthInput} 
+       high: <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSSDV_301}   placeholder='High' step="0.1" type='number' value={inputValueSDV_301} onChange={handleInputChangeSDV_301} inputMode="decimal" />, 
+       low:  <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSSDV_301}   placeholder='Low' step="0.1" type='number' value={inputValue2SDV_301} onChange={handleInputChange2SDV_301} inputMode="decimal" />,
+       update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={TECHNIAN_AUTH} />,
+       Maintain:   <Checkbox disabled={TECH_OPER} 
        style={{ marginRight: 20, }}
        onChange={ChangeMaintainSDV_301}
        checked={maintainSDV_301}
@@ -2688,10 +2810,10 @@ const formatValue = (value:any) => {
       modbus: <span style={combineCss.CSSSDV_302}>500003	 </span> ,
 
      value: <span style={combineCss.CSSSDV_302} > {SDV_302} {DataSDV_302}</span> , 
-      high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSSDV_302}   placeholder='High' step="0.1" type='number' value={inputValueSDV_302} onChange={handleInputChangeSDV_302} inputMode="decimal" />, 
-      low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSSDV_302}   placeholder='Low' step="0.1" type='number' value={inputValue2SDV_302} onChange={handleInputChange2SDV_302} inputMode="decimal" />,
-      update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
-      Maintain:   <Checkbox disabled={AuthInput} 
+      high: <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSSDV_302}   placeholder='High' step="0.1" type='number' value={inputValueSDV_302} onChange={handleInputChangeSDV_302} inputMode="decimal" />, 
+      low:  <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSSDV_302}   placeholder='Low' step="0.1" type='number' value={inputValue2SDV_302} onChange={handleInputChange2SDV_302} inputMode="decimal" />,
+      update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={TECHNIAN_AUTH} />,
+      Maintain:   <Checkbox disabled={TECH_OPER} 
       style={{ marginRight: 20, }}
       onChange={ChangeMaintainSDV_302}
       checked={maintainSDV_302}
@@ -2707,10 +2829,10 @@ const formatValue = (value:any) => {
              modbus: <span style={combineCss.CSSPLC_Conn_STT}>Status	 </span> ,
        
             value: <span style={combineCss.CSSPLC_Conn_STT} > {PLC_Conn_STT} {DataPLC_Conn_STT}</span> , 
-             high: <InputText disabled={AuthInputHighLow} style={combineCss.CSSPLC_Conn_STT}   placeholder='High' step="0.1" type='number' value={inputValuePLC_Conn_STT} onChange={handleInputChangePLC_Conn_STT} inputMode="decimal" />, 
-             low:  <InputText disabled={AuthInputHighLow} style={combineCss.CSSPLC_Conn_STT}   placeholder='Low' step="0.1" type='number' value={inputValue2PLC_Conn_STT} onChange={handleInputChange2PLC_Conn_STT} inputMode="decimal" />,
-             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={AuthUpdatePCV} />,
-             Maintain:   <Checkbox disabled={AuthInput} 
+             high: <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSPLC_Conn_STT}   placeholder='High' step="0.1" type='number' value={inputValuePLC_Conn_STT} onChange={handleInputChangePLC_Conn_STT} inputMode="decimal" />, 
+             low:  <InputText disabled={TECHNIAN_AUTH} style={combineCss.CSSPLC_Conn_STT}   placeholder='Low' step="0.1" type='number' value={inputValue2PLC_Conn_STT} onChange={handleInputChange2PLC_Conn_STT} inputMode="decimal" />,
+             update:  <Button className='buttonUpdateSetData' onClick={confirmUpData} label='Update' disabled={TECHNIAN_AUTH} />,
+             Maintain:   <Checkbox disabled={TECH_OPER} 
              style={{ marginRight: 20, }}
              onChange={ChangeMaintainPLC_Conn_STT}
              checked={maintainPLC_Conn_STT}
@@ -2756,7 +2878,7 @@ const formatValue = (value:any) => {
 
             Value: (
                 <InputText
-                disabled={AuthUpdatePCV}
+                disabled={TECHNIAN_AUTH}
               style={combineCssAttribute.PCV}
                     step="0.1"
                     type="Name"
@@ -2771,7 +2893,7 @@ const formatValue = (value:any) => {
             
             Update: (
                 <Button
-                disabled={AuthUpdatePCV}
+                disabled={TECHNIAN_AUTH}
 
                     className="buttonUpdateSetData"
                     style={{ marginTop: 5 }}
@@ -2788,61 +2910,57 @@ const formatValue = (value:any) => {
        //=========================================================================
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',  borderRadius:10,marginTop:10 }}>
-    <audio ref={audioRef}>
-            <source src="/audios/mixkit-police-siren-us-1643-_1_.mp3" type="audio/mpeg" />
-        </audio>
-        <Toast ref={toast} />
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',  borderRadius:10, }}>
+   
+    <Toast ref={toast} />
 
-        <ConfirmDialog />
+    <ConfirmDialog />
+
 <h2>MEIKO</h2>
 
 <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-  <div style={{ width: '100%' }}>
-    <DataTable 
-      size={'small'} 
-      selectionMode="single" 
-      value={combinedData} 
-      rowGroupMode="subheader" 
-      groupRowsBy="mainCategory" 
-      sortMode="single" 
-      sortField="mainCategory"
-      sortOrder={1} 
-      scrollable 
-      rowGroupHeaderTemplate={mainCategoryTemplate} 
-    >
-      <Column field="timeUpdate" header="Time Update" />
-      <Column field="modbus" header="Modbus" />
-      <Column field="name" header="Name" />
-      <Column field="value" header="Value" />
-      <Column field="high" header="High" />
-      <Column field="low" header="Low" />
-      <Column field="Maintain" header="Maintain" />
-     
-      {AuthInput ?  " " : <Column field="update" header="Update"     
-style={{ width: '133px' }} 
-/> } {/* Set consistent width */}
-    </DataTable>
-  </div>
-
-  <div style={{ width: '100%', borderRadius: 5, marginTop: 10 }}>
-    <h4>Station - Configuration</h4>
-    <DataTable value={Configuration} size={'small'} selectionMode="single">
-      <Column field="Name" header="Name" />
-     
-      <Column field="Value" header="value" />
-     {AuthInput ? " " : 
-      <Column 
-        field="Update" 
-        header={<div style={{position:'relative', right:45}}>Update</div>} 
-        style={{ display: 'flex', justifyContent: 'flex-end',}} 
-      /> } {/* Set the same width */} 
-    </DataTable>
-  </div>
+<div style={{ width: '100%' }}>
+<DataTable 
+   rowGroupMode="subheader"
+   size={'small'}      resizableColumns
+   tableStyle={{ minWidth: '50rem' }} 
+  value={combinedData}  
+  groupRowsBy="mainCategory"  
+   sortOrder={1} 
+   rowGroupHeaderTemplate={mainCategoryTemplate} >
+  <Column field="timeUpdate" header="Time Update" />
+  <Column field="modbus" header="Modbus" />
+  <Column field="name" header="Name" />
+  <Column field="value" header="Value" />
+  <Column field="high" header="High" />
+  <Column field="low" header="Low" />
+    <Column field="Maintain" header={maintainHeader} />
+ <Column field="update" header="Update"     
+style={{ width: '45px' }} 
+/>  
+</DataTable>
 </div>
 
+<div style={{ width: '100%', borderRadius: 5,}}>
+<h4>Station - Configuration</h4>
+<DataTable value={Configuration} size={'small'} selectionMode="single">
+  <Column field="Name" header="Name" />
+ 
+  <Column field="Value" header="value" />
+
+  <Column
+    field="Update" 
+    header={<div style={{position:'relative', right:45}}>Update</div>} 
+    style={{ display: 'flex', justifyContent: 'flex-end',right:45}} 
+  />  
+</DataTable>
+</div>
+</div>
+
+
 <br />
 <br />
+
 </div>
   )
 }

@@ -8,7 +8,6 @@ import SetAttribute1 from "../../OTSUKA/title-OTK";
 import { httpApi } from "@/api/http.api";
 import { DotGreen, DotRed } from "./SVG_Scorecard";
 
-import "./ScoreCard.css"
 import { Down, Up } from "../SVG_Scorecard";
 
 interface StateMap {
@@ -452,6 +451,11 @@ setEVC_02_Flow_at_Base_Condition_Low(EVC_02_Flow_at_Base_Condition_Low?.value ||
 const EVC_02_Flow_at_Base_Condition_Maintain = res.data.find(
     (item: any) => item.key === "EVC_02_Flow_at_Base_Condition_Maintain"
 );
+
+
+
+
+
 //==================================================================================================================================
          
             const PT_1103_High = res.data.find((item: any) => item.key === "PT_1103_High");
@@ -2040,33 +2044,22 @@ const dataFC = [
       
     ];
 
+    const STT = [
 
-    const dataFC111 = [
-
-      
         {
-            name: <span>{tagNameFC.InputPressure}</span>,
-            FC1901: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure}>{FC_01_Current_Values_Static_Pressure}</span>,
-            FC1902: <span style={combineCss.CSSEVC_02_Pressure}>{EVC_02_Pressure}</span>,
-    
+            name: <span> FC-1101 Connection Status (0: Not Init - 1: COM OK - 2: Error)</span>,
+            STT: <span style={combineCss.CSSFC_01_Conn_STT}>{FC_01_Conn_STT} {DataFC_01_Conn_STT}</span>,
+
         },
-            {
-                name: <span>{tagNameFC.Temperature}</span>,
-                FC1901: <span style={combineCss.CSSFC_01_Current_Values_Temperature}>{FC_01_Current_Values_Temperature}</span>,
-                FC1902: <span style={combineCss.CSSEVC_02_Temperature}>{EVC_02_Temperature}</span>,
-    
-            },
-            {
-                name: <span>{tagNameFC.SVF}</span>,
-                FC1901: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate}>{FC_01_Current_Values_Flow_Rate}</span>,
-                FC1902: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition}>{EVC_02_Flow_at_Base_Condition}</span>,
-    
-            },
-       
-           
-         
-        ];
-    
+        {
+            name: <span>EVC-1102 Connection Status (0: Not Init - 1: COM OK - 2: Error)</span>,
+            STT: <span style={combineCss.CSSEVC_02_Conn_STT}>{EVC_02_Conn_STT} {DataEVC_02_Conn_STT}</span>,
+
+        },
+
+    ]
+
+   
         
     const [ShowMore,setShowMore] = useState(false)
 
@@ -2077,47 +2070,33 @@ const dataFC = [
 
     return (
         <div >
-            <div  >
-                <div
-                    style={{
-                        background: "#64758B",
-                        color: "white",
-                        borderRadius: "10px 10px 0 0",
-                        display:'flex',
-                        justifyContent:'space-between'
-
-                    }}
-                >
-                    <div
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            padding: "5px 5px 0px 5px",
-                        }}
-                    >
-                        <div style={{ fontSize: 30, fontWeight: 700 }}>
-                            {" "}
+              <div className="Container_Scorecard1" >
+                   <div className="Container_Scorecard2" >
+                        <div className="Container_Name" >
                             ZOCV
                         </div>
                     </div>
                     <div
-                        style={{
-                            display:'flex',
-
-                            alignItems: "center",
-                           padding:5
-                        }}
-                    >
-                     
-                        <div style={{  fontWeight: 500 , display:'flex',}}>
+                    className="Container_Time_Show" >
+                        
+                        <div className="Container_Time" >
                         {Conn_STTValue}
+
                         </div>
-                        <div  onClick={handleShowMore} >
-                    {ShowMore ? <span style={{cursor:"pointer",  }}>{Up}</span>  : <span style={{cursor:"pointer"}}>{Down}</span>}
+                        <div className="Container_Show"  onClick={handleShowMore} >
+                    {ShowMore ?
+                    
+                    <span style={{fontSize:'2rem',cursor:'pointer'}}  className="pi pi-arrow-circle-down"></span>
+                     :
+                    <span style={{fontSize:'2rem',cursor:'pointer'}}  className="pi pi-arrow-circle-up"></span>}
+
+
                     </div>
                     </div>
+                    
                 </div>
+
+
 
                 {ShowMore ?    <div > 
 
@@ -2161,27 +2140,7 @@ const dataFC = [
 
                 </DataTable>
                     
-                <DataTable value={dataPT} size="small" selectionMode="single">
-                        <Column  field="name" header={<span className="id556" > PT Parameter</span>}></Column>
-                        <Column
-                        style={{display:'flex', justifyContent:'flex-end'}}
-
-                            field="FC1901"
-                            header={PLC_Conn_STT === "1" ? (
-
-                                <div style={{ padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                <p style={{marginLeft:5}}>PT-1103 </p>
-   
-                               </div>
-                               
-                            ) : (
-                                <div style={{ padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                <p style={{marginLeft:5}}>PT-1103 </p>
-   
-                               </div>
-                            )}
-                        ></Column>
-                    </DataTable>
+             
 
                     <DataTable value={FC0} size="small" selectionMode="single">
                         <Column  field="name" header={<span className="id556" > FC Parameter</span>}></Column>
@@ -2203,7 +2162,27 @@ const dataFC = [
                             )}
                         ></Column>
                     </DataTable>
-                   
+                    <DataTable value={dataPT} size="small" selectionMode="single">
+                        <Column  field="name" header={<span className="id556" > PT Parameter</span>}></Column>
+                        <Column
+                        style={{display:'flex', justifyContent:'flex-end'}}
+
+                            field="FC1901"
+                            header={PLC_Conn_STT === "1" ? (
+
+                                <div style={{ padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                                <p style={{marginLeft:5}}>PT-1103 </p>
+   
+                               </div>
+                               
+                            ) : (
+                                <div style={{ padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                                <p style={{marginLeft:5}}>PT-1103 </p>
+   
+                               </div>
+                            )}
+                        ></Column>
+                    </DataTable>
                     <DataTable value={dataUPS} size="small" selectionMode="single">
                         <Column  field="name" header={<span className="id556" > UPS Parameter</span>}></Column>
                         <Column
@@ -2225,6 +2204,30 @@ const dataFC = [
                             )}
                         ></Column>
                     </DataTable>
+
+
+                    <DataTable value={STT} size="small" selectionMode="single">
+                        <Column  field="name" header={<span className="id556" > Status</span>}></Column>
+                        <Column
+                        style={{display:'flex', justifyContent:'flex-end'}}
+
+                            field="STT"
+                            header={PLC_Conn_STT === "1" ? (
+
+                                <div style={{ padding:11,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                                <p style={{marginLeft:5}}></p>
+   
+                               </div>
+                               
+                            ) : (
+                                <div style={{ padding:11,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                                <p style={{marginLeft:5}}></p>
+   
+                               </div>
+                            )}
+                        ></Column>
+                    </DataTable>
+
 
                             
                 </div> 
@@ -2275,6 +2278,5 @@ const dataFC = [
 
         </div>
 
-        </div>
     );
 }

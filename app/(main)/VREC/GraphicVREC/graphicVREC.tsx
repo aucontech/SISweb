@@ -1916,6 +1916,195 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
               }).format(parseFloat(value))
             : "";
     };
+
+    useEffect(() => {
+        if (
+            (exceedThresholdFC_Lithium_Battery_Status && !maintainFC_Lithium_Battery_Status) ||
+            (exceedThresholdFC_Battery_Voltage && !maintainFC_Battery_Voltage) ||
+            (exceedThresholdFC_System_Voltage && !maintainFC_System_Voltage) ||
+            (exceedThresholdFC_Charger_Voltage && !maintainFC_Charger_Voltage) ||
+            (exceedThresholdFC_Conn_STT && !maintainFC_Conn_STT) ||
+            (exceedThresholdFC_01_Accumulated_Values_Uncorrected_Volume && !maintainFC_01_Accumulated_Values_Uncorrected_Volume) ||
+            (exceedThresholdFC_01_Accumulated_Values_Volume && !maintainFC_01_Accumulated_Values_Volume) ||
+            (exceedThresholdFC_01_Current_Values_Static_Pressure && !maintainFC_01_Current_Values_Static_Pressure) ||
+            (exceedThresholdFC_01_Current_Values_Temperature && !maintainFC_01_Current_Values_Temperature) ||
+            (exceedThresholdFC_01_Current_Values_Flow_Rate && !maintainFC_01_Current_Values_Flow_Rate) ||
+            (exceedThresholdFC_01_Current_Values_Uncorrected_Flow_Rate && !maintainFC_01_Current_Values_Uncorrected_Flow_Rate) ||
+            (exceedThresholdFC_01_Today_Values_Volume && !maintainFC_01_Today_Values_Volume) ||
+            (exceedThresholdFC_01_Today_Values_Uncorrected_Volume && !maintainFC_01_Today_Values_Uncorrected_Volume) ||
+            (exceedThresholdFC_01_Yesterday_Values_Volume && !maintainFC_01_Yesterday_Values_Volume) ||
+            (exceedThresholdFC_01_Yesterday_Values_Uncorrected_Volume && !maintainFC_01_Yesterday_Values_Uncorrected_Volume) ||
+            (exceedThresholdFC_02_Accumulated_Values_Uncorrected_Volume && !maintainFC_02_Accumulated_Values_Uncorrected_Volume) ||
+            (exceedThresholdFC_02_Accumulated_Values_Volume && !maintainFC_02_Accumulated_Values_Volume) ||
+            (exceedThresholdFC_02_Current_Values_Static_Pressure && !maintainFC_02_Current_Values_Static_Pressure) ||
+            (exceedThresholdFC_02_Current_Values_Temperature && !maintainFC_02_Current_Values_Temperature) ||
+            (exceedThresholdFC_02_Current_Values_Flow_Rate && !maintainFC_02_Current_Values_Flow_Rate) ||
+            (exceedThresholdFC_02_Current_Values_Uncorrected_Flow_Rate && !maintainFC_02_Current_Values_Uncorrected_Flow_Rate) ||
+            (exceedThresholdFC_02_Today_Values_Volume && !maintainFC_02_Today_Values_Volume) ||
+            (exceedThresholdFC_02_Today_Values_Uncorrected_Volume && !maintainFC_02_Today_Values_Uncorrected_Volume) ||
+            (exceedThresholdFC_02_Yesterday_Values_Volume && !maintainFC_02_Yesterday_Values_Volume) ||
+            (exceedThresholdFC_02_Yesterday_Values_Uncorrected_Volume && !maintainFC_02_Yesterday_Values_Uncorrected_Volume) ||
+            (exceedThresholdGD1 && !maintainGD1) ||
+            (exceedThresholdGD2 && !maintainGD2) ||
+            (exceedThresholdPT1 && !maintainPT1) ||
+            (exceedThresholdDI_ZSO_1 && !maintainDI_ZSO_1) ||
+            (exceedThresholdDI_ZSC_1 && !maintainDI_ZSC_1) ||
+            (exceedThresholdDI_MAP_1 && !maintainDI_MAP_1) ||
+            (exceedThresholdDI_UPS_BATTERY && !maintainDI_UPS_BATTERY) ||
+            (exceedThresholdDI_UPS_CHARGING && !maintainDI_UPS_CHARGING) ||
+            (exceedThresholdDI_UPS_ALARM && !maintainDI_UPS_ALARM) ||
+            (exceedThresholdDI_SD_1 && !maintainDI_SD_1) ||
+            (exceedThresholdDI_SELECT_SW && !maintainDI_SELECT_SW) ||
+            (exceedThresholdDI_RESET && !maintainDI_RESET) ||
+            (exceedThresholdEmergency_NO && !maintainEmergency_NO) ||
+            (exceedThresholdEmergency_NC && !maintainEmergency_NC) ||
+            (exceedThresholdUPS_Mode && !maintainUPS_Mode) ||
+            (exceedThresholdDO_HR_01 && !maintainDO_HR_01) ||
+            (exceedThresholdDO_BC_01 && !maintainDO_BC_01) ||
+            (exceedThresholdDO_SV_01 && !maintainDO_SV_01) ||
+            (exceedThresholdPLC_Conn_STT && !maintainPLC_Conn_STT)
+        ) {
+            setAlarmMessage("ALARM");
+        } else if (
+            maintainFC_Lithium_Battery_Status ||
+            maintainFC_Battery_Voltage ||
+            maintainFC_System_Voltage ||
+            maintainFC_Charger_Voltage ||
+            maintainFC_Conn_STT ||
+            maintainFC_01_Accumulated_Values_Uncorrected_Volume ||
+            maintainFC_01_Accumulated_Values_Volume ||
+            maintainFC_01_Current_Values_Static_Pressure ||
+            maintainFC_01_Current_Values_Temperature ||
+            maintainFC_01_Current_Values_Flow_Rate ||
+            maintainFC_01_Current_Values_Uncorrected_Flow_Rate ||
+            maintainFC_01_Today_Values_Volume ||
+            maintainFC_01_Today_Values_Uncorrected_Volume ||
+            maintainFC_01_Yesterday_Values_Volume ||
+            maintainFC_01_Yesterday_Values_Uncorrected_Volume ||
+            maintainFC_02_Accumulated_Values_Uncorrected_Volume ||
+            maintainFC_02_Accumulated_Values_Volume ||
+            maintainFC_02_Current_Values_Static_Pressure ||
+            maintainFC_02_Current_Values_Temperature ||
+            maintainFC_02_Current_Values_Flow_Rate ||
+            maintainFC_02_Current_Values_Uncorrected_Flow_Rate ||
+            maintainFC_02_Today_Values_Volume ||
+            maintainFC_02_Today_Values_Uncorrected_Volume ||
+            maintainFC_02_Yesterday_Values_Volume ||
+            maintainFC_02_Yesterday_Values_Uncorrected_Volume ||
+            maintainGD1 ||
+            maintainGD2 ||
+            maintainPT1 ||
+            maintainDI_ZSO_1 ||
+            maintainDI_ZSC_1 ||
+            maintainDI_MAP_1 ||
+            maintainDI_UPS_BATTERY ||
+            maintainDI_UPS_CHARGING ||
+            maintainDI_UPS_ALARM ||
+            maintainDI_SD_1 ||
+            maintainDI_SELECT_SW ||
+            maintainDI_RESET ||
+            maintainEmergency_NO ||
+            maintainEmergency_NC ||
+            maintainUPS_Mode ||
+            maintainDO_HR_01 ||
+            maintainDO_BC_01 ||
+            maintainDO_SV_01 ||
+            maintainPLC_Conn_STT
+        ) {
+            setAlarmMessage("Maintaining");
+        } else {
+            setAlarmMessage(null);
+        }
+    }, [
+        exceedThresholdFC_Lithium_Battery_Status,
+        exceedThresholdFC_Battery_Voltage,
+        exceedThresholdFC_System_Voltage,
+        exceedThresholdFC_Charger_Voltage,
+        exceedThresholdFC_Conn_STT,
+        exceedThresholdFC_01_Accumulated_Values_Uncorrected_Volume,
+        exceedThresholdFC_01_Accumulated_Values_Volume,
+        exceedThresholdFC_01_Current_Values_Static_Pressure,
+        exceedThresholdFC_01_Current_Values_Temperature,
+        exceedThresholdFC_01_Current_Values_Flow_Rate,
+        exceedThresholdFC_01_Current_Values_Uncorrected_Flow_Rate,
+        exceedThresholdFC_01_Today_Values_Volume,
+        exceedThresholdFC_01_Today_Values_Uncorrected_Volume,
+        exceedThresholdFC_01_Yesterday_Values_Volume,
+        exceedThresholdFC_01_Yesterday_Values_Uncorrected_Volume,
+        exceedThresholdFC_02_Accumulated_Values_Uncorrected_Volume,
+        exceedThresholdFC_02_Accumulated_Values_Volume,
+        exceedThresholdFC_02_Current_Values_Static_Pressure,
+        exceedThresholdFC_02_Current_Values_Temperature,
+        exceedThresholdFC_02_Current_Values_Flow_Rate,
+        exceedThresholdFC_02_Current_Values_Uncorrected_Flow_Rate,
+        exceedThresholdFC_02_Today_Values_Volume,
+        exceedThresholdFC_02_Today_Values_Uncorrected_Volume,
+        exceedThresholdFC_02_Yesterday_Values_Volume,
+        exceedThresholdFC_02_Yesterday_Values_Uncorrected_Volume,
+        exceedThresholdGD1,
+        exceedThresholdGD2,
+        exceedThresholdPT1,
+        exceedThresholdDI_ZSO_1,
+        exceedThresholdDI_ZSC_1,
+        exceedThresholdDI_MAP_1,
+        exceedThresholdDI_UPS_BATTERY,
+        exceedThresholdDI_UPS_CHARGING,
+        exceedThresholdDI_UPS_ALARM,
+        exceedThresholdDI_SD_1,
+        exceedThresholdDI_SELECT_SW,
+        exceedThresholdDI_RESET,
+        exceedThresholdEmergency_NO,
+        exceedThresholdEmergency_NC,
+        exceedThresholdUPS_Mode,
+        exceedThresholdDO_HR_01,
+        exceedThresholdDO_BC_01,
+        exceedThresholdDO_SV_01,
+        exceedThresholdPLC_Conn_STT,
+        maintainFC_Lithium_Battery_Status,
+        maintainFC_Battery_Voltage,
+        maintainFC_System_Voltage,
+        maintainFC_Charger_Voltage,
+        maintainFC_Conn_STT,
+        maintainFC_01_Accumulated_Values_Uncorrected_Volume,
+        maintainFC_01_Accumulated_Values_Volume,
+        maintainFC_01_Current_Values_Static_Pressure,
+        maintainFC_01_Current_Values_Temperature,
+        maintainFC_01_Current_Values_Flow_Rate,
+        maintainFC_01_Current_Values_Uncorrected_Flow_Rate,
+        maintainFC_01_Today_Values_Volume,
+        maintainFC_01_Today_Values_Uncorrected_Volume,
+        maintainFC_01_Yesterday_Values_Volume,
+        maintainFC_01_Yesterday_Values_Uncorrected_Volume,
+        maintainFC_02_Accumulated_Values_Uncorrected_Volume,
+        maintainFC_02_Accumulated_Values_Volume,
+        maintainFC_02_Current_Values_Static_Pressure,
+        maintainFC_02_Current_Values_Temperature,
+        maintainFC_02_Current_Values_Flow_Rate,
+        maintainFC_02_Current_Values_Uncorrected_Flow_Rate,
+        maintainFC_02_Today_Values_Volume,
+        maintainFC_02_Today_Values_Uncorrected_Volume,
+        maintainFC_02_Yesterday_Values_Volume,
+        maintainFC_02_Yesterday_Values_Uncorrected_Volume,
+        maintainGD1,
+        maintainGD2,
+        maintainPT1,
+        maintainDI_ZSO_1,
+        maintainDI_ZSC_1,
+        maintainDI_MAP_1,
+        maintainDI_UPS_BATTERY,
+        maintainDI_UPS_CHARGING,
+        maintainDI_UPS_ALARM,
+        maintainDI_SD_1,
+        maintainDI_SELECT_SW,
+        maintainDI_RESET,
+        maintainEmergency_NO,
+        maintainEmergency_NC,
+        maintainUPS_Mode,
+        maintainDO_HR_01,
+        maintainDO_BC_01,
+        maintainDO_SV_01,
+        maintainPLC_Conn_STT
+    ]);
     useEffect(() => {
         const updatedNodes = nodes.map((node) => {
             if (node.id === "data4") {
@@ -3021,194 +3210,7 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
         });
         setNodes(updatedNodes);
     }, [data]);
-    useEffect(() => {
-        if (
-            (exceedThresholdFC_Lithium_Battery_Status && !maintainFC_Lithium_Battery_Status) ||
-            (exceedThresholdFC_Battery_Voltage && !maintainFC_Battery_Voltage) ||
-            (exceedThresholdFC_System_Voltage && !maintainFC_System_Voltage) ||
-            (exceedThresholdFC_Charger_Voltage && !maintainFC_Charger_Voltage) ||
-            (exceedThresholdFC_Conn_STT && !maintainFC_Conn_STT) ||
-            (exceedThresholdFC_01_Accumulated_Values_Uncorrected_Volume && !maintainFC_01_Accumulated_Values_Uncorrected_Volume) ||
-            (exceedThresholdFC_01_Accumulated_Values_Volume && !maintainFC_01_Accumulated_Values_Volume) ||
-            (exceedThresholdFC_01_Current_Values_Static_Pressure && !maintainFC_01_Current_Values_Static_Pressure) ||
-            (exceedThresholdFC_01_Current_Values_Temperature && !maintainFC_01_Current_Values_Temperature) ||
-            (exceedThresholdFC_01_Current_Values_Flow_Rate && !maintainFC_01_Current_Values_Flow_Rate) ||
-            (exceedThresholdFC_01_Current_Values_Uncorrected_Flow_Rate && !maintainFC_01_Current_Values_Uncorrected_Flow_Rate) ||
-            (exceedThresholdFC_01_Today_Values_Volume && !maintainFC_01_Today_Values_Volume) ||
-            (exceedThresholdFC_01_Today_Values_Uncorrected_Volume && !maintainFC_01_Today_Values_Uncorrected_Volume) ||
-            (exceedThresholdFC_01_Yesterday_Values_Volume && !maintainFC_01_Yesterday_Values_Volume) ||
-            (exceedThresholdFC_01_Yesterday_Values_Uncorrected_Volume && !maintainFC_01_Yesterday_Values_Uncorrected_Volume) ||
-            (exceedThresholdFC_02_Accumulated_Values_Uncorrected_Volume && !maintainFC_02_Accumulated_Values_Uncorrected_Volume) ||
-            (exceedThresholdFC_02_Accumulated_Values_Volume && !maintainFC_02_Accumulated_Values_Volume) ||
-            (exceedThresholdFC_02_Current_Values_Static_Pressure && !maintainFC_02_Current_Values_Static_Pressure) ||
-            (exceedThresholdFC_02_Current_Values_Temperature && !maintainFC_02_Current_Values_Temperature) ||
-            (exceedThresholdFC_02_Current_Values_Flow_Rate && !maintainFC_02_Current_Values_Flow_Rate) ||
-            (exceedThresholdFC_02_Current_Values_Uncorrected_Flow_Rate && !maintainFC_02_Current_Values_Uncorrected_Flow_Rate) ||
-            (exceedThresholdFC_02_Today_Values_Volume && !maintainFC_02_Today_Values_Volume) ||
-            (exceedThresholdFC_02_Today_Values_Uncorrected_Volume && !maintainFC_02_Today_Values_Uncorrected_Volume) ||
-            (exceedThresholdFC_02_Yesterday_Values_Volume && !maintainFC_02_Yesterday_Values_Volume) ||
-            (exceedThresholdFC_02_Yesterday_Values_Uncorrected_Volume && !maintainFC_02_Yesterday_Values_Uncorrected_Volume) ||
-            (exceedThresholdGD1 && !maintainGD1) ||
-            (exceedThresholdGD2 && !maintainGD2) ||
-            (exceedThresholdPT1 && !maintainPT1) ||
-            (exceedThresholdDI_ZSO_1 && !maintainDI_ZSO_1) ||
-            (exceedThresholdDI_ZSC_1 && !maintainDI_ZSC_1) ||
-            (exceedThresholdDI_MAP_1 && !maintainDI_MAP_1) ||
-            (exceedThresholdDI_UPS_BATTERY && !maintainDI_UPS_BATTERY) ||
-            (exceedThresholdDI_UPS_CHARGING && !maintainDI_UPS_CHARGING) ||
-            (exceedThresholdDI_UPS_ALARM && !maintainDI_UPS_ALARM) ||
-            (exceedThresholdDI_SD_1 && !maintainDI_SD_1) ||
-            (exceedThresholdDI_SELECT_SW && !maintainDI_SELECT_SW) ||
-            (exceedThresholdDI_RESET && !maintainDI_RESET) ||
-            (exceedThresholdEmergency_NO && !maintainEmergency_NO) ||
-            (exceedThresholdEmergency_NC && !maintainEmergency_NC) ||
-            (exceedThresholdUPS_Mode && !maintainUPS_Mode) ||
-            (exceedThresholdDO_HR_01 && !maintainDO_HR_01) ||
-            (exceedThresholdDO_BC_01 && !maintainDO_BC_01) ||
-            (exceedThresholdDO_SV_01 && !maintainDO_SV_01) ||
-            (exceedThresholdPLC_Conn_STT && !maintainPLC_Conn_STT)
-        ) {
-            setAlarmMessage("ALARM");
-        } else if (
-            maintainFC_Lithium_Battery_Status &&
-            maintainFC_Battery_Voltage &&
-            maintainFC_System_Voltage &&
-            maintainFC_Charger_Voltage &&
-            maintainFC_Conn_STT &&
-            maintainFC_01_Accumulated_Values_Uncorrected_Volume &&
-            maintainFC_01_Accumulated_Values_Volume &&
-            maintainFC_01_Current_Values_Static_Pressure &&
-            maintainFC_01_Current_Values_Temperature &&
-            maintainFC_01_Current_Values_Flow_Rate &&
-            maintainFC_01_Current_Values_Uncorrected_Flow_Rate &&
-            maintainFC_01_Today_Values_Volume &&
-            maintainFC_01_Today_Values_Uncorrected_Volume &&
-            maintainFC_01_Yesterday_Values_Volume &&
-            maintainFC_01_Yesterday_Values_Uncorrected_Volume &&
-            maintainFC_02_Accumulated_Values_Uncorrected_Volume &&
-            maintainFC_02_Accumulated_Values_Volume &&
-            maintainFC_02_Current_Values_Static_Pressure &&
-            maintainFC_02_Current_Values_Temperature &&
-            maintainFC_02_Current_Values_Flow_Rate &&
-            maintainFC_02_Current_Values_Uncorrected_Flow_Rate &&
-            maintainFC_02_Today_Values_Volume &&
-            maintainFC_02_Today_Values_Uncorrected_Volume &&
-            maintainFC_02_Yesterday_Values_Volume &&
-            maintainFC_02_Yesterday_Values_Uncorrected_Volume &&
-            maintainGD1 &&
-            maintainGD2 &&
-            maintainPT1 &&
-            maintainDI_ZSO_1 &&
-            maintainDI_ZSC_1 &&
-            maintainDI_MAP_1 &&
-            maintainDI_UPS_BATTERY &&
-            maintainDI_UPS_CHARGING &&
-            maintainDI_UPS_ALARM &&
-            maintainDI_SD_1 &&
-            maintainDI_SELECT_SW &&
-            maintainDI_RESET &&
-            maintainEmergency_NO &&
-            maintainEmergency_NC &&
-            maintainUPS_Mode &&
-            maintainDO_HR_01 &&
-            maintainDO_BC_01 &&
-            maintainDO_SV_01 &&
-            maintainPLC_Conn_STT
-        ) {
-            setAlarmMessage("Maintaining");
-        } else {
-            setAlarmMessage(null);
-        }
-    }, [
-        exceedThresholdFC_Lithium_Battery_Status,
-        exceedThresholdFC_Battery_Voltage,
-        exceedThresholdFC_System_Voltage,
-        exceedThresholdFC_Charger_Voltage,
-        exceedThresholdFC_Conn_STT,
-        exceedThresholdFC_01_Accumulated_Values_Uncorrected_Volume,
-        exceedThresholdFC_01_Accumulated_Values_Volume,
-        exceedThresholdFC_01_Current_Values_Static_Pressure,
-        exceedThresholdFC_01_Current_Values_Temperature,
-        exceedThresholdFC_01_Current_Values_Flow_Rate,
-        exceedThresholdFC_01_Current_Values_Uncorrected_Flow_Rate,
-        exceedThresholdFC_01_Today_Values_Volume,
-        exceedThresholdFC_01_Today_Values_Uncorrected_Volume,
-        exceedThresholdFC_01_Yesterday_Values_Volume,
-        exceedThresholdFC_01_Yesterday_Values_Uncorrected_Volume,
-        exceedThresholdFC_02_Accumulated_Values_Uncorrected_Volume,
-        exceedThresholdFC_02_Accumulated_Values_Volume,
-        exceedThresholdFC_02_Current_Values_Static_Pressure,
-        exceedThresholdFC_02_Current_Values_Temperature,
-        exceedThresholdFC_02_Current_Values_Flow_Rate,
-        exceedThresholdFC_02_Current_Values_Uncorrected_Flow_Rate,
-        exceedThresholdFC_02_Today_Values_Volume,
-        exceedThresholdFC_02_Today_Values_Uncorrected_Volume,
-        exceedThresholdFC_02_Yesterday_Values_Volume,
-        exceedThresholdFC_02_Yesterday_Values_Uncorrected_Volume,
-        exceedThresholdGD1,
-        exceedThresholdGD2,
-        exceedThresholdPT1,
-        exceedThresholdDI_ZSO_1,
-        exceedThresholdDI_ZSC_1,
-        exceedThresholdDI_MAP_1,
-        exceedThresholdDI_UPS_BATTERY,
-        exceedThresholdDI_UPS_CHARGING,
-        exceedThresholdDI_UPS_ALARM,
-        exceedThresholdDI_SD_1,
-        exceedThresholdDI_SELECT_SW,
-        exceedThresholdDI_RESET,
-        exceedThresholdEmergency_NO,
-        exceedThresholdEmergency_NC,
-        exceedThresholdUPS_Mode,
-        exceedThresholdDO_HR_01,
-        exceedThresholdDO_BC_01,
-        exceedThresholdDO_SV_01,
-        exceedThresholdPLC_Conn_STT,
-        maintainFC_Lithium_Battery_Status,
-        maintainFC_Battery_Voltage,
-        maintainFC_System_Voltage,
-        maintainFC_Charger_Voltage,
-        maintainFC_Conn_STT,
-        maintainFC_01_Accumulated_Values_Uncorrected_Volume,
-        maintainFC_01_Accumulated_Values_Volume,
-        maintainFC_01_Current_Values_Static_Pressure,
-        maintainFC_01_Current_Values_Temperature,
-        maintainFC_01_Current_Values_Flow_Rate,
-        maintainFC_01_Current_Values_Uncorrected_Flow_Rate,
-        maintainFC_01_Today_Values_Volume,
-        maintainFC_01_Today_Values_Uncorrected_Volume,
-        maintainFC_01_Yesterday_Values_Volume,
-        maintainFC_01_Yesterday_Values_Uncorrected_Volume,
-        maintainFC_02_Accumulated_Values_Uncorrected_Volume,
-        maintainFC_02_Accumulated_Values_Volume,
-        maintainFC_02_Current_Values_Static_Pressure,
-        maintainFC_02_Current_Values_Temperature,
-        maintainFC_02_Current_Values_Flow_Rate,
-        maintainFC_02_Current_Values_Uncorrected_Flow_Rate,
-        maintainFC_02_Today_Values_Volume,
-        maintainFC_02_Today_Values_Uncorrected_Volume,
-        maintainFC_02_Yesterday_Values_Volume,
-        maintainFC_02_Yesterday_Values_Uncorrected_Volume,
-        maintainGD1,
-        maintainGD2,
-        maintainPT1,
-        maintainDI_ZSO_1,
-        maintainDI_ZSC_1,
-        maintainDI_MAP_1,
-        maintainDI_UPS_BATTERY,
-        maintainDI_UPS_CHARGING,
-        maintainDI_UPS_ALARM,
-        maintainDI_SD_1,
-        maintainDI_SELECT_SW,
-        maintainDI_RESET,
-        maintainEmergency_NO,
-        maintainEmergency_NC,
-        maintainUPS_Mode,
-        maintainDO_HR_01,
-        maintainDO_BC_01,
-        maintainDO_SV_01,
-        maintainPLC_Conn_STT
-    ]);
+   
     
     // const storedPositionString = localStorage.getItem("positionsDemo");
 
@@ -6004,7 +6006,7 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
             sourcePosition: Position.Left,
             targetPosition: Position.Right,
             style: {
-                background: backgroundGraphic,
+                background: background,
                 border: "none",
                 width: 200,
                 borderRadius: 5,

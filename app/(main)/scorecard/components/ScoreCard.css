@@ -15,3 +15,34 @@
     background: none;
 }
 
+.Container_Scorecard1{
+    background:#64758B ;
+    color: white;
+    border-radius: 10px 10px 0px 0px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.25rem 0.75rem;
+}
+.Container_Scorecard2{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.Container_Name{
+    font-size: 30px;
+    font-weight: 700;
+}
+.Container_Time_Show{
+    display: flex;
+    align-items: center;
+}
+.Container_Time{
+    font-weight: 500;
+    display: flex;
+    margin-right: 0.75rem;
+
+}
+.Container_Show{
+    display: flex;
+    align-items: center;
+}

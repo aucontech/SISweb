@@ -3,13 +3,10 @@ import { id_LGDS,  } from "../../data-table-device/ID-DEVICE/IdDevice";
 import { readToken } from "@/service/localStorage";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import "./ScoreCard.css";
 import SetAttribute1 from "../../OTSUKA/title-OTK";
 import { httpApi } from "@/api/http.api";
 import { DotGreen, DotRed } from "./SVG_Scorecard";
-
 import "./ScoreCard.css"
-import { Down, Up } from "../SVG_Scorecard";
 
 interface StateMap {
     [key: string]:
@@ -654,9 +651,18 @@ export default function ScoreCard_LGDS() {
             );
 
 
+            const FC_Conn_STT_High = res.data.find((item: any) => item.key === "FC_Conn_STT_High");
+            setFC_Conn_STT_High(FC_Conn_STT_High?.value || null);
+            const FC_Conn_STT_Low = res.data.find((item: any) => item.key === "FC_Conn_STT_Low");
+            setFC_Conn_STT_Low(FC_Conn_STT_Low?.value || null);
+            const FC_Conn_STT_Maintain = res.data.find(
+                (item: any) => item.key === "FC_Conn_STT_Maintain"
+            );
+
             
  // =================================================================================================================== 
 
+ setMaintainFC_Conn_STT(FC_Conn_STT_Maintain?.value || false);
 
 
 
@@ -2156,7 +2162,8 @@ useEffect(() => {
         VmToday: "Gross Volume Vm Today (m³)",
         VmLastDay: "Gross Volume Vm Yesterday (m³)",
         ReBattery: "Remainning Battery (Months)",
-        PT_1003: "Output Pressure PT-1103 (BarG)",
+        PT_1003: "Output Pressure PT-1003 (BarG)",
+        FC_Conn_STT: "FC-1101 Connection Status (0: Not Init - 1: COM OK - 2: Error)",
 
     };
 
@@ -2255,6 +2262,7 @@ useEffect(() => {
             ? " Normal"
             : null;
 
+    const DataFC_Conn_STT = FC_Conn_STT === "0" ? "Not Init" : FC_Conn_STT === "1" ? "COM OK" : FC_Conn_STT ? "Error" : null;
          
 
             const combineCss = {
@@ -3024,6 +3032,20 @@ useEffect(() => {
                     ? 18
                     : ""
                 },
+
+                CSSFC_Conn_STT : {
+                    color:exceedThresholdFC_Conn_STT && !maintainFC_Conn_STT
+                    ? "#ff5656"
+                    : maintainFC_Conn_STT
+                    ? "orange"
+                    : "" ,
+                    fontWeight: (exceedThresholdFC_Conn_STT || maintainFC_Conn_STT)
+                    ? 600
+                    : "",
+                    fontSize: (exceedThresholdFC_Conn_STT || maintainFC_Conn_STT)
+                    ? 18
+                    : ""
+                },
         
           };
 
@@ -3057,7 +3079,7 @@ useEffect(() => {
                 FC1: <span style={combineCss.CSSFC_Charger_Voltage}>{formatValue(FC_Charger_Voltage)}</span>,
     
             },
-            
+           
           
         ];
 //=================================================================================
@@ -3119,115 +3141,21 @@ const dataFC = [
 
 
         {
-            name: <span>Output Pressure PT-1103 (BarG)</span>,
+            name: <span>Output Pressure PT-1003 (BarG)</span>,
             FC1901: <span style={combineCss.CSSPT_1003}>{formatValue(PT_1003)}</span>,
     
         },
     ];
-    // const dataPLC = [
-    //     {
-    //         name: <span>{tagNamePLC.PT01}</span>,
-    //         PLC: <span style={combineCss.CSSPT1}> {PT1}</span>,
-    //     },
-    //     {
-    //         name: <span>{tagNamePLC.GD1}</span>,
-    //         PLC: <span style={combineCss.CSSGD1}>{} {GD1}</span>,
-    //     },
-    //     {
-    //         name: <span>{tagNamePLC.GD2}</span>,
-    //         PLC: <span style={combineCss.CSSGD2}> {GD2}</span>,
-    //     },
-    //     {
-    //         name: <span>{tagNamePLC.DO_SV_01}</span>,
-    //         PLC: <span style={combineCss.CSSDO_SV_01}> {DO_SV_01} {DataDO_SV_01}</span>,
-    //     },
-    //     {
-    //         name: <span>{tagNamePLC.DO_SV_02}</span>,
-    //         PLC: <span style={combineCss.CSSDO_SV_02}> {DO_SV_02} {DataDO_SV_02}</span>,
-    //     },
-      
 
-    //     {
-    //         name: <span>{tagNamePLC.ZSO1}</span>,
-    //         PLC: <span style={combineCss.CSSDI_ZSO_1}>{DI_ZSO_1} {DataZSO_1}</span>,
-    //     },
-      
-    //     {
-    //         name: <span>{tagNamePLC.ZSC1}</span>,
-    //         PLC: <span style={combineCss.CSSDI_ZSC_1}>{DI_ZSC_1} {DataZSC_1}</span>,
-    //     },
+    const STT = [
+        {
+            name: <span>{tagNameFC.FC_Conn_STT}</span>,
+            STT: <span style={combineCss.CSSFC_Conn_STT}>{formatValue(FC_Conn_STT)} {DataFC_Conn_STT}</span>,
 
-
-    //     {
-    //         name: <span>{tagNamePLC.ZSO2}</span>,
-    //         PLC: <span style={combineCss.CSSDI_ZSO_2}>{DI_ZSO_1} {DataZSO_2}</span>,
-    //     },
-      
-    //     {
-    //         name: <span>{tagNamePLC.ZSC2}</span>,
-    //         PLC: <span style={combineCss.CSSDI_ZSC_2}>{DI_ZSC_2} {DataZSC_2}</span>,
-    //     },
-      
-    //     {
-    //         name: <span>{tagNamePLC.UPS_BATTERY}</span>,
-    //         PLC: <span style={combineCss.CSSDI_UPS_BATTERY}> {DI_UPS_BATTERY} {DataBattery}</span>,
-    //     },
-    //     {
-    //         name: <span>{tagNamePLC.UPS_CHARGING}</span>,
-    //         PLC: <span style={combineCss.CSSDI_UPS_CHARGING}> {DI_UPS_CHARGING} {DataCharging}</span>,
-    //     },
-
-     
-    //     {
-    //         name: <span>{tagNamePLC.UPS_ALARM}</span>,
-    //         PLC: <span style={combineCss.CSSDI_UPS_ALARM}>{DI_UPS_ALARM} {DataAlarm}</span>,
-    //     },
-
-   
-    //     {
-    //         name: <span>{tagNamePLC.UPS_MODE}</span>,
-    //         PLC: <span style={combineCss.CSSUPS_Mode}> {UPS_Mode} {DataMode}</span>,
-    //     },
-    //     {
-    //         name: <span>{tagNamePLC.DI_SD_1}</span>,
-    //         PLC: <span style={combineCss.CSSDI_SD_1}> {DI_SD_1} {DataSmoker_Detected}</span>,
-    //     },
-
-    //     {
-    //         name: <span>{tagNamePLC.SELECT_SW}</span>,
-    //         PLC: <span style={combineCss.CSSDI_SELECT_SW}>{DI_SELECT_SW} {DataDI_SELECT_SW}</span>,
-    //     },
-
-    //     {
-    //         name: <span>{tagNamePLC.RESET}</span>,
-    //         PLC: <span style={combineCss.CSSDI_RESET}>{DI_RESET} {DataRESET}</span>,
-    //     },
-    //     {
-    //         name: <span>{tagNamePLC.EmergencyNO}</span>,
-    //         PLC: <span style={combineCss.CSSEmergency_NO}> {Emergency_NO} {DataEmergency_NO}</span>,
-    //     },
-    //     {
-    //         name: <span>{tagNamePLC.EmergencyNC}</span>,
-    //         PLC: <span style={combineCss.CSSEmergency_NC}>{Emergency_NC} {DataEmergency_NC}</span>,
-    //     },
-     
-
-    //     {
-    //         name: <span>{tagNamePLC.HORN}</span>,
-    //         PLC: <span style={combineCss.CSSDO_HR_01}>{DO_HR_01} {DataHorn}</span>,
-    //     },
-    //     {
-    //         name: <span>{tagNamePLC.BEACON}</span>,
-    //         PLC: <span style={combineCss.CSSDO_BC_01}> {DO_BC_01} {DataBeacon}</span>,
-    //     },
-   
-
-    
-    //     {
-    //         name: <span>{tagNamePLC.MAP}</span>,
-    //         PLC: <span style={combineCss.CSSDI_MAP_1}> {DI_MAP_1} {DataMap1}</span>,
-    //     },
-    // ];
+        },
+    ]
+  
+  
     const [ShowMore,setShowMore] = useState(false)
 
     const handleShowMore = () => {
@@ -3235,204 +3163,197 @@ const dataFC = [
     }
 
 
-    return (
-        <div >
-            <div  >
-                <div
-                    style={{
-                        background: "#64758B",
-                        color: "white",
-                        borderRadius: "10px 10px 0 0",
-                        display:'flex',
-                        justifyContent:'space-between'
 
-                    }}
-                >
-                   <div
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            padding: "5px 5px 0px 5px",
-                        }}
-                    >
-                        <div style={{ fontSize: 30, fontWeight: 700 }}>
-                            {" "}
-                            LGDS
+
+    const renderShowMore = () => {
+        return   <div> 
+
+
+        <DataTable value={dataFC} size="small" selectionMode="single"> 
+            <Column field="name" header="FC Parameter"></Column>
+
+            <Column
+                    field="FC1901"
+                    header={FC_Conn_STT === "1" ? (
+
+                        <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center',  position:'relative', right:30}}>
+                        {DotGreen} <p style={{marginLeft:5}}>FC-1001</p>
+
+                       </div>
+                       
+                    ) : (
+                        <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center' , position:'relative', right:30}}>
+                           {DotRed}  <p style={{marginLeft:5}}>FC-1001</p>
                         </div>
-                    </div>
-                    <div
-                        style={{
-                            display:'flex',
+                    )}
+                ></Column>
+                <Column
+                style={{display:'flex', justifyContent:'flex-end'}}
+                    field="FC1902"
+                    header={FC_Conn_STT === "1" ? (
 
-                            alignItems: "center",
-                            padding:5
+                        <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                        {DotGreen} <p style={{marginLeft:5}}>FC-1002</p>
 
-                        }}
-                    >
-                        
-                        <div style={{  fontWeight: 500,display:'flex', }}>
-                           {FC_Conn_STTValue}
-                        </div>
-                        <div  onClick={handleShowMore} >
-                    {ShowMore ? <span style={{cursor:"pointer",  }}>{Up}</span>  : <span style={{cursor:"pointer",  }}>{Down}</span>}
-                    </div>
-                    </div>
-                    
-                </div>
-
-
-
-                {ShowMore ?    <div> 
-
-
-                <DataTable value={dataFC} size="small" selectionMode="single"> 
-                    <Column field="name" header="FC Parameter"></Column>
-
-                    <Column
-                            field="FC1901"
-                            header={FC_Conn_STT === "1" ? (
-
-                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center',  position:'relative', right:30}}>
-                                {DotGreen} <p style={{marginLeft:5}}>FC-1001</p>
-   
-                               </div>
-                               
-                            ) : (
-                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center' , position:'relative', right:30}}>
-                                   {DotRed}  <p style={{marginLeft:5}}>FC-1001</p>
-                                </div>
-                            )}
-                        ></Column>
-                        <Column
-                        style={{display:'flex', justifyContent:'flex-end'}}
-                            field="FC1902"
-                            header={FC_Conn_STT === "1" ? (
-
-                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                {DotGreen} <p style={{marginLeft:5}}>FC-1002</p>
-   
-                               </div>
-                              
-                            ) : (
-                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
-                                {DotRed}  <p style={{marginLeft:5}}>FC-1002</p>
-                             </div>
-                            )}
-                        ></Column>
-                </DataTable>
-                    {/* <DataTable value={dataPLC} size="small" selectionMode="single">
-                        <Column  field="name" header={<span className="id556" > PLC Parameter</span>}></Column>
-                        <Column
-                        style={{display:'flex', justifyContent:'flex-end'}}
-
-                            field="PLC"
-                            header={PLC_Conn_STT === "1" ? (
-
-                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                {DotGreen} <p style={{marginLeft:5}}>PLC Value</p>
-   
-                               </div>
-                               
-                            ) : (
-                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
-                                {DotRed}  <p style={{marginLeft:5}}>PLC Value</p>
-                             </div>
-                            )}
-                        ></Column>
-                    </DataTable> */}
-                 <DataTable value={dataPT} size="small" selectionMode="single">
-                        <Column  field="name" header={<span className="id556" > PT Parameter</span>}></Column>
-                        <Column
-                        style={{display:'flex', justifyContent:'flex-end'}}
-
-                            field="FC1901"
-                            header={FC_Conn_STT === "1" ? (
-
-                                <div style={{ padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                <p style={{marginLeft:5}}>PT-1003 </p>
-   
-                               </div>
-                               
-                            ) : (
-                                <div style={{ padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                <p style={{marginLeft:5}}>PT-1003 </p>
-   
-                               </div>
-                            )}
-                        ></Column>
-                    </DataTable>
-                    <DataTable value={dataFC1} size="small" selectionMode="single">
-                        <Column  field="name" header={<span className="id556" > FC Parameter</span>}></Column>
-                        <Column
-                        style={{display:'flex', justifyContent:'flex-end'}}
-
-                            field="FC1"
-                            header={FC_Conn_STT === "1" ? (
-                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                 {DotGreen} <p style={{marginLeft:5}}>FC</p>
-    
-                                </div>
-                            ) : (
-                                
-
+                       </div>
+                      
+                    ) : (
                         <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
-                                {DotRed}  <p style={{marginLeft:5}}>FC</p>
-                                    </div>
-                            )}
-                        ></Column>
+                        {DotRed}  <p style={{marginLeft:5}}>FC-1002</p>
+                     </div>
+                    )}
+                ></Column>
+        </DataTable>
+        <DataTable value={dataFC1} size="small" selectionMode="single">
+                <Column  field="name" header={<span className="id556" > FC Parameter</span>}></Column>
+                <Column
+                style={{display:'flex', justifyContent:'flex-end'}}
 
-                    
-                    </DataTable>
-                    </div> 
-                
-                : 
-                
-                
-                <div>
+                    field="FC1"
+                    header={FC_Conn_STT === "1" ? (
+                        <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                         {DotGreen} <p style={{marginLeft:5}}>FC</p>
+
+                        </div>
+                    ) : (
+                        
+
+                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
+                        {DotRed}  <p style={{marginLeft:5}}>FC</p>
+                            </div>
+                    )}
+                ></Column>
+
+            
+            </DataTable>
+         <DataTable value={dataPT} size="small" selectionMode="single">
+                <Column  field="name" header={<span className="id556" > PT Parameter</span>}></Column>
+                <Column
+                style={{display:'flex', justifyContent:'flex-end'}}
+
+                    field="FC1901"
+                    header={FC_Conn_STT === "1" ? (
+
+                        <div style={{ padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                        <p style={{marginLeft:5}}>PT-1003 </p>
+
+                       </div>
+                       
+                    ) : (
+                        <div style={{ padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                        <p style={{marginLeft:5}}>PT-1003 </p>
+
+                       </div>
+                    )}
+                ></Column>
+            </DataTable>
+           
+            <DataTable value={STT} size="small" selectionMode="single">
+                <Column  field="name" header={<span className="id556" > Status</span>}></Column>
+                <Column
+                style={{display:'flex', justifyContent:'flex-end'}}
+
+                    field="STT"
+                    header={FC_Conn_STT === "1" ? (
+
+                        <div style={{ padding:11,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                        <p style={{marginLeft:5}}> </p>
+
+                       </div>
+                       
+                    ) : (
+                        <div style={{ padding:11,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                        <p style={{marginLeft:5}}> </p>
+
+                       </div>
+                    )}
+                ></Column>
+            </DataTable>
+
+            </div> 
+        
+    }
+
+    const renderShowLess = () => {
+        return  <div>
                    
-                <DataTable value={dataFC} size="small" selectionMode="single"> 
-                    <Column field="name" header="FC Parameter"></Column>
+        <DataTable value={dataFC} size="small" selectionMode="single"> 
+            <Column field="name" header="FC Parameter"></Column>
 
-                    <Column
-                            field="FC1901"
-                            header={FC_Conn_STT === "1" ? (
+            <Column
+                    field="FC1901"
+                    header={FC_Conn_STT === "1" ? (
 
-                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center',  position:'relative', right:30}}>
-                                {DotGreen} <p style={{marginLeft:5}}>FC-1001</p>
-   
-                               </div>
-                               
-                            ) : (
-                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center' , position:'relative', right:30}}>
-                                   {DotRed}  <p style={{marginLeft:5}}>FC-1001</p>
-                                </div>
-                            )}
-                        ></Column>
-                        <Column
-                        style={{display:'flex', justifyContent:'flex-end'}}
-                            field="FC1902"
-                            header={FC_Conn_STT === "1" ? (
+                        <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center',  position:'relative', right:30}}>
+                        {DotGreen} <p style={{marginLeft:5}}>FC-1001</p>
 
-                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                {DotGreen} <p style={{marginLeft:5}}>FC-1002</p>
-   
-                               </div>
-                              
-                            ) : (
-                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
-                                {DotRed}  <p style={{marginLeft:5}}>FC-1002</p>
-                             </div>
-                            )}
-                        ></Column>
-                </DataTable>
+                       </div>
+                       
+                    ) : (
+                        <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center' , position:'relative', right:30}}>
+                           {DotRed}  <p style={{marginLeft:5}}>FC-1001</p>
+                        </div>
+                    )}
+                ></Column>
+                <Column
+                style={{display:'flex', justifyContent:'flex-end'}}
+                    field="FC1902"
+                    header={FC_Conn_STT === "1" ? (
 
-            </div>
+                        <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                        {DotGreen} <p style={{marginLeft:5}}>FC-1002</p>
 
-                        }
+                       </div>
+                      
+                    ) : (
+                        <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
+                        {DotRed}  <p style={{marginLeft:5}}>FC-1002</p>
+                     </div>
+                    )}
+                ></Column>
+        </DataTable>
+
+    </div>
+    }
+
+    const headerOverView = () => {
+        return  <div className="Container_Scorecard1" >
+        <div className="Container_Scorecard2" >
+             <div className="Container_Name" >
+                 LGDS
+             </div>
+         </div>
+         <div
+         className="Container_Time_Show" >
+             
+             <div className="Container_Time" >
+                {FC_Conn_STTValue}
+             </div>
+             <div className="Container_Show"  onClick={handleShowMore} >
+         {ShowMore ?
+         
+         <span style={{fontSize:'2rem',cursor:'pointer'}}  className="pi pi-arrow-circle-down"></span>
+          :
+         <span style={{fontSize:'2rem',cursor:'pointer'}}  className="pi pi-arrow-circle-up"></span>}
+
+
+         </div>
+         </div>
+         
+     </div>
+    }
+
+
+    return (
+            < div >
+               
+               {headerOverView()}
+
+
+
+                {ShowMore ?  renderShowMore() : renderShowLess()  }
 
         </div>
 
-        </div>
     );
 }

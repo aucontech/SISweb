@@ -31,7 +31,6 @@ export default function ScoreCard_Meiko() {
 
 
     const [EVC_STT01, setEVC_STT01] = useState<any | null>(null);
-    const [PLC_Conn_STT, setPLC_Conn_STT] = useState<any | null>(null);
 
     const [FC_Conn_STTValue, setFC_Conn_STTValue] = useState<string | null>(
         null
@@ -428,8 +427,16 @@ export default function ScoreCard_Meiko() {
             const Consumption_Flow_Maintain = res.data.find(
                 (item: any) => item.key === "Consumption_Flow_Maintain"
             );
+            const PLC_Conn_STT_High = res.data.find((item: any) => item.key === "PLC_Conn_STT_High");
+            setPLC_Conn_STT_High(PLC_Conn_STT_High?.value || null);
+            const PLC_Conn_STT_Low = res.data.find((item: any) => item.key === "PLC_Conn_STT_Low");
+            setPLC_Conn_STT_Low(PLC_Conn_STT_Low?.value || null);
+            const PLC_Conn_STT_Maintain = res.data.find(
+                (item: any) => item.key === "PLC_Conn_STT_Maintain"
+            );
 
  // =================================================================================================================== 
+ setMaintainPLC_Conn_STT(PLC_Conn_STT_Maintain?.value || false);
 
             setMaintainVP_303(VP_303_Maintain?.value || false);
 
@@ -1052,7 +1059,24 @@ useEffect(() => {
                         }, [Flow_Velocity, Flow_Velocity_High, Flow_Velocity_Low, maintainFlow_Velocity]);
                          
                      
-                         
+                         //=======================================================================
+const [PLC_Conn_STT, setPLC_Conn_STT] = useState<string | null>(null);
+
+const [PLC_Conn_STT_High, setPLC_Conn_STT_High] = useState<number | null>(null);
+const [PLC_Conn_STT_Low, setPLC_Conn_STT_Low] = useState<number | null>(null);
+const [exceedThresholdPLC_Conn_STT, setexceedThresholdPLC_Conn_STT] = useState(false); 
+const [maintainPLC_Conn_STT, setMaintainPLC_Conn_STT] = useState<boolean>(false);
+
+useEffect(() => {
+const PLC_Conn_STTValue = parseFloat(PLC_Conn_STT as any);
+const highValue = PLC_Conn_STT_High ?? NaN;
+const lowValue = PLC_Conn_STT_Low ?? NaN;
+
+if (!isNaN(PLC_Conn_STTValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintainPLC_Conn_STT) {
+ setexceedThresholdPLC_Conn_STT(PLC_Conn_STTValue >= highValue || PLC_Conn_STTValue <= lowValue);
+}
+}, [PLC_Conn_STT, PLC_Conn_STT_High, PLC_Conn_STT_Low, maintainPLC_Conn_STT]);
+
                          
   
 
@@ -1090,8 +1114,9 @@ useEffect(() => {
         Tank_01_Volume: `Tank-01 Volume `,
 
         Consumption_Flow: `Consumption Flow ${nameValue.m3}`,
-        Flow_Velocity:`Flow Velocity ${nameValue.m3h}`
+        Flow_Velocity:`Flow Velocity ${nameValue.m3h}`,
 
+        PLC_Conn_STT: "PLC Connection Status (0: Not Init - 1: COM OK - 2: Error)",
 
     };
 
@@ -1110,6 +1135,7 @@ useEffect(() => {
         const DataSDV_301  = SDV_301 === "0" ? "OFF" : SDV_301 === "1" ? "ON" : null;
         const DataSDV_302  = SDV_302 === "0" ? "OFF" : SDV_302 === "1" ? "ON" : null;
 
+        const DataPLC_Conn_STT  = PLC_Conn_STT === "0" ? "Not Init" : PLC_Conn_STT === "1" ? "COM OK" : PLC_Conn_STT === "2" ? "Error" : null;
 
             const combineCss = {
 
@@ -1453,7 +1479,19 @@ useEffect(() => {
                ? 18
                : ""
            },
-   
+           CSSPLC_Conn_STT : {
+            color:exceedThresholdPLC_Conn_STT && !maintainPLC_Conn_STT
+            ? "#ff5656"
+            : maintainPLC_Conn_STT
+            ? "orange"
+            : "" ,
+            fontWeight: (exceedThresholdPLC_Conn_STT || maintainPLC_Conn_STT)
+            ? 600
+            : "",
+            fontSize: (exceedThresholdPLC_Conn_STT || maintainPLC_Conn_STT)
+            ? 18
+            : ""
+        },
         
           };
 
@@ -1468,16 +1506,6 @@ useEffect(() => {
                 : "";
         };
     const dataPLC = [
-
-        {
-            name: <span>{tagNamePLC.V1_Flow_Meter}</span>,
-            PLC: <span style={combineCss.CSSV1_Flow_Meter}>{formatValue(V1_Flow_Meter)} </span>,
-        },
-        {
-            name: <span>{tagNamePLC.V2_Flow_Meter}</span>,
-            PLC: <span style={combineCss.CSSV2_Flow_Meter}> {formatValue(V2_Flow_Meter)} </span>,
-        },
-
 
         {
             name: <span>{tagNamePLC.Pipe_Temp}</span>,
@@ -1496,35 +1524,19 @@ useEffect(() => {
             name: <span>{tagNamePLC.Tank_PT_301}</span>,
             PLC: <span style={combineCss.CSSTank_PT_301}> {formatValue(Tank_PT_301)} </span>,
         },
-
         {
             name: <span>Tank-01 Level (%)</span>,
             PLC: <span style={combineCss.CSSTank_01_Level}>{formatValue(Tank_01_Level)} </span>,
         },
-
-    
-//===
-
         {
             name: <span>Tank-01 Mass (Kg)</span>,
             PLC: <span style={combineCss.CSSTank_01_Mass}>{formatValue(Tank_01_Mass)}  </span>,
-        },
-     
-        {
-            name: <span>Tank-01 Volume (L)</span>,
-            PLC: <span style={combineCss.CSSTank_01_Volume}>{formatValue(Tank_01_Volume)}  </span>,
-        },
-      
-
-
-        {
-            name: <span>{tagNamePLC.Consumption_Flow}</span>,
-            PLC: <span style={combineCss.CSSConsumption_Flow}>{formatValue(Consumption_Flow)} </span>,
         },
         {
             name: <span>{tagNamePLC.Flow_Velocity}</span>,
             PLC: <span style={combineCss.CSSFlow_Velocity}> {formatValue(Flow_Velocity)} </span>,
         },
+
         {
             name: <span>{tagNamePLC.VP_301}</span>,
             PLC: <span style={combineCss.CSSVP_301}> {VP_301} {DataVP_301}</span>,
@@ -1538,6 +1550,31 @@ useEffect(() => {
             name: <span>{tagNamePLC.VP_303}</span>,
             PLC: <span style={combineCss.CSSVP_303}>{} {VP_303} {DataVP_303}</span>,
         },
+
+
+
+
+        {
+            name: <span>{tagNamePLC.V1_Flow_Meter}</span>,
+            PLC: <span style={combineCss.CSSV1_Flow_Meter}>{formatValue(V1_Flow_Meter)} </span>,
+        },
+        {
+            name: <span>{tagNamePLC.V2_Flow_Meter}</span>,
+            PLC: <span style={combineCss.CSSV2_Flow_Meter}> {formatValue(V2_Flow_Meter)} </span>,
+        },
+        {
+            name: <span>Tank-01 Volume (L)</span>,
+            PLC: <span style={combineCss.CSSTank_01_Volume}>{formatValue(Tank_01_Volume)}  </span>,
+        },
+      
+
+
+        {
+            name: <span>{tagNamePLC.Consumption_Flow}</span>,
+            PLC: <span style={combineCss.CSSConsumption_Flow}>{formatValue(Consumption_Flow)} </span>,
+        },
+     
+    
         {
             name: <span>{tagNamePLC.GD_101_High}</span>,
             PLC: <span style={combineCss.CSSGD_101_High}> {GD_101_High} {DataGD_101_High}</span>,
@@ -1565,10 +1602,6 @@ useEffect(() => {
             PLC: <span style={combineCss.CSSGD_103_Low}> {GD_103_Low} {DataGD_103_Low}</span>,
         },
 
-     
- 
-
-
         {
             name: <span>{tagNamePLC.SDV_301}</span>,
             PLC: <span style={combineCss.CSSSDV_301}> {SDV_301} {DataSDV_301}</span>,
@@ -1581,50 +1614,74 @@ useEffect(() => {
       
     ];
 
-    return (
-        <div style={{width:'100%'}} >
-                <div
-                    style={{
-                        background: "#64758B",
-                        color: "white",
-                        borderRadius: "10px 10px 0 0",
-                        display:'flex',
-                        justifyContent:'space-between'
-                    }}
-                >
-                    <div
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            padding: "5px 5px 0px 5px",
-                        }}
-                    >
-                        <div style={{ fontSize: 30, fontWeight: 700 }}>
-                            {" "}
-                            MEIKO
-                        </div>
+    const STT = [
+      
+        {
+            name: <span>{tagNamePLC.PLC_Conn_STT}</span>,
+            STT: <span style={combineCss.CSSPLC_Conn_STT}>{formatValue(PLC_Conn_STT)} {DataPLC_Conn_STT}</span>,
+        },
+    ]
 
-                        
-                       
-                    </div>
-            
-                    <div
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            padding: "0px 5px 5px 5px",
-                            justifyContent: "space-between",
 
-                        }}
-                    >
-                       
-                        <div style={{  fontWeight: 500 , display:'flex'}}>
-                          {Conn_STTValue}
-                        </div>
-                    </div>
-                </div>
-                    <DataTable value={dataPLC} size="small" selectionMode="single">
+    const ShowLessPLC = [
+
+        {
+            name: <span>{tagNamePLC.Pipe_Temp}</span>,
+            PLC: <span style={combineCss.CSSPipe_Temp}>{formatValue(Pipe_Temp)} </span>,
+        },
+     
+        {
+            name: <span>{tagNamePLC.Pipe_Press}</span>,
+            PLC: <span style={combineCss.CSSPipe_Press}>{formatValue(Pipe_Press)}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.Tank_TT_301}</span>,
+            PLC: <span style={combineCss.CSSTank_TT_301}>{formatValue(Tank_TT_301)}  </span>,
+        },
+        {
+            name: <span>{tagNamePLC.Tank_PT_301}</span>,
+            PLC: <span style={combineCss.CSSTank_PT_301}> {formatValue(Tank_PT_301)} </span>,
+        },
+        {
+            name: <span>Tank-01 Level (%)</span>,
+            PLC: <span style={combineCss.CSSTank_01_Level}>{formatValue(Tank_01_Level)} </span>,
+        },
+        {
+            name: <span>Tank-01 Mass (Kg)</span>,
+            PLC: <span style={combineCss.CSSTank_01_Mass}>{formatValue(Tank_01_Mass)}  </span>,
+        },
+        {
+            name: <span>{tagNamePLC.Flow_Velocity}</span>,
+            PLC: <span style={combineCss.CSSFlow_Velocity}> {formatValue(Flow_Velocity)} </span>,
+        },
+
+        {
+            name: <span>{tagNamePLC.VP_301}</span>,
+            PLC: <span style={combineCss.CSSVP_301}> {VP_301} {DataVP_301}</span>,
+        },
+   
+        {
+            name: <span>{tagNamePLC.VP_302}</span>,
+            PLC: <span style={combineCss.CSSVP_302}> {VP_302} {DataVP_302}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.VP_303}</span>,
+            PLC: <span style={combineCss.CSSVP_303}>{} {VP_303} {DataVP_303}</span>,
+        },
+
+
+    ]
+
+
+    const [ShowMore,setShowMore] = useState(false)
+
+    const handleShowMore = () => {
+        setShowMore(!ShowMore)
+    }
+
+    const renderShowMore = () => { 
+        return <div>
+            <DataTable value={dataPLC} size="small" selectionMode="single">
                         <Column  field="name" header={<span className="id556" > PLC Parameter</span>}></Column>
                         <Column
                         style={{display:'flex', justifyContent:'flex-end'}}
@@ -1644,7 +1701,105 @@ useEffect(() => {
                             )}
                         ></Column>
                     </DataTable>
-                <br /><br />
+                    <DataTable value={STT} size="small" selectionMode="single">
+                        <Column  field="name" header={<span className="id556" > Status</span>}></Column>
+                        <Column
+                        style={{display:'flex', justifyContent:'flex-end'}}
+
+                            field="STT"
+                            header={PLC_Conn_STT === "1" ? (
+                                <div style={{  padding:11,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                                <p style={{marginLeft:5}}> </p>
+                               </div>
+                                
+                            ) : (
+                                <div style={{  padding:11, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
+                                 <p style={{marginLeft:5}}></p>
+                             </div>
+                            )}
+                        ></Column>
+                    </DataTable>
+        </div>
+    }
+
+    const renderShowLess = () => { 
+        return <div>
+             <DataTable value={ShowLessPLC} size="small" selectionMode="single">
+                        <Column  field="name" header={<span className="id556" > PLC Parameter</span>}></Column>
+                        <Column
+                        style={{display:'flex', justifyContent:'flex-end'}}
+
+                            field="PLC"
+                            header={PLC_Conn_STT === "1" ? (
+
+                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                                {DotGreen} <p style={{marginLeft:5}}>PLC</p>
+   
+                               </div>
+                              
+                            ) : (
+                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
+                                   {DotRed}  <p style={{marginLeft:5}}>PLC</p>
+                                </div>
+                            )}
+                        ></Column>
+                    </DataTable>
+                    <DataTable value={STT} size="small" selectionMode="single">
+                        <Column  field="name" header={<span className="id556" > Status</span>}></Column>
+                        <Column
+                        style={{display:'flex', justifyContent:'flex-end'}}
+
+                            field="STT"
+                            header={PLC_Conn_STT === "1" ? (
+                                <div style={{  padding:11,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                                <p style={{marginLeft:5}}> </p>
+                               </div>
+                                
+                            ) : (
+                                <div style={{  padding:11, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
+                                 <p style={{marginLeft:5}}></p>
+                             </div>
+                            )}
+                        ></Column>
+                    </DataTable>
+        </div>
+     }
+
+     const headerOvewView = () => { 
+        return <div className="Container_Scorecard1" >
+        <div className="Container_Scorecard2" >
+             <div className="Container_Name" >
+             MEIKO
+
+             </div>
+         </div>
+         <div
+         className="Container_Time_Show" >
+             
+             <div className="Container_Time" >
+                {Conn_STTValue}
+             </div>
+             <div className="Container_Show"  onClick={handleShowMore} >
+         {ShowMore ?
+         
+         <span style={{fontSize:'2rem',cursor:'pointer'}}  className="pi pi-arrow-circle-down"></span>
+          :
+         <span style={{fontSize:'2rem',cursor:'pointer'}}  className="pi pi-arrow-circle-up"></span>}
+
+
+         </div>
+         </div>
+         
+     </div>
+      }
+
+
+    return (
+        <div>
+                {headerOvewView()}
+                {ShowMore ? renderShowMore() : renderShowLess()}
+
+
             </div>
 
         
