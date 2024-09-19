@@ -2702,41 +2702,10 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
             name: <span>{tagNamePLC.TT_3003}</span>,
             PLC: <span style={combineCss.CSSTT_3003}> {formatValue(TT_3003)} {DataTT_3003}</span>,
         },
-   
-        {
-            name: <span>{tagNamePLC.TG_3005}</span>,
-            PLC: <span style={combineCss.CSSTG_3005}> {formatValue(TG_3005)} {DataTG_3005}</span>,
-        },
-      
         {
             name: <span>{tagNamePLC.WB_3001}</span>,
             PLC: <span style={combineCss.CSSWB_3001}>{formatValue(WB_3001)} {DataWB_3001}</span>,
         },
-        {
-            name: <span>{tagNamePLC.GD_3002}</span>,
-            PLC: <span style={combineCss.CSSGD_3002}> {formatValue(GD_3002)} {DataGD_3002}</span>,
-        },
-           
-        {
-            name: <span>{tagNamePLC.GD_3003}</span>,
-            PLC: <span style={combineCss.CSSGD_3003}>{formatValue(GD_3003)} {DataGD_3003}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.GD_3004}</span>,
-            PLC: <span style={combineCss.CSSGD_3004}> {formatValue(GD_3004)} {DataGD_3004}</span>,
-        },
-      
-      
-        {
-            name: <span>{tagNamePLC.GD_3005}</span>,
-            PLC: <span style={combineCss.CSSGD_3005}>{formatValue(GD_3005)} </span>,
-        },
-        {
-            name: <span>{tagNamePLC.GD_3006}</span>,
-            PLC: <span style={combineCss.CSSGD_3006}> {formatValue(GD_3006)} </span>,
-        },
-
-
         {
             name: <span>{tagNamePLC.TM_3002_SNG}</span>,
             PLC: <span style={combineCss.CSSTM_3002_SNG}>{formatValue(TM_3002_SNG)} </span>,
@@ -2749,59 +2718,6 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
         {
             name: <span>{tagNamePLC.TOTAL_SNG}</span>,
             PLC: <span style={combineCss.CSSTOTAL_SNG}>{formatValue(TOTAL_SNG)}  </span>,
-        },
-        {
-            name: <span>{tagNamePLC.SDV_3004}</span>,
-            PLC: <span style={combineCss.CSSSDV_3004}> {formatValue(SDV_3004)}  {DataSDV_3004}</span>,
-        },
-
-        {
-            name: <span>{tagNamePLC.SDV_3003}</span>,
-            PLC: <span style={combineCss.CSSSDV_3003}>{formatValue(SDV_3003)} {DataSDV_3003}</span>,
-        },
-
-//===
-
-        {
-            name: <span>{tagNamePLC.GD1_STATUS}</span>,
-            PLC: <span style={combineCss.CSSGD1_STATUS}>{formatValue(GD1_STATUS)}  {DataGD1_STATUS}</span>,
-        },
-     
-        {
-            name: <span>{tagNamePLC.GD2_STATUS}</span>,
-            PLC: <span style={combineCss.CSSGD2_STATUS}>{formatValue(GD2_STATUS)}  {DataGD2_STATUS}</span>,
-        },
-      
-
-
-        {
-            name: <span>{tagNamePLC.GD3_STATUS}</span>,
-            PLC: <span style={combineCss.CSSGD3_STATUS}>{formatValue(GD3_STATUS)}  {DataGD3_STATUS}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.GD4_STATUS}</span>,
-            PLC: <span style={combineCss.CSSGD4_STATUS}> {formatValue(GD4_STATUS)}  {DataGD4_STATUS}</span>,
-        },
-     
- 
-
-        {
-            name: <span>{tagNamePLC.GD5_STATUS}</span>,
-            PLC: <span style={combineCss.CSSGD5_STATUS}> {formatValue(GD5_STATUS)} {DataGD5_STATUS}</span>,
-        },
-        
-        {
-            name: <span>{tagNamePLC.SD}</span>,
-            PLC: <span style={combineCss.CSSSD}> {formatValue(SD)} {DataSD}</span>,
-        },
-   
-        {
-            name: <span>{tagNamePLC.HR_BC}</span>,
-            PLC: <span style={combineCss.CSSHR_BC}> {formatValue(HR_BC)} {DataHR_BC}</span>,
-        },
-        {
-            name: <span>{tagNamePLC.ESD}</span>,
-            PLC: <span style={combineCss.CSSESD}>{} {formatValue(ESD)} {DataESD}</span>,
         },
         {
             name: <span>{tagNamePLC.VAPORIZER_1}</span>,
@@ -2822,17 +2738,9 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
             PLC: <span style={combineCss.CSSVAPORIZER_4}> {formatValue(VAPORIZER_4)} {DataVAPORIZER_4}</span>,
         },
         {
-            name: <span>{tagNamePLC.COOLING_V}</span>,
-            PLC: <span style={combineCss.CSSCOOLING_V}>{formatValue(COOLING_V)} {DataCOOLING_V}</span>,
-        },
-        {
             name: <span>{tagNamePLC.FCV_3001}</span>,
             PLC: <span style={combineCss.CSSFCV_3001}> {formatValue(FCV_3001)} </span>,
         },
-     
-     
-
-     
         {
             name: <span>{tagNamePLC.PERCENT_LPG}</span>,
             PLC: <span style={combineCss.CSSPERCENT_LPG}>{} {formatValue(PERCENT_LPG)} </span>,
@@ -2841,6 +2749,101 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
             name: <span>{tagNamePLC.PERCENT_AIR}</span>,
             PLC: <span style={combineCss.CSSPERCENT_AIR}> {formatValue(PERCENT_AIR)} </span>,
         },
+
+
+
+
+        {
+            name: <span>{tagNamePLC.TG_3005}</span>,
+            PLC: <span style={combineCss.CSSTG_3005}> {formatValue(TG_3005)} </span>,
+        },
+      
+
+      
+        {
+            name: <span>{tagNamePLC.GD_3002}</span>,
+            PLC: <span style={combineCss.CSSGD_3002}> {formatValue(GD_3002)} </span>,
+        },
+        {
+            name: <span>{tagNamePLC.GD_3003}</span>,
+            PLC: <span style={combineCss.CSSGD_3003}>{formatValue(GD_3003)} </span>,
+        },
+        {
+            name: <span>{tagNamePLC.GD_3004}</span>,
+            PLC: <span style={combineCss.CSSGD_3004}> {formatValue(GD_3004)} </span>,
+        },
+      
+        {
+            name: <span>{tagNamePLC.GD_3005}</span>,
+            PLC: <span style={combineCss.CSSGD_3005}>{formatValue(GD_3005)} </span>,
+        },
+        {
+            name: <span>{tagNamePLC.GD_3006}</span>,
+            PLC: <span style={combineCss.CSSGD_3006}> {formatValue(GD_3006)} </span>,
+        },
+
+
+    
+        {
+            name: <span>{tagNamePLC.SDV_3004}</span>,
+            PLC: <span style={combineCss.CSSSDV_3004}> {formatValue(SDV_3004)}  {DataSDV_3004}</span>,
+        },
+
+        {
+            name: <span>{tagNamePLC.SDV_3003}</span>,
+            PLC: <span style={combineCss.CSSSDV_3003}>{formatValue(SDV_3003)} {DataSDV_3003}</span>,
+        },
+
+
+
+
+        {
+            name: <span>{tagNamePLC.GD1_STATUS}</span>,
+            PLC: <span style={combineCss.CSSGD1_STATUS}>{formatValue(GD1_STATUS)}  {DataGD1_STATUS}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.GD2_STATUS}</span>,
+            PLC: <span style={combineCss.CSSGD2_STATUS}>{formatValue(GD2_STATUS)}  {DataGD2_STATUS}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.GD3_STATUS}</span>,
+            PLC: <span style={combineCss.CSSGD3_STATUS}>{formatValue(GD3_STATUS)}  {DataGD3_STATUS}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.GD4_STATUS}</span>,
+            PLC: <span style={combineCss.CSSGD4_STATUS}> {formatValue(GD4_STATUS)}  {DataGD4_STATUS}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.GD5_STATUS}</span>,
+            PLC: <span style={combineCss.CSSGD5_STATUS}> {formatValue(GD5_STATUS)} {DataGD5_STATUS}</span>,
+        },
+
+
+        
+        {
+            name: <span>{tagNamePLC.SD}</span>,
+            PLC: <span style={combineCss.CSSSD}> {formatValue(SD)} {DataSD}</span>,
+        },
+   
+        {
+            name: <span>{tagNamePLC.HR_BC}</span>,
+            PLC: <span style={combineCss.CSSHR_BC}> {formatValue(HR_BC)} {DataHR_BC}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.ESD}</span>,
+            PLC: <span style={combineCss.CSSESD}>{} {formatValue(ESD)} {DataESD}</span>,
+        },
+       
+        {
+            name: <span>{tagNamePLC.COOLING_V}</span>,
+            PLC: <span style={combineCss.CSSCOOLING_V}>{formatValue(COOLING_V)} {DataCOOLING_V}</span>,
+        },
+   
+     
+     
+
+
+    
         {
             name: <span>{tagNamePLC.HV_3001}</span>,
             PLC: <span style={combineCss.CSSHV_3001}> {formatValue(HV_3001)} </span>,
@@ -2873,9 +2876,7 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
             PLC: <span style={combineCss.CSSWB_Setpoint}> {formatValue(WB_Setpoint)}</span>,
         },
     
-     
-       
-
+    
 
 
 
@@ -2898,53 +2899,101 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
             PLC: <span style={combineCss.CSSSG_Calorimeter}> {formatValue(SG_Calorimeter)}</span>,
         },
 
-     
-
-      
-
     ]
 
-    return (
-        <div >
-            <div  >
-                <div
-                    style={{
-                        background: "#64758B",
-                        color: "white",
-                        borderRadius: "10px 10px 0 0",
-                        display:'flex',
-                        justifyContent:'space-between'
-                    }}
-                >
-                    <div
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            padding: "5px 5px 0px 5px",
-                        }}
-                    >
-                        <div style={{ fontSize: 30, fontWeight: 700 }}>
-                            {" "}
-                            SNG HUNG YEN
-                        </div>
-                    </div>
-                    <div
-                        style={{
-                            display:'flex',
 
-                            alignItems: "center",
-                           padding:5
-                        }}
-                    >
-                     
-                        <div style={{  fontWeight: 500 , display:'flex'}}>
-                        {Conn_STTValue}
-                        </div>
-                    </div>
-                    
-                </div>
-                    <DataTable value={dataPLC} size="small" selectionMode="single">
+    const STT =[
+        {
+            name: <span>{tagNamePLC.PLC_Conn_STT}</span>,
+            STT: <span style={combineCss.CSSPLC_Conn_STT}>{formatValue(PLC_Conn_STT)} {DataPLC_Conn_STT}</span>,
+        },
+        {
+            name: <span>{tagNamePLC.TD_4072_Conn_STT}</span>,
+            STT: <span style={combineCss.CSSTD_4072_Conn_STT}>{formatValue(TD_4072_Conn_STT)} {DataTD_4072_Conn_STT}</span>,
+        },
+    ]
+
+
+const ShowLessPLC = [
+    {
+        name: <span>{tagNamePLC.PT_3005}</span>,
+        PLC: <span style={combineCss.CSSPT_3005}>{} {formatValue(PT_3005)} {DataPT_3005}</span>,
+    },
+
+    {
+        name: <span>{tagNamePLC.PT_3006}</span>,
+        PLC: <span style={combineCss.CSSPT_3006}> {formatValue(PT_3006)} {DataPT_3006}</span>,
+    },
+ 
+    {
+        name: <span>{tagNamePLC.TT_3004}</span>,
+        PLC: <span style={combineCss.CSSTT_3004}>{formatValue(TT_3004)} {DataTT_3004}</span>,
+    },
+    {
+        name: <span>{tagNamePLC.TT_3003}</span>,
+        PLC: <span style={combineCss.CSSTT_3003}> {formatValue(TT_3003)} {DataTT_3003}</span>,
+    },
+    {
+        name: <span>{tagNamePLC.WB_3001}</span>,
+        PLC: <span style={combineCss.CSSWB_3001}>{formatValue(WB_3001)} {DataWB_3001}</span>,
+    },
+    {
+        name: <span>{tagNamePLC.TM_3002_SNG}</span>,
+        PLC: <span style={combineCss.CSSTM_3002_SNG}>{formatValue(TM_3002_SNG)} </span>,
+    },
+ 
+    {
+        name: <span>{tagNamePLC.TM_3003_SNG}</span>,
+        PLC: <span style={combineCss.CSSTM_3003_SNG}>{formatValue(TM_3003_SNG)}</span>,
+    },
+    {
+        name: <span>{tagNamePLC.TOTAL_SNG}</span>,
+        PLC: <span style={combineCss.CSSTOTAL_SNG}>{formatValue(TOTAL_SNG)}  </span>,
+    },
+    {
+        name: <span>{tagNamePLC.VAPORIZER_1}</span>,
+        PLC: <span style={combineCss.CSSVAPORIZER_1}>{formatValue(VAPORIZER_1)} {DataVAPORIZER_1}</span>,
+    },
+    {
+        name: <span>{tagNamePLC.VAPORIZER_2}</span>,
+        PLC: <span style={combineCss.CSSVAPORIZER_2}>{formatValue(VAPORIZER_2)} {DataVAPORIZER_2}</span>,
+    },
+
+    {
+        name: <span>{tagNamePLC.VAPORIZER_3}</span>,
+        PLC: <span style={combineCss.CSSVAPORIZER_3}> {formatValue(VAPORIZER_3)} {DataVAPORIZER_3}</span>,
+    },
+ 
+    {
+        name: <span>{tagNamePLC.VAPORIZER_4}</span>,
+        PLC: <span style={combineCss.CSSVAPORIZER_4}> {formatValue(VAPORIZER_4)} {DataVAPORIZER_4}</span>,
+    },
+    {
+        name: <span>{tagNamePLC.FCV_3001}</span>,
+        PLC: <span style={combineCss.CSSFCV_3001}> {formatValue(FCV_3001)} </span>,
+    },
+    {
+        name: <span>{tagNamePLC.PERCENT_LPG}</span>,
+        PLC: <span style={combineCss.CSSPERCENT_LPG}>{} {formatValue(PERCENT_LPG)} </span>,
+    },
+    {
+        name: <span>{tagNamePLC.PERCENT_AIR}</span>,
+        PLC: <span style={combineCss.CSSPERCENT_AIR}> {formatValue(PERCENT_AIR)} </span>,
+    },
+
+]
+
+
+    const [ShowMore, setShowMore] = useState(false)
+
+    const handleShowMore = () => { 
+        setShowMore(!ShowMore)
+     }
+
+
+     const renderShowMore = () => { 
+        return <div>
+            <DataTable value={dataPLC} size="small" selectionMode="single">
                         <Column  field="name" header={<span className="id556" > PLC Parameter</span>}></Column>
                         <Column
                         style={{display:'flex', justifyContent:'flex-end'}}
@@ -2982,11 +3031,104 @@ if (!isNaN(RATIO_MODEValue) && !isNaN(highValue) && !isNaN(lowValue) && !maintai
                             )}
                         ></Column>
                     </DataTable>
-            </div>
+                    <DataTable value={STT} size="small" selectionMode="single">
+                        <Column  field="name" header={<span className="id556" > Status</span>}></Column>
+                        <Column
+                        style={{display:'flex', justifyContent:'flex-end'}}
 
-            {/* <div>
-                <SetAttribute1/>
-            </div> */}
+                            field="STT"
+                            header={PLC_Conn_STT === "1" ? (
+                                <div style={{  padding:11,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                                <p style={{marginLeft:5}}> </p>
+                               </div>
+                                
+                            ) : (
+                                <div style={{  padding:11, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
+                                 <p style={{marginLeft:5}}></p>
+                             </div>
+                            )}
+                        ></Column>
+                    </DataTable>
+        </div>
+      }
+
+      const renderShowLess = () => { 
+        return  <div>
+        <DataTable value={ShowLessPLC} size="small" selectionMode="single">
+                    <Column  field="name" header={<span className="id556" > PLC Parameter</span>}></Column>
+                    <Column
+                    style={{display:'flex', justifyContent:'flex-end'}}
+
+                        field="PLC"
+                        header={PLC_Conn_STT === "1" ? (
+
+                            <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                            {DotGreen} <p style={{marginLeft:5}}>PLC </p>
+
+                           </div>
+                          
+                        ) : (
+                            <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
+                               {DotRed}  <p style={{marginLeft:5}}>PLC </p>
+                            </div>
+                        )}
+                    ></Column>
+                </DataTable>
+                <DataTable value={TD_CON_STT} size="small" selectionMode="single">
+                    <Column  field="name" header={<span className="id556" > Calorimeter Parameter</span>}></Column>
+                    <Column
+                    style={{display:'flex', justifyContent:'flex-end'}}
+
+                        field="PLC"
+                        header={TD_4072_Conn_STT === "1" ? (
+                            <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                            {DotGreen} <p style={{marginLeft:5}}>Calorimeter </p>
+                           </div>
+                            
+                        ) : (
+                            <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
+                            {DotRed}  <p style={{marginLeft:5}}>Calorimeter </p>
+                         </div>
+                        )}
+                    ></Column>
+                </DataTable>
+               
+    </div>
+       }
+       const headerOverView = () => { 
+        return <div className="Container_Scorecard1" >
+        <div className="Container_Scorecard2" >
+             <div className="Container_Name" >
+             SNG HUNG YEN
+
+             </div>
+         </div>
+         <div
+         className="Container_Time_Show" >
+             
+             <div className="Container_Time" >
+                {Conn_STTValue}
+             </div>
+             <div className="Container_Show"  onClick={handleShowMore} >
+         {ShowMore ?
+         
+         <span style={{fontSize:'2rem',cursor:'pointer'}}  className="pi pi-arrow-circle-down"></span>
+          :
+         <span style={{fontSize:'2rem',cursor:'pointer'}}  className="pi pi-arrow-circle-up"></span>}
+
+
+         </div>
+         </div>
+         
+     </div>
+       }
+
+    return (
+        <div >
+           {headerOverView()}
+            {ShowMore ? renderShowMore() : renderShowLess()}
+
+          
         </div>
     );
 }

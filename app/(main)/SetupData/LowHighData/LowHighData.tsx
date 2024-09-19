@@ -57,6 +57,8 @@ export default function LowHighData() {
 
 
 
+    const [inputValue, setInputValue] = useState<any>();
+    const [inputValue2, setInputValue2] = useState<any>();
     const [inputValue3, setInputValue3] = useState<any>();
     const [ inputGetwayPhone, setInputGetwayPhone] = useState<any>()
 
@@ -64,16 +66,9 @@ export default function LowHighData() {
     const userData = Authorization ? JSON.parse(Authorization) : null;
      const userId = userData?.id?.id;
     
-    const AuthUpdate = userId === UserTechnican.A  ||
-    userId === UserTechnican.Q ||
-     userId ===  UserTechnican.N ||
-      userId === UserTechnican.T  ||
-       userId === UserTechnican.TN ||
-        userId === UserTechnican.DT ||
-        userId === UserTechnican.KL ; 
+
     
-    
-    const AuthInput = userId !== UserTechnican.A  && 
+    const TECH_OPER = userId !== UserTechnican.A  && 
     userId !== UserTechnican.Q &&
     userId !==  UserTechnican.N &&
      userId !== UserTechnican.T  &&
@@ -92,7 +87,7 @@ export default function LowHighData() {
             userId !== UserTechnican.KL ;
 
 
-            const AuthInputHighLow = userId !== UserTechnican.A  && 
+            const TECHNIAN_AUTH = userId !== UserTechnican.A  && 
             userId !== UserTechnican.Q &&
             userId !==  UserTechnican.N &&
              userId !== UserTechnican.T  &&
@@ -115,12 +110,126 @@ export default function LowHighData() {
                 },
             ],
         };
+
+        const obj2 = {
+            entityDataCmds: [
+                {
+                    cmdId: 1,
+                    latestCmd: {
+                        keys: [
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PCV_01",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PCV_02",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PSV_01",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "IOT_Gateway_Phone",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_01_Battery_Expiration_Date",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_01_Battery_Installation_Date",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_02_Battery_Expiration_Date",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_02_Battery_Installation_Date",
+                            },
+                        ],
+                    },
+                    query: {
+                        entityFilter: {
+                            type: "singleEntity",
+                            singleEntity: {
+                                entityType: "DEVICE",
+                                id: id_OTSUKA,
+                            },
+                        },
+                        pageLink: {
+                            pageSize: 1,
+                            page: 0,
+                            sortOrder: {
+                                key: {
+                                    type: "ENTITY_FIELD",
+                                    key: "createdTime",
+                                },
+                                direction: "DESC",
+                            },
+                        },
+                        entityFields: [
+                            {
+                                type: "ENTITY_FIELD",
+                                key: "name",
+                            },
+                            {
+                                type: "ENTITY_FIELD",
+                                key: "label",
+                            },
+                            {
+                                type: "ENTITY_FIELD",
+                                key: "additionalInfo",
+                            },
+                        ],
+                        latestValues: [
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PCV_01",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PCV_02",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "PSV_01",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "IOT_Gateway_Phone",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_01_Battery_Expiration_Date",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_01_Battery_Installation_Date",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_02_Battery_Expiration_Date",
+                            },
+                            {
+                                type: "ATTRIBUTE",
+                                key: "EVC_02_Battery_Installation_Date",
+                            },
+                        ],
+                    },
+                },
+            ],
+        };
+
        
         if (ws.current) {
             ws.current.onopen = () => {
                 console.log("WebSocket connected");
                 setTimeout(() => {
                     ws.current?.send(JSON.stringify(obj1));
+                    ws.current?.send(JSON.stringify(obj2));
 
                 });
             };
@@ -254,6 +363,85 @@ export default function LowHighData() {
                             valueStateMap[key]?.(formattedDate); // Set formatted timestamp
                         }
                     });
+                }  if (dataReceived.data && dataReceived.data.data.length > 0) {
+                    const ballValue =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_01?.value;
+                    setUpData(ballValue);
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update.length > 0
+                ) {
+                    const updatedData =
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_01?.value;
+                    setUpData(updatedData);
+                }
+
+                if (dataReceived.data && dataReceived.data.data.length > 0) {
+                    const ballValue2 =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PCV_02?.value;
+                    setUpData2(ballValue2);
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update.length > 0
+                ) {
+                    const updatedData2 =
+                        dataReceived.update[0].latest.ATTRIBUTE.PCV_02?.value;
+
+                    setUpData2(updatedData2);
+                }
+                if (dataReceived.data && dataReceived.data.data.length > 0) {
+                    const ballValue3 =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.PSV_01?.value;
+                    setUpData3(ballValue3);
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update.length > 0
+                ) {
+                    const updatedData3 =
+                        dataReceived.update[0].latest.ATTRIBUTE?.PSV_01?.value;
+
+                    setUpData3(updatedData3);
+                }
+
+                if (dataReceived.data && dataReceived.data.data.length > 0) {
+                    const ballValue3 =
+                        dataReceived.data.data[0].latest.ATTRIBUTE.IOT_Gateway_Phone.value;
+                        setGetWayPhoneOTSUKA(ballValue3);
+                } else if (
+                    dataReceived.update &&
+                    dataReceived.update.length > 0
+                ) {
+                    const updatedData3 =
+                        dataReceived.update[0].latest.ATTRIBUTE.IOT_Gateway_Phone.value;
+
+                        setGetWayPhoneOTSUKA(updatedData3);
+                }
+                if (dataReceived.data && dataReceived.data.data.length > 0) {
+                    const ValueTIME1 = dataReceived.data.data[0].latest.ATTRIBUTE.EVC_01_Battery_Expiration_Date.value;
+                    setTimeEVC_01(ValueTIME1);
+
+                    const ValueTIME2 = dataReceived.data.data[0].latest.ATTRIBUTE.EVC_01_Battery_Installation_Date.value;
+                    setTimeEVC_02(ValueTIME2);
+                } else if (dataReceived.update && dataReceived.update.length > 0) {
+                    const ValueTIME1 = dataReceived.update[0].latest.ATTRIBUTE.EVC_01_Battery_Expiration_Date.value;
+                    setTimeEVC_01(ValueTIME1);
+
+                    const ValueTIME2 = dataReceived.update[0].latest.ATTRIBUTE.EVC_01_Battery_Installation_Date.value;
+                    setTimeEVC_02(ValueTIME2);
+                }
+
+                if (dataReceived.data && dataReceived.data.data.length > 0) {
+                    const ValueTIME1 = dataReceived.data.data[0].latest.ATTRIBUTE.EVC_02_Battery_Expiration_Date.value;
+                    setTimeEVC_03(ValueTIME1);
+
+                    const ValueTIME2 = dataReceived.data.data[0].latest.ATTRIBUTE.EVC_02_Battery_Installation_Date.value;
+                    setTimeEVC_04(ValueTIME2);
+                } else if (dataReceived.update && dataReceived.update.length > 0) {
+                    const ValueTIME1 = dataReceived.update[0].latest.ATTRIBUTE.EVC_02_Battery_Expiration_Date.value;
+                    setTimeEVC_03(ValueTIME1);
+
+                    const ValueTIME2 = dataReceived.update[0].latest.ATTRIBUTE.EVC_02_Battery_Installation_Date.value;
+                    setTimeEVC_04(ValueTIME2);
                 }
 
               
@@ -824,7 +1012,99 @@ const ChangeMaintainEVC_01_Pressure = async () => {
 
 
 // ========================== PT 1901 ============================================
+const handleButtonClickAttribute = async () => {
+    try {
+        await httpApi.post(
+            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
+            { PCV_01: inputValue, PCV_02: inputValue2, PSV_01: inputValue3,IOT_Gateway_Phone: inputGetwayPhone, 
+                 EVC_01_Battery_Expiration_Date: timeEVC_01,
+                EVC_01_Battery_Installation_Date: timeEVC_02,
+                EVC_02_Battery_Expiration_Date: timeEVC_03,
+                EVC_02_Battery_Installation_Date: timeEVC_04, }
+        );
+        setUpData(inputValue);
+        setUpData2(inputValue2);
+        setUpData3(inputValue3);
+        setGetWayPhoneOTSUKA(inputGetwayPhone);
 
+
+
+        toast.current?.show({
+            severity: "info",
+            detail: "Success ",
+            life: 3000,
+        });
+    } catch (error) {
+        console.log("error: ", error);
+        toast.current?.show({
+            severity: "error",
+            summary: "Error",
+            detail: "Message Content",
+            life: 3000,
+        });
+    }
+};
+
+useEffect(() => {
+    setInputValue(upData);
+    setInputValue2(upData2);
+    setInputValue3(upData3);
+    setInputGetwayPhone(getWayPhoneOTSUKA)
+
+ 
+
+
+}, [upData, upData2, upData3,getWayPhoneOTSUKA,timeEVC_01,timeEVC_02, timeEVC_03,timeEVC_04 ]);
+
+
+const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.target.value;
+    setInputValue(newValue);
+};
+
+const handleInputChange2 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.target.value;
+    setInputValue2(newValue);
+};
+const handleInputChange3 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.target.value;
+    setInputValue3(newValue);
+};
+
+const handleInputChangeGetWayPhone = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue : any = event.target.value;
+    setInputGetwayPhone(newValue);
+};
+
+const timeEVC_01Number = parseFloat(timeEVC_01);
+const date = !isNaN(timeEVC_01Number) ? new Date(timeEVC_01Number) : null;
+
+const timeEVC_02Number = parseFloat(timeEVC_02);
+const date2 = !isNaN(timeEVC_02Number) ? new Date(timeEVC_02Number) : null;
+
+const timeEVC_03Number = parseFloat(timeEVC_03);
+const date3 = !isNaN(timeEVC_03Number) ? new Date(timeEVC_03Number) : null;
+
+const timeEVC_04Number = parseFloat(timeEVC_04);
+const date4 = !isNaN(timeEVC_04Number) ? new Date(timeEVC_04Number) : null;
+
+const handleDateChange = (e: any) => {
+    const selectedDate = e.value;
+    setTimeEVC_02(selectedDate.getTime());
+
+    const expirationDate = new Date(selectedDate);
+    expirationDate.setMonth(expirationDate.getMonth() + 18);
+    setTimeEVC_01(expirationDate.getTime());
+};
+
+const handleDateChange2 = (e: any) => {
+    const selectedDate = e.value;
+     setTimeEVC_04(selectedDate.getTime());
+
+    const expirationDate = new Date(selectedDate);
+    expirationDate.setMonth(expirationDate.getMonth() + 18);
+    setTimeEVC_03(expirationDate.getTime());
+};
 // ========================== PT 1902 ============================================
 
 const [EVC_02_Pressure, setEVC_02_Pressure] = useState<string | null>(null);
@@ -865,7 +1145,29 @@ const ChangeMaintainEVC_02_Pressure = async () => {
         console.error(error);
     }
 };
+const confirmUpDataAttribute = () => {
+    confirmDialog({
+        message: "Are you sure you updated the data?",
+        header: "Confirmation",
+        icon: "pi pi-info-circle",
+        accept: () => handleButtonClickAttribute(),
+    });
+};
 
+
+
+const configurationName = {
+
+    PSV: "Pressure Safety Valve (PSV-1901)" ,
+    PCV1: "Pressure Control Valve (PCV-1901)",
+    PCV2: "Pressure Control Valve (PCV-1902)",
+    IOT: "IOT gateway phone number",
+    EVC_01_Battery_Expiration_Date: "EVC-1901 Battery Expiration Date",
+    EVC_01_Battery_Installation_Date: "EVC-1901 Battery Installation Date",
+    EVC_02_Battery_Expiration_Date: "EVC-1902 Battery Expiration Date",
+    EVC_02_Battery_Installation_Date: "EVC-1902 Battery Installation Date",
+
+}
 // ========================== PT 1902 ============================================
 // ========================== PT 1903 ============================================
 
@@ -947,6 +1249,14 @@ const ChangeMaintainGD1 = async () => {
         console.error(error);
     }
 };
+
+const combineCssAttribute = {
+    PCV: {
+        height: 25,
+        fontWeight: 400,
+    },
+};
+
 // ========================== PT 1903 ============================================
 
 // ========================== PT 1903 ============================================
@@ -2552,44 +2862,6 @@ const ChangemaintainPLC_Conn_STT = async () => {
 
 
 //===========================================================================================
-const handleInputChangeGetWayPhone = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue : any = event.target.value;
-    setGetWayPhoneOTSUKA(newValue);
-};
-
-
-const handleButtonClickGetwayPhone = async () => {
-    try {
-        await httpApi.post(
-            `/plugins/telemetry/DEVICE/${id_OTSUKA}/SERVER_SCOPE`,
-            { IOT_Gateway_Phone: inputGetwayPhone,}
-        );
-     
-
-        toast.current?.show({
-            severity: "info",
-            detail: "Successfully changed IOT gateway phone number  ",
-            life: 3000,
-        });
-    } catch (error) {
-        console.log("error: ", error);
-        toast.current?.show({
-            severity: "error",
-            summary: "Error",
-            detail: "Message Content",
-            life: 3000,
-        });
-    }
-};
-
-const confirmUpChangeGatewayPhone = () => {
-    confirmDialog({
-        message: "Are you sure update IOT gateway phone?",
-        header: "Confirmation",
-        icon: "pi pi-info-circle",
-        accept: () => handleButtonClickGetwayPhone(),
-    });
-};
 
 
 
@@ -3906,27 +4178,27 @@ const handleCheckboxChangePLC = (e:any) => {
 
     const mainCategoryEVC = {
        
-        EVC01: <span  style={{display:'flex',textAlign:'center', justifyContent:'space-between'  }}> EVC-1901 -  Parameters & Configurations  {!AuthInput && ( <div style={{display:'flex' , textAlign:'center', alignItems:'center',}}>  
-            <Checkbox disabled={AuthInput}
+        EVC01: <span  style={{display:'flex',textAlign:'center', justifyContent:'space-between'  }}> EVC-1901 -  Parameters & Configurations   <div style={{display:'flex' , textAlign:'center', alignItems:'center',}}>  
+            <Checkbox disabled={TECH_OPER}
                 style={{ marginRight: 5 }}
                 onChange={handleCheckboxChangeEVC01}
                 checked={maintainEVC_01_Remain_Battery_Service_Life}
             />
-        <p style={{fontSize:15}}>Maintain EVC-1901</p>  </div> )}  </span>,
-        EVC02:  <span  style={{display:'flex',textAlign:'center', justifyContent:'space-between'  }}> EVC-1902 -  Parameters & Configurations  {!AuthInput && ( <div style={{display:'flex' , textAlign:'center', alignItems:'center',}}>  
-            <Checkbox disabled={AuthInput}
+        <p style={{fontSize:15}}>Maintain EVC-1901</p>  </div>  </span>,
+        EVC02:  <span  style={{display:'flex',textAlign:'center', justifyContent:'space-between'  }}> EVC-1902 -  Parameters & Configurations   <div style={{display:'flex' , textAlign:'center', alignItems:'center',}}>  
+            <Checkbox disabled={TECH_OPER}
                 style={{ marginRight: 5 }}
                 onChange={handleCheckboxChangeEVC02}
                 checked={maintainEVC_02_Remain_Battery_Service_Life}
             />
-         <p style={{fontSize:15}}>Maintain EVC-1902</p>  </div> )} </span>,
-        PLC:  <span  style={{display:'flex',textAlign:'center', justifyContent:'space-between'  }}> PLC -  Parameters & Configurations  {!AuthInput && (  <div style={{display:'flex' , textAlign:'center', alignItems:'center',}}> 
-            <Checkbox disabled={AuthInput}
+         <p style={{fontSize:15}}>Maintain EVC-1902</p>  </div> </span>,
+        PLC:  <span  style={{display:'flex',textAlign:'center', justifyContent:'space-between'  }}> PLC -  Parameters & Configurations    <div style={{display:'flex' , textAlign:'center', alignItems:'center',}}> 
+            <Checkbox disabled={TECH_OPER}
                 style={{ marginRight: 5 }}
                 onChange={handleCheckboxChangePLC}
                 checked={maintainGD1}
             />
-         <p style={{fontSize:15}}>Maintain PLC</p>  </div> )} </span>
+         <p style={{fontSize:15}}>Maintain PLC</p>  </div> </span>
     };
     
     const formatValue = (value:any) => {
@@ -3949,15 +4221,15 @@ const handleCheckboxChangePLC = (e:any) => {
 
         value: <span style={combineCss.CSS_Rebattery} > {formatValue(EVC_01_Remain_Battery_Service_Life)} {nameValue.month} </span>, 
         high: <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
         
         style={combineCss.CSS_Rebattery}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Remain_Battery_Service_Life} onChange={handleInputChangeEVC_01_Remain_Battery_Service_Life} inputMode="decimal" />, 
         low:  <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
         
         style={combineCss.CSS_Rebattery}    placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Remain_Battery_Service_Life} onChange={handleInputChange2EVC_01_Remain_Battery_Service_Life} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
-        Maintain:   <Checkbox disabled={AuthInput}
+        Maintain:   <Checkbox disabled={TECH_OPER}
         style={{ marginRight: 20, }}
         onChange={ChangemaintainEVC_01_Remain_Battery_Service_Life}
         checked={maintainEVC_01_Remain_Battery_Service_Life}
@@ -3975,15 +4247,15 @@ const handleCheckboxChangePLC = (e:any) => {
 
     value: <span style={combineCss.CSS_Temperature} > {formatValue(EVC_01_Temperature)} {nameValue.C}</span>, 
     high: <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
     
     style={combineCss.CSS_Temperature}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Temperature} onChange={handleInputChangeEVC_01_Temperature} inputMode="decimal" />, 
     low:  <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
     
     style={combineCss.CSS_Temperature}    placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Temperature} onChange={handleInputChange2EVC_01_Temperature} inputMode="decimal" />,
     update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
-    Maintain:   <Checkbox disabled={AuthInput}
+    Maintain:   <Checkbox disabled={TECH_OPER}
     style={{ marginRight: 20, }}
     onChange={ChangemaintainEVC_01_Temperature}
     checked={maintainEVC_01_Temperature}
@@ -4000,15 +4272,15 @@ const handleCheckboxChangePLC = (e:any) => {
         name: <span style={combineCss.CSSEVC_01_Pressure}>{TagName.Output_Pressure} </span> ,
         value: <span style={combineCss.CSSEVC_01_Pressure} > {formatValue(EVC_01_Pressure)} {nameValue.Bara}</span> , 
         high: <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
         
         style={combineCss.CSSEVC_01_Pressure}  placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Pressure} onChange={handleInputChangeEVC_01_Pressure} inputMode="decimal" />, 
         low:  <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
         
         style={combineCss.CSSEVC_01_Pressure}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Pressure} onChange={handleInputChange2EVC_01_Pressure} inputMode="decimal" />,
      update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
-     Maintain:   <Checkbox disabled={AuthInput}
+     Maintain:   <Checkbox disabled={TECH_OPER}
      style={{ marginRight: 20, }}
      onChange={ChangeMaintainEVC_01_Pressure}
      checked={maintainEVC_01_Pressure}
@@ -4027,15 +4299,15 @@ const handleCheckboxChangePLC = (e:any) => {
 
         value: <span style={combineCss.CSS_EVC_01_Volume_at_Base_Condition} >  {formatValue(EVC_01_Volume_at_Base_Condition)}  {nameValue.Sm3}</span> , 
          high: <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
          
          style={combineCss.CSS_EVC_01_Volume_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Volume_at_Base_Condition} onChange={handleInputChangeEVC_01_Volume_at_Base_Condition} inputMode="decimal" />, 
          low:  <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
          
          style={combineCss.CSS_EVC_01_Volume_at_Base_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Volume_at_Base_Condition} onChange={handleInputChange2EVC_01_Volume_at_Base_Condition} inputMode="decimal" />,
          update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
-         Maintain:   <Checkbox disabled={AuthInput}
+         Maintain:   <Checkbox disabled={TECH_OPER}
          style={{ marginRight: 20, }}
          onChange={ChangemaintainEVC_01_Volume_at_Base_Condition}
          checked={maintainEVC_01_Volume_at_Base_Condition}
@@ -4053,15 +4325,15 @@ const handleCheckboxChangePLC = (e:any) => {
 
         value: <span style={combineCss.CSS_EVC_01_Volume_at_Measurement_Condition} > {formatValue(EVC_01_Volume_at_Measurement_Condition)} {nameValue.m3}</span> , 
          high: <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
          
          style={combineCss.CSS_EVC_01_Volume_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Volume_at_Measurement_Condition} onChange={handleInputChangeEVC_01_Volume_at_Measurement_Condition} inputMode="decimal" />, 
          low:  <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
          
          style={combineCss.CSS_EVC_01_Volume_at_Measurement_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Volume_at_Measurement_Condition} onChange={handleInputChange2EVC_01_Volume_at_Measurement_Condition} inputMode="decimal" />,
          update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
-         Maintain:   <Checkbox disabled={AuthInput}
+         Maintain:   <Checkbox disabled={TECH_OPER}
          style={{ marginRight: 20, }}
          onChange={ChangemaintainEVC_01_Volume_at_Measurement_Condition}
          checked={maintainEVC_01_Volume_at_Measurement_Condition}
@@ -4079,15 +4351,15 @@ const handleCheckboxChangePLC = (e:any) => {
 
         value: <span style={combineCss.CSS_EVC_01_Flow_at_Base_Condition} > {formatValue(EVC_01_Flow_at_Base_Condition)}  {nameValue.Sm3h}  </span> , 
          high: <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
          
          style={combineCss.CSS_EVC_01_Flow_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Flow_at_Base_Condition} onChange={handleInputChangeEVC_01_Flow_at_Base_Condition} inputMode="decimal" />, 
          low:  <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
          
          style={combineCss.CSS_EVC_01_Flow_at_Base_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Flow_at_Base_Condition} onChange={handleInputChange2EVC_01_Flow_at_Base_Condition} inputMode="decimal" />,
          update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
-         Maintain:   <Checkbox disabled={AuthInput}
+         Maintain:   <Checkbox disabled={TECH_OPER}
          style={{ marginRight: 20, }}
          onChange={ChangemaintainEVC_01_Flow_at_Base_Condition}
          checked={maintainEVC_01_Flow_at_Base_Condition}
@@ -4106,15 +4378,15 @@ const handleCheckboxChangePLC = (e:any) => {
 
         value: <span style={combineCss.CSS_EVC_01_Flow_at_Measurement_Condition} > {formatValue(EVC_01_Flow_at_Measurement_Condition)}  {nameValue.m3h}</span> , 
          high: <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
          
          style={combineCss.CSS_EVC_01_Flow_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Flow_at_Measurement_Condition} onChange={handleInputChangeEVC_01_Flow_at_Measurement_Condition} inputMode="decimal" />, 
          low:  <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
          
          style={combineCss.CSS_EVC_01_Flow_at_Measurement_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Flow_at_Measurement_Condition} onChange={handleInputChange2EVC_01_Flow_at_Measurement_Condition} inputMode="decimal" />,
          update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
-         Maintain:   <Checkbox disabled={AuthInput}
+         Maintain:   <Checkbox disabled={TECH_OPER}
          style={{ marginRight: 20, }}
          onChange={ChangemaintainEVC_01_Flow_at_Measurement_Condition}
          checked={maintainEVC_01_Flow_at_Measurement_Condition}
@@ -4137,15 +4409,15 @@ const handleCheckboxChangePLC = (e:any) => {
 
         value: <span style={combineCss.CSS_EVC_01_Vb_of_Current_Day} > {formatValue(EVC_01_Vb_of_Current_Day)} {nameValue.Sm3}</span>, 
         high: <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
         
         style={combineCss.CSS_EVC_01_Vb_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vb_of_Current_Day} onChange={handleInputChangeEVC_01_Vb_of_Current_Day} inputMode="decimal" />, 
         low:  <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
         
         style={combineCss.CSS_EVC_01_Vb_of_Current_Day}    placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Vb_of_Current_Day} onChange={handleInputChange2EVC_01_Vb_of_Current_Day} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
-        Maintain:   <Checkbox disabled={AuthInput}
+        Maintain:   <Checkbox disabled={TECH_OPER}
         style={{ marginRight: 20, }}
         onChange={ChangemaintainEVC_01_Vb_of_Current_Day}
         checked={maintainEVC_01_Vb_of_Current_Day}
@@ -4162,15 +4434,15 @@ const handleCheckboxChangePLC = (e:any) => {
         name: <span style={combineCss.CSS_EVC_01_Vm_of_Current_Day}>{TagName.Vm_Today}</span> ,
         value: <span style={combineCss.CSS_EVC_01_Vm_of_Current_Day} > {formatValue(EVC_01_Vm_of_Current_Day)} {nameValue.m3}</span>, 
         high: <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
         
         style={combineCss.CSS_EVC_01_Vm_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vm_of_Current_Day} onChange={handleInputChangeEVC_01_Vm_of_Current_Day} inputMode="decimal" />, 
         low:  <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
         
         style={combineCss.CSS_EVC_01_Vm_of_Current_Day}    placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Vm_of_Current_Day} onChange={handleInputChange2EVC_01_Vm_of_Current_Day} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
-        Maintain:   <Checkbox disabled={AuthInput}
+        Maintain:   <Checkbox disabled={TECH_OPER}
         style={{ marginRight: 20, }}
         onChange={ChangemaintainEVC_01_Vm_of_Current_Day}
         checked={maintainEVC_01_Vm_of_Current_Day}
@@ -4188,15 +4460,15 @@ const handleCheckboxChangePLC = (e:any) => {
 
        value: <span style={combineCss.CSS_EVC_01_Vb_of_Last_Day} > {formatValue(EVC_01_Vb_of_Last_Day)} {nameValue.Sm3}</span>, 
        high: <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
        
        style={combineCss.CSS_EVC_01_Vb_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vb_of_Last_Day} onChange={handleInputChangeEVC_01_Vb_of_Last_Day} inputMode="decimal" />, 
        low:  <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
        
        style={combineCss.CSS_EVC_01_Vb_of_Last_Day}    placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Vb_of_Last_Day} onChange={handleInputChange2EVC_01_Vb_of_Last_Day} inputMode="decimal" />,
        update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
-       Maintain:   <Checkbox disabled={AuthInput}
+       Maintain:   <Checkbox disabled={TECH_OPER}
        style={{ marginRight: 20, }}
        onChange={ChangemaintainEVC_01_Vb_of_Last_Day}
        checked={maintainEVC_01_Vb_of_Last_Day}
@@ -4214,15 +4486,15 @@ const handleCheckboxChangePLC = (e:any) => {
 
         value: <span style={combineCss.CSS_EVC_01_Vm_of_Last_Day} > {formatValue(EVC_01_Vm_of_Last_Day)} {nameValue.m3}</span>, 
         high: <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
         
         style={combineCss.CSS_EVC_01_Vm_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Vm_of_Last_Day} onChange={handleInputChangeEVC_01_Vm_of_Last_Day} inputMode="decimal" />, 
         low:  <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
         
         style={combineCss.CSS_EVC_01_Vm_of_Last_Day}    placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Vm_of_Last_Day} onChange={handleInputChange2EVC_01_Vm_of_Last_Day} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
-        Maintain:   <Checkbox disabled={AuthInput}
+        Maintain:   <Checkbox disabled={TECH_OPER}
         style={{ marginRight: 20, }}
         onChange={ChangemaintainEVC_01_Vm_of_Last_Day}
         checked={maintainEVC_01_Vm_of_Last_Day}
@@ -4240,15 +4512,15 @@ const handleCheckboxChangePLC = (e:any) => {
 
         value: <span style={combineCss.CSS_EVC_01_Conn_STT} > {formatValue(EVC_01_Conn_STT)} {DataEVC_01_Conn_STT}</span>, 
         high: <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
         
         style={combineCss.CSS_EVC_01_Conn_STT}   placeholder='High' step="0.1" type='number' value={inputValueEVC_01_Conn_STT} onChange={handleInputChangeEVC_01_Conn_STT} inputMode="decimal" />, 
         low:  <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
         
         style={combineCss.CSS_EVC_01_Conn_STT}    placeholder='Low' step="0.1" type='number' value={inputValue2EVC_01_Conn_STT} onChange={handleInputChange2EVC_01_Conn_STT} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
-        Maintain:   <Checkbox disabled={AuthInput}
+        Maintain:   <Checkbox disabled={TECH_OPER}
         style={{ marginRight: 20, }}
         onChange={ChangemaintainEVC_01_Conn_STT}
         checked={maintainEVC_01_Conn_STT}
@@ -4276,15 +4548,15 @@ const handleCheckboxChangePLC = (e:any) => {
 
         value: <span style={combineCss.CSS_EVC_02_Remain_Battery_Service_Life} > {formatValue(EVC_02_Remain_Battery_Service_Life)} {nameValue.month}</span>, 
         high: <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
         
         style={combineCss.CSS_EVC_02_Remain_Battery_Service_Life}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Remain_Battery_Service_Life} onChange={handleInputChangeEVC_02_Remain_Battery_Service_Life} inputMode="decimal" />, 
         low:  <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
         
         style={combineCss.CSS_EVC_02_Remain_Battery_Service_Life}    placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Remain_Battery_Service_Life} onChange={handleInputChange2EVC_02_Remain_Battery_Service_Life} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
-        Maintain:   <Checkbox disabled={AuthInput}
+        Maintain:   <Checkbox disabled={TECH_OPER}
         style={{ marginRight: 20, }}
         onChange={ChangemaintainEVC_02_Remain_Battery_Service_Life}
         checked={maintainEVC_02_Remain_Battery_Service_Life}
@@ -4302,15 +4574,15 @@ const handleCheckboxChangePLC = (e:any) => {
     
     value: <span style={combineCss.CSS_EVC_02_Temperature} > {formatValue(EVC_02_Temperature)}  {nameValue.C}</span>, 
     high: <InputText  
-    disabled={AuthInputHighLow}
+    disabled={TECHNIAN_AUTH}
     
     style={combineCss.CSS_EVC_02_Temperature}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Temperature} onChange={handleInputChangeEVC_02_Temperature} inputMode="decimal" />, 
     low:  <InputText  
-    disabled={AuthInputHighLow}
+    disabled={TECHNIAN_AUTH}
     
     style={combineCss.CSS_EVC_02_Temperature}    placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Temperature} onChange={handleInputChange2EVC_02_Temperature} inputMode="decimal" />,
     update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
-    Maintain:   <Checkbox disabled={AuthInput}
+    Maintain:   <Checkbox disabled={TECH_OPER}
     style={{ marginRight: 20, }}
     onChange={ChangemaintainEVC_02_Temperature}
     checked={maintainEVC_02_Temperature}
@@ -4327,15 +4599,15 @@ const handleCheckboxChangePLC = (e:any) => {
     name: <span style={combineCss.CSSEVC_02_Pressure}>{TagName.Output_Pressure}</span> ,
     value: <span style={combineCss.CSSEVC_02_Pressure} > {formatValue(EVC_02_Pressure)} {nameValue.Bara}</span> , 
     high: <InputText  
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
     
     style={combineCss.CSSEVC_02_Pressure}  placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Pressure} onChange={handleInputChangeEVC_02_Pressure} inputMode="decimal" />, 
     low:  <InputText  
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
     
     style={combineCss.CSSEVC_02_Pressure}   placeholder='High' step="0.1" type='number' value={inputValue2EVC_02_Pressure} onChange={handleInputChange2EVC_02_Pressure} inputMode="decimal" />,
  update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
- Maintain:   <Checkbox disabled={AuthInput}
+ Maintain:   <Checkbox disabled={TECH_OPER}
  style={{ marginRight: 20, }}
  onChange={ChangeMaintainEVC_02_Pressure}
  checked={maintainEVC_02_Pressure}
@@ -4353,15 +4625,15 @@ name: <span style={combineCss.CSS_EVC_02_Volume_at_Base_Condition}>{TagName.SVA}
 
 value: <span style={combineCss.CSS_EVC_02_Volume_at_Base_Condition} > {formatValue(EVC_02_Volume_at_Base_Condition)} {nameValue.Sm3}</span> , 
  high: <InputText  
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
  
  style={combineCss.CSS_EVC_02_Volume_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Volume_at_Base_Condition} onChange={handleInputChangeEVC_02_Volume_at_Base_Condition} inputMode="decimal" />, 
  low:  <InputText  
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
  
  style={combineCss.CSS_EVC_02_Volume_at_Base_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Volume_at_Base_Condition} onChange={handleInputChange2EVC_02_Volume_at_Base_Condition} inputMode="decimal" />,
  update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
- Maintain:   <Checkbox disabled={AuthInput}
+ Maintain:   <Checkbox disabled={TECH_OPER}
  style={{ marginRight: 20, }}
  onChange={ChangemaintainEVC_02_Volume_at_Base_Condition}
  checked={maintainEVC_02_Volume_at_Base_Condition}
@@ -4379,15 +4651,15 @@ name: <span style={combineCss.CSS_EVC_02_Volume_at_Measurement_Condition}>{TagNa
 
 value: <span style={combineCss.CSS_EVC_02_Volume_at_Measurement_Condition} > {formatValue(EVC_02_Volume_at_Measurement_Condition)} {nameValue.m3}</span> , 
  high: <InputText  
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
  
  style={combineCss.CSS_EVC_02_Volume_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Volume_at_Measurement_Condition} onChange={handleInputChangeEVC_02_Volume_at_Measurement_Condition} inputMode="decimal" />, 
  low:  <InputText  
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
  
  style={combineCss.CSS_EVC_02_Volume_at_Measurement_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Volume_at_Measurement_Condition} onChange={handleInputChange2EVC_02_Volume_at_Measurement_Condition} inputMode="decimal" />,
  update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
- Maintain:   <Checkbox disabled={AuthInput}
+ Maintain:   <Checkbox disabled={TECH_OPER}
  style={{ marginRight: 20, }}
  onChange={ChangemaintainEVC_02_Volume_at_Measurement_Condition} 
  checked={maintainEVC_02_Volume_at_Measurement_Condition}
@@ -4405,15 +4677,15 @@ disabled={AuthInputHighLow}
 
         value: <span style={combineCss.CSS_EVC_02_Flow_at_Base_Condition} > {formatValue(EVC_02_Flow_at_Base_Condition)} {nameValue.Sm3h} </span> , 
          high: <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
          
          style={combineCss.CSS_EVC_02_Flow_at_Base_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Flow_at_Base_Condition} onChange={handleInputChangeEVC_02_Flow_at_Base_Condition} inputMode="decimal" />, 
          low:  <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
          
          style={combineCss.CSS_EVC_02_Flow_at_Base_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Flow_at_Base_Condition} onChange={handleInputChange2EVC_02_Flow_at_Base_Condition} inputMode="decimal" />,
          update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
-         Maintain:   <Checkbox disabled={AuthInput}
+         Maintain:   <Checkbox disabled={TECH_OPER}
          style={{ marginRight: 20, }}
          onChange={ChangemaintainEVC_02_Flow_at_Base_Condition}
          checked={maintainEVC_02_Flow_at_Base_Condition}
@@ -4431,15 +4703,15 @@ disabled={AuthInputHighLow}
 
         value: <span style={combineCss.CSS_EVC_02_Flow_at_Measurement_Condition} > {formatValue(EVC_02_Flow_at_Measurement_Condition)} {nameValue.m3h} </span> , 
          high: <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
          
          style={combineCss.CSS_EVC_02_Flow_at_Measurement_Condition}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Flow_at_Measurement_Condition} onChange={handleInputChangeEVC_02_Flow_at_Measurement_Condition} inputMode="decimal" />, 
          low:  <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
          
          style={combineCss.CSS_EVC_02_Flow_at_Measurement_Condition}   placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Flow_at_Measurement_Condition} onChange={handleInputChange2EVC_02_Flow_at_Measurement_Condition} inputMode="decimal" />,
          update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
-         Maintain:   <Checkbox disabled={AuthInput}
+         Maintain:   <Checkbox disabled={TECH_OPER}
          style={{ marginRight: 20, }}
          onChange={ChangemaintainEVC_02_Flow_at_Measurement_Condition}
          checked={maintainEVC_02_Flow_at_Measurement_Condition}
@@ -4464,15 +4736,15 @@ disabled={AuthInputHighLow}
 
         value: <span style={combineCss.CSS_EVC_02_Vb_of_Current_Day} > {formatValue(EVC_02_Vb_of_Current_Day)} {nameValue.Sm3}</span>, 
         high: <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
         
         style={combineCss.CSS_EVC_02_Vb_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Vb_of_Current_Day} onChange={handleInputChangeEVC_02_Vb_of_Current_Day} inputMode="decimal" />, 
         low:  <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
         
         style={combineCss.CSS_EVC_02_Vb_of_Current_Day}    placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Vb_of_Current_Day} onChange={handleInputChange2EVC_02_Vb_of_Current_Day} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
-        Maintain:   <Checkbox disabled={AuthInput}
+        Maintain:   <Checkbox disabled={TECH_OPER}
         style={{ marginRight: 20, }}
         onChange={ChangemaintainEVC_02_Vb_of_Current_Day}
         checked={maintainEVC_02_Vb_of_Current_Day}
@@ -4491,15 +4763,15 @@ disabled={AuthInputHighLow}
 
         value: <span style={combineCss.CSS_EVC_02_Vm_of_Current_Day} > {formatValue(EVC_02_Vm_of_Current_Day)} {nameValue.m3}</span>, 
         high: <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
         
         style={combineCss.CSS_EVC_02_Vm_of_Current_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Vm_of_Current_Day} onChange={handleInputChangeEVC_02_Vm_of_Current_Day} inputMode="decimal" />, 
         low:  <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
         
         style={combineCss.CSS_EVC_02_Vm_of_Current_Day}    placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Vm_of_Current_Day} onChange={handleInputChange2EVC_02_Vm_of_Current_Day} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
-        Maintain:   <Checkbox disabled={AuthInput}
+        Maintain:   <Checkbox disabled={TECH_OPER}
         style={{ marginRight: 20, }}
         onChange={ChangemaintainEVC_02_Vm_of_Current_Day}
         checked={maintainEVC_02_Vm_of_Current_Day}
@@ -4518,15 +4790,15 @@ disabled={AuthInputHighLow}
 
         value: <span style={combineCss.CSS_EVC_02_Vb_of_Last_Day} > {formatValue(EVC_02_Vb_of_Last_Day)} {nameValue.Sm3}</span>, 
         high: <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
         
         style={combineCss.CSS_EVC_02_Vb_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Vb_of_Last_Day} onChange={handleInputChangeEVC_02_Vb_of_Last_Day} inputMode="decimal" />, 
         low:  <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
         
         style={combineCss.CSS_EVC_02_Vb_of_Last_Day}    placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Vb_of_Last_Day} onChange={handleInputChange2EVC_02_Vb_of_Last_Day} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
-        Maintain:   <Checkbox disabled={AuthInput}
+        Maintain:   <Checkbox disabled={TECH_OPER}
         style={{ marginRight: 20, }}
         onChange={ChangemaintainEVC_02_Vb_of_Last_Day}
         checked={maintainEVC_02_Vb_of_Last_Day}
@@ -4544,15 +4816,15 @@ disabled={AuthInputHighLow}
 
         value: <span style={combineCss.CSS_EVC_02_Vm_of_Last_Day} > {formatValue(EVC_02_Vm_of_Last_Day)} {nameValue.m3}</span>, 
         high: <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
         
         style={combineCss.CSS_EVC_02_Vm_of_Last_Day}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Vm_of_Last_Day} onChange={handleInputChangeEVC_02_Vm_of_Last_Day} inputMode="decimal" />, 
         low:  <InputText  
- disabled={AuthInputHighLow}
+ disabled={TECHNIAN_AUTH}
         
         style={combineCss.CSS_EVC_02_Vm_of_Last_Day}    placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Vm_of_Last_Day} onChange={handleInputChange2EVC_02_Vm_of_Last_Day} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
-        Maintain:   <Checkbox disabled={AuthInput}
+        Maintain:   <Checkbox disabled={TECH_OPER}
         style={{ marginRight: 20, }}
         onChange={ChangemaintainEVC_02_Vm_of_Last_Day}
         checked={maintainEVC_02_Vm_of_Last_Day}
@@ -4569,15 +4841,15 @@ disabled={AuthInputHighLow}
 
     value: <span style={combineCss.CSS_EVC_02_Conn_STT} > {formatValue(EVC_02_Conn_STT)} {DataEVC_02_Conn_STT}</span>, 
     high: <InputText  
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
     
     style={combineCss.CSS_EVC_02_Conn_STT}   placeholder='High' step="0.1" type='number' value={inputValueEVC_02_Conn_STT} onChange={handleInputChangeEVC_02_Conn_STT} inputMode="decimal" />, 
     low:  <InputText  
-disabled={AuthInputHighLow}
+disabled={TECHNIAN_AUTH}
     
     style={combineCss.CSS_EVC_02_Conn_STT}    placeholder='Low' step="0.1" type='number' value={inputValue2EVC_02_Conn_STT} onChange={handleInputChange2EVC_02_Conn_STT} inputMode="decimal" />,
     update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
-    Maintain:   <Checkbox disabled={AuthInput}
+    Maintain:   <Checkbox disabled={TECH_OPER}
     style={{ marginRight: 20, }}
     onChange={ChangemaintainEVC_02_Conn_STT}
     checked={maintainEVC_02_Conn_STT}
@@ -4632,15 +4904,15 @@ disabled={AuthInputHighLow}
         name: <span style={combineCss.CSSGD1}>{PLC_OTSUKA.GD1} </span> ,
         value: <span style={combineCss.CSSGD1} > {GD1} {nameValue.LEL}</span> , 
          high: <InputText  
-    disabled={AuthInput}
+    disabled={TECH_OPER}
          
          style={combineCss.CSSGD1}   placeholder='High' step="0.1" type='number' value={inputValueGD1} onChange={handleInputChangeGD1} inputMode="decimal" />, 
          low:  <InputText  
-    disabled={AuthInput}
+    disabled={TECH_OPER}
          
          style={combineCss.CSSGD1}   placeholder='Low' step="0.1" type='number' value={inputValue2GD1} onChange={handleInputChange2GD1} inputMode="decimal" />,
          update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
-         Maintain:   <Checkbox disabled={AuthInput}
+         Maintain:   <Checkbox disabled={TECH_OPER}
          style={{ marginRight: 20, }}
          onChange={ChangeMaintainGD1}
          checked={maintainGD1}
@@ -4657,15 +4929,15 @@ disabled={AuthInputHighLow}
         name: <span style={combineCss.CSSGD2}>{PLC_OTSUKA.GD2} </span> ,
         value: <span style={combineCss.CSSGD2} > {GD2} {nameValue.LEL}</span> , 
          high: <InputText  
-    disabled={AuthInput}
+    disabled={TECH_OPER}
          
          style={combineCss.CSSGD2}   placeholder='High' step="0.1" type='number' value={inputValueGD2} onChange={handleInputChangeGD2} inputMode="decimal" />, 
          low:  <InputText  
-    disabled={AuthInput}
+    disabled={TECH_OPER}
          
          style={combineCss.CSSGD2}   placeholder='Low' step="0.1" type='number' value={inputValue2GD2} onChange={handleInputChange2GD2} inputMode="decimal" />,
          update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
-         Maintain:   <Checkbox disabled={AuthInput}
+         Maintain:   <Checkbox disabled={TECH_OPER}
          style={{ marginRight: 20, }}
          onChange={ChangeMaintainGD2}
          checked={maintainGD2}
@@ -4682,15 +4954,15 @@ disabled={AuthInputHighLow}
         name: <span style={combineCss.CSSgd3}>{PLC_OTSUKA.GD3}</span> ,
         value: <span style={combineCss.CSSgd3} > {GD3} {nameValue.LEL}</span> , 
          high: <InputText  
-    disabled={AuthInput}
+    disabled={TECH_OPER}
          
          style={combineCss.CSSgd3}   placeholder='High' step="0.1" type='number' value={inputValueGD3} onChange={handleInputChangeGD3} inputMode="decimal" />, 
          low:  <InputText  
-    disabled={AuthInput}
+    disabled={TECH_OPER}
          
          style={combineCss.CSSgd3}   placeholder='Low' step="0.1" type='number' value={inputValue2GD3} onChange={handleInputChange2GD3} inputMode="decimal" />,
          update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
-         Maintain:   <Checkbox disabled={AuthInput}
+         Maintain:   <Checkbox disabled={TECH_OPER}
          style={{ marginRight: 20, }}
          onChange={ChangeMaintainGD3}
          checked={maintainGD3}
@@ -4706,15 +4978,15 @@ disabled={AuthInputHighLow}
         name: <span style={combineCss.CSSPT1}>{PLC_OTSUKA.PT1}</span> ,
         value: <span style={combineCss.CSSPT1} > {PT1format} {nameValue.BARG}</span> , 
          high: <InputText  
- disabled={AuthInput}
+ disabled={TECH_OPER}
          
          style={combineCss.CSSPT1}   placeholder='High' step="0.1" type='number' value={inputValuePT1} onChange={handleInputChangePT1} inputMode="decimal" />, 
          low:  <InputText  
- disabled={AuthInput}
+ disabled={TECH_OPER}
          
          style={combineCss.CSSPT1}   placeholder='Low' step="0.1" type='number' value={inputValue2PT1} onChange={handleInputChange2PT1} inputMode="decimal" />,
       update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
-      Maintain:   <Checkbox disabled={AuthInput}
+      Maintain:   <Checkbox disabled={TECH_OPER}
       style={{ marginRight: 20, }}
       onChange={ChangeMaintainPT1}
       checked={maintainPT1}
@@ -4731,15 +5003,15 @@ disabled={AuthInputHighLow}
        name: <span style={combineCss.CSS_ZSO}>{PLC_OTSUKA.DI_ZSO_1} </span> ,
        value: <span style={combineCss.CSS_ZSO} > {DI_ZSO_1} {DataDI_ZSO_1}</span> , 
        high: <InputText  
- disabled={AuthInput}
+ disabled={TECH_OPER}
        
        style={combineCss.CSS_ZSO}   placeholder='High' step="0.1" type='number' value={inputValueDI_ZSO_1} onChange={handleInputChangeDI_ZSO_1} inputMode="decimal" />, 
        low:  <InputText  
- disabled={AuthInput}
+ disabled={TECH_OPER}
        
        style={combineCss.CSS_ZSO}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_ZSO_1} onChange={handleInputChange2DI_ZSO_1} inputMode="decimal" />,
        update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
-       Maintain:   <Checkbox disabled={AuthInput}
+       Maintain:   <Checkbox disabled={TECH_OPER}
        style={{ marginRight: 20, }}
        onChange={ChangemaintainDI_ZSO_1}
        checked={maintainDI_ZSO_1}
@@ -4755,15 +5027,15 @@ disabled={AuthInputHighLow}
         name: <span style={combineCss.CSS_ZSC}>{PLC_OTSUKA.DI_ZSC_1} </span> ,
         value: <span style={combineCss.CSS_ZSC} > {DI_ZSC_1} {DataDI_ZSC_1}</span> , 
         high: <InputText  
- disabled={AuthInput}
+ disabled={TECH_OPER}
         
         style={combineCss.CSS_ZSC}   placeholder='High' step="0.1" type='number' value={inputValueDI_ZSC_1} onChange={handleInputChangeDI_ZSC_1} inputMode="decimal" />, 
         low:  <InputText  
- disabled={AuthInput}
+ disabled={TECH_OPER}
         
         style={combineCss.CSS_ZSC}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_ZSC_1} onChange={handleInputChange2DI_ZSC_1} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
-        Maintain:   <Checkbox disabled={AuthInput}
+        Maintain:   <Checkbox disabled={TECH_OPER}
         style={{ marginRight: 20, }}
         onChange={ChangemaintainDI_ZSC_1}
         checked={maintainDI_ZSC_1}
@@ -4779,15 +5051,15 @@ disabled={AuthInputHighLow}
        name: <span style={combineCss.CSS_Map}>{paragraphContentsPLC.MAP} </span> ,
        value: <span style={combineCss.CSS_Map} > {DI_MAP_1} {DataDI_MAP_1}</span> , 
        high: <InputText  
-disabled={AuthInput}
+disabled={TECH_OPER}
        
        style={combineCss.CSS_Map}   placeholder='High' step="0.1" type='number' value={inputValueDI_MAP_1} onChange={handleInputChangeDI_MAP_1} inputMode="decimal" />, 
        low:  <InputText  
-disabled={AuthInput}
+disabled={TECH_OPER}
        
        style={combineCss.CSS_Map}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_MAP_1} onChange={handleInputChange2DI_MAP_1} inputMode="decimal" />,
        update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
-       Maintain:   <Checkbox disabled={AuthInput}
+       Maintain:   <Checkbox disabled={TECH_OPER}
        style={{ marginRight: 20, }}
        onChange={ChangemaintainDI_MAP_1}
        checked={maintainDI_MAP_1}
@@ -4803,15 +5075,15 @@ disabled={AuthInput}
        name: <span style={combineCss.CSS_DI_UPS_BATTERY}>{TagName.UPS_BATTERY}</span> ,
        value: <span style={combineCss.CSS_DI_UPS_BATTERY} > {DI_UPS_BATTERY} {DataBattery}</span> , 
        high: <InputText  
-disabled={AuthInput}
+disabled={TECH_OPER}
        
        style={combineCss.CSS_DI_UPS_BATTERY}   placeholder='High' step="0.1" type='number' value={inputValueDI_UPS_BATTERY} onChange={handleInputChangeDI_UPS_BATTERY} inputMode="decimal" />, 
        low:  <InputText  
-disabled={AuthInput}
+disabled={TECH_OPER}
        
        style={combineCss.CSS_DI_UPS_BATTERY}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_UPS_BATTERY} onChange={handleInputChange2DI_UPS_BATTERY} inputMode="decimal" />,
        update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
-       Maintain:   <Checkbox disabled={AuthInput}
+       Maintain:   <Checkbox disabled={TECH_OPER}
        style={{ marginRight: 20, }}
        onChange={ChangemaintainDI_UPS_BATTERY}
        checked={maintainDI_UPS_BATTERY}
@@ -4828,15 +5100,15 @@ disabled={AuthInput}
         name: <span style={combineCss.CSS_DI_UPS_CHARGING}>{TagName.UPS_CHARGING}</span> ,
         value: <span style={combineCss.CSS_DI_UPS_CHARGING} > {DI_UPS_CHARGING} {DataCharging}</span> , 
         high: <InputText  
- disabled={AuthInput}
+ disabled={TECH_OPER}
         
         style={combineCss.CSS_DI_UPS_CHARGING}   placeholder='High' step="0.1" type='number' value={inputValueDI_UPS_CHARGING} onChange={handleInputChangeDI_UPS_CHARGING} inputMode="decimal" />, 
         low:  <InputText  
- disabled={AuthInput}
+ disabled={TECH_OPER}
         
         style={combineCss.CSS_DI_UPS_CHARGING}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_UPS_CHARGING} onChange={handleInputChange2DI_UPS_CHARGING} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
-        Maintain:   <Checkbox disabled={AuthInput}
+        Maintain:   <Checkbox disabled={TECH_OPER}
         style={{ marginRight: 20, }}
         onChange={ChangemaintainDI_UPS_CHARGING}
         checked={maintainDI_UPS_CHARGING}
@@ -4852,15 +5124,15 @@ disabled={AuthInput}
         name: <span style={combineCss.CSS_DI_UPS_ALARM}>{TagName.UPS_ALARM} </span> ,
         value: <span style={combineCss.CSS_DI_UPS_ALARM} > {DI_UPS_ALARM} {DataAlarm}</span> , 
         high: <InputText  
- disabled={AuthInput}
+ disabled={TECH_OPER}
         
         style={combineCss.CSS_DI_UPS_ALARM}   placeholder='High' step="0.1" type='number' value={inputValueDI_UPS_ALARM} onChange={handleInputChangeDI_UPS_ALARM} inputMode="decimal" />, 
         low:  <InputText  
- disabled={AuthInput}
+ disabled={TECH_OPER}
         
         style={combineCss.CSS_DI_UPS_ALARM}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_UPS_ALARM} onChange={handleInputChange2DI_UPS_ALARM} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
-        Maintain:   <Checkbox disabled={AuthInput}
+        Maintain:   <Checkbox disabled={TECH_OPER}
         style={{ marginRight: 20, }}
         onChange={ChangemaintainDI_UPS_ALARM}
         checked={maintainDI_UPS_ALARM}
@@ -4876,15 +5148,15 @@ disabled={AuthInput}
         name: <span style={combineCss.CSS_UPS_Mode}>{TagName.UPS_MODE} </span> ,
         value: <span style={combineCss.CSS_UPS_Mode} > {UPS_Mode} {DataMode}</span> , 
         high: <InputText  
- disabled={AuthInput}
+ disabled={TECH_OPER}
         
         style={combineCss.CSS_UPS_Mode}   placeholder='High' step="0.1" type='number' value={inputValueUPS_Mode} onChange={handleInputChangeUPS_Mode} inputMode="decimal" />, 
         low:  <InputText  
- disabled={AuthInput}
+ disabled={TECH_OPER}
         
         style={combineCss.CSS_UPS_Mode}   placeholder='Low' step="0.1" type='number' value={inputValue2UPS_Mode} onChange={handleInputChange2UPS_Mode} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
-        Maintain:   <Checkbox disabled={AuthInput}
+        Maintain:   <Checkbox disabled={TECH_OPER}
         style={{ marginRight: 20, }}
         onChange={ChangemaintainUPS_Mode}
         checked={maintainUPS_Mode}
@@ -4901,15 +5173,15 @@ disabled={AuthInput}
         name: <span style={combineCss.CSS_DI_SELECT_SW}>{TagName.SELECT_SW}</span> ,
         value: <span style={combineCss.CSS_DI_SELECT_SW} > {DI_SELECT_SW} {DataDI_SELECT_SW}</span> , 
         high: <InputText  
- disabled={AuthInput}
+ disabled={TECH_OPER}
         
         style={combineCss.CSS_DI_SELECT_SW}   placeholder='High' step="0.1" type='number' value={inputValueDI_SELECT_SW} onChange={handleInputChangeDI_SELECT_SW} inputMode="decimal" />, 
         low:  <InputText  
- disabled={AuthInput}
+ disabled={TECH_OPER}
         
         style={combineCss.CSS_DI_SELECT_SW}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_SELECT_SW} onChange={handleInputChange2DI_SELECT_SW} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
-        Maintain:   <Checkbox disabled={AuthInput}
+        Maintain:   <Checkbox disabled={TECH_OPER}
         style={{ marginRight: 20, }}
         onChange={ChangemaintainDI_SELECT_SW}
         checked={maintainDI_SELECT_SW}
@@ -4925,15 +5197,15 @@ disabled={AuthInput}
         name: <span style={combineCss.CSS_Reset}>{TagName.RESET} </span> ,
         value: <span style={combineCss.CSS_Reset} > {DI_RESET} {DataReset}</span> , 
         high: <InputText  
- disabled={AuthInput}
+ disabled={TECH_OPER}
         
         style={combineCss.CSS_Reset}   placeholder='High' step="0.1" type='number' value={inputValueDI_RESET} onChange={handleInputChangeDI_RESET} inputMode="decimal" />, 
         low:  <InputText  
- disabled={AuthInput}
+ disabled={TECH_OPER}
         
         style={combineCss.CSS_Reset}   placeholder='Low' step="0.1" type='number' value={inputValue2DI_RESET} onChange={handleInputChange2DI_RESET} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
-        Maintain:   <Checkbox disabled={AuthInput}
+        Maintain:   <Checkbox disabled={TECH_OPER}
         style={{ marginRight: 20, }}
         onChange={ChangemaintainDI_RESET}
         checked={maintainDI_RESET}
@@ -4948,15 +5220,15 @@ disabled={AuthInput}
        name: <span style={combineCss.CSS_Emergency_NO}>{TagName.EMER_NO}</span> ,
        value: <span style={combineCss.CSS_Emergency_NO} > {Emergency_NO} {DataEmergency_NO}</span> , 
        high: <InputText  
-disabled={AuthInput}
+disabled={TECH_OPER}
        
        style={combineCss.CSS_Emergency_NO}   placeholder='High' step="0.1" type='number' value={inputValueEmergency_NO} onChange={handleInputChangeEmergency_NO} inputMode="decimal" />, 
        low:  <InputText  
-disabled={AuthInput}
+disabled={TECH_OPER}
        
        style={combineCss.CSS_Emergency_NO}   placeholder='Low' step="0.1" type='number' value={inputValue2Emergency_NO} onChange={handleInputChange2Emergency_NO} inputMode="decimal" />,
        update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
-       Maintain:   <Checkbox disabled={AuthInput}
+       Maintain:   <Checkbox disabled={TECH_OPER}
        style={{ marginRight: 20, }}
        onChange={ChangemaintainEmergency_NO}
        checked={maintainEmergency_NO}
@@ -4971,15 +5243,15 @@ disabled={AuthInput}
         name: <span style={combineCss.CSS_Emergency_NC}>{TagName.EMER_NC} </span> ,
         value: <span style={combineCss.CSS_Emergency_NC} > {Emergency_NC} {DataEmergency_NC}</span> , 
         high: <InputText  
- disabled={AuthInput}
+ disabled={TECH_OPER}
         
         style={combineCss.CSS_Emergency_NC}   placeholder='High' step="0.1" type='number' value={inputValueEmergency_NC} onChange={handleInputChangeEmergency_NC} inputMode="decimal" />, 
         low:  <InputText  
- disabled={AuthInput}
+ disabled={TECH_OPER}
         
         style={combineCss.CSS_Emergency_NC}   placeholder='Low' step="0.1" type='number' value={inputValue2Emergency_NC} onChange={handleInputChange2Emergency_NC} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
-        Maintain:   <Checkbox disabled={AuthInput}
+        Maintain:   <Checkbox disabled={TECH_OPER}
         style={{ marginRight: 20, }}
         onChange={ChangemaintainEmergency_NC}
         checked={maintainEmergency_NC}
@@ -4994,15 +5266,15 @@ disabled={AuthInput}
         name: <span style={combineCss.CSS_SELENOID}>{PLC_OTSUKA.SV_1} </span> ,
         value: <span style={combineCss.CSS_SELENOID} > {DO_SV1} {DataSV_1}</span> , 
         high: <InputText  
- disabled={AuthInput}
+ disabled={TECH_OPER}
         
         style={combineCss.CSS_SELENOID}   placeholder='High' step="0.1" type='number' value={inputValueDO_SV1} onChange={handleInputChangeDO_SV1} inputMode="decimal" />, 
         low:  <InputText  
- disabled={AuthInput}
+ disabled={TECH_OPER}
         
         style={combineCss.CSS_SELENOID}   placeholder='Low' step="0.1" type='number' value={inputValue2DO_SV1} onChange={handleInputChange2DO_SV1} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV}  className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
-        Maintain:   <Checkbox disabled={AuthInput}
+        Maintain:   <Checkbox disabled={TECH_OPER}
         style={{ marginRight: 20, }}
         onChange={ChangemaintainDO_SV1}
         checked={maintainDO_SV1}
@@ -5020,15 +5292,15 @@ disabled={AuthInput}
         name: <span style={combineCss.CSS_Horn}>{paragraphContentsPLC.HORN} </span> ,
         value: <span style={combineCss.CSS_Horn} > {DO_HR_01} {DataHorn}</span> , 
         high: <InputText  
- disabled={AuthInput}
+ disabled={TECH_OPER}
         
         style={combineCss.CSS_Horn}   placeholder='High' step="0.1" type='number' value={inputValueDO_HR_01} onChange={handleInputChangeDO_HR_01} inputMode="decimal" />, 
         low:  <InputText  
- disabled={AuthInput}
+ disabled={TECH_OPER}
         
         style={combineCss.CSS_Horn}   placeholder='Low' step="0.1" type='number' value={inputValue2DO_HR_01} onChange={handleInputChange2DO_HR_01} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
-        Maintain:   <Checkbox disabled={AuthInput}
+        Maintain:   <Checkbox disabled={TECH_OPER}
         style={{ marginRight: 20, }}
         onChange={ChangemaintainDO_HR_01}
         checked={maintainDO_HR_01}
@@ -5044,15 +5316,15 @@ disabled={AuthInput}
         name: <span style={combineCss.CSS_DO_BC_01}>{paragraphContentsPLC.DO_BC_01} </span> ,
         value: <span style={combineCss.CSS_DO_BC_01} > {DO_BC_01} {DataDO_BC_01}</span> , 
         high: <InputText  
- disabled={AuthInput}
+ disabled={TECH_OPER}
         
         style={combineCss.CSS_DO_BC_01}   placeholder='High' step="0.1" type='number' value={inputValueDO_BC_01} onChange={handleInputChangeDO_BC_01} inputMode="decimal" />, 
         low:  <InputText  
- disabled={AuthInput}
+ disabled={TECH_OPER}
         
         style={combineCss.CSS_DO_BC_01}   placeholder='Low' step="0.1" type='number' value={inputValue2DO_BC_01} onChange={handleInputChange2DO_BC_01} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData' onClick={confirmUpData}   label='Update'  /> ,
-        Maintain:   <Checkbox disabled={AuthInput}
+        Maintain:   <Checkbox disabled={TECH_OPER}
         style={{ marginRight: 20, }}
         onChange={ChangemaintainDO_BC_01}
         checked={maintainDO_BC_01}
@@ -5068,15 +5340,15 @@ disabled={AuthInput}
     
         value: <span style={combineCss.CSS_PLC_Conn_STT} > {PLC_Conn_STT} {DataPLC_Conn_STT}</span>, 
         high: <InputText  
-    disabled={AuthInputHighLow}
+    disabled={TECHNIAN_AUTH}
         
         style={combineCss.CSS_PLC_Conn_STT}   placeholder='High' step="0.1" type='number' value={inputValuePLC_Conn_STT} onChange={handleInputChangePLC_Conn_STT} inputMode="decimal" />, 
         low:  <InputText  
-    disabled={AuthInputHighLow}
+    disabled={TECHNIAN_AUTH}
         
         style={combineCss.CSS_PLC_Conn_STT}    placeholder='Low' step="0.1" type='number' value={inputValue2PLC_Conn_STT} onChange={handleInputChange2PLC_Conn_STT} inputMode="decimal" />,
         update:  <Button disabled={AuthUpdatePCV} className='buttonUpdateSetData'   onClick={confirmUpData}   label='Update'  /> ,
-        Maintain:   <Checkbox disabled={AuthInput}
+        Maintain:   <Checkbox disabled={TECH_OPER}
         style={{ marginRight: 20, }}
         onChange={ChangemaintainPLC_Conn_STT}
         checked={maintainPLC_Conn_STT}
@@ -5097,21 +5369,257 @@ disabled={AuthInput}
       const maintainHeader = (
         <div>
 
-            {!AuthInput && (
-                <Checkbox disabled={AuthInput}
+                <Checkbox disabled={TECH_OPER}
                     style={{ marginRight: 5 }}
                     onChange={handleCheckboxChange}
                     checked={maintainEVC_01_Remain_Battery_Service_Life}
                 />
-            )} 
             Maintain
 
         </div>
     );
 
 
+
+    const configuration = [
+        {
+            Name: <span style={combineCssAttribute.PCV}>{configurationName.PCV1} (BarG) </span>,
+    
+            Value: (
+                <InputText
+                disabled={AuthUpdatePCV}
+                    style={combineCssAttribute.PCV}
+                    
+                    step="0.1"
+                    type="Name"
+                    value={inputValue}
+                    onChange={handleInputChange}
+                    inputMode="decimal"
+                />
+            ),
+    
+            Update: (
+                <Button  
+                    disabled={AuthUpdatePCV}
+                    className="buttonUpdateSetData"
+                    style={{ marginTop: 5 }}
+                    label="Update"
+                    onClick={handleButtonClickAttribute}
+                />
+            ),
+        },
+    
+        {
+            Name: <span style={combineCssAttribute.PCV}>{configurationName.PCV2} (BarG) </span>,
+    
+            Value: (
+                <InputText
+                disabled={AuthUpdatePCV}
+                    style={combineCssAttribute.PCV}
+                    
+                    step="0.1"
+                    type="Name"
+                    value={inputValue2}
+                    onChange={handleInputChange2}
+                    inputMode="decimal"
+                />
+            ),
+    
+            Update: (
+                <Button  
+                    disabled={AuthUpdatePCV}
+                    className="buttonUpdateSetData"
+                    style={{ marginTop: 5 }}
+                    label="Update"
+                    onClick={handleButtonClickAttribute}
+                />
+            ),
+        },
+    
+        {
+            Name: <span style={combineCssAttribute.PCV}>{configurationName.PSV} (BarG) </span>,
+    
+            Value: (
+                <InputText
+                disabled={AuthUpdatePCV}
+                    style={combineCssAttribute.PCV}
+                    
+                    step="0.1"
+                    type="Name"
+                    value={inputValue3}
+                    onChange={handleInputChange3}
+                    inputMode="decimal"
+                />
+            ),
+    
+            Update: (
+                <Button  
+                    disabled={AuthUpdatePCV}
+                    className="buttonUpdateSetData"
+                    style={{ marginTop: 5 }}
+                    label="Update"
+                    onClick={handleButtonClickAttribute}
+                />
+            ),
+        },
+    
+        {
+            Name: <span style={combineCssAttribute.PCV}>{configurationName.IOT} </span>,
+    
+            Value: (
+                <InputText
+                disabled={AuthUpdatePCV}
+                    style={combineCssAttribute.PCV}
+                    
+                    step="0.1"
+                    type="Name"
+                    value={inputGetwayPhone}
+                    onChange={handleInputChangeGetWayPhone}
+                    inputMode="decimal"
+                />
+            ),
+    
+            Update: (
+                <Button  
+                    disabled={AuthUpdatePCV}
+                    className="buttonUpdateSetData"
+                    style={{ marginTop: 5 }}
+                    label="Update"
+                    onClick={handleButtonClickAttribute}
+                />
+            ),
+        },
+    
+    
+    
+        {
+            Name: (
+                <span style={combineCssAttribute.PCV}>
+                    {configurationName.EVC_01_Battery_Installation_Date}
+                </span>
+            ),
+          
+            Value: (
+                <Calendar
+                    style={combineCssAttribute.PCV}
+                    value={date2}
+                    onChange={handleDateChange}
+                    disabled={TECH_OPER}
+                    showTime={false}
+                    inputId="timeEVC_02"
+                    dateFormat="dd-mm-yy"
+                />
+            ),
+           
+            Update: (
+                <Button  
+                disabled={TECH_OPER}
+
+                    className="buttonUpdateSetData"
+                    style={{ marginTop: 5 }}
+                    label="Update"
+                    onClick={handleButtonClickAttribute}
+                />
+            ),
+        },
+        {
+            Name: (
+                <span style={combineCssAttribute.PCV}>
+                    {configurationName.EVC_01_Battery_Expiration_Date}
+                </span>
+            ),
+          
+         
+            Value: (
+                <Calendar
+                
+                    style={combineCssAttribute.PCV}
+                    value={date}
+                    disabled
+    
+                    showTime={false}
+                    inputId="timeEVC_01"
+                    dateFormat="dd-mm-yy"
+                />
+            ),
+            Update: (
+                <Button
+                    className="buttonUpdateSetData"
+    
+                    disabled
+                    style={{ marginTop: 5,cursor:"no-drop" }}
+                    label="Update"
+                />
+            ),
+           
+        },
+    
+        {
+            Name: (
+                <span style={combineCssAttribute.PCV}>
+                    {configurationName.EVC_02_Battery_Installation_Date}
+                </span>
+            ),
+          
+            Value: (
+                <Calendar
+                    style={combineCssAttribute.PCV}
+                    value={date4}
+                    onChange={handleDateChange2}
+                disabled={TECH_OPER}
+                    showTime={false}
+                    inputId="timeEVC_04"
+                    dateFormat="dd-mm-yy"
+                />
+            ),
+           
+            Update: (
+                <Button
+                disabled={TECH_OPER}
+
+                    className="buttonUpdateSetData"
+                    style={{ marginTop: 5 }}
+                    label="Update"
+                    onClick={handleButtonClickAttribute}
+                />
+            ),
+        },
+        {
+            Name: (
+                <span style={combineCssAttribute.PCV}>
+                    {configurationName.EVC_02_Battery_Expiration_Date}
+                </span>
+            ),
+            
+            Value: (
+                <Calendar
+                
+                    style={combineCssAttribute.PCV}
+                    value={date3}
+                    disabled
+    
+                    showTime={false}
+                    inputId="timeEVC_03"
+                    dateFormat="dd-mm-yy"
+                />
+                
+            ),
+            Update: (
+                <Button
+                    className="buttonUpdateSetData"
+                    
+                    disabled
+                    style={{ marginTop: 5,cursor:"no-drop" }}
+                    label="Update"
+                />
+            ),
+           
+        },
+    ];
+
+
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop:10 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',  }}>
             
          
         <Toast ref={toast} />
@@ -5121,39 +5629,48 @@ disabled={AuthInput}
         <h2>OTSUKA</h2>
      
       
-        <div style={{width:'100%' ,  borderRadius:5 }}>
-
-        <DataTable rowGroupMode="subheader"
-                size={'small'}      resizableColumns
-        tableStyle={{ minWidth: '50rem' }}   value={combinedData}  groupRowsBy="mainCategory"  
-      sortMode="single" 
-      scrollable 
-      selectionMode="single" 
-
-      sortOrder={1}    rowGroupHeaderTemplate={mainCategoryTemplate}   >
-
+        <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+  <div style={{ width: '100%' }}>
+    <DataTable 
+       rowGroupMode="subheader"
+       size={'small'}      resizableColumns
+       tableStyle={{ minWidth: '50rem' }} 
+      value={combinedData}  
+      groupRowsBy="mainCategory"  
+       sortOrder={1} 
+       rowGroupHeaderTemplate={mainCategoryTemplate} >
       <Column field="timeUpdate" header="Time Update" />
-      <Column field="modbus" header="Address" />
-
+      <Column field="modbus" header="Modbus" />
       <Column field="name" header="Name" />
-
       <Column field="value" header="Value" />
-      <Column  field="high" header="High" />
+      <Column field="high" header="High" />
       <Column field="low" header="Low" />
-   <Column field="Maintain" header={maintainHeader} />
-      {AuthInput ?  " " : <Column field="update" header="Update" /> }
+       <Column field="Maintain" header={maintainHeader} />
 
+     
+        <Column field="update" header="Update"     
+style={{ width: '133px' }} 
+/> {/* Set consistent width */}
     </DataTable>
+  </div>
 
-    </div>
-<br />
-
-
-
-<div style={{width:'100%' ,  borderRadius:5,   }}>
-
-<SetAttribute/>
+  <div style={{ width: '100%', borderRadius: 5, }}>
+    <h4>Station - Configuration</h4>
+    <DataTable value={configuration} size={'small'} selectionMode="single">
+      <Column field="Name" header="Name" />
+     
+      <Column field="Value" header="value" />
+ 
+      <Column 
+        field="Update" 
+        header={<div style={{position:'relative', right:45}}>Update</div>} 
+        style={{ display: 'flex', justifyContent: 'flex-end',}} 
+      /> {/* Set the same width */} 
+    </DataTable>
+  </div>
 </div>
+
+
 
 {/* <div style={{width:'100%' ,  borderRadius:5,   }}>
 

@@ -13,5 +13,12 @@
          gap: 0.5rem;
     }
 }
+.p-tabview .p-tabview-panels{
+    padding: 0.5rem 0px;
+}
 
-
+/* .p-tabview-nav-content{
+    width:100%;
+    max-width: 330px;
+    border-radius: 5px;
+} */
