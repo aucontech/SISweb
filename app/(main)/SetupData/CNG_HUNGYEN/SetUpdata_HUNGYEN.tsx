@@ -6463,9 +6463,7 @@ disabled={TECH_OPER}
         );
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',  borderRadius:10, }}>
-        <audio ref={audioRef}>
-            <source src="/audios/mixkit-police-siren-us-1643-_1_.mp3" type="audio/mpeg" />
-        </audio>
+   
         <Toast ref={toast} />
 
         <ConfirmDialog />
@@ -6488,30 +6486,29 @@ disabled={TECH_OPER}
       <Column field="value" header="Value" />
       <Column field="high" header="High" />
       <Column field="low" header="Low" />
-       <Column field="Maintain" header={maintainHeader} />
-
-     
-        <Column field="update" header="Update"     
-style={{ width: '133px' }} 
-/> {/* Set consistent width */}
+        <Column field="Maintain" header={maintainHeader} />
+     <Column field="update" header="Update"     
+style={{ width: '45px' }} 
+/>  
     </DataTable>
   </div>
 
-  <div style={{ width: '100%', borderRadius: 5, }}>
+  <div style={{ width: '100%', borderRadius: 5,}}>
     <h4>Station - Configuration</h4>
     <DataTable value={configuration} size={'small'} selectionMode="single">
       <Column field="Name" header="Name" />
      
       <Column field="Value" header="value" />
- 
-      <Column 
+    
+      <Column
         field="Update" 
         header={<div style={{position:'relative', right:45}}>Update</div>} 
-        style={{ display: 'flex', justifyContent: 'flex-end',}} 
-      /> {/* Set the same width */} 
+        style={{ display: 'flex', justifyContent: 'flex-end',right:45}} 
+      />  
     </DataTable>
   </div>
 </div>
+
 
 <br />
 <br />

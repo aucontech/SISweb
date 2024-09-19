@@ -5671,9 +5671,7 @@ checked={maintainPLC_Conn_STT}
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',  borderRadius:10, }}>
-        <audio ref={audioRef}>
-            <source src="/audios/mixkit-police-siren-us-1643-_1_.mp3" type="audio/mpeg" />
-        </audio>
+   
         <Toast ref={toast} />
 
         <ConfirmDialog />
@@ -5698,8 +5696,8 @@ checked={maintainPLC_Conn_STT}
       <Column field="low" header="Low" />
         <Column field="Maintain" header={maintainHeader} />
      <Column field="update" header="Update"     
-style={{ width: '133px' }} 
-/>  {/* Set consistent width */}
+style={{ width: '45px' }} 
+/>  
     </DataTable>
   </div>
 
@@ -5709,11 +5707,12 @@ style={{ width: '133px' }}
       <Column field="Name" header="Name" />
      
       <Column field="Value" header="value" />
-      <Column 
+    
+      <Column
         field="Update" 
         header={<div style={{position:'relative', right:45}}>Update</div>} 
-        style={{ display: 'flex', justifyContent: 'flex-end',}} 
-      />  {/* Set the same width */} 
+        style={{ display: 'flex', justifyContent: 'flex-end',right:45}} 
+      />  
     </DataTable>
   </div>
 </div>

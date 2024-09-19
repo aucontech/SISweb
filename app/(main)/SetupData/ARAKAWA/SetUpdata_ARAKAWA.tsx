@@ -58,14 +58,11 @@ export default function SetUpdata_ARAKAWA() {
     const [timeEVC_01,setTimeEVC_01] = useState<any>()
     const [timeEVC_02,setTimeEVC_02] = useState<any>()
 
-    const [maintainEVC_01_Temperature11, setMaintainEVC_01_Temperature11] = useState(false);
 
 
     const Authorization = localStorage.getItem('user');
     const userData = Authorization ? JSON.parse(Authorization) : null;
      const userId = userData?.id?.id;
-    
-  
     
     
     const TECH_OPER = userId !== UserTechnican.A  && 
@@ -4726,8 +4723,8 @@ checked={maintainPLC_Conn_STT}
       <Column field="low" header="Low" />
         <Column field="Maintain" header={maintainHeader} />
      <Column field="update" header="Update"     
-style={{ width: '133px' }} 
-/>  {/* Set consistent width */}
+style={{ width: '45px' }} 
+/>  
     </DataTable>
   </div>
 
@@ -4738,11 +4735,11 @@ style={{ width: '133px' }}
      
       <Column field="Value" header="value" />
     
-      <Column 
+      <Column
         field="Update" 
         header={<div style={{position:'relative', right:45}}>Update</div>} 
-        style={{ display: 'flex', justifyContent: 'flex-end',}} 
-      />  {/* Set the same width */} 
+        style={{ display: 'flex', justifyContent: 'flex-end',right:45}} 
+      />  
     </DataTable>
   </div>
 </div>
