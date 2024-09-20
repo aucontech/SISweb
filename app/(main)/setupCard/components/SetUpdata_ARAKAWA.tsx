@@ -1,5 +1,4 @@
 
-
 import React, { useEffect, useRef, useState } from 'react'
 import { id_ARAKAWA } from '../../data-table-device/ID-DEVICE/IdDevice';
 import { Toast } from 'primereact/toast';
@@ -12,7 +11,6 @@ import { Checkbox } from 'primereact/checkbox';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import "./LowHighOtsuka.css"
 import { Button } from 'primereact/button';
-import { Calendar } from 'primereact/calendar';
 import { namePCV_PSV, nameValue, PLC_ARAKAWA, TagName } from '../../SetupData/namValue';
 
 interface StateMap {
@@ -22,30 +20,18 @@ interface StateMap {
         | undefined;
 
 }
-interface ValueStateMap {
-    [key: string]:
-        | React.Dispatch<React.SetStateAction<string | null>>
-        | undefined;
-}
 
 
 
 export default function SetUpdata_ARAKAWA() {
 
-    const audioRef = useRef<HTMLAudioElement>(null);
     const token = readToken();
-    const [timeUpdate, setTimeUpdate] = useState<any | null>(null);
 
     const ws = useRef<WebSocket | null>(null);
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
     const [data, setData] = useState<any[]>([]);
 
     const toast = useRef<Toast>(null);
-
-
-
-
-
 
 
 
@@ -71,7 +57,6 @@ export default function SetUpdata_ARAKAWA() {
                 console.log("WebSocket connected");
                 setTimeout(() => {
                     ws.current?.send(JSON.stringify(obj1));
-
                 });
             };
             ws.current.onclose = () => {
@@ -108,11 +93,6 @@ export default function SetUpdata_ARAKAWA() {
                             const slicedValue = value;
                             stateMap[key]?.(slicedValue);
                         }
-
-                       
-
-
-
                     });
                 }
                
@@ -121,57 +101,39 @@ export default function SetUpdata_ARAKAWA() {
         }
     }, [data]);
 
-    const fetchData = async () => {
-        try {
-            const res = await httpApi.get(
-                `/plugins/telemetry/DEVICE/${id_ARAKAWA}/values/attributes/SERVER_SCOPE`
-            );
-     
-
-            const EVC_01_Vb_of_Last_Day_High = res.data.find((item: any) => item.key === "EVC_01_Vb_of_Last_Day_High");
-            setEVC_01_Vb_of_Last_Day_High(EVC_01_Vb_of_Last_Day_High?.value || null);
-            const EVC_01_Vb_of_Last_Day_Low = res.data.find((item: any) => item.key === "EVC_01_Vb_of_Last_Day_Low");
-            setEVC_01_Vb_of_Last_Day_Low(EVC_01_Vb_of_Last_Day_Low?.value || null);
-            const EVC_01_Vb_of_Last_Day_Maintain = res.data.find(
-                (item: any) => item.key === "EVC_01_Vb_of_Last_Day_Maintain"
-            );
-
-
-            const EVC_01_Vm_of_Last_Day_High = res.data.find((item: any) => item.key === "EVC_01_Vm_of_Last_Day_High");
-            setEVC_01_Vm_of_Last_Day_High(EVC_01_Vm_of_Last_Day_High?.value || null);
-            const EVC_01_Vm_of_Last_Day_Low = res.data.find((item: any) => item.key === "EVC_01_Vm_of_Last_Day_Low");
-            setEVC_01_Vm_of_Last_Day_Low(EVC_01_Vm_of_Last_Day_Low?.value || null);
-            const EVC_01_Vm_of_Last_Day_Maintain = res.data.find(
-                (item: any) => item.key === "EVC_01_Vm_of_Last_Day_Maintain"
-            );
-
-          
-//=====================================================================================
-
-
-
- // =================================================================================================================== 
-
-
-
-            
-
-            setMaintainEVC_01_Vm_of_Last_Day(EVC_01_Vm_of_Last_Day_Maintain?.value || false);
-
-
-
-
-            setMaintainEVC_01_Vb_of_Last_Day(EVC_01_Vb_of_Last_Day_Maintain?.value || false);
-
+ const fetchData = async () => {
+    try {
+        const res = await httpApi.get(`/plugins/telemetry/DEVICE/${id_ARAKAWA}/values/attributes/SERVER_SCOPE`);
+        const keysToFetch = ["EVC_01_Vb_of_Last_Day_High", "EVC_01_Vb_of_Last_Day_Low", "EVC_01_Vb_of_Last_Day_Maintain", "EVC_01_Vm_of_Last_Day_High", "EVC_01_Vm_of_Last_Day_Low", "EVC_01_Vm_of_Last_Day_Maintain"];
         
-
-
-           
-
-            } catch (error) {
-            console.error("Error fetching data:", error);
+        keysToFetch.forEach((key) => {
+            const value = res.data.find((item: any) => item.key === key)?.value || null;
+            switch (key) {
+                case "EVC_01_Vb_of_Last_Day_High":
+                    setEVC_01_Vb_of_Last_Day_High(value);
+                    break;
+                case "EVC_01_Vb_of_Last_Day_Low":
+                    setEVC_01_Vb_of_Last_Day_Low(value);
+                    break;
+                case "EVC_01_Vb_of_Last_Day_Maintain":
+                    setMaintainEVC_01_Vb_of_Last_Day(value);
+                    break;
+                case "EVC_01_Vm_of_Last_Day_High":
+                    setEVC_01_Vm_of_Last_Day_High(value);
+                    break;
+                case "EVC_01_Vm_of_Last_Day_Low":
+                    setEVC_01_Vm_of_Last_Day_Low(value);
+                    break;
+                case "EVC_01_Vm_of_Last_Day_Maintain":
+                    setMaintainEVC_01_Vm_of_Last_Day(value);
+                    break;
             }
-        };
+        });
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    }
+};
+
 
           const [EVC_01_Vb_of_Last_Day, setEVC_01_Vb_of_Last_Day] = useState<string | null>(null);
           const [inputValueEVC_01_Vb_of_Last_Day, setInputValueEVC_01_Vb_of_Last_Day] = useState<any>();
@@ -181,11 +143,6 @@ export default function SetUpdata_ARAKAWA() {
           const [exceedThresholdEVC_01_Vb_of_Last_Day, setExceedThresholdEVC_01_Vb_of_Last_Day] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
           
           const [maintainEVC_01_Vb_of_Last_Day, setMaintainEVC_01_Vb_of_Last_Day] = useState<boolean>(false);
-          
-          
-         
-          
-          
               const handleInputChangeEVC_01_Vb_of_Last_Day = (event: any) => {
                   const newValue = event.target.value;
                   setInputValueEVC_01_Vb_of_Last_Day(newValue);
@@ -243,54 +200,34 @@ export default function SetUpdata_ARAKAWA() {
             } catch (error) {}
         };
 
+     
 
     // =================================================================================================================== 
   
+    const checkThreshold = (high: string | null, low: string | null, value: string | null, maintain: boolean, setExceedThreshold: React.Dispatch<React.SetStateAction<boolean>>) => {
+        if (typeof high === 'string' && typeof low === 'string' && value !== null && maintain === false) {
+            const highValue = parseFloat(high);
+            const lowValue = parseFloat(low);
+            const valueParsed = parseFloat(value);
+    
+            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(valueParsed)) {
+                if (highValue <= valueParsed || valueParsed <= lowValue) {
+                    setExceedThreshold(true);
+                } else {
+                    setExceedThreshold(false);
+                }
+            }
+        }
+    };
+       
     useEffect(() => {
-        
-        
-        if (typeof EVC_01_Vm_of_Last_Day_High === 'string' && typeof EVC_01_Vm_of_Last_Day_Low === 'string' && EVC_01_Vm_of_Last_Day !== null && maintainEVC_01_Vm_of_Last_Day === false
-        ) {
-            const highValue = parseFloat(EVC_01_Vm_of_Last_Day_High);
-            const lowValue = parseFloat(EVC_01_Vm_of_Last_Day_Low);
-            const EVC_01_Vm_of_Last_DayValue = parseFloat(EVC_01_Vm_of_Last_Day);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Vm_of_Last_DayValue)) {
-                if (highValue <= EVC_01_Vm_of_Last_DayValue || EVC_01_Vm_of_Last_DayValue <= lowValue) {
-                        setExceedThresholdEVC_01_Vm_of_Last_Day(true);
-                } else {
-                   setExceedThresholdEVC_01_Vm_of_Last_Day(false);
-                }
-            } 
-        } 
-        if (typeof EVC_01_Vb_of_Last_Day_High === 'string' && typeof EVC_01_Vb_of_Last_Day_Low === 'string' && EVC_01_Vb_of_Last_Day !== null && maintainEVC_01_Vb_of_Last_Day === false
-        ) {
-            const highValue = parseFloat(EVC_01_Vb_of_Last_Day_High);
-            const lowValue = parseFloat(EVC_01_Vb_of_Last_Day_Low);
-            const EVC_01_Vb_of_Last_DayValue = parseFloat(EVC_01_Vb_of_Last_Day);
-    
-            if (!isNaN(highValue) && !isNaN(lowValue) && !isNaN(EVC_01_Vb_of_Last_DayValue)) {
-                if (highValue <= EVC_01_Vb_of_Last_DayValue || EVC_01_Vb_of_Last_DayValue <= lowValue) {
-                        setExceedThresholdEVC_01_Vb_of_Last_Day(true);
-                } else {
-                   setExceedThresholdEVC_01_Vb_of_Last_Day(false);
-                }
-            } 
-        } 
+        checkThreshold(EVC_01_Vm_of_Last_Day_High, EVC_01_Vm_of_Last_Day_Low, EVC_01_Vm_of_Last_Day, maintainEVC_01_Vm_of_Last_Day, setExceedThresholdEVC_01_Vm_of_Last_Day);
+        checkThreshold(EVC_01_Vb_of_Last_Day_High, EVC_01_Vb_of_Last_Day_Low, EVC_01_Vb_of_Last_Day, maintainEVC_01_Vb_of_Last_Day, setExceedThresholdEVC_01_Vb_of_Last_Day);
     }, [
-        
-
-        EVC_01_Vm_of_Last_Day_High, EVC_01_Vm_of_Last_Day, , EVC_01_Vm_of_Last_Day_Low,maintainEVC_01_Vm_of_Last_Day,
-        EVC_01_Vb_of_Last_Day_High, EVC_01_Vb_of_Last_Day, EVC_01_Vb_of_Last_Day_Low,maintainEVC_01_Vb_of_Last_Day,
-
-
-
-    
-    
-    
+        EVC_01_Vm_of_Last_Day_High, EVC_01_Vm_of_Last_Day, EVC_01_Vm_of_Last_Day_Low, maintainEVC_01_Vm_of_Last_Day,
+        EVC_01_Vb_of_Last_Day_High, EVC_01_Vb_of_Last_Day, EVC_01_Vb_of_Last_Day_Low, maintainEVC_01_Vb_of_Last_Day,
     ]);
-
-
+    
 
     const handleButtonClick = async () => {
         try {
@@ -299,26 +236,15 @@ export default function SetUpdata_ARAKAWA() {
 
                 {
                     
-
-
                     EVC_01_Vm_of_Last_Day_High: inputValueEVC_01_Vm_of_Last_Day,EVC_01_Vm_of_Last_Day_Low:inputValue2EVC_01_Vm_of_Last_Day,
                     EVC_01_Vb_of_Last_Day_High: inputValueEVC_01_Vb_of_Last_Day,EVC_01_Vb_of_Last_Day_Low:inputValue2EVC_01_Vb_of_Last_Day,
-
-                 
                 }
             );
-     
-   
-
-
             setEVC_01_Vm_of_Last_Day_High(inputValueEVC_01_Vm_of_Last_Day);
             setEVC_01_Vm_of_Last_Day_Low(inputValue2EVC_01_Vm_of_Last_Day);
 
             setEVC_01_Vb_of_Last_Day_High(inputValueEVC_01_Vb_of_Last_Day);
             setEVC_01_Vb_of_Last_Day_Low(inputValue2EVC_01_Vb_of_Last_Day);
-
-
-         
             toast.current?.show({
                 severity: "info",
                 detail: "Success ",
@@ -340,230 +266,21 @@ export default function SetUpdata_ARAKAWA() {
 
     useEffect(() => {
 
-
-
-     
-
-
-     
-
         setInputValueEVC_01_Vb_of_Last_Day(EVC_01_Vb_of_Last_Day_High); 
         setInputValue2EVC_01_Vb_of_Last_Day(EVC_01_Vb_of_Last_Day_Low); 
 
         setInputValueEVC_01_Vm_of_Last_Day(EVC_01_Vm_of_Last_Day_High); 
         setInputValue2EVC_01_Vm_of_Last_Day(EVC_01_Vm_of_Last_Day_Low); 
-
-      
-
     }, [
         
         
            EVC_01_Vb_of_Last_Day_High,EVC_01_Vb_of_Last_Day_Low,
            EVC_01_Vm_of_Last_Day_High,EVC_01_Vm_of_Last_Day_Low,
-          
-      
-
         ]);
-
-        const handleMainTainAll = async (checked:any) => {
-            try {
-                const newMaintainEVC_01_Remain_Battery_Service_Life = checked;
-                const newmaintainEVC_01_Temperature = checked;
-                const newmaintainEVC_01_Volume_at_Base_Condition = checked;
-                const newmaintainEVC_01_Volume_at_Measurement_Condition = checked;
-                const newMaintainEVC_01_Pressure = checked;
-                const newMaintainEVC_01_Flow_at_Base_Condition = checked;
-                const newmaintainEVC_01_Vm_of_Current_Day = checked;
-                const newMaintainEVC_01_Vb_of_Current_Day = checked;
-                const newmaintainEVC_01_Flow_at_Measurement_Condition = checked;
-                const newmaintainEVC_01_Vb_of_Last_Day = checked;
-                const newmaintainEVC_01_Vm_of_Last_Day = checked;
-        
-        
-       
-        
-        
-                await httpApi.post(
-                    `/plugins/telemetry/DEVICE/${id_ARAKAWA}/SERVER_SCOPE`,
-                    { EVC_01_Remain_Battery_Service_Life_Maintain: newMaintainEVC_01_Remain_Battery_Service_Life,
-                       EVC_01_Temperature_Maintain: newmaintainEVC_01_Temperature,
-                       EVC_01_Volume_at_Base_Condition_Maintain: newmaintainEVC_01_Volume_at_Base_Condition,
-                       EVC_01_Volume_at_Measurement_Condition_Maintain: newmaintainEVC_01_Volume_at_Measurement_Condition,
-                       EVC_01_Pressure_Maintain: newMaintainEVC_01_Pressure,
-                       EVC_01_Flow_at_Base_Condition_Maintain: newMaintainEVC_01_Flow_at_Base_Condition,
-                       EVC_01_Vm_of_Current_Day_Maintain: newmaintainEVC_01_Vm_of_Current_Day,
-                       EVC_01_Vb_of_Current_Day_Maintain: newMaintainEVC_01_Vb_of_Current_Day,
-                       EVC_01_Flow_at_Measurement_Condition_Maintain: newmaintainEVC_01_Flow_at_Measurement_Condition,
-                       EVC_01_Vb_of_Last_Day_Maintain: newmaintainEVC_01_Vb_of_Last_Day,
-                       EVC_01_Vm_of_Last_Day_Maintain: newmaintainEVC_01_Vm_of_Last_Day,
-        
-        
-               
-        
-                     }
-                );
-             
-                setMaintainEVC_01_Vb_of_Last_Day(newmaintainEVC_01_Vb_of_Last_Day);
-                setMaintainEVC_01_Vm_of_Last_Day(newmaintainEVC_01_Vm_of_Last_Day);
-        
-     
-        
-        
-            } catch (error) {
-                console.error('Error updating maintainEVC_01_Remain_Battery_Service_Life:', error);
-            }
-        };
-        
-        const handleCheckboxChange = (e:any) => {
-            const isChecked = e.checked;
-            handleMainTainAll(isChecked);
-        };
-        
-
-        const handleCheckboxChangeALL = 
-      
-        maintainEVC_01_Vb_of_Last_Day === true &&
-        maintainEVC_01_Vm_of_Last_Day === true 
-    //============================================================================================
-
-   const handleMainTainEVC = async (checked:any) => {
-            try {
-                const newMaintainEVC_01_Remain_Battery_Service_Life = checked;
-                const newmaintainEVC_01_Temperature = checked;
-                const newmaintainEVC_01_Volume_at_Base_Condition = checked;
-                const newmaintainEVC_01_Volume_at_Measurement_Condition = checked;
-                const newMaintainEVC_01_Pressure = checked;
-                const newMaintainEVC_01_Flow_at_Base_Condition = checked;
-                const newmaintainEVC_01_Vm_of_Current_Day = checked;
-                const newMaintainEVC_01_Vb_of_Current_Day = checked;
-                const newmaintainEVC_01_Flow_at_Measurement_Condition = checked;
-                const newmaintainEVC_01_Vb_of_Last_Day = checked;
-                const newmaintainEVC_01_Vm_of_Last_Day = checked;
-                const newmaintainEVC_01_Conn_STT = checked;
-        
-        
-        
-        
-                await httpApi.post(
-                    `/plugins/telemetry/DEVICE/${id_ARAKAWA}/SERVER_SCOPE`,
-                    { EVC_01_Remain_Battery_Service_Life_Maintain: newMaintainEVC_01_Remain_Battery_Service_Life,
-                       EVC_01_Temperature_Maintain: newmaintainEVC_01_Temperature,
-                       EVC_01_Volume_at_Base_Condition_Maintain: newmaintainEVC_01_Volume_at_Base_Condition,
-                       EVC_01_Volume_at_Measurement_Condition_Maintain: newmaintainEVC_01_Volume_at_Measurement_Condition,
-                       EVC_01_Pressure_Maintain: newMaintainEVC_01_Pressure,
-                       EVC_01_Flow_at_Base_Condition_Maintain: newMaintainEVC_01_Flow_at_Base_Condition,
-                       EVC_01_Vm_of_Current_Day_Maintain: newmaintainEVC_01_Vm_of_Current_Day,
-                       EVC_01_Vb_of_Current_Day_Maintain: newMaintainEVC_01_Vb_of_Current_Day,
-                       EVC_01_Flow_at_Measurement_Condition_Maintain: newmaintainEVC_01_Flow_at_Measurement_Condition,
-                       EVC_01_Vb_of_Last_Day_Maintain: newmaintainEVC_01_Vb_of_Last_Day,
-                       EVC_01_Vm_of_Last_Day_Maintain: newmaintainEVC_01_Vm_of_Last_Day,
-                       EVC_01_Conn_STT_Maintain: newmaintainEVC_01_Conn_STT,
-        
-                     }
-                );
-            
-                setMaintainEVC_01_Vb_of_Last_Day(newmaintainEVC_01_Vb_of_Last_Day);
-                setMaintainEVC_01_Vm_of_Last_Day(newmaintainEVC_01_Vm_of_Last_Day);
-        
-                
-       
-        
-        
-            } catch (error) {
-                console.error('Error updating maintainEVC_01_Remain_Battery_Service_Life:', error);
-            }
-        };
-        
-        const handleCheckboxChangeEVC = (e:any) => {
-            const isChecked = e.checked;
-            handleMainTainEVC(isChecked);
-        };
-
-        //============================================================================================
-    const handleMainTainPLC = async (checked:any) => {
-        try {
    
-    
-    
-            const newMaintainGD1 = checked;
-            const newMaintainGD2 = checked;
-    
-            const newMaintainPT1 = checked;
-            const newMaintainDI_ZSO_1 = checked;
-            const newMaintainDI_ZSC_1 = checked;
-            const newmaintainDI_MAP_1 = checked;
-            const newmaintainDI_UPS_CHARGING = checked;
-            const newmaintainDI_UPS_ALARM = checked;
-            const newmaintainDI_SELECT_SW = checked;
-            const newmaintainDI_RESET = checked;
-            const newmaintainDI_UPS_BATTERY = checked;
-            const newmaintainDO_SV1 = checked;
-    
-            const newmaintainEmergency_NO = checked;
-            const newmaintainEmergency_NC = checked;
-            const newmaintainUPS_Mode = checked;
-            const newmaintainDO_HR_01 = checked;
-            const newmaintainDO_BC_01 = checked;
-            const newMaintainDO_SV_01 = checked;
-            const newmaintainPLC_Conn_STT = checked;
-  
-    
-    
-            await httpApi.post(
-                `/plugins/telemetry/DEVICE/${id_ARAKAWA}/SERVER_SCOPE`,
-                { 
-    
-                   GD1_Maintain: newMaintainGD1,
-                   GD2_Maintain: newMaintainGD2,
-                   PT1_Maintain: newMaintainPT1,
-                    DI_ZSO_1_Maintain: newMaintainDI_ZSO_1,
-                   DI_ZSC_1_Maintain: newMaintainDI_ZSC_1,
-                   DI_MAP_1_Maintain: newmaintainDI_MAP_1,
-                   DI_UPS_CHARGING_Maintain: newmaintainDI_UPS_CHARGING,
-                   DI_UPS_ALARM_Maintain: newmaintainDI_UPS_ALARM,
-                   DI_SELECT_SW_Maintain: newmaintainDI_SELECT_SW,
-                   DI_RESET_Maintain: newmaintainDI_RESET,
-                   DI_UPS_BATTERY_Maintain: newmaintainDI_UPS_BATTERY,
-                   DO_SV1_Maintain: newmaintainDO_SV1,
-    
-                   Emergency_NO_Maintain: newmaintainEmergency_NO,
-                   Emergency_NC_Maintain: newmaintainEmergency_NC,
-                   UPS_Mode_Maintain: newmaintainUPS_Mode,
-                   DO_HR_01_Maintain: newmaintainDO_HR_01,
-                   DO_BC_01_Maintain: newmaintainDO_BC_01,
-                   DO_SV_01_Maintain: newMaintainDO_SV_01,
-                   PLC_Conn_STT_Maintain: newmaintainPLC_Conn_STT,
-           
-    
-    
-                 }
-            );
-   
-    
-            
-    
-       
-    
-        } catch (error) {
-            console.error('Error updating maintainEVC_01_Remain_Battery_Service_Life:', error);
-        }
-    };
-    
-    const handleCheckboxChangePLC = (e:any) => {
-        const isChecked = e.checked;
-        handleMainTainPLC(isChecked);
-    };
-    
-
-
-        
     //============================================================================================
         
     const combineCss = {
-
-
-
-  
         CSSEVC_01_Vb_of_Last_Day : {
             color:exceedThresholdEVC_01_Vb_of_Last_Day && !maintainEVC_01_Vb_of_Last_Day
             ? "#ff5656"
@@ -587,14 +304,11 @@ export default function SetUpdata_ARAKAWA() {
        
 
   };
-
   const mainCategoryFC = {
     EVC:"sadasdadad",
  
     PLC:"assdlkadk"
 };
-
-
 
 
 const formatValue = (value:any) => {
@@ -608,12 +322,6 @@ const formatValue = (value:any) => {
 
 
         const dataEVC01 = [
-
-
-
-            
-
-         
 
        {
         mainCategory:mainCategoryFC.EVC,
@@ -652,7 +360,6 @@ const formatValue = (value:any) => {
 
      },
 
-     
       ]
 
       const combinedData = [ ...dataEVC01 ,];
@@ -664,200 +371,6 @@ const formatValue = (value:any) => {
               </div>
           );
       };
-
-       //=========================================================================
-
-
-       const combineCssAttribute = {
-        PCV: {
-            height: 25,
-            fontWeight: 400,
-        },
-    };
-  
-
-  
-    // const configuration = [
-    //     {
-    //         Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.control} (PCV-1601) (BarG)</span>,
-
-    //         Value: (
-    //             <InputText 
-    //                 style={combineCssAttribute.PCV}
-    //                 placeholder="High"
-    //                 step="0.1"
-    //                 type="Name"
-    //                 value={inputPCV_01}
-    //                 onChange={handleInputPCV_01}
-    //                 inputMode="decimal"
-    //             />
-    //         ),
-
-    //         Update: (
-    //             <Button
-    //                 className="buttonUpdateSetData"
-    //                 style={{ marginTop: 5 }}
-    //                 label="Update"
-    //                 onClick={confirmUpData}
-    //             />
-    //         ),
-    //     },
-
-    //     {
-    //         Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.control} (PCV-1602) (BarG)</span>,
-
-    //         Value: (
-    //             <InputText 
-    //                 style={combineCssAttribute.PCV}
-    //                 placeholder="High"
-    //                 step="0.1"
-    //                 type="Name"
-    //                 value={inputPCV_02}
-    //                 onChange={handleInputPCV_02}
-    //                 inputMode="decimal"
-    //             />
-    //         ),
-
-    //         Update: (
-    //             <Button
-    //                 className="buttonUpdateSetData"
-    //                 style={{ marginTop: 5 }}
-    //                 label="Update"
-    //                 onClick={confirmUpData}
-    //             />
-    //         ),
-    //     },
-
-    //     {
-    //         Name: <span style={combineCssAttribute.PCV}>{namePCV_PSV.safety} (PCV-1601) (BarG)</span>,
-
-    //         Value: (
-    //             <InputText 
-    //                 style={combineCssAttribute.PCV}
-    //                 placeholder="High"
-    //                 step="0.1"
-    //                 type="Name"
-    //                 value={inputPSV_01}
-    //                 onChange={handleInputPSV_01}
-    //                 inputMode="decimal"
-    //             />
-    //         ),
-
-    //         Update: (
-    //             <Button
-    //                 className="buttonUpdateSetData"
-    //                 style={{ marginTop: 5 }}
-    //                 label="Update"
-    //                 onClick={confirmUpData}
-    //             />
-    //         ),
-    //     },
-    //     {
-    //         Name: <span style={combineCssAttribute.PCV}>IOT getway phone number </span>,
-
-    //         Value: (
-    //             <InputText 
-    //                 style={combineCssAttribute.PCV}
-    //                 placeholder="High"
-    //                 step="0.1"
-    //                 type="Name"
-    //                 value={inputGetwayPhone}
-    //                 onChange={handleInputChangeGetWayPhone}
-    //                 inputMode="decimal"
-    //             />
-    //         ),
-
-    //         Update: (
-    //             <Button
-    //                 className="buttonUpdateSetData"
-    //                 style={{ marginTop: 5 }}
-    //                 label="Update"
-    //                 onClick={confirmUpData}
-    //             />
-    //         ),
-    //     },
-
-
-    //     {
-    //         Name: (
-    //             <span style={combineCssTime.PCV}>
-    //                 {ConfigurationName.EVC_01_Battery_Installation_Date}
-    //             </span>
-    //         ),
-          
-    //         Value: (
-    //             <Calendar
-    //                 style={combineCssTime.PCV}
-    //                 value={date2}
-    //                 onChange={handleDateChange}
-
-    //                 showTime={false}
-    //                 inputId="timeEVC_02"
-    //                 dateFormat="dd-mm-yy"
-    //             />
-    //         ),
-           
-    //         Update: (
-    //             <Button
-    //                 className="buttonUpdateSetData"
-    //                 style={{ marginTop: 5 }}
-    //                 label="Update"
-    //                 onClick={confirmUpData}
-    //             />
-    //         ),
-    //     },
-    //     {
-    //         Name: (
-    //             <span style={combineCssTime.PCV}>
-    //                 {ConfigurationName.EVC_01_Battery_Expiration_Date}
-    //             </span>
-    //         ),
-          
-         
-    //         Value: (
-    //             <Calendar
-                
-    //                 style={combineCssTime.PCV}
-    //                 value={date}
-    //                 disabled
-
-    //                 showTime={false}
-    //                 inputId="timeEVC_01"
-    //                 dateFormat="dd-mm-yy"
-    //             />
-    //         ),
-    //         Update: (
-    //             <Button
-    //                 className="buttonUpdateSetData"
-
-    //                 disabled
-    //                 style={{ marginTop: 5,cursor:"no-drop" }}
-    //                 label="Update"
-    //             />
-    //         ),
-           
-    //     },
-
-    // ];
-
-
-   
-    const maintainHeader = (
-        <div>
-
-        
-                <Checkbox
-                    style={{ marginRight: 5 }}
-                    onChange={handleCheckboxChange}
-                    checked={handleCheckboxChangeALL}
-                />
-            
-            Maintain
-
-        </div>
-    );
-
-       //=========================================================================
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',  borderRadius:10, }}>
@@ -883,7 +396,7 @@ const formatValue = (value:any) => {
       <Column field="value" header="Value" />
       <Column field="high" header="High" />
       <Column field="low" header="Low" />
-        <Column field="Maintain" header={maintainHeader} />
+        <Column field="Maintain" header="Maintain" />
      <Column field="update" header="Update"     
 style={{ width: '133px' }} 
 />  

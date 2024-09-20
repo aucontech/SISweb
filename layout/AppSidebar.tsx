@@ -16,7 +16,7 @@ const AppSidebar = () => {
 
     return (
         <>
-            <div style={{zIndex:99999}} className="sidebar-header">
+            <div style={{zIndex:99999999}} className="sidebar-header">
                 <Link href="/Graphic" className="app-logo">
                     <img
                         src="/layout/imgGas/logoGas.png"

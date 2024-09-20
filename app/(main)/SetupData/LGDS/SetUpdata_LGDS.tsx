@@ -234,7 +234,6 @@ export default function SetUpdata_LGDS() {
                         FC_Battery_Voltage: setFC_Battery_Voltage,
                         FC_System_Voltage: setFC_System_Voltage,
                         FC_Charger_Voltage: setFC_Charger_Voltage,
-
                         
                         FC_01_Accumulated_Values_Uncorrected_Volume: setFC_01_Accumulated_Values_Uncorrected_Volume,
                         FC_01_Accumulated_Values_Volume: setFC_01_Accumulated_Values_Volume,
@@ -247,7 +246,6 @@ export default function SetUpdata_LGDS() {
                         FC_01_Yesterday_Values_Volume: setFC_01_Yesterday_Values_Volume,
                         FC_01_Yesterday_Values_Uncorrected_Volume: setFC_01_Yesterday_Values_Uncorrected_Volume,
 
-
                         FC_02_Accumulated_Values_Uncorrected_Volume: setFC_02_Accumulated_Values_Uncorrected_Volume,
                         FC_02_Accumulated_Values_Volume: setFC_02_Accumulated_Values_Volume,
                         FC_02_Current_Values_Static_Pressure: setFC_02_Current_Values_Static_Pressure,
@@ -258,7 +256,6 @@ export default function SetUpdata_LGDS() {
                         FC_02_Today_Values_Uncorrected_Volume:setFC_02_Today_Values_Uncorrected_Volume,
                         FC_02_Yesterday_Values_Volume: setFC_02_Yesterday_Values_Volume,
                         FC_02_Yesterday_Values_Uncorrected_Volume: setFC_02_Yesterday_Values_Uncorrected_Volume,
-
 
                         PT_1003: setPT_1003,
                         GD2: setGD2,
@@ -795,7 +792,18 @@ export default function SetUpdata_LGDS() {
             const UPS_Mode_Maintain = res.data.find(
                 (item: any) => item.key === "UPS_Mode_Maintain"
             );
+
+            const FC_Conn_STT_High = res.data.find((item: any) => item.key === "FC_Conn_STT_High");
+            setFC_Conn_STT_High(FC_Conn_STT_High?.value || null);
+            const FC_Conn_STT_Low = res.data.find((item: any) => item.key === "FC_Conn_STT_Low");
+            setFC_Conn_STT_Low(FC_Conn_STT_Low?.value || null);
+            const FC_Conn_STT_Maintain = res.data.find(
+                (item: any) => item.key === "FC_Conn_STT_Maintain"
+            );
+
+
  // =================================================================================================================== 
+        setMaintainFC_Conn_STT(FC_Conn_STT_Maintain?.value || false);
 
 
 
@@ -3625,7 +3633,6 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
     
     
            const [FC_Conn_STT, setFC_Conn_STT] = useState<string | null>(null);
-           const [audioPlayingFC_Conn_STT, setAudioPlayingFC_Conn_STT] = useState(false);
            const [inputValueFC_Conn_STT, setInputValueFC_Conn_STT] = useState<any>();
            const [inputValue2FC_Conn_STT, setInputValue2FC_Conn_STT] = useState<any>();
            const [FC_Conn_STT_High, setFC_Conn_STT_High] = useState<number | null>(null);
@@ -3932,6 +3939,8 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
             setUPS_Mode_High(inputValueUPS_Mode);
             setUPS_Mode_Low(inputValue2UPS_Mode);
 
+
+
             toast.current?.show({
                 severity: "info",
                 detail: "Success ",
@@ -3961,8 +3970,7 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
         setInputPSV_02(PSV_02)
 
 
-        setInputValueFC_Conn_STT(FC_Conn_STT_High); 
-        setInputValue2FC_Conn_STT(FC_Conn_STT_Low); 
+    
    
         setInputValueDO_HR_01(DO_HR_01_High); 
         setInputValue2DO_HR_01(DO_HR_01_Low); 
@@ -4128,6 +4136,10 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
         setInputValueUPS_Mode(UPS_Mode_High); 
         setInputValue2UPS_Mode(UPS_Mode_Low); 
 
+
+        setInputValueFC_Conn_STT(FC_Conn_STT_High); 
+        setInputValue2FC_Conn_STT(FC_Conn_STT_Low); 
+
     }, [
         
         DO_HR_01_High, DO_HR_01_Low 
@@ -4209,7 +4221,8 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
            PCV_01,
            PCV_02,
            PSV_01,
-           PSV_02
+           PSV_02,
+
 
 
         ]);
@@ -5033,12 +5046,7 @@ const DataFC_Lithium_Battery_Status = FC_Lithium_Battery_Status === "0" ? "Yes" 
  ></Checkbox>
 
     },
-
-
-   
-
     {
-        
          mainCategory: mainCategoryFC.FC01 ,
         timeUpdate: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate} >{EVC_STT01Value}</span>,
     name: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate}>{TagName.SVF}</span> ,
@@ -5054,12 +5062,8 @@ const DataFC_Lithium_Battery_Status = FC_Lithium_Battery_Status === "0" ? "Yes" 
     onChange={ChangeMaintainFC_01_Current_Values_Flow_Rate}
     checked={maintainFC_01_Current_Values_Flow_Rate}
 ></Checkbox>
-
    },
-
-
    {
-    
      mainCategory: mainCategoryFC.FC01 ,
     timeUpdate: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate} >{EVC_STT01Value}</span>,
    name: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>{TagName.GVF}</span> ,
