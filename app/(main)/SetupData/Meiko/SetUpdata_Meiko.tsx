@@ -789,7 +789,6 @@ useEffect(() => {
             }
         }, [GD_101_High, GD_101_High_High, GD_101_High_Low, maintainGD_101_High]);
           
-           
           
               const handleInputChangeGD_101_High = (event: any) => {
                   const newValue = event.target.value;

@@ -111,15 +111,14 @@ const ScoreCard = () => {
         <div
           style={{
            
-        
+            zIndex:99 ,
             position: "sticky",
       top: 63, 
-      zIndex: 99999, // 
       background:'white',
       boxShadow: '2px 2x 3px rgba(0, 0, 0, 0.5)', 
           }}
         >
-          <div style={{display:'flex',justifyContent:'space-between', zIndex:9999,  height:51 }}>
+          <div style={{display:'flex',justifyContent:'space-between', height:51 }}>
             <TabView
               activeIndex={activeIndex}
               onTabChange={(e) => setActiveIndex(e.index)}
