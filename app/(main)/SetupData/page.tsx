@@ -343,7 +343,7 @@ export default function GraphicSogec() {
                    {InputSearch()}
                 </div> */}
 
-                <div style={{position:'sticky', top:63, zIndex:9999}}>
+                <div style={{position:'sticky', top:63, zIndex:9}}>
       <MegaMenu model={items} style={{ borderRadius: 5, background:'white' }} />
       </div>
 
