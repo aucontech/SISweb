@@ -244,14 +244,14 @@ export default function GraphicSogec() {
               // { label: 'Test', command: () => handleItemClick(<AlarmOTSUKA />, 'Test') },
 
               { label: 'Sarawak', command: () => NG_Click(<SetUpdata_LGDS/>, 'Sarawak') },
-              { label: 'Pasir Gudang CG', command: () => NG_Click(<SetUpdata_ZOVC/>, 'Pasir Gudang CG') },
-              { label: 'Melaka', command: () => NG_Click(<SetUpdata_KOA/>, 'Melaka') },
-              { label: '	Kota Kinabalu', command: () => NG_Click(<SetUpdata_NITORI/>, '	Kota Kinabalu') },
-              { label: 'Selangor', command: () => NG_Click(<SetUpdata_YOSHINO/>, 'Selangor') },
-              { label: 'Sabah', command: () => NG_Click(<SetUpdata_IGUACU/>, 'Sabah') },
-              { label: 'Penang', command: () => NG_Click(<SetUpdata_ARAKAWA/>, 'Penang') },
-              { label: 'Johor', command: () => NG_Click(<SetUpdata_SPMCV/>, 'Johor') },
-              { label: 'Perlis', command: () => NG_Click(<SetUpdata_VREC/>, 'Perlis') },
+              { label: 'Pengerang', command: () => NG_Click(<SetUpdata_ZOVC/>, 'Pengerang') },
+              { label: 'Kulai CG', command: () => NG_Click(<SetUpdata_KOA/>, 'Kulai CG') },
+              { label: 'Gebeng CG', command: () => NG_Click(<SetUpdata_NITORI/>, 'Gebeng CG') },
+              { label: 'Kluang CG', command: () => NG_Click(<SetUpdata_YOSHINO/>, 'Kluang CG') },
+              { label: 'Teluk Kalong CG', command: () => NG_Click(<SetUpdata_IGUACU/>, 'Teluk Kalong CG') },
+              { label: 'Gambang CG', command: () => NG_Click(<SetUpdata_ARAKAWA/>, 'Gambang CG') },
+              { label: 'Prai CG', command: () => NG_Click(<SetUpdata_SPMCV/>, 'Prai CG') },
+              { label: 'Pasir Gudang CG', command: () => NG_Click(<SetUpdata_VREC/>, 'Pasir Gudang CG') },
 
               // { label: 'Melaka', command: () => NG_Click(<LowHighData />, 'Melaka') },
 

@@ -2686,7 +2686,7 @@ export default function GraphicNITORI() {
             GD_none2: { x: -83.45659585230814, y: 1055.0452836615555 },
             GD_none3: { x: -8.569329151370312, y: 1040.1027102105159 },
             HELP: { x: 750.7851455025582, y: 336.66019515746984 },
-            Header: { x: -1130.982952877127, y: 418.9855378563634 },
+            Header: { x: -1150.982952877127, y: 405.9855378563634 },
 
             Line2_NONE: { x: -884.3336203769039, y: 1046.097424130381 },
             Line2_NONE1: { x: -771.9885863058424, y: 1046.097424130381 },
@@ -4853,7 +4853,7 @@ export default function GraphicNITORI() {
                                     color: "#ffaa00",
                                 }}
                             >
-                                Kota Kinabalu
+                               Gebeng CG
                             </p>
                         </div>
                     </div>
@@ -4866,7 +4866,7 @@ export default function GraphicNITORI() {
             style: {
                 background: background,
                 border: background,
-                width: 10,
+                width: 400,
 
                 height: 10,
             },
@@ -5318,9 +5318,9 @@ export default function GraphicNITORI() {
                 ),
             },
             position: positions.borderWhite,
-
+            zIndex:99999,
             style: {
-                background: background,
+                background: 'none',
                 border: "1px solid white",
                 width: 580,
                 height: 270,

@@ -1,10 +1,10 @@
 
 
-const id_OTSUKA = '28f7e830-a3ce-11ee-9ca1-8f006c3fce43'
+const id_OTSUKA = '28f7e830-a3ce-11ee-9ca1-8f006c3fce43' // Kerteh CG
 
 const id_THACHTHAT = '28e76d70-a3ce-11ee-9ca1-8f006c3fce43'
 
-const id_IGUECU = '28af6d80-a3ce-11ee-9ca1-8f006c3fce43'
+const id_IGUECU = '28af6d80-a3ce-11ee-9ca1-8f006c3fce43' // Teluk Kalong CG
 
 
 const id_SNG_HungYen = "28f1a6a0-a3ce-11ee-9ca1-8f006c3fce43"
@@ -21,28 +21,21 @@ const id_CNG_PRU = "28cedc60-a3ce-11ee-9ca1-8f006c3fce43"
 
 const id_CNG_BinhDuong = "28d37040-a3ce-11ee-9ca1-8f006c3fce43"
 
-const id_LGDS = "28cf2a80-a3ce-11ee-9ca1-8f006c3fce43"
+const id_LGDS = "28cf2a80-a3ce-11ee-9ca1-8f006c3fce43" // 	Sarawak
 
-const id_ZOCV = "28ca96a0-a3ce-11ee-9ca1-8f006c3fce43"
+const id_ZOCV = "28ca96a0-a3ce-11ee-9ca1-8f006c3fce43" // Pengerang
 
-const id_VREC = "28c3dfe0-a3ce-11ee-9ca1-8f006c3fce43"
+const id_VREC = "28c3dfe0-a3ce-11ee-9ca1-8f006c3fce43" // Pasir Gudang CG
 
-const id_KOA = "28c391c1-a3ce-11ee-9ca1-8f006c3fce43"
+const id_KOA = "28c391c1-a3ce-11ee-9ca1-8f006c3fce43" // Kulai CG
 
-const id_YOSHINO = "28c31c90-a3ce-11ee-9ca1-8f006c3fce43"
+const id_YOSHINO = "28c31c90-a3ce-11ee-9ca1-8f006c3fce43" // Kluang CG
 
-const id_SPMCV = "28b009c0-a3ce-11ee-9ca1-8f006c3fce43"
+const id_SPMCV = "28b009c0-a3ce-11ee-9ca1-8f006c3fce43" // Prai CG
 
-const id_NITORI = "28afe2b0-a3ce-11ee-9ca1-8f006c3fce43"
+const id_NITORI = "28afe2b0-a3ce-11ee-9ca1-8f006c3fce43" // Gebeng CG
 
-const id_ARAKAWA = "28af9490-a3ce-11ee-9ca1-8f006c3fce43"
-
-
-
-
-
-
-
+const id_ARAKAWA = "28af9490-a3ce-11ee-9ca1-8f006c3fce43" // Gambang CG
 
 
 

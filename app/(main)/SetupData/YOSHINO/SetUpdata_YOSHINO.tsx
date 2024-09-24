@@ -5851,7 +5851,7 @@ checked={maintainPLC_Conn_STT}
 
     <ConfirmDialog />
 
-<h2>Selangor</h2>
+<h2>Kluang CG</h2>
 
 <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
 <div style={{ width: '100%' }}>

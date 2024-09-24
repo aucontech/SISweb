@@ -4346,7 +4346,7 @@ checked={maintainPLC_Conn_STT}
 
     <ConfirmDialog />
 
-<h2>Johor</h2>
+<h2>Prai CG</h2>
 
 <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
 <div style={{ width: '100%' }}>

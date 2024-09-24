@@ -4591,7 +4591,7 @@ const Configuration = [
 
         <ConfirmDialog />
 
-<h2>Kota Kinabalu</h2>
+<h2>Gebeng CG</h2>
 
 <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
   <div style={{ width: '100%' }}>

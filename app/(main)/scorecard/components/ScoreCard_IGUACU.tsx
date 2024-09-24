@@ -2763,8 +2763,21 @@ if (!isNaN(PLC_Conn_STTValue) && !isNaN(highValue) && !isNaN(lowValue) && !maint
         <div >
             <div className="Container_Scorecard1" >
                    <div className="Container_Scorecard2" >
+                   {EVC_02_Conn_STT  === "1" ? 
+
+<div className="DotGreen">
+
+{DotGreen}
+
+</div>
+: <div className="DotRed">
+
+{DotRed}
+
+</div>
+ }
                         <div className="Container_Name" >
-                        Sabah
+                        Teluk Kalong CG
                         </div>
                     </div>
                     <div
@@ -2801,14 +2814,14 @@ if (!isNaN(PLC_Conn_STTValue) && !isNaN(highValue) && !isNaN(lowValue) && !maint
                             field="evc1902"
                             header={EVC_02_Conn_STT === "1" ? (
 
-                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                {DotGreen} <p style={{marginLeft:5}}>EVC-1502</p>
+                                <div style={{  padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                                 <p style={{marginLeft:5}}>EVC-1502</p>
    
                                </div>
                               
                             ) : (
-                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
-                                {DotRed}  <p style={{marginLeft:5}}>EVC-1502</p>
+                                <div style={{  padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
+                                 <p style={{marginLeft:5}}>EVC-1502</p>
                              </div>
                             )}
                         ></Column>
@@ -2850,14 +2863,14 @@ if (!isNaN(PLC_Conn_STTValue) && !isNaN(highValue) && !isNaN(lowValue) && !maint
                             field="evc1902"
                             header={EVC_02_Conn_STT === "1" ? (
 
-                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                {DotGreen} <p style={{marginLeft:5}}>EVC-1502</p>
+                                <div style={{  padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                                 <p style={{marginLeft:5}}>EVC-1502</p>
    
                                </div>
                               
                             ) : (
-                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
-                                {DotRed}  <p style={{marginLeft:5}}>EVC-1502</p>
+                                <div style={{  padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
+                                 <p style={{marginLeft:5}}>EVC-1502</p>
                              </div>
                             )}
                         ></Column>

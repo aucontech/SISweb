@@ -31,6 +31,8 @@
 .Container_Name{
     font-size: 30px;
     font-weight: 700;
+    margin-right: 5px;
+ 
 }
 .Container_Time_Show{
     display: flex;
@@ -45,4 +47,26 @@
 .Container_Show{
     display: flex;
     align-items: center;
+}
+.DotGreen{
+    display: flex;
+    align-items: center;
+    animation: blink 1s infinite;
+  
+}
+
+.DotRed{
+    display: flex;
+    align-items: center;
+}
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }

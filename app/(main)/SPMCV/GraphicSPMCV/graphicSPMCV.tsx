@@ -4815,7 +4815,7 @@ useEffect(() => {
                                     color: "orange",
                                 }}
                             >
-                                Johor
+                                Prai CG
                             </p>
                         </div>
                     </div>
@@ -4828,7 +4828,7 @@ useEffect(() => {
             style: {
                 background: background,
                 border: background,
-                width: 10,
+                width: 300,
 
                 height: 10,
             },

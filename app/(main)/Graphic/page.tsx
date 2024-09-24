@@ -140,49 +140,45 @@ export default function GraphicSogec() {
                         items: [
                             { label: 'Sarawak', command: () => NG_Click(<GraphicStaion1 />, 'Sarawak') },
                         
+                           
+                            {
+                                label: "Pengerang",
+                                command: () =>
+                                    NG_Click(<GraphicZOCV />, "Pengerang "),
+                            },
+                            {
+                                label: "Kulai CG",
+                                command: () => NG_Click(<GraphicKOA />, "Kulai CG"),
+                            },
+                            {
+                                label: "Gebeng CG",
+                                command: () =>
+                                    NG_Click(<GraphicNITORI />, "Gebeng CG"),
+                            },
+                            {
+                                label: "Kluang CG",
+                                command: () =>
+                                    NG_Click(<GraphicYOSHINO />, "Kluang CG"),
+                            },
+                            {
+                                label: "Teluk Kalong CG",
+                                command: () =>
+                                    NG_Click(<GraphicIGUACU />, "Teluk Kalong CG"),
+                            },
+                            {
+                                label: "Gambang CG",
+                                command: () =>
+                                    NG_Click(<GraphicARAKAWA />, "Gambang CG"),
+                            },
+                            {
+                                label: "Prai CG",
+                                command: () =>
+                                    NG_Click(<GraphicSPMCV />, "Prai CG"),
+                            },
                             {
                                 label: "Pasir Gudang CG",
                                 command: () =>
-                                    NG_Click(<GraphicLGDS />, "Pasir Gudang CG"),
-                            },
-                            {
-                                label: "Melaka",
-                                command: () =>
-                                    NG_Click(<GraphicZOCV />, "Melaka "),
-                            },
-                            {
-                                label: "Pengerang",
-                                command: () => NG_Click(<GraphicKOA />, "Pengerang"),
-                            },
-                            {
-                                label: "Kota Kinabalu",
-                                command: () =>
-                                    NG_Click(<GraphicNITORI />, "	Kota Kinabalu"),
-                            },
-                            {
-                                label: "Selangor",
-                                command: () =>
-                                    NG_Click(<GraphicYOSHINO />, "Selangor"),
-                            },
-                            {
-                                label: "Sabah",
-                                command: () =>
-                                    NG_Click(<GraphicIGUACU />, "Sabah"),
-                            },
-                            {
-                                label: "Penang",
-                                command: () =>
-                                    NG_Click(<GraphicARAKAWA />, "Penang"),
-                            },
-                            {
-                                label: "Johor",
-                                command: () =>
-                                    NG_Click(<GraphicSPMCV />, "Johor"),
-                            },
-                            {
-                                label: "Perlis",
-                                command: () =>
-                                    NG_Click(<GraphicVREC />, "Perlis"),
+                                    NG_Click(<GraphicVREC />, "Pasir Gudang CG"),
                             },
                             // {
                             //     label: "Melaka",

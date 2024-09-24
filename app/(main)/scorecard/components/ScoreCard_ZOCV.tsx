@@ -2043,8 +2043,22 @@ const dataFC = [
         <div >
               <div className="Container_Scorecard1" >
                    <div className="Container_Scorecard2" >
+
+                   {EVC_02_Conn_STT  === "1" ? 
+
+<div className="DotGreen">
+
+{DotGreen}
+
+</div>
+: <div className="DotRed">
+
+{DotRed}
+
+</div>
+ }
                         <div className="Container_Name" >
-                        Pasir Gudang CG
+                        Pengerang
                         </div>
                     </div>
                     <div
@@ -2082,14 +2096,14 @@ const dataFC = [
 
                             field="FC1902"
                             header={EVC_02_Conn_STT === "1" ? (
-                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                {DotGreen} <p style={{marginLeft:5}}>EVC-1102</p>
+                                <div style={{  padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                                 <p style={{marginLeft:5}}>EVC-1102</p>
    
                                </div>
                                 
                             ) : (
-                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
-                                {DotRed}  <p style={{marginLeft:5}}>EVC-1102</p>
+                                <div style={{  padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
+                                  <p style={{marginLeft:5}}>EVC-1102</p>
                              </div>
                             )}
                         ></Column>
@@ -2106,14 +2120,14 @@ const dataFC = [
                             field="FC0"
                             header={FC_01_Conn_STT === "1" ? (
 
-                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                {DotGreen} <p style={{marginLeft:5}}>FC </p>
+                                <div style={{  padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                                 <p style={{marginLeft:5}}>FC </p>
    
                                </div>
                                
                             ) : (
-                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
-                                {DotRed}  <p style={{marginLeft:5}}>FC </p>
+                                <div style={{  padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
+                                  <p style={{marginLeft:5}}>FC </p>
                              </div>
                             )}
                         ></Column>
@@ -2140,14 +2154,14 @@ const dataFC = [
 
                         field="FC1902"
                         header={EVC_02_Conn_STT === "1" ? (
-                            <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                            {DotGreen} <p style={{marginLeft:5}}>EVC-1102</p>
+                            <div style={{  padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                             <p style={{marginLeft:5}}>EVC-1102</p>
 
                            </div>
                             
                         ) : (
-                            <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
-                            {DotRed}  <p style={{marginLeft:5}}>EVC-1102</p>
+                            <div style={{  padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
+                              <p style={{marginLeft:5}}>EVC-1102</p>
                          </div>
                         )}
                     ></Column>

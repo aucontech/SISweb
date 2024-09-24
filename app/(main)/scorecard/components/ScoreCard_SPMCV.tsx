@@ -2034,8 +2034,23 @@ useEffect(() => {
         <div >
                 <div className="Container_Scorecard1" >
                    <div className="Container_Scorecard2" >
+
+
+                   {EVC_01_Conn_STT  === "1" ? 
+
+<div className="DotGreen">
+
+{DotGreen}
+
+</div>
+: <div className="DotRed">
+
+{DotRed}
+
+</div>
+ }
                         <div className="Container_Name" >
-                        Johor
+                        Prai CG
                         </div>
                     </div>
                     <div
@@ -2066,12 +2081,12 @@ useEffect(() => {
                         style={{display:'flex', justifyContent:'flex-end'}}
                         field="evc1901"
                         header={EVC_01_Conn_STT === "1" ? (
-                            <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center',}}>
-                            {DotGreen} <p>EVC-1701</p>
+                            <div style={{  padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center',}}>
+                             <p>EVC-1701</p>
                            </div>
                         ) : (
-                            <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center',}}>
-                               {DotRed} <p>EVC-1701</p>
+                            <div style={{  padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center',}}>
+                                <p>EVC-1701</p>
                             </div>
                         )}
                     ></Column>
@@ -2110,12 +2125,12 @@ useEffect(() => {
                         style={{display:'flex', justifyContent:'flex-end'}}
                         field="evc1901"
                         header={EVC_01_Conn_STT === "1" ? (
-                            <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center',}}>
-                            {DotGreen} <p>EVC-1701</p>
+                            <div style={{  padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center',}}>
+                             <p>EVC-1701</p>
                            </div>
                         ) : (
-                            <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center',}}>
-                               {DotRed} <p>EVC-1701</p>
+                            <div style={{  padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center',}}>
+                                <p>EVC-1701</p>
                             </div>
                         )}
                     ></Column>

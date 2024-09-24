@@ -2764,15 +2764,29 @@ const dataPLC = [
         <div >
               <div className="Container_Scorecard1" >
                    <div className="Container_Scorecard2" >
+
+                {FC_Conn_STT  === "1" ? 
+
+                <div className="DotGreen">
+                {DotGreen}
+
+                </div>
+                : <div className="DotRed">
+                {DotRed}
+
+                </div>
+                 }
+
                         <div className="Container_Name" >
-                        Perlis
+                           Pasir Gudang CG
+                       
                         </div>
                     </div>
                     <div
                     className="Container_Time_Show" >
                         
                         <div className="Container_Time" >
-                           {FC_Conn_STTValue}
+                      {FC_Conn_STTValue}
                         </div>
                         <div className="Container_Show"  onClick={handleShowMore} >
                     {ShowMore ?
@@ -2801,14 +2815,14 @@ const dataPLC = [
 
                             field="FC1902"
                             header={FC_Conn_STT === "1" ? (
-                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                {DotGreen} <p style={{marginLeft:5}}>FC-1802</p>
+                                <div style={{  padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                               <p style={{marginLeft:5}}>FC-1802</p>
    
                                </div>
                                 
                             ) : (
-                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
-                                {DotRed}  <p style={{marginLeft:5}}>FC-1802</p>
+                                <div style={{ padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
+                                <p style={{marginLeft:5}}>FC-1802</p>
                              </div>
                             )}
                         ></Column>
@@ -2852,14 +2866,14 @@ const dataPLC = [
 
                             field="FC1902"
                             header={FC_Conn_STT === "1" ? (
-                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                {DotGreen} <p style={{marginLeft:5}}>FC-1802</p>
+                                <div style={{  padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
+                                <p style={{marginLeft:5}}>FC-1802</p>
    
                                </div>
                                 
                             ) : (
-                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
-                                {DotRed}  <p style={{marginLeft:5}}>FC-1802</p>
+                                <div style={{  padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
+                                <p style={{marginLeft:5}}>FC-1802</p>
                              </div>
                             )}
                         ></Column>
@@ -2867,7 +2881,8 @@ const dataPLC = [
                 </DataTable>
             </div>
 }
-
+<br />
+<br />
         
             </div>
 

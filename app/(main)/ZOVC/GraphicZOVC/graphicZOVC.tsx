@@ -3588,7 +3588,7 @@ export default function GraphicZOCV() {
               GD_none2: { x: -311.4848030174507, y: 1042.5915840896632 },
               GD_none3: { x: -8.569329151370312, y: 1040.1027102105159 },
               HELP: { x: 750.7851455025582, y: 336.66019515746984 },
-              Header: { x: -1070.982952877127, y: 418.9855378563634 },
+              Header: { x: -1140.982952877127, y: 410.9855378563634 },
               Line2_NONE: { x: -884.3336203769039, y: 1046.097424130381 },
               Line2_NONE1: { x: -766.4885863058424, y: 1046.097424130381 },
               LineBall_1_1: { x: -1291.5317402818896, y: 1045.9869361614612 },
@@ -5747,7 +5747,7 @@ export default function GraphicZOCV() {
                                     color: "#ffaa00",
                                 }}
                             >
-                              Melaka
+                              Pengerang
                             </p>
                         </div>
                     </div>
@@ -6209,13 +6209,14 @@ export default function GraphicZOCV() {
                 ),
             },
             position: positions.borderWhite,
-
+zIndex:99999,
             style: {
-                background: background,
+                background: 'none',
                 border: "1px solid white",
                 width: 580,
                 height: 270,
                 borderRadius: 50,
+            
             },
             targetPosition: Position.Bottom,
         },
