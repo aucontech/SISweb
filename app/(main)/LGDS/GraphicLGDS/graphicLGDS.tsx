@@ -4535,7 +4535,7 @@ export default function GraphicLGDS() {
               GD_none2: { x: 3.885562964520915, y: 1052.696199525848 },
               GD_none3: { x: -8.569329151370312, y: 1040.1027102105159 },
               HELP: { x: 750.7851455025582, y: 336.66019515746984 },
-              Header: { x: -1108.068877360768, y: 413.182590191916 },
+              Header: { x: -1258.068877360768, y: 413.182590191916 },
               Line2_NONE: { x: -884.3336203769039, y: 1046.097424130381 },
               Line2_NONE1: { x: -771.9885863058424, y: 1046.097424130381 },
               LineBall_1_1: { x: -1308.1239277818895, y: 1045.9869361614612 },
@@ -5814,7 +5814,7 @@ export default function GraphicLGDS() {
             data: {
                 label: (
                     <div>
-                        <BallValue07 onDataLine7={animated_07} />
+                        {/* <BallValue07 onDataLine7={animated_07} /> */}
                     </div>
                 ),
             },
@@ -5836,7 +5836,7 @@ export default function GraphicLGDS() {
             data: {
                 label: (
                     <div>
-                        <BallValue08 onDataLine8={animated_08} />
+                        {/* <BallValue08 onDataLine8={animated_08} /> */}
                     </div>
                 ),
             },
@@ -5857,7 +5857,7 @@ export default function GraphicLGDS() {
             data: {
                 label: (
                     <div>
-                        <BallValue09 onDataLine09={animated_09} />
+                        {/* <BallValue09 onDataLine09={animated_09} /> */}
                     </div>
                 ),
             },
@@ -5879,7 +5879,7 @@ export default function GraphicLGDS() {
             data: {
                 label: (
                     <div>
-                        <BallValue10 onDataLine10={animated_10} />
+                        {/* <BallValue10 onDataLine10={animated_10} /> */}
                     </div>
                 ),
             },
@@ -6402,7 +6402,7 @@ export default function GraphicLGDS() {
             data: {
                 label: (
                     <div>
-                        <BallValueCenter onDataLineCenter={animated_center} />
+                        {/* <BallValueCenter onDataLineCenter={animated_center} /> */}
                     </div>
                 ),
             },
@@ -7298,7 +7298,7 @@ export default function GraphicLGDS() {
                                     color: "orange",
                                 }}
                             >
-                                LGDS
+                                Pasir Gudang CG
                             </p>
                         </div>
                     </div>
@@ -7311,7 +7311,7 @@ export default function GraphicLGDS() {
             style: {
                 background: background,
                 border: background,
-                width: 10,
+                width: 500,
 
                 height: 10,
             },

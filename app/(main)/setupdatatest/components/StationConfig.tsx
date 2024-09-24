@@ -336,7 +336,9 @@ const StationConfig: React.FC<Props> = ({
         <>
             <h2>{title}</h2>
 
-            <DataTable value={data} loading={loading}>
+            <DataTable    rowGroupMode="subheader"
+       size={'small'}      resizableColumns
+       tableStyle={{ minWidth: '50rem' }}  value={data} loading={loading}>
                 {headers?.map((header) => (
                     <Column
                         key={header.key}

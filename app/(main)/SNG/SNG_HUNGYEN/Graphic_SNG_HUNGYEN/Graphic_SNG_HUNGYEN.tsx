@@ -2430,7 +2430,7 @@ export default function Graphic_SNG_HUNGYEN() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {formatValue(TT_3003)}
+                                        {formatValue(TT_3004)}
                                     </p>
                                 </div>
                                 <p

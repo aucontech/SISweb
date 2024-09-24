@@ -243,17 +243,17 @@ export default function GraphicSogec() {
             items: [
               // { label: 'Test', command: () => handleItemClick(<AlarmOTSUKA />, 'Test') },
 
-              { label: 'LGDS', command: () => NG_Click(<SetUpdata_LGDS/>, 'LGDS') },
-              { label: 'ZOCV', command: () => NG_Click(<SetUpdata_ZOVC/>, 'ZOCV') },
-              { label: 'KOA', command: () => NG_Click(<SetUpdata_KOA/>, 'KOA') },
-              { label: 'NITORI', command: () => NG_Click(<SetUpdata_NITORI/>, 'NITORI') },
-              { label: 'YOSHINO', command: () => NG_Click(<SetUpdata_YOSHINO/>, 'YOSHINO') },
-              { label: 'IGUACU', command: () => NG_Click(<SetUpdata_IGUACU/>, 'IGUACU') },
-              { label: 'ARAKAWA', command: () => NG_Click(<SetUpdata_ARAKAWA/>, 'ARAKAWA') },
-              { label: 'SPMCV', command: () => NG_Click(<SetUpdata_SPMCV/>, 'SPMCV') },
-              { label: 'VREC', command: () => NG_Click(<SetUpdata_VREC/>, 'VREC') },
+              { label: 'Sarawak', command: () => NG_Click(<SetUpdata_LGDS/>, 'Sarawak') },
+              { label: 'Pasir Gudang CG', command: () => NG_Click(<SetUpdata_ZOVC/>, 'Pasir Gudang CG') },
+              { label: 'Melaka', command: () => NG_Click(<SetUpdata_KOA/>, 'Melaka') },
+              { label: '	Kota Kinabalu', command: () => NG_Click(<SetUpdata_NITORI/>, '	Kota Kinabalu') },
+              { label: 'Selangor', command: () => NG_Click(<SetUpdata_YOSHINO/>, 'Selangor') },
+              { label: 'Sabah', command: () => NG_Click(<SetUpdata_IGUACU/>, 'Sabah') },
+              { label: 'Penang', command: () => NG_Click(<SetUpdata_ARAKAWA/>, 'Penang') },
+              { label: 'Johor', command: () => NG_Click(<SetUpdata_SPMCV/>, 'Johor') },
+              { label: 'Perlis', command: () => NG_Click(<SetUpdata_VREC/>, 'Perlis') },
 
-              { label: 'OTSUKA', command: () => NG_Click(<LowHighData />, 'OTSUKA') },
+              // { label: 'Melaka', command: () => NG_Click(<LowHighData />, 'Melaka') },
 
               // { label: 'Test-Setup', command: () => NG_Click(<LowHighDataTestAlarm/>, 'Test-Setup') },
               // { label: 'ARAKAWA', command: () => handleItemClick(null, 'ARAKAWA') }
@@ -263,66 +263,66 @@ export default function GraphicSogec() {
        
       ]
     },
-    {
-      label: SNG,
-      icon: 'pi pi-box',
-      items: [
-        [
-          {
-            label: "Station List",
-            items: [
-              { label:  'SNG ', command: () => SNG_Click(<SetUpdata_SNG_PRU/> , ' SNG ') },
+    // {
+    //   label: SNG,
+    //   icon: 'pi pi-box',
+    //   items: [
+    //     [
+    //       {
+    //         label: "Station List",
+    //         items: [
+    //           { label:  'SNG ', command: () => SNG_Click(<SetUpdata_SNG_PRU/> , ' SNG ') },
 
-              { label:  'SNG BINH DUONG', command: () => SNG_Click(<SetUpdata_SNG_BINHDUONG/> , ' SNG BINH DUONG') },
-              { label: 'SNG HUNG YEN', command: () => SNG_Click(<SetUpdata_HUNGYEN_SNG/>, 'SNG HUNG YEN') },
+    //           { label:  'SNG BINH DUONG', command: () => SNG_Click(<SetUpdata_SNG_BINHDUONG/> , ' SNG BINH DUONG') },
+    //           { label: 'SNG HUNG YEN', command: () => SNG_Click(<SetUpdata_HUNGYEN_SNG/>, 'SNG HUNG YEN') },
 
             
-            ]
-          }
-        ],
+    //         ]
+    //       }
+    //     ],
        
-      ]
-    },
+    //   ]
+    // },
 
-    {
-      label: CNG,
-      icon: 'pi pi-box',
-      items: [
-        [
-          {
-            label: "Station List",
-            items: [
+    // {
+    //   label: CNG,
+    //   icon: 'pi pi-box',
+    //   items: [
+    //     [
+    //       {
+    //         label: "Station List",
+    //         items: [
 
-              { label: 'CNG PHU MY 3', command: () => CNG_CLICK(<SetUpdata_PRU/>, 'CNG PHU MY 3') },
-              { label: 'CNG BINH DUONG', command: () => CNG_CLICK(<SetUpdata_CNG_BINHDUONG/> , 'CNG BINH DUONG') },
-              { label: 'CNG HUNG YEN', command: () => CNG_CLICK( <SetUpdata_HUNGYEN/> , 'CNG HUNG YEN') },
+    //           { label: 'CNG PHU MY 3', command: () => CNG_CLICK(<SetUpdata_PRU/>, 'CNG PHU MY 3') },
+    //           { label: 'CNG BINH DUONG', command: () => CNG_CLICK(<SetUpdata_CNG_BINHDUONG/> , 'CNG BINH DUONG') },
+    //           { label: 'CNG HUNG YEN', command: () => CNG_CLICK( <SetUpdata_HUNGYEN/> , 'CNG HUNG YEN') },
 
             
-            ]
-          }
-        ],
-      ]
-    },
+    //         ]
+    //       }
+    //     ],
+    //   ]
+    // },
 
-    {
-      label: LPG,
-      icon: 'pi pi-box',
-      items: [
-        [
-          {
-            label: "Station List",
-            items: [
+    // {
+    //   label: LPG,
+    //   icon: 'pi pi-box',
+    //   items: [
+    //     [
+    //       {
+    //         label: "Station List",
+    //         items: [
          
-              { label: 'MEIKO', command: () => LPG_Click(<SetUpdata_Meiko/> , 'MEIKO ') },
+    //           { label: 'MEIKO', command: () => LPG_Click(<SetUpdata_Meiko/> , 'MEIKO ') },
 
 
             
-            ]
-          }
-        ],
+    //         ]
+    //       }
+    //     ],
        
-      ]
-    },
+    //   ]
+    // },
   ];
 
 

@@ -25,7 +25,6 @@ import SDV_Otsuka from "../ReactFlow/SDV_Otsuka";
 import PCV_01_Otsuka from "../ReactFlow/PCV01_Otsuka";
 import PCV_02_Otsuka from "../ReactFlow/PCV02_Otsuka";
 import { readToken } from "@/service/localStorage";
-import { id_OTSUKA } from "../../data-table-device/ID-DEVICE/IdDevice";
 import BallValueCenter from "../ReactFlow/BallValueCenter";
 import { OverlayPanel } from "primereact/overlaypanel";
 
@@ -48,6 +47,7 @@ import { Dialog } from "primereact/dialog";
 import { httpApi } from "@/api/http.api";
 import BallVavlePSV from "../ReactFlow/BallVavlePSV";
 import { InputText } from "primereact/inputtext";
+import { id_OTSUKA } from "@/app/(main)/data-table-device/ID-DEVICE/IdDevice";
 interface StateMap {
     [key: string]:
         | React.Dispatch<React.SetStateAction<string | null>>

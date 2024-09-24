@@ -110,7 +110,6 @@ export default function BallValue01() {
                         dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_01
                             .ts;
                     setUpTS(ballTS);
-                    // onDataLine1({ value: ballValue});
 
                 } else if (
                     dataReceived.update &&
@@ -123,7 +122,6 @@ export default function BallValue01() {
                         dataReceived.update[0].latest.ATTRIBUTE.BallValue_01.ts;
 
                     setUpData(updatedData);
-                    // onDataLine1({ value: updatedData});
 
                 }
         fetchData();
@@ -134,53 +132,37 @@ export default function BallValue01() {
 
     const handleButtonClick = async () => {
         try {
-            const newValue = !sensorData;
-            await httpApi.post(
-               PostTelemetry_ZOVC,
-                { BallValue_01: newValue }
-            );
-            setSensorData(newValue);
-            
-        } catch (error) {}
+            const newValue = !sensorData;  // Assuming sensorData is the current BallValue_01 state
+            await httpApi.post(PostTelemetry_ZOVC, { BallValue_01: newValue });
+            setSensorData(newValue);  // Update local state
+
+        } catch (error) {
+            console.error("Error posting data:", error);
+        }
     };
-
-        const fetchData = async () => {
-            try {
-                const res = await httpApi.get(
-                   GetTelemetry_ZOVC
-                );
-                setData(res.data);
-                const ballValue = res.data.find((item: any) => item.key === "BallValue_01")?.value;
-                // onDataLine1(ballValue);
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
-        useEffect(() => {
-            fetchData();
-
-    }, []);
+    
+    const fetchData = async () => {
+        try {
+            const res = await httpApi.get(GetTelemetry_ZOVC);
+            setData(res.data);
+    
+            const ballValue = res.data.find((item: any) => item.key === "BallValue_01")?.value;
+      
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+    
+    useEffect(() => {
+        fetchData();
+    }, []);  // No dependency, fetch only on mount
 
 
     return (
         <div>
-            {data.map((item: any) => (
-                <div key={item.key}>
-                    {item.key === "BallValue_01" && (
-                        <div
-                        style={{
-                            cursor: "pointer",
-                            border: "none",
-                           
-                        }}
-                        onClick={handleButtonClick}
-
-                         >
-                             {item.value ? <div> {BallVavleOn}</div> :  <div>{BallVavleOff}</div> }
-                        </div>
-                    )}
-                </div>
-            ))}
+             <div onClick={handleButtonClick}>
+            {sensorData ? <div>{BallVavleOn}</div> : <div>{BallVavleOff}</div>}
+        </div>
         </div>
     );
 }

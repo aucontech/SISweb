@@ -251,7 +251,7 @@ const AppMenu = () => {
                         {
                             label: "About Us",
                             icon: "pi pi-fw pi-user",
-                            // to: "/devices",
+                         // to: "/devices",
                         },
                         {
                             label: "Help",

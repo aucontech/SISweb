@@ -2676,6 +2676,10 @@ if (!isNaN(PLC_Conn_STTValue) && !isNaN(highValue) && !isNaN(lowValue) && !maint
     
             },
             {
+                name: <span>{tagNamePLC.PT01}</span>,
+                evc1902: <span style={combineCss.CSSPT1}> {formatValue(PT1)}</span>,
+            },
+            {
                 name: <span>{tagNameEVC.Temperature}</span>,
                 evc1901: <span style={combineCss.CSSEVC_01_Temperature}>{formatValue(EVC_01_Temperature)}</span>,
                 evc1902: <span style={combineCss.CSSEVC_02_Temperature}>{formatValue(EVC_02_Temperature)}</span>,
@@ -2687,24 +2691,14 @@ if (!isNaN(PLC_Conn_STTValue) && !isNaN(highValue) && !isNaN(lowValue) && !maint
                 evc1902: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition}>{formatValue(EVC_02_Flow_at_Base_Condition)}</span>,
     
             },
-            {
-                name: <span>{tagNameEVC.GVF}</span>,
-                evc1901: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}>{formatValue(EVC_01_Flow_at_Measurement_Condition)}</span>,
-                evc1902: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition}>{formatValue(EVC_02_Flow_at_Measurement_Condition)}</span>,
-    
-            },
+           
             {
                 name: <span>{tagNameEVC.SVA}</span>,
                 evc1901: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition}>{formatValue(EVC_01_Volume_at_Base_Condition)}</span>,
                 evc1902: <span style={combineCss.CSSEVC_02_Volume_at_Base_Condition}>{formatValue(EVC_02_Volume_at_Base_Condition)}</span>,
     
             },
-            {
-                name: <span>{tagNameEVC.GVA}</span>,
-                evc1901: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}>{formatValue(EVC_01_Volume_at_Measurement_Condition)}</span>,
-                evc1902: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition}>{formatValue(EVC_02_Volume_at_Measurement_Condition)}</span>,
-    
-            },
+           
          
     
             {
@@ -2713,24 +2707,14 @@ if (!isNaN(PLC_Conn_STTValue) && !isNaN(highValue) && !isNaN(lowValue) && !maint
                 evc1902: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day}>{formatValue(EVC_02_Vb_of_Current_Day)}</span>,
     
             },
-            {
-                name: <span>{tagNameEVC.VmToday}</span>,
-                evc1901: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day}>{formatValue(EVC_01_Vm_of_Current_Day)}</span>,
-                evc1902: <span style={combineCss.CSSEVC_02_Vm_of_Current_Day}>{formatValue(EVC_02_Vm_of_Current_Day)}</span>,
-    
-            },
+           
             {
                 name: <span>{tagNameEVC.VbLastDay}</span>,
                 evc1901: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day}>{formatValue(EVC_01_Vb_of_Last_Day)}</span>,
                 evc1902: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day}>{formatValue(EVC_02_Vb_of_Last_Day)}</span>,
     
             },
-            {
-                name: <span>{tagNameEVC.VmLastDay}</span>,
-                evc1901: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day}>{formatValue(EVC_01_Vm_of_Last_Day)}</span>,
-                evc1902: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day}>{formatValue(EVC_02_Vm_of_Last_Day)}</span>,
-    
-            },
+           
       
         ];
 
@@ -2848,7 +2832,7 @@ if (!isNaN(PLC_Conn_STTValue) && !isNaN(highValue) && !isNaN(lowValue) && !maint
              <div className="Container_Scorecard1" >
                    <div className="Container_Scorecard2" >
                         <div className="Container_Name" >
-                            OSTUKA
+                        Melaka
                         </div>
                     </div>
                     <div
@@ -2873,24 +2857,10 @@ if (!isNaN(PLC_Conn_STTValue) && !isNaN(highValue) && !isNaN(lowValue) && !maint
 
                 {ShowMore ?    <div > 
 
-                <DataTable value={dataEVC} size="small" selectionMode="single"> 
+                <DataTable value={dataEVC02} size="small" selectionMode="single"> 
                     <Column field="name" header="EVC Parameter"></Column>
                     
-                    <Column
-                            field="evc1901"
-                            header={EVC_01_Conn_STT === "1" ? (
-
-                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center',  position:'relative', right:30}}>
-                                {DotGreen} <p style={{marginLeft:5}}>EVC-1901</p>
-   
-                               </div>
-                               
-                            ) : (
-                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center' , position:'relative', right:30}}>
-                                   {DotRed}  <p style={{marginLeft:5}}>EVC-1901</p>
-                                </div>
-                            )}
-                        ></Column>
+                    
                     <Column
                         style={{display:'flex', justifyContent:'flex-end'}}
 
@@ -2910,24 +2880,7 @@ if (!isNaN(PLC_Conn_STTValue) && !isNaN(highValue) && !isNaN(lowValue) && !maint
                         ></Column>
 
                 </DataTable>
-                    <DataTable value={dataPLC} size="small" selectionMode="single">
-                        <Column  field="name" header={<span className="id556" > PLC Parameter</span>}></Column>
-                        <Column
-                        style={{display:'flex', justifyContent:'flex-end'}}
-
-                            field="PLC"
-                            header={PLC_Conn_STT === "1" ? (
-                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                {DotGreen} <p style={{marginLeft:5}}>PLC</p>
-                               </div>
-                                
-                            ) : (
-                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
-                                {DotRed}  <p style={{marginLeft:5}}>PLC</p>
-                             </div>
-                            )}
-                        ></Column>
-                    </DataTable>
+                    
                     <DataTable value={STT} size="small" selectionMode="single">
                         <Column  field="name" header={<span className="id556" > Status</span>}></Column>
                         <Column
@@ -2956,21 +2909,7 @@ if (!isNaN(PLC_Conn_STTValue) && !isNaN(highValue) && !isNaN(lowValue) && !maint
             <DataTable value={dataEVC02} size="small" selectionMode="single"> 
                     <Column field="name" header="EVC Parameter"></Column>
                     
-                    <Column
-                            field="evc1901"
-                            header={EVC_01_Conn_STT === "1" ? (
-
-                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center',  position:'relative', right:30}}>
-                                {DotGreen} <p style={{marginLeft:5}}>EVC-1901</p>
-   
-                               </div>
-                               
-                            ) : (
-                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center' , position:'relative', right:30}}>
-                                   {DotRed}  <p style={{marginLeft:5}}>EVC-1901</p>
-                                </div>
-                            )}
-                        ></Column>
+                   
                     <Column
                         style={{display:'flex', justifyContent:'flex-end'}}
 

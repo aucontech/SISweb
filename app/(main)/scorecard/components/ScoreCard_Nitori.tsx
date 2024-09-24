@@ -1921,6 +1921,11 @@ useEffect(() => {
                 name: <span>{tagNameEVC.InputPressure}</span>,
                 evc1901: <span style={combineCss.CSSEVC_01_Pressure}>{formatValue(EVC_01_Pressure)}</span>,
             },
+           
+            {
+                name: <span>{tagNamePLC.PT01}</span>,
+                evc1901: <span style={combineCss.CSSPT1}> {formatValue(PT1)}</span>,
+            },
             {
                 name: <span>{tagNameEVC.Temperature}</span>,
                 evc1901: <span style={combineCss.CSSEVC_01_Temperature}>{formatValue(EVC_01_Temperature)}</span>,
@@ -1929,34 +1934,22 @@ useEffect(() => {
                 name: <span>{tagNameEVC.SVF}</span>,
                 evc1901: <span style={combineCss.CSSEVC_01_Flow_at_Base_Condition}>{formatValue(EVC_01_Flow_at_Base_Condition)}</span>,
             },
-            {
-                name: <span>{tagNameEVC.GVF}</span>,
-                evc1901: <span style={combineCss.CSSEVC_01_Flow_at_Measurement_Condition}>{formatValue(EVC_01_Flow_at_Measurement_Condition)}</span>,
-            },
+           
             {
                 name: <span>{tagNameEVC.SVA}</span>,
                 evc1901: <span style={combineCss.CSSEVC_01_Volume_at_Base_Condition}>{formatValue(EVC_01_Volume_at_Base_Condition)}</span>,
             },
-            {
-                name: <span>{tagNameEVC.GVA}</span>,
-                evc1901: <span style={combineCss.CSSEVC_01_Volume_at_Measurement_Condition}>{formatValue(EVC_01_Volume_at_Measurement_Condition)}</span>,
-            },
+           
             {
                 name: <span>{tagNameEVC.VbToday}</span>,
                 evc1901: <span style={combineCss.CSSEVC_01_Vb_of_Current_Day}>{formatValue(EVC_01_Vb_of_Current_Day)}</span>,
             },
-            {
-                name: <span>{tagNameEVC.VmToday}</span>,
-                evc1901: <span style={combineCss.CSSEVC_01_Vm_of_Current_Day}>{formatValue(EVC_01_Vm_of_Current_Day)}</span>,
-            },
+           
             {
                 name: <span>{tagNameEVC.VbLastDay}</span>,
                 evc1901: <span style={combineCss.CSSEVC_01_Vb_of_Last_Day}>{formatValue(EVC_01_Vb_of_Last_Day)}</span>,
             },
-            {
-                name: <span>{tagNameEVC.VmLastDay}</span>,
-                evc1901: <span style={combineCss.CSSEVC_01_Vm_of_Last_Day}>{formatValue(EVC_01_Vm_of_Last_Day)}</span>,
-            },
+           
         ];
 
         const STT = [
@@ -2063,7 +2056,7 @@ useEffect(() => {
            <div className="Container_Scorecard1" >
                    <div className="Container_Scorecard2" >
                         <div className="Container_Name" >
-                            NITORI
+                        Kota Kinabalu
                         </div>
                     </div>
                     <div
@@ -2089,7 +2082,7 @@ useEffect(() => {
 
                 {ShowMore ?    <div >  
 
-                <DataTable value={dataEVC} size="small" selectionMode="single"> 
+                <DataTable value={dataEVC02} size="small" selectionMode="single"> 
                     <Column field="name" header="EVC Parameter"></Column>
                     <Column
                         style={{display:'flex', justifyContent:'flex-end'}}
@@ -2106,7 +2099,7 @@ useEffect(() => {
                     ></Column>
 
                 </DataTable>
-                    <DataTable value={dataPLC} size="small" selectionMode="single">
+                    {/* <DataTable value={dataPLC} size="small" selectionMode="single">
                         <Column  field="name" header={<span className="id556" > PLC Parameter</span>}></Column>
                         <Column
                         style={{display:'flex', justifyContent:'flex-end'}}
@@ -2125,7 +2118,7 @@ useEffect(() => {
                              </div>
                             )}
                         ></Column>
-                    </DataTable>
+                    </DataTable> */}
 
                     <DataTable value={STT} size="small" selectionMode="single">
                         <Column  field="name" header={<span className="id556" > Status</span>}></Column>

@@ -366,7 +366,9 @@ const SetupDataTable: React.FC<Props> = ({
         <>
             <h2>{title}</h2>
 
-            <DataTable rowClassName={rowClass} value={data} loading={loading}>
+            <DataTable  rowGroupMode="subheader"
+       size={'small'}      resizableColumns
+       tableStyle={{ minWidth: '50rem' }}  rowClassName={rowClass} value={data} loading={loading}>
                 {headers?.map((header) => (
                     <Column
                         key={header.key}

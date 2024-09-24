@@ -25,25 +25,22 @@ import BallValue10 from "../ReactFlow/BallValue10";
 import PCV_01_Otsuka from "../ReactFlow/PCV01_Otsuka";
 import PCV_02_Otsuka from "../ReactFlow/PCV02_Otsuka";
 import { readToken } from "@/service/localStorage";
-import { id_OTSUKA, id_KOA } from "../../data-table-device/ID-DEVICE/IdDevice";
+import { id_LGDS } from "../../data-table-device/ID-DEVICE/IdDevice";
 import BallValueCenter from "../ReactFlow/BallValueCenter";
 import { OverlayPanel } from "primereact/overlaypanel";
 import {
-    ArrowRight,
+    ArrowLeftLGDS,
+    ArrowRightLGDS,
     BallVavle,
     BlackTriangle,
     BlackTriangleRight,
     FIQ,
-    GD,
-    PCV,
+    PCV_LGDS,
     PTV,
-    SVD_NC,
     SVD_NO,
+    tankGas,
     VavleWay,
     WhiteTriangleRight,
-    juntionBottom,
-    juntionTop,
-    tankGas,
 } from "./iconSVG";
 import PSV01_Otsuka from "../ReactFlow/PSV01_Otsuka";
 import { Dialog } from "primereact/dialog";
@@ -56,7 +53,14 @@ import BallValueLast from "../ReactFlow/BallValueLast";
 import { edgePRU } from "../../PRU/GraphicPRU/edgePRU";
 import { edgeZOVC } from "./edgeZOVC";
 import { GetTelemetry_ZOVC, PostTelemetry_ZOVC } from "./Api_ZOVC";
-import BallValueSDV_2 from "../ReactFlow/BallValueSDV_2";
+import BallVavleSDV_TOP from "../ReactFlow/BallVavleSDV_TOP";
+import BallVavleSDV_TOP1 from "../ReactFlow/BallVavleSDV_TOP";
+import BallVavleSDV_BOTTOM1 from "../ReactFlow/BallVavleSDV_BOTTOM";
+import PSV02_Otsuka from "../ReactFlow/PSV02_Otsuka";
+import BallValue11 from "../ReactFlow/BallValue11";
+import BallValue12 from "../ReactFlow/BallValue12";
+import BallValue13 from "../ReactFlow/BallValue13";
+import BallValueSDV1 from "../ReactFlow/BallValueSDV1";
 interface StateMap {
     [key: string]:
         | React.Dispatch<React.SetStateAction<string | null>>
@@ -72,28 +76,28 @@ interface StateMap2 {
         | React.Dispatch<React.SetStateAction<string | null>>
         | undefined;
 }
+
 const background = "#036E9B";
 const backGroundData = "white";
-export const borderBox = "#aad4ff";
+export const borderBox = "white";
 
 export const colorNameValue = "black";
 export const colorData = "green";
 export const backgroundGraphic = background;
 export const colorIMG_none = "#000";
-export const line = "#ffaa00";
+export const line = "orange";
 
-export default function GraphicKOA() {
+export default function GraphicStaion1() {
     const [visible, setVisible] = useState(false);
     const audioRef = useRef<HTMLAudioElement>(null);
     const [editingEnabled, setEditingEnabled] = useState(false);
-    const [active, setActive] = useState();
+    const [active, setActive] = useState<any>();
 
     const [checkConnectData, setCheckConnectData] = useState(false);
     const token = readToken();
     const [timeUpdate, setTimeUpdate] = useState<any | null>(null);
     const [data, setData] = useState<any[]>([]);
 
- 
     const [FC_Conn_STTValue, setFC_Conn_STTValue] = useState<string | null>(
         null
     );
@@ -104,13 +108,16 @@ export default function GraphicKOA() {
     const toast = useRef<Toast>(null);
     const ws = useRef<WebSocket | null>(null);
     const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
+
+    //=====================================================================================
+
     const [resetKey, setResetKey] = useState(0);
     const [isOnline, setIsOnline] = useState(navigator.onLine);
 
     const [cmdId, setCmdId] = useState(1); // Track cmdId for requests
- 
+
     const connectWebSocket = (cmdId: number) => {
-        const token = localStorage.getItem('accessToken');
+        const token = localStorage.getItem("accessToken");
         const url = `${process.env.NEXT_PUBLIC_BASE_URL_WEBSOCKET_TELEMETRY}${token}`;
         ws.current = new WebSocket(url);
         const obj1 = {
@@ -118,7 +125,7 @@ export default function GraphicKOA() {
             tsSubCmds: [
                 {
                     entityType: "DEVICE",
-                    entityId: id_KOA,
+                    entityId: id_LGDS,
                     scope: "LATEST_TELEMETRY",
                     cmdId: cmdId, // Use dynamic cmdId for new requests
                 },
@@ -140,10 +147,9 @@ export default function GraphicKOA() {
             ws.current.onmessage = (evt) => {
                 let dataReceived = JSON.parse(evt.data);
                 if (dataReceived.update !== null) {
-                    setData(prevData => [...prevData, dataReceived]);
+                    setData((prevData) => [...prevData, dataReceived]); // Update data state with new message
+                    const keys = Object.keys(dataReceived.data);
 
-                   
-                    const keys = Object?.keys(dataReceived.data);
                     const stateMap: StateMap = {
                         FC_Lithium_Battery_Status: setFC_Lithium_Battery_Status,
                         FC_Battery_Voltage: setFC_Battery_Voltage,
@@ -192,9 +198,16 @@ export default function GraphicKOA() {
                             setFC_02_Today_Values_Uncorrected_Volume,
                         FC_02_Today_Values_Volume: setFC_02_Today_Values_Volume,
 
+                        PT_1003: setPT_1003,
+
                         GD1: setGD1,
                         GD2: setGD2,
                         PT1: setPT1,
+                        DI_ZSO_1: setDI_ZSO_1,
+                        DI_ZSC_1: setDI_ZSC_1,
+
+                        DI_ZSO_2: setDI_ZSO_2,
+                        DI_ZSC_2: setDI_ZSC_2,
 
                         DI_UPS_BATTERY: setDI_UPS_BATTERY,
                         DI_UPS_CHARGING: setDI_UPS_CHARGING,
@@ -211,28 +224,23 @@ export default function GraphicKOA() {
                         DO_BC_01: setDO_BC_01,
                         DO_SV_01: setDO_SV_01,
                         DO_SV_02: setDO_SV_02,
-                        DI_ZSO_1: setDI_ZSO_1,
-                        DI_ZSC_1: setDI_ZSC_1,
 
-                        DI_ZSO_2: setDI_ZSO_2,
-                        DI_ZSC_2: setDI_ZSC_2,
                         FC_Conn_STT: setFC_Conn_STT,
-                        PLC_Conn_STT: setPLC_Conn_STT,
+                        PLC_Conn_STT: setConn_STT,
                     };
 
                     const valueStateMap: ValueStateMap = {
                         FC_Conn_STT: setFC_Conn_STTValue,
                         PLC_Conn_STT: setConn_STTValue,
                     };
-                 
 
                     keys.forEach((key) => {
-                      
                         if (stateMap[key]) {
                             const value = dataReceived.data[key][0][1];
                             const slicedValue = value;
                             stateMap[key]?.(slicedValue);
                         }
+
                         if (valueStateMap[key]) {
                             const value = dataReceived.data[key][0][0];
 
@@ -254,34 +262,21 @@ export default function GraphicKOA() {
                                 .padStart(2, "0")}`;
                             valueStateMap[key]?.(formattedDate);
                         }
+                        fetchData();
                     });
                 }
-
-                if (dataReceived.data && dataReceived.data.data?.length > 0) {
-                    const ballValue =
-                        dataReceived.data.data[0].latest.ATTRIBUTE.active.value;
-                    setActive(ballValue);
-                } else if (
-                    dataReceived.update &&
-                    dataReceived.update?.length > 0
-                ) {
-                    const updatedData =
-                        dataReceived.update[0].latest.ATTRIBUTE.setActive.value;
-                    setActive(updatedData);
-                }
-                fetchData();
             };
-
         }
     };
     useEffect(() => {
-        fetchData()
-    },[isOnline])
-    
+        fetchData();
+    }, [isOnline]);
+
     useEffect(() => {
         if (isOnline) {
             // Initial connection
             connectWebSocket(cmdId);
+            fetchData();
         }
 
         return () => {
@@ -291,38 +286,37 @@ export default function GraphicKOA() {
             }
         };
     }, [isOnline, cmdId]); // Reconnect if isOnline or cmdId changes
-    
 
     useEffect(() => {
         const handleOnline = () => {
             setIsOnline(true);
-            console.log('Back online. Reconnecting WebSocket with new cmdId.');
-            setCmdId(prevCmdId => prevCmdId + 1); // Increment cmdId on reconnect
-
+            console.log("Back online. Reconnecting WebSocket with new cmdId.");
+            setCmdId((prevCmdId) => prevCmdId + 1); // Increment cmdId on reconnect
+            fetchData();
         };
 
         const handleOffline = () => {
             setIsOnline(false);
-            console.log('Offline detected. Closing WebSocket.');
+            console.log("Offline detected. Closing WebSocket.");
             if (ws.current) {
                 ws.current.close(); // Close WebSocket when offline
             }
         };
 
         // Attach event listeners for online/offline status
-        window.addEventListener('online', handleOnline);
-        window.addEventListener('offline', handleOffline);
+        window.addEventListener("online", handleOnline);
+        window.addEventListener("offline", handleOffline);
 
         return () => {
             // Cleanup event listeners on unmount
-            window.removeEventListener('online', handleOnline);
-            window.removeEventListener('offline', handleOffline);
+            window.removeEventListener("online", handleOnline);
+            window.removeEventListener("offline", handleOffline);
         };
     }, []);
 
-
     //============================GD =============================
 
+    // ===================================================================================================================
 
     const [FC_Lithium_Battery_Status, setFC_Lithium_Battery_Status] = useState<
         string | null
@@ -2303,6 +2297,33 @@ export default function GraphicKOA() {
 
     // ===================================================================================================================
 
+    const [PT_1003, setPT_1003] = useState<string | null>(null);
+
+    const [PT_1003_High, setPT_1003_High] = useState<number | null>(null);
+    const [PT_1003_Low, setPT_1003_Low] = useState<number | null>(null);
+    const [exceedThresholdPT_1003, setExceedThresholdPT_1003] = useState(false); // State để lưu trữ trạng thái vượt ngưỡng
+    const [maintainPT_1003, setMaintainPT_1003] = useState<boolean>(false);
+
+    useEffect(() => {
+        const PT_1003Value = parseFloat(PT_1003 as any);
+        const highValue = PT_1003_High ?? NaN;
+        const lowValue = PT_1003_Low ?? NaN;
+
+        if (
+            !isNaN(PT_1003Value) &&
+            !isNaN(highValue) &&
+            !isNaN(lowValue) &&
+            !maintainPT_1003
+        ) {
+            setExceedThresholdPT_1003(
+                PT_1003Value >= highValue || PT_1003Value <= lowValue
+            );
+        }
+    }, [PT_1003, PT_1003_High, PT_1003_Low, maintainPT_1003]);
+
+    // ===================================================================================================================
+    // ===================================================================================================================
+
     const [FC_Conn_STT, setFC_Conn_STT] = useState<string | null>(null);
 
     const [FC_Conn_STT_High, setFC_Conn_STT_High] = useState<number | null>(
@@ -2332,43 +2353,6 @@ export default function GraphicKOA() {
     }, [FC_Conn_STT, FC_Conn_STT_High, FC_Conn_STT_Low, maintainFC_Conn_STT]);
 
     // ===================================================================================================================
-
-    const [PLC_Conn_STT, setPLC_Conn_STT] = useState<string | null>(null);
-
-    const [PLC_Conn_STT_High, setPLC_Conn_STT_High] = useState<number | null>(
-        null
-    );
-    const [PLC_Conn_STT_Low, setPLC_Conn_STT_Low] = useState<number | null>(
-        null
-    );
-    const [exceedThresholdPLC_Conn_STT, setExceedThresholdPLC_Conn_STT] =
-        useState(false); // State để lưu trữ trạng thái vượt ngưỡng
-    const [maintainPLC_Conn_STT, setMaintainPLC_Conn_STT] =
-        useState<boolean>(false);
-
-    useEffect(() => {
-        const PLC_Conn_STTValue = parseFloat(PLC_Conn_STT as any);
-        const highValue = PLC_Conn_STT_High ?? NaN;
-        const lowValue = PLC_Conn_STT_Low ?? NaN;
-
-        if (
-            !isNaN(PLC_Conn_STTValue) &&
-            !isNaN(highValue) &&
-            !isNaN(lowValue) &&
-            !maintainPLC_Conn_STT
-        ) {
-            setExceedThresholdPLC_Conn_STT(
-                PLC_Conn_STTValue >= highValue || PLC_Conn_STTValue <= lowValue
-            );
-        }
-    }, [
-        PLC_Conn_STT,
-        PLC_Conn_STT_High,
-        PLC_Conn_STT_Low,
-        maintainPLC_Conn_STT,
-    ]);
-
-    //================================ GVA1 FIQ 1901 ======================================================
 
     const [lineDuty1901, setLineduty1901] = useState<boolean>(false);
     const [lineDuty1902, setLineduty1902] = useState<boolean>(true);
@@ -2405,7 +2389,7 @@ export default function GraphicKOA() {
     const fetchData = async () => {
         try {
             const res = await httpApi.get(
-                `/plugins/telemetry/DEVICE/${id_KOA}/values/attributes/SERVER_SCOPE`
+                `/plugins/telemetry/DEVICE/${id_LGDS}/values/attributes/SERVER_SCOPE`
             );
 
             const FC_Lithium_Battery_Status_High = res.data.find(
@@ -2864,6 +2848,18 @@ export default function GraphicKOA() {
                         "FC_02_Yesterday_Values_Uncorrected_Volume_Maintain"
                 );
 
+            const PT_1003_High = res.data.find(
+                (item: any) => item.key === "PT_1003_High"
+            );
+            setPT_1003_High(PT_1003_High?.value || null);
+            const PT_1003_Low = res.data.find(
+                (item: any) => item.key === "PT_1003_Low"
+            );
+            setPT_1003_Low(PT_1003_Low?.value || null);
+            const PT_1003_Maintain = res.data.find(
+                (item: any) => item.key === "PT_1003_Maintain"
+            );
+
             const DO_HR_01_High = res.data.find(
                 (item: any) => item.key === "DO_HR_01_High"
             );
@@ -3116,13 +3112,26 @@ export default function GraphicKOA() {
                 (item: any) => item.key === "DI_SD_1_Maintain"
             );
 
-            const Active = res.data.find(
-                (item: any) => item.key === "active"
+            const FC_Conn_STT_High = res.data.find(
+                (item: any) => item.key === "FC_Conn_STT_High"
             );
+            setFC_Conn_STT_High(FC_Conn_STT_High?.value || null);
+            const FC_Conn_STT_Low = res.data.find(
+                (item: any) => item.key === "FC_Conn_STT_Low"
+            );
+            setFC_Conn_STT_Low(FC_Conn_STT_Low?.value || null);
+            const FC_Conn_STT_Maintain = res.data.find(
+                (item: any) => item.key === "FC_Conn_STT_Maintain"
+            );
+            setMaintainFC_Conn_STT(FC_Conn_STT_Maintain?.value || false);
+
+            const Active = res.data.find((item: any) => item.key === "active");
             setActive(Active?.value || false);
+
             // ===================================================================================================================
 
             setMaintainDI_SD_1(DI_SD_1_Maintain?.value || false);
+            setMaintainPT_1003(PT_1003_Maintain?.value || false);
 
             setMaintainFC_02_Accumulated_Values_Uncorrected_Volume(
                 FC_02_Accumulated_Values_Uncorrected_Volume_Maintain?.value ||
@@ -3267,12 +3276,15 @@ export default function GraphicKOA() {
 
             setMaintainDI_ZSC_1(DI_ZSC_1_Maintain?.value || false);
 
-            const Line_Duty_01 = res.data.find((item: any) => item.key === "Line_Duty_01");
-            
-            setLineduty1901(Line_Duty_01?.value || null);
-            const Line_Duty_02 = res.data.find((item: any) => item.key === "Line_Duty_02");
-            setLineduty1902(Line_Duty_02?.value || null);
+            const Line_Duty_01 = res.data.find(
+                (item: any) => item.key === "Line_Duty_01"
+            );
 
+            setLineduty1901(Line_Duty_01?.value || null);
+            const Line_Duty_02 = res.data.find(
+                (item: any) => item.key === "Line_Duty_02"
+            );
+            setLineduty1902(Line_Duty_02?.value || null);
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -3281,231 +3293,6 @@ export default function GraphicKOA() {
     useEffect(() => {
         fetchData();
     }, []);
-
-    useEffect(() => {
-        if (
-            (exceedThresholdFC_Lithium_Battery_Status &&
-                !maintainFC_Lithium_Battery_Status) ||
-            (exceedThresholdFC_Battery_Voltage &&
-                !maintainFC_Battery_Voltage) ||
-            (exceedThresholdFC_System_Voltage && !maintainFC_System_Voltage) ||
-            (exceedThresholdFC_Charger_Voltage &&
-                !maintainFC_Charger_Voltage) ||
-            (exceedThresholdFC_Conn_STT && !maintainFC_Conn_STT) ||
-            (exceedThresholdFC_01_Accumulated_Values_Uncorrected_Volume &&
-                !maintainFC_01_Accumulated_Values_Uncorrected_Volume) ||
-            (exceedThresholdFC_01_Accumulated_Values_Volume &&
-                !maintainFC_01_Accumulated_Values_Volume) ||
-            (exceedThresholdFC_01_Current_Values_Static_Pressure &&
-                !maintainFC_01_Current_Values_Static_Pressure) ||
-            (exceedThresholdFC_01_Current_Values_Temperature &&
-                !maintainFC_01_Current_Values_Temperature) ||
-            (exceedThresholdFC_01_Current_Values_Flow_Rate &&
-                !maintainFC_01_Current_Values_Flow_Rate) ||
-            (exceedThresholdFC_01_Current_Values_Uncorrected_Flow_Rate &&
-                !maintainFC_01_Current_Values_Uncorrected_Flow_Rate) ||
-            (exceedThresholdFC_01_Today_Values_Volume &&
-                !maintainFC_01_Today_Values_Volume) ||
-            (exceedThresholdFC_01_Today_Values_Uncorrected_Volume &&
-                !maintainFC_01_Today_Values_Uncorrected_Volume) ||
-            (exceedThresholdFC_01_Yesterday_Values_Volume &&
-                !maintainFC_01_Yesterday_Values_Volume) ||
-            (exceedThresholdFC_01_Yesterday_Values_Uncorrected_Volume &&
-                !maintainFC_01_Yesterday_Values_Uncorrected_Volume) ||
-            (exceedThresholdFC_02_Accumulated_Values_Uncorrected_Volume &&
-                !maintainFC_02_Accumulated_Values_Uncorrected_Volume) ||
-            (exceedThresholdFC_02_Accumulated_Values_Volume &&
-                !maintainFC_02_Accumulated_Values_Volume) ||
-            (exceedThresholdFC_02_Current_Values_Static_Pressure &&
-                !maintainFC_02_Current_Values_Static_Pressure) ||
-            (exceedThresholdFC_02_Current_Values_Temperature &&
-                !maintainFC_02_Current_Values_Temperature) ||
-            (exceedThresholdFC_02_Current_Values_Flow_Rate &&
-                !maintainFC_02_Current_Values_Flow_Rate) ||
-            (exceedThresholdFC_02_Current_Values_Uncorrected_Flow_Rate &&
-                !maintainFC_02_Current_Values_Uncorrected_Flow_Rate) ||
-            (exceedThresholdFC_02_Today_Values_Volume &&
-                !maintainFC_02_Today_Values_Volume) ||
-            (exceedThresholdFC_02_Today_Values_Uncorrected_Volume &&
-                !maintainFC_02_Today_Values_Uncorrected_Volume) ||
-            (exceedThresholdFC_02_Yesterday_Values_Volume &&
-                !maintainFC_02_Yesterday_Values_Volume) ||
-            (exceedThresholdFC_02_Yesterday_Values_Uncorrected_Volume &&
-                !maintainFC_02_Yesterday_Values_Uncorrected_Volume) ||
-            (exceedThresholdGD1 && !maintainGD1) ||
-            (exceedThresholdGD2 && !maintainGD2) ||
-            (exceedThresholdPT1 && !maintainPT1) ||
-            (exceedThresholdDI_ZSO_1 && !maintainDI_ZSO_1) ||
-            (exceedThresholdDI_ZSC_1 && !maintainDI_ZSC_1) ||
-            (exceedThresholdDI_ZSO_2 && !maintainDI_ZSO_2) ||
-            (exceedThresholdDI_ZSC_2 && !maintainDI_ZSC_2) ||
-            (exceedThresholdDI_MAP_1 && !maintainDI_MAP_1) ||
-            (exceedThresholdDI_UPS_BATTERY && !maintainDI_UPS_BATTERY) ||
-            (exceedThresholdDI_UPS_CHARGING && !maintainDI_UPS_CHARGING) ||
-            (exceedThresholdDI_UPS_ALARM && !maintainDI_UPS_ALARM) ||
-            (exceedThresholdDI_SD_1 && !maintainDI_SD_1) ||
-            (exceedThresholdDI_SELECT_SW && !maintainDI_SELECT_SW) ||
-            (exceedThresholdDI_RESET && !maintainDI_RESET) ||
-            (exceedThresholdEmergency_NO && !maintainEmergency_NO) ||
-            (exceedThresholdEmergency_NC && !maintainEmergency_NC) ||
-            (exceedThresholdUPS_Mode && !maintainUPS_Mode) ||
-            (exceedThresholdDO_HR_01 && !maintainDO_HR_01) ||
-            (exceedThresholdDO_BC_01 && !maintainDO_BC_01) ||
-            (exceedThresholdDO_SV_01 && !maintainDO_SV_01) ||
-            (exceedThresholdDO_SV_02 && !maintainDO_SV_02) ||
-            (exceedThresholdPLC_Conn_STT && !maintainPLC_Conn_STT)
-        ) {
-            setAlarmMessage("ALARM");
-        } else if (
-            maintainFC_Lithium_Battery_Status ||
-            maintainFC_Battery_Voltage ||
-            maintainFC_System_Voltage ||
-            maintainFC_Charger_Voltage ||
-            maintainFC_Conn_STT ||
-            maintainFC_01_Accumulated_Values_Uncorrected_Volume ||
-            maintainFC_01_Accumulated_Values_Volume ||
-            maintainFC_01_Current_Values_Static_Pressure ||
-            maintainFC_01_Current_Values_Temperature ||
-            maintainFC_01_Current_Values_Flow_Rate ||
-            maintainFC_01_Current_Values_Uncorrected_Flow_Rate ||
-            maintainFC_01_Today_Values_Volume ||
-            maintainFC_01_Today_Values_Uncorrected_Volume ||
-            maintainFC_01_Yesterday_Values_Volume ||
-            maintainFC_01_Yesterday_Values_Uncorrected_Volume ||
-            maintainFC_02_Accumulated_Values_Uncorrected_Volume ||
-            maintainFC_02_Accumulated_Values_Volume ||
-            maintainFC_02_Current_Values_Static_Pressure ||
-            maintainFC_02_Current_Values_Temperature ||
-            maintainFC_02_Current_Values_Flow_Rate ||
-            maintainFC_02_Current_Values_Uncorrected_Flow_Rate ||
-            maintainFC_02_Today_Values_Volume ||
-            maintainFC_02_Today_Values_Uncorrected_Volume ||
-            maintainFC_02_Yesterday_Values_Volume ||
-            maintainFC_02_Yesterday_Values_Uncorrected_Volume ||
-            maintainGD1 ||
-            maintainGD2 ||
-            maintainPT1 ||
-            maintainDI_ZSO_1 ||
-            maintainDI_ZSC_1 ||
-            maintainDI_ZSO_2 ||
-            maintainDI_ZSC_2 ||
-            maintainDI_MAP_1 ||
-            maintainDI_UPS_BATTERY ||
-            maintainDI_UPS_CHARGING ||
-            maintainDI_UPS_ALARM ||
-            maintainDI_SD_1 ||
-            maintainDI_SELECT_SW ||
-            maintainDI_RESET ||
-            maintainEmergency_NO ||
-            maintainEmergency_NC ||
-            maintainUPS_Mode ||
-            maintainDO_HR_01 ||
-            maintainDO_BC_01 ||
-            maintainDO_SV_01 ||
-            maintainDO_SV_02 ||
-            maintainPLC_Conn_STT
-        ) {
-            setAlarmMessage("Maintaining");
-        } else {
-            setAlarmMessage(null);
-        }
-    }, [
-        exceedThresholdFC_Lithium_Battery_Status,
-        maintainFC_Lithium_Battery_Status,
-        exceedThresholdFC_Battery_Voltage,
-        maintainFC_Battery_Voltage,
-        exceedThresholdFC_System_Voltage,
-        maintainFC_System_Voltage,
-        exceedThresholdFC_Charger_Voltage,
-        maintainFC_Charger_Voltage,
-        exceedThresholdFC_Conn_STT,
-        maintainFC_Conn_STT,
-        exceedThresholdFC_01_Accumulated_Values_Uncorrected_Volume,
-        maintainFC_01_Accumulated_Values_Uncorrected_Volume,
-        exceedThresholdFC_01_Accumulated_Values_Volume,
-        maintainFC_01_Accumulated_Values_Volume,
-        exceedThresholdFC_01_Current_Values_Static_Pressure,
-        maintainFC_01_Current_Values_Static_Pressure,
-        exceedThresholdFC_01_Current_Values_Temperature,
-        maintainFC_01_Current_Values_Temperature,
-        exceedThresholdFC_01_Current_Values_Flow_Rate,
-        maintainFC_01_Current_Values_Flow_Rate,
-        exceedThresholdFC_01_Current_Values_Uncorrected_Flow_Rate,
-        maintainFC_01_Current_Values_Uncorrected_Flow_Rate,
-        exceedThresholdFC_01_Today_Values_Volume,
-        maintainFC_01_Today_Values_Volume,
-        exceedThresholdFC_01_Today_Values_Uncorrected_Volume,
-        maintainFC_01_Today_Values_Uncorrected_Volume,
-        exceedThresholdFC_01_Yesterday_Values_Volume,
-        maintainFC_01_Yesterday_Values_Volume,
-        exceedThresholdFC_01_Yesterday_Values_Uncorrected_Volume,
-        maintainFC_01_Yesterday_Values_Uncorrected_Volume,
-        exceedThresholdFC_02_Accumulated_Values_Uncorrected_Volume,
-        maintainFC_02_Accumulated_Values_Uncorrected_Volume,
-        exceedThresholdFC_02_Accumulated_Values_Volume,
-        maintainFC_02_Accumulated_Values_Volume,
-        exceedThresholdFC_02_Current_Values_Static_Pressure,
-        maintainFC_02_Current_Values_Static_Pressure,
-        exceedThresholdFC_02_Current_Values_Temperature,
-        maintainFC_02_Current_Values_Temperature,
-        exceedThresholdFC_02_Current_Values_Flow_Rate,
-        maintainFC_02_Current_Values_Flow_Rate,
-        exceedThresholdFC_02_Current_Values_Uncorrected_Flow_Rate,
-        maintainFC_02_Current_Values_Uncorrected_Flow_Rate,
-        exceedThresholdFC_02_Today_Values_Volume,
-        maintainFC_02_Today_Values_Volume,
-        exceedThresholdFC_02_Today_Values_Uncorrected_Volume,
-        maintainFC_02_Today_Values_Uncorrected_Volume,
-        exceedThresholdFC_02_Yesterday_Values_Volume,
-        maintainFC_02_Yesterday_Values_Volume,
-        exceedThresholdFC_02_Yesterday_Values_Uncorrected_Volume,
-        maintainFC_02_Yesterday_Values_Uncorrected_Volume,
-        exceedThresholdGD1,
-        maintainGD1,
-        exceedThresholdGD2,
-        maintainGD2,
-        exceedThresholdPT1,
-        maintainPT1,
-        exceedThresholdDI_ZSO_1,
-        maintainDI_ZSO_1,
-        exceedThresholdDI_ZSC_1,
-        maintainDI_ZSC_1,
-        exceedThresholdDI_ZSO_2,
-        maintainDI_ZSO_2,
-        exceedThresholdDI_ZSC_2,
-        maintainDI_ZSC_2,
-        exceedThresholdDI_MAP_1,
-        maintainDI_MAP_1,
-        exceedThresholdDI_UPS_BATTERY,
-        maintainDI_UPS_BATTERY,
-        exceedThresholdDI_UPS_CHARGING,
-        maintainDI_UPS_CHARGING,
-        exceedThresholdDI_UPS_ALARM,
-        maintainDI_UPS_ALARM,
-        exceedThresholdDI_SD_1,
-        maintainDI_SD_1,
-        exceedThresholdDI_SELECT_SW,
-        maintainDI_SELECT_SW,
-        exceedThresholdDI_RESET,
-        maintainDI_RESET,
-        exceedThresholdEmergency_NO,
-        maintainEmergency_NO,
-        exceedThresholdEmergency_NC,
-        maintainEmergency_NC,
-        exceedThresholdUPS_Mode,
-        maintainUPS_Mode,
-        exceedThresholdDO_HR_01,
-        maintainDO_HR_01,
-        exceedThresholdDO_BC_01,
-        maintainDO_BC_01,
-        exceedThresholdDO_SV_01,
-        maintainDO_SV_01,
-        exceedThresholdDO_SV_02,
-        maintainDO_SV_02,
-        exceedThresholdPLC_Conn_STT,
-        maintainPLC_Conn_STT,
-    ]);
-
     const ValueGas = {
         SVF: "SVF",
         GVF: "GVF",
@@ -3515,7 +3302,6 @@ export default function GraphicKOA() {
         PCV1901: "PT-1901",
         PT_1902: "PT-1902",
         PT_1903: "PT-1903",
-
         TT: "TT",
     };
 
@@ -3541,22 +3327,28 @@ export default function GraphicKOA() {
         SDV: "Shutdown valve",
     };
 
-    const formatValue = (value:any) => {
+    const formatValue = (value: any) => {
         return value !== null
-            ? new Intl.NumberFormat('en-US', {
+            ? new Intl.NumberFormat("en-US", {
                   maximumFractionDigits: 2,
-                  useGrouping: true, 
+                  useGrouping: true,
               }).format(parseFloat(value))
             : "";
     };
 
-
     useEffect(() => {
         const updatedNodes = nodes.map((node) => {
             if (node.id === "data4") {
-                const roundedFC_01_Current_Values_Flow_Rate =
+                const rounded_FC_01_Current_Values_Flow_Rate =
                     FC_01_Current_Values_Flow_Rate !== null
-                        ? parseFloat(FC_01_Current_Values_Flow_Rate).toFixed(2)
+                        ? new Intl.NumberFormat("en-US", {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                          }).format(
+                              parseFloat(
+                                  FC_01_Current_Values_Flow_Rate.toString()
+                              )
+                          )
                         : "";
                 return {
                     ...node,
@@ -3565,12 +3357,11 @@ export default function GraphicKOA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 30,
-                                    fontWeight: 600,
+                                    fontSize: 23,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
-                                    // padding: 2,
                                     borderRadius: 5,
                                     backgroundColor:
                                         exceedThresholdFC_01_Current_Values_Flow_Rate &&
@@ -3580,6 +3371,7 @@ export default function GraphicKOA() {
                                             ? "orange"
                                             : "transparent",
                                 }}
+
                                 // onClick={() => confirmSVF_1()}
                             >
                                 <div
@@ -3590,21 +3382,33 @@ export default function GraphicKOA() {
                                         top: 5,
                                     }}
                                 >
-                                    <p style={{ color: colorNameValue }}>
+                                    <p
+                                        style={{
+                                            color:
+                                                exceedThresholdFC_01_Current_Values_Flow_Rate &&
+                                                !maintainFC_01_Current_Values_Flow_Rate
+                                                    ? "white"
+                                                    : maintainFC_01_Current_Values_Flow_Rate
+                                                    ? "white"
+                                                    : "orange",
+                                        }}
+                                    >
                                         {ValueGas.SVF} :
                                     </p>
                                     <p
                                         style={{
-                                            color: colorData,
+                                            color: "white",
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {formatValue(FC_01_Current_Values_Flow_Rate)}
+                                        {formatValue(
+                                            FC_01_Current_Values_Flow_Rate
+                                        )}
                                     </p>
                                 </div>
                                 <p
                                     style={{
-                                        color: colorNameValue,
+                                        color: "white",
                                         position: "relative",
                                         top: 5,
                                     }}
@@ -3617,11 +3421,16 @@ export default function GraphicKOA() {
                 };
             }
             if (node.id === "data3") {
-                const roundedFC_01_Current_Values_Uncorrected_Flow_Rate =
+                const rounded_FC_01_Current_Values_Uncorrected_Flow_Rate =
                     FC_01_Current_Values_Uncorrected_Flow_Rate !== null
-                        ? parseFloat(
-                              FC_01_Current_Values_Uncorrected_Flow_Rate
-                          ).toFixed(2)
+                        ? new Intl.NumberFormat("en-US", {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                          }).format(
+                              parseFloat(
+                                  FC_01_Current_Values_Uncorrected_Flow_Rate.toString()
+                              )
+                          )
                         : "";
                 return {
                     ...node,
@@ -3630,8 +3439,8 @@ export default function GraphicKOA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 30,
-                                    fontWeight: 600,
+                                    fontSize: 23,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -3655,23 +3464,33 @@ export default function GraphicKOA() {
                                         top: 5,
                                     }}
                                 >
-                                    <p style={{ color: colorNameValue }}>
+                                    <p
+                                        style={{
+                                            color:
+                                                exceedThresholdFC_01_Current_Values_Uncorrected_Flow_Rate &&
+                                                !maintainFC_01_Current_Values_Uncorrected_Flow_Rate
+                                                    ? "white"
+                                                    : maintainFC_01_Current_Values_Uncorrected_Flow_Rate
+                                                    ? "white"
+                                                    : "orange",
+                                        }}
+                                    >
                                         {ValueGas.GVF} :
                                     </p>
                                     <p
                                         style={{
-                                            color: colorData,
+                                            color: "white",
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {
-                                            formatValue(FC_01_Current_Values_Uncorrected_Flow_Rate)
-                                        }
+                                        {formatValue(
+                                            FC_01_Current_Values_Uncorrected_Flow_Rate
+                                        )}
                                     </p>
                                 </div>
                                 <p
                                     style={{
-                                        color: colorNameValue,
+                                        color: "white",
                                         position: "relative",
                                         top: 5,
                                     }}
@@ -3684,9 +3503,16 @@ export default function GraphicKOA() {
                 };
             }
             if (node.id === "data2") {
-                const roundedFC_01_Accumulated_Values_Volume =
+                const rounded_FC_01_Accumulated_Values_Volume =
                     FC_01_Accumulated_Values_Volume !== null
-                        ? parseFloat(FC_01_Accumulated_Values_Volume).toFixed(2)
+                        ? new Intl.NumberFormat("en-US", {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                          }).format(
+                              parseFloat(
+                                  FC_01_Accumulated_Values_Volume.toString()
+                              )
+                          )
                         : "";
                 return {
                     ...node,
@@ -3695,8 +3521,8 @@ export default function GraphicKOA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 30,
-                                    fontWeight: 600,
+                                    fontSize: 23,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -3720,21 +3546,33 @@ export default function GraphicKOA() {
                                         top: 5,
                                     }}
                                 >
-                                    <p style={{ color: colorNameValue }}>
+                                    <p
+                                        style={{
+                                            color:
+                                                exceedThresholdFC_01_Accumulated_Values_Volume &&
+                                                !maintainFC_01_Accumulated_Values_Volume
+                                                    ? "white"
+                                                    : maintainFC_01_Accumulated_Values_Volume
+                                                    ? "white"
+                                                    : "orange",
+                                        }}
+                                    >
                                         {ValueGas.SVA} :
                                     </p>
                                     <p
                                         style={{
-                                            color: colorData,
+                                            color: "white",
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {formatValue(FC_01_Accumulated_Values_Volume)}
+                                        {formatValue(
+                                            FC_01_Accumulated_Values_Volume
+                                        )}
                                     </p>
                                 </div>
                                 <p
                                     style={{
-                                        color: colorNameValue,
+                                        color: "white",
                                         position: "relative",
                                         top: 5,
                                     }}
@@ -3747,11 +3585,16 @@ export default function GraphicKOA() {
                 };
             }
             if (node.id === "data1") {
-                const roundedFC_01_Accumulated_Values_Uncorrected_Volume =
+                const rounded_FC_01_Accumulated_Values_Uncorrected_Volume =
                     FC_01_Accumulated_Values_Uncorrected_Volume !== null
-                        ? parseFloat(
-                              FC_01_Accumulated_Values_Uncorrected_Volume
-                          ).toFixed(2)
+                        ? new Intl.NumberFormat("en-US", {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                          }).format(
+                              parseFloat(
+                                  FC_01_Accumulated_Values_Uncorrected_Volume.toString()
+                              )
+                          )
                         : "";
 
                 return {
@@ -3761,8 +3604,9 @@ export default function GraphicKOA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 30,
-                                    fontWeight: 600,
+                                    fontSize: 23,
+                                    color: "white",
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -3786,24 +3630,34 @@ export default function GraphicKOA() {
                                         top: 5,
                                     }}
                                 >
-                                    <p style={{ color: colorNameValue }}>
+                                    <p
+                                        style={{
+                                            color:
+                                                exceedThresholdFC_01_Accumulated_Values_Uncorrected_Volume &&
+                                                !maintainFC_01_Accumulated_Values_Uncorrected_Volume
+                                                    ? "white"
+                                                    : maintainFC_01_Accumulated_Values_Uncorrected_Volume
+                                                    ? "white"
+                                                    : "orange",
+                                        }}
+                                    >
                                         {ValueGas.GVA} :
                                     </p>
 
                                     <p
                                         style={{
-                                            color: colorData,
+                                            color: "white",
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {
-                                            formatValue(FC_01_Accumulated_Values_Uncorrected_Volume)
-                                        }
+                                        {formatValue(
+                                            FC_01_Accumulated_Values_Uncorrected_Volume
+                                        )}
                                     </p>
                                 </div>
                                 <p
                                     style={{
-                                        color: colorNameValue,
+                                        color: "white",
                                         position: "relative",
                                         top: 5,
                                     }}
@@ -3816,9 +3670,16 @@ export default function GraphicKOA() {
                 };
             }
             if (node.id === "data5") {
-                const roundedFC_02_Current_Values_Flow_Rate =
+                const rounded_FC_02_Current_Values_Flow_Rate =
                     FC_02_Current_Values_Flow_Rate !== null
-                        ? parseFloat(FC_02_Current_Values_Flow_Rate).toFixed(2)
+                        ? new Intl.NumberFormat("en-US", {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                          }).format(
+                              parseFloat(
+                                  FC_02_Current_Values_Flow_Rate.toString()
+                              )
+                          )
                         : "";
 
                 return {
@@ -3828,8 +3689,8 @@ export default function GraphicKOA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 30,
-                                    fontWeight: 600,
+                                    fontSize: 23,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -3853,21 +3714,33 @@ export default function GraphicKOA() {
                                         top: 5,
                                     }}
                                 >
-                                    <p style={{ color: colorNameValue }}>
+                                    <p
+                                        style={{
+                                            color:
+                                                exceedThresholdFC_02_Current_Values_Flow_Rate &&
+                                                !maintainFC_02_Current_Values_Flow_Rate
+                                                    ? "white"
+                                                    : maintainFC_02_Current_Values_Flow_Rate
+                                                    ? "white"
+                                                    : "orange",
+                                        }}
+                                    >
                                         {ValueGas.SVF} :
                                     </p>
                                     <p
                                         style={{
-                                            color: colorData,
+                                            color: "white",
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {formatValue(FC_02_Current_Values_Flow_Rate)}
+                                        {formatValue(
+                                            FC_02_Current_Values_Flow_Rate
+                                        )}
                                     </p>
                                 </div>
                                 <p
                                     style={{
-                                        color: colorNameValue,
+                                        color: "white",
                                         position: "relative",
                                         top: 5,
                                     }}
@@ -3880,13 +3753,17 @@ export default function GraphicKOA() {
                 };
             }
             if (node.id === "data6") {
-                const roundedFC_02_Current_Values_Uncorrected_Flow_Rate =
+                const rounded_FC_02_Current_Values_Uncorrected_Flow_Rate =
                     FC_02_Current_Values_Uncorrected_Flow_Rate !== null
-                        ? parseFloat(
-                              FC_02_Current_Values_Uncorrected_Flow_Rate
-                          ).toFixed(2)
+                        ? new Intl.NumberFormat("en-US", {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                          }).format(
+                              parseFloat(
+                                  FC_02_Current_Values_Uncorrected_Flow_Rate.toString()
+                              )
+                          )
                         : "";
-
                 return {
                     ...node,
                     data: {
@@ -3894,8 +3771,8 @@ export default function GraphicKOA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 30,
-                                    fontWeight: 600,
+                                    fontSize: 23,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -3919,23 +3796,33 @@ export default function GraphicKOA() {
                                         top: 5,
                                     }}
                                 >
-                                    <p style={{ color: colorNameValue }}>
+                                    <p
+                                        style={{
+                                            color:
+                                                exceedThresholdFC_02_Current_Values_Uncorrected_Flow_Rate &&
+                                                !maintainFC_02_Current_Values_Uncorrected_Flow_Rate
+                                                    ? "white"
+                                                    : maintainFC_02_Current_Values_Uncorrected_Flow_Rate
+                                                    ? "white"
+                                                    : "orange",
+                                        }}
+                                    >
                                         {ValueGas.GVF} :
                                     </p>
                                     <p
                                         style={{
-                                            color: colorData,
+                                            color: "white",
                                             marginLeft: 10,
                                         }}
                                     >
-                                        {
-                                            formatValue(FC_02_Current_Values_Uncorrected_Flow_Rate)
-                                        }
+                                        {formatValue(
+                                            FC_02_Current_Values_Uncorrected_Flow_Rate
+                                        )}
                                     </p>
                                 </div>
                                 <p
                                     style={{
-                                        color: colorNameValue,
+                                        color: "white",
                                         position: "relative",
                                         top: 5,
                                     }}
@@ -3948,9 +3835,16 @@ export default function GraphicKOA() {
                 };
             }
             if (node.id === "data7") {
-                const roundedFC_02_Accumulated_Values_Volume =
+                const rounded_FC_02_Accumulated_Values_Volume =
                     FC_02_Accumulated_Values_Volume !== null
-                        ? parseFloat(FC_02_Accumulated_Values_Volume).toFixed(2)
+                        ? new Intl.NumberFormat("en-US", {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                          }).format(
+                              parseFloat(
+                                  FC_02_Accumulated_Values_Volume.toString()
+                              )
+                          )
                         : "";
 
                 return {
@@ -3960,8 +3854,8 @@ export default function GraphicKOA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 30,
-                                    fontWeight: 600,
+                                    fontSize: 23,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -3985,21 +3879,33 @@ export default function GraphicKOA() {
                                         top: 5,
                                     }}
                                 >
-                                    <p style={{ color: colorNameValue }}>
+                                    <p
+                                        style={{
+                                            color:
+                                                exceedThresholdFC_02_Accumulated_Values_Volume &&
+                                                !maintainFC_02_Accumulated_Values_Volume
+                                                    ? "white"
+                                                    : maintainFC_02_Accumulated_Values_Volume
+                                                    ? "white"
+                                                    : "orange",
+                                        }}
+                                    >
                                         {ValueGas.SVA} :
                                     </p>
                                     <p
                                         style={{
-                                            color: colorData,
+                                            color: "white",
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {formatValue(FC_02_Accumulated_Values_Volume)}
+                                        {formatValue(
+                                            FC_02_Accumulated_Values_Volume
+                                        )}
                                     </p>
                                 </div>
                                 <p
                                     style={{
-                                        color: colorNameValue,
+                                        color: "white",
                                         position: "relative",
                                         top: 5,
                                     }}
@@ -4012,11 +3918,16 @@ export default function GraphicKOA() {
                 };
             }
             if (node.id === "data8") {
-                const roundedFC_02_Accumulated_Values_Uncorrected_Volume =
+                const rounded_FC_02_Accumulated_Values_Uncorrected_Volume =
                     FC_02_Accumulated_Values_Uncorrected_Volume !== null
-                        ? parseFloat(
-                              FC_02_Accumulated_Values_Uncorrected_Volume
-                          ).toFixed(2)
+                        ? new Intl.NumberFormat("en-US", {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                          }).format(
+                              parseFloat(
+                                  FC_02_Accumulated_Values_Uncorrected_Volume.toString()
+                              )
+                          )
                         : "";
 
                 return {
@@ -4026,8 +3937,8 @@ export default function GraphicKOA() {
                         label: (
                             <div
                                 style={{
-                                    fontSize: 30,
-                                    fontWeight: 600,
+                                    fontSize: 23,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -4051,23 +3962,33 @@ export default function GraphicKOA() {
                                         top: 5,
                                     }}
                                 >
-                                    <p style={{ color: colorNameValue }}>
+                                    <p
+                                        style={{
+                                            color:
+                                                exceedThresholdFC_02_Accumulated_Values_Uncorrected_Volume &&
+                                                !maintainFC_02_Accumulated_Values_Uncorrected_Volume
+                                                    ? "white"
+                                                    : maintainFC_02_Accumulated_Values_Uncorrected_Volume
+                                                    ? "white"
+                                                    : "orange",
+                                        }}
+                                    >
                                         {ValueGas.GVA} :
                                     </p>
                                     <p
                                         style={{
-                                            color: colorData,
+                                            color: "white",
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {
-                                            formatValue(FC_02_Accumulated_Values_Uncorrected_Volume)
-                                        }
+                                        {formatValue(
+                                            FC_02_Accumulated_Values_Uncorrected_Volume
+                                        )}
                                     </p>
                                 </div>
                                 <p
                                     style={{
-                                        color: colorNameValue,
+                                        color: "white",
                                         position: "relative",
                                         top: 5,
                                     }}
@@ -4080,9 +4001,6 @@ export default function GraphicKOA() {
                 };
             }
             if (node.id === "Pressure_Trans01") {
-                const roundedPT1 =
-                    PT1 !== null ? parseFloat(PT1).toFixed(2) : "";
-
                 return {
                     ...node,
                     data: {
@@ -4092,15 +4010,16 @@ export default function GraphicKOA() {
                                 style={{
                                     // padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 30,
-                                    fontWeight: 600,
+                                    fontSize: 23,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
                                     backgroundColor:
-                                        exceedThresholdPT1 && !maintainPT1
+                                        exceedThresholdPT_1003 &&
+                                        !maintainPT_1003
                                             ? "#ff5656"
-                                            : maintainPT1
+                                            : maintainPT_1003
                                             ? "orange"
                                             : "transparent",
                                 }}
@@ -4114,21 +4033,31 @@ export default function GraphicKOA() {
                                         top: 5,
                                     }}
                                 >
-                                    <p style={{ color: colorNameValue }}>
-                                        PT-1203 :
+                                    <p
+                                        style={{
+                                            color:
+                                                exceedThresholdPT_1003 &&
+                                                !maintainPT_1003
+                                                    ? "white"
+                                                    : maintainPT_1003
+                                                    ? "white"
+                                                    : "orange",
+                                        }}
+                                    >
+                                        Input Pressure:
                                     </p>
                                     <p
                                         style={{
-                                            color: colorData,
+                                            color: "white",
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {formatValue(PT1)}
+                                        {formatValue(PT_1003)}
                                     </p>
                                 </div>
                                 <p
                                     style={{
-                                        color: colorNameValue,
+                                        color: "white",
                                         position: "relative",
                                         top: 5,
                                     }}
@@ -4157,8 +4086,8 @@ export default function GraphicKOA() {
                                 style={{
                                     // padding: 2,
                                     borderRadius: 5,
-                                    fontSize: 30,
-                                    fontWeight: 600,
+                                    fontSize: 23,
+                                    fontWeight: 500,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     position: "relative",
@@ -4180,24 +4109,34 @@ export default function GraphicKOA() {
                                         top: 5,
                                     }}
                                 >
-                                    <p style={{ color: colorNameValue }}>
-                                        PT-1201:
+                                    <p
+                                        style={{
+                                            color:
+                                                exceedThresholdFC_01_Current_Values_Static_Pressure &&
+                                                !maintainFC_01_Current_Values_Static_Pressure
+                                                    ? "white"
+                                                    : maintainFC_01_Current_Values_Static_Pressure
+                                                    ? "white"
+                                                    : "orange",
+                                        }}
+                                    >
+                                        Output Pressure:
                                     </p>
                                     <p
                                         style={{
-                                            color: colorData,
+                                            color: "white",
                                             marginLeft: 10,
                                         }}
                                     >
                                         {/* {roundedFC_01_Current_Values_Static_Pressure} */}
-                                        {
-                                            formatValue(FC_01_Current_Values_Static_Pressure)
-                                        }
+                                        {formatValue(
+                                            FC_01_Current_Values_Static_Pressure
+                                        )}
                                     </p>
                                 </div>
                                 <p
                                     style={{
-                                        color: colorNameValue,
+                                        color: "white",
                                         position: "relative",
                                         top: 5,
                                     }}
@@ -4251,7 +4190,7 @@ export default function GraphicKOA() {
                                     }}
                                 >
                                     <p style={{ color: colorNameValue }}>
-                                        PT-1202:
+                                        PT-1002:
                                     </p>
                                     <p
                                         style={{
@@ -4259,9 +4198,9 @@ export default function GraphicKOA() {
                                             marginLeft: 15,
                                         }}
                                     >
-                                        {
-                                            formatValue(FC_02_Current_Values_Static_Pressure)
-                                        }
+                                        {formatValue(
+                                            FC_02_Current_Values_Static_Pressure
+                                        )}
                                     </p>
                                 </div>
                                 <p
@@ -4271,7 +4210,7 @@ export default function GraphicKOA() {
                                         top: 5,
                                     }}
                                 >
-                                    BarA
+                                    Bar
                                 </p>
                             </div>
                         ),
@@ -4312,16 +4251,6 @@ export default function GraphicKOA() {
                                         {" "}
                                         FC{" "}
                                     </p>
-
-                                    <p
-                                        style={{
-                                            color: "white",
-                                            display: "flex",
-                                        }}
-                                    >
-                                        {" "}
-                                        PLC{" "}
-                                    </p>
                                 </div>
 
                                 <div style={{ marginLeft: 5 }}>
@@ -4334,16 +4263,6 @@ export default function GraphicKOA() {
                                         {" "}
                                         :
                                     </p>
-                                    <p
-                                        style={{
-                                            color: "white",
-                                            display: "flex",
-                                        }}
-                                    >
-                                        {" "}
-                                        :
-                                    </p>
-
                                     <p
                                         style={{
                                             color: "white",
@@ -4394,26 +4313,6 @@ export default function GraphicKOA() {
                                             </span>
                                         )}
                                     </p>
-
-                                    <p style={{ marginLeft: 5 }}>
-                                        {PLC_Conn_STT === "1" ? (
-                                            <span
-                                                style={{
-                                                    color: "#25d125",
-                                                }}
-                                            >
-                                                Connected
-                                            </span>
-                                        ) : (
-                                            <span
-                                                style={{
-                                                    color: "#ff5656",
-                                                }}
-                                            >
-                                                Disconnect
-                                            </span>
-                                        )}
-                                    </p>
                                 </div>
 
                                 <div>
@@ -4422,13 +4321,8 @@ export default function GraphicKOA() {
                                             color: "white",
                                         }}
                                     >
-                                        {Conn_STTValue}
+                                        {FC_Conn_STTValue}
                                     </p>
-                                    <p
-                                        style={{
-                                            color: "white",
-                                        }}
-                                    ></p>
                                     <p
                                         style={{
                                             color: "white",
@@ -4443,9 +4337,6 @@ export default function GraphicKOA() {
             //  =============================== GD ===================================
 
             if (node.id === "GD1_Value1901") {
-                const roundedGD1 =
-                    GD1 !== null ? parseFloat(GD1).toFixed(2) : "";
-
                 return {
                     ...node,
                     data: {
@@ -4470,16 +4361,13 @@ export default function GraphicKOA() {
                                 }}
                                 // onClick={() => confirmGD_1901()}
                             >
-                                <p>{formatValue(GD1)} %LEL</p>
+                                <p>{GD1} %LEL</p>
                             </div>
                         ),
                     },
                 };
             }
             if (node.id === "GD2_Value1902") {
-                const roundedGD2 =
-                    GD2 !== null ? parseFloat(GD2).toFixed(2) : "";
-
                 return {
                     ...node,
                     data: {
@@ -4506,7 +4394,7 @@ export default function GraphicKOA() {
                                 }}
                                 // onClick={() => confirmGD_1902()}
                             >
-                                <p>{formatValue(GD2)} %LEL</p>
+                                <p>{GD2} %LEL</p>
                             </div>
                         ),
                     },
@@ -4520,13 +4408,7 @@ export default function GraphicKOA() {
                         ...node.data,
                         label: (
                             <div>
-                                <div>
-                                    {DI_ZSO_1 === "1"
-                                        ? SVD_NO
-                                        : DI_ZSO_1 === "0"
-                                        ? SVD_NC
-                                        : null}
-                                </div>
+                                <div>{SVD_NO}</div>
                             </div>
                         ),
                     },
@@ -4540,12 +4422,27 @@ export default function GraphicKOA() {
                         ...node.data,
                         label: (
                             <div>
+                                <div>{SVD_NO}</div>
+                            </div>
+                        ),
+                    },
+                };
+            }
+
+            if (node.id === "SDV_IMG3") {
+                return {
+                    ...node,
+                    data: {
+                        ...node.data,
+                        label: (
+                            <div>
                                 <div>
-                                    {DI_ZSO_2 === "1"
+                                    {/* {NO === "1"
                                         ? SVD_NO
-                                        : DI_ZSO_2 === "0"
+                                        : NO === "0"
                                         ? SVD_NC
-                                        : null}
+                                        : null} */}
+                                    {SVD_NO}
                                 </div>
                             </div>
                         ),
@@ -4569,7 +4466,7 @@ export default function GraphicKOA() {
                                 }}
                                 onClick={confirmLineDuty}
                             >
-                                FC-1201
+                                FC-1001
                                 {lineDuty1901 && (
                                     <span style={{ marginLeft: 30 }}>
                                         <i
@@ -4603,7 +4500,7 @@ export default function GraphicKOA() {
                                 }}
                                 onClick={confirmLineDuty}
                             >
-                                FC-1202
+                                FC-1002
                                 {lineDuty1902 && (
                                     <span style={{ marginLeft: 30 }}>
                                         <i
@@ -4672,173 +4569,404 @@ export default function GraphicKOA() {
                     },
                 };
             }
+            if (node.id === "timeUpdate3") {
+                return {
+                    ...node,
+                    data: {
+                        ...node.data,
+                        label: (
+                            <div
+                                style={{
+                                    fontSize: 25,
+                                    fontWeight: 500,
+
+                                    display: "flex",
+                                }}
+                            >
+                                <div>
+                                    <p
+                                        style={{
+                                            color: "white",
+                                            display: "flex",
+                                        }}
+                                    >
+                                        {" "}
+                                        Gateway{" "}
+                                    </p>
+                                    <p
+                                        style={{
+                                            color: "white",
+                                            display: "flex",
+                                        }}
+                                    >
+                                        {" "}
+                                        FC{" "}
+                                    </p>
+                                </div>
+
+                                <div style={{ marginLeft: 5 }}>
+                                    <p
+                                        style={{
+                                            color: "white",
+                                            display: "flex",
+                                        }}
+                                    >
+                                        {" "}
+                                        :
+                                    </p>
+                                    <p
+                                        style={{
+                                            color: "white",
+                                            display: "flex",
+                                        }}
+                                    >
+                                        {" "}
+                                        :
+                                    </p>
+                                </div>
+
+                                <div style={{}}>
+                                    <p style={{ marginLeft: 5 }}>
+                                        <p style={{ marginLeft: 5 }}>
+                                            {active === true ? (
+                                                <span
+                                                    style={{
+                                                        color: "#25d125",
+                                                    }}
+                                                >
+                                                    Online
+                                                </span>
+                                            ) : (
+                                                <span
+                                                    style={{
+                                                        color: "#ff5656",
+                                                    }}
+                                                >
+                                                    Offline
+                                                </span>
+                                            )}
+                                        </p>
+                                        {FC_Conn_STT === "1" ? (
+                                            <span
+                                                style={{
+                                                    color: "#25d125",
+                                                }}
+                                            >
+                                                Connected
+                                            </span>
+                                        ) : (
+                                            <span
+                                                style={{
+                                                    color: "#ff5656",
+                                                }}
+                                            >
+                                                Disconnect
+                                            </span>
+                                        )}
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <p
+                                        style={{
+                                            color: "white",
+                                        }}
+                                    >
+                                        {FC_Conn_STTValue}
+                                    </p>
+                                    <p
+                                        style={{
+                                            color: "white",
+                                        }}
+                                    ></p>
+                                </div>
+                            </div>
+                        ),
+                    },
+                };
+            }
+
             return node;
         });
         setNodes(updatedNodes);
     }, [data]);
 
-    // const storedPositionString = localStorage.getItem("positionsKOA");
+    // const storedPositionString = localStorage.getItem("positionsStation1");
 
     // const initialPositions = storedPositionString
     //     ? JSON.parse(storedPositionString)
     //     : {
     const initialPositions = {
-        AlarmCenter: { x: 482.05200728443185, y: 413.3377226840123 },
-        ArrowRight: { x: 600.6812903546922, y: 1023.2137288625802 },
-        ArrowRight1: { x: -1313.8656579165704, y: 1030.965695747948 },
-        BallValue01: { x: -1099.8623120428465, y: 1132.8426285378578 },
-        BallValue02: { x: -936.0488084444128, y: 1133.9611112928555 },
-        BallValue03: { x: -196.79621954129698, y: 899.1124566834239 },
-        BallValue04: { x: -195.60396011679137, y: 1130.0961562807925 },
-        BallValue05: { x: 69.02660980686983, y: 900.275444950572 },
-        BallValue06: { x: 68.14677001999206, y: 1130.2445342820436 },
-        BallValue07: { x: -760.558494130737, y: 813.9595916722001 },
-        BallValue08: { x: -318.78277994435996, y: 813.2368352599929 },
-        BallValue09: { x: -761.5161533656683, y: 1218.0953144552127 },
-        BallValue10: { x: -319.2587189121365, y: 1218.2687283598136 },
-        BallValueCenter: { x: -490.3799459557838, y: 1016.4944766882877 },
-        BallValueCenter_Check: { x: 90.96636981528951, y: 1084.2937921267353 },
-        BallValueCenter_None: { x: -474.0480962199408, y: 1047.4658048132944 },
-        BallValueCenter_None2: {
-            x: -458.43233108676895,
-            y: 1047.9161594286932,
-        },
-        BallValueFirst: { x: 540.6382414025647, y: 1009.8554479041943 },
-        BallValueLast: { x: -1237.434881462209, y: 1014.8398498863096 },
-        BallValuePSV: { x: 365.7214870733153, y: 969.1157106130481 },
-        BallValuePSVNone: { x: 384.29818356393537, y: 983.3599694543407 },
-        BallValueSDV_2: { x: 460.0534879934596, y: 1126.0467878081538 },
-        ConnectData: { x: -1224.1375965271236, y: 779.7488024784055 },
-        FIQ_1901: { x: -650.6050171712068, y: 419.4180175567138 },
-        FIQ_1902: { x: -650.7978554063068, y: 1302.7206372374262 },
-        FIQ_none: { x: -489.9470769137962, y: 797.3702269986474 },
-        FIQ_none2: { x: -490.92064731860467, y: 1201.8983996314123 },
-        FIQ_none11: { x: -461.4522399597448, y: 842.2526102310347 },
-        FIQ_none22: { x: -461.411272356637, y: 1246.8432149457044 },
-        Flow1: { x: -853.4576431348205, y: 1498.5512757003828 },
-        Flow2: { x: -444.10018252327654, y: 1498.2070645557653 },
-        GD1: { x: -721.106774380396, y: 1036.124815356864 },
-        GD1_Name1901: { x: -750.5717919879045, y: 963.6033250363372 },
-        GD1_Value1901: { x: -750.6929582767964, y: 998.3450746708818 },
-        GD2: { x: -108.63790203727399, y: 1034.2608683363853 },
-        GD2_Name1902: { x: -138.3576747080346, y: 962.2555967945655 },
-        GD2_Value1902: { x: -138.105199084697, y: 996.9067838824453 },
-        GD3: { x: -33.45865823821708, y: 1023.4968146950976 },
-        GD3_Name1903: { x: -38.935748158151824, y: 965.0434170104967 },
-        GD3_Value1903: { x: -38.71667918527706, y: 990.28449275314 },
-        GD_none1: { x: -695.6714460801703, y: 1055.524751466512 },
-        GD_none2: { x: -83.45659585230814, y: 1055.0452836615555 },
-        GD_none3: { x: -8.569329151370312, y: 1040.1027102105159 },
-        HELP: { x: 750.7851455025582, y: 336.66019515746984 },
-        Header: { x: -1150.982952877127, y: 418.9855378563634 },
-        Line2_NONE: { x: -884.3336203769039, y: 1046.097424130381 },
-        Line2_NONE1: { x: -771.9885863058424, y: 1046.097424130381 },
-        LineBall_1_1: { x: -1307.8650736152229, y: 1045.9167371770163 },
-        PCV01: { x: -71.72419522919697, y: 872.1992339822971 },
-        PCV02: { x: -70.59914284418218, y: 1102.7742211636619 },
-        PCV_NUM01: { x: -150.01994102955004, y: 822.7337186204609 },
-        PCV_NUM02: { x: -152.59143023214534, y: 1177.587987672237 },
-        PCV_ballVavle_Small1: { x: -9.97812688216436, y: 890.3528829879407 },
-        PCV_ballVavle_Small1_none1: {
-            x: -85.98048131286686,
-            y: 906.7535606409883,
-        },
-        PCV_ballVavle_Small1_none2: {
-            x: -87.01319099046559,
-            y: 1140.2927546567473,
-        },
-        PCV_ballVavle_Small2: { x: -10.924423457684213, y: 1121.8809236143888 },
-        PCV_ballVavle_Small2_none1: {
-            x: -3.980775175783833,
-            y: 937.8135634050248,
-        },
-        PCV_ballVavle_Small2_none2: {
-            x: -4.242106929766209,
-            y: 1168.0979210360842,
-        },
-        PCV_none1: { x: -81.53859921276154, y: 931.6359691613542 },
-        PCV_none2: { x: -82.81357330202869, y: 1160.4579021505795 },
-        PSV01: { x: 375.16283692916215, y: 850.6784784974753 },
-        PSV_01: { x: 363.01399102294744, y: 918.1847523730952 },
-        PSV_02: { x: 343.50657410430927, y: 898.8234351782597 },
-        PSV_03: { x: 336.37235462546346, y: 853.2472414915732 },
-        PSV_None01: { x: 443.9871838308024, y: 1041.2984512500652 },
-        PSV_None02: { x: 384.4148444470081, y: 944.3475775498915 },
-        PSV_None03: { x: 362.95828329018167, y: 922.9843066623179 },
-        PSV_None04: { x: 359.78841525116593, y: 873.6633118651833 },
-        PT1: { x: 212.46666801628896, y: 967.0006757895978 },
-        PT2: { x: -714.758294622871, y: 1169.7084571677146 },
-        PT3: { x: -724.0493263648187, y: 765.418717530157 },
-        PT_col1: { x: 244.93092240769465, y: 1029.6619231307786 },
-        PT_col2: { x: -691.4134359761592, y: 827.2156614482261 },
-        PT_col3: { x: -682.6744823539359, y: 1232.1938517905614 },
-        PT_none1: { x: 244.47093596247453, y: 1035.3795085307177 },
-        PT_none2: { x: -691.2272311787543, y: 799.8737796553648 },
-        PT_none3: { x: -681.713304101358, y: 1200.4279572443495 },
-        PVC_none1: { x: -559.5285900583461, y: 935.5671930782875 },
-        PVC_none2: { x: -554.5116204107262, y: 1246.839418457314 },
-        Pressure_Trans01: { x: 88.44115443547344, y: 744.1939817620072 },
-        Pressure_Trans02: { x: -1062.2957790075757, y: 715.1286867309525 },
-        Pressure_Trans03: { x: -1063.1765921652548, y: 1304.9210038322592 },
-        SDV: { x: -1130.2804525595525, y: 949.2231976259577 },
-        SDV2: { x: 428.80808378008487, y: 947.7631672170489 },
-        SDV_Ball: { x: -1082.1826908317034, y: 1163.7430466784738 },
-        SDV_Ball2: { x: 476.86464803916624, y: 1155.8236963022298 },
-        SDV_IMG: { x: -1106.4525318521069, y: 994.2834321094119 },
-        SDV_IMG2: { x: 452.64818322228166, y: 990.890204545138 },
-        SDV_Name_none: { x: -1249.6461839977737, y: 902.8410000476873 },
-        SDV_Name_none2: { x: -535.6461839977737, y: 897.8410000476873 },
-        SDV_None: { x: -1079.6286470234306, y: 1045.6886789070904 },
-        SDV_None2: { x: 479.4466067147644, y: 1040.4900272412854 },
-        T_juntion_11: { x: -415.1375899376694, y: 826.41338351339 },
-        T_juntion_14: { x: -636.9217801711462, y: 1199.4187412355468 },
-        Tank: { x: -953.9997669617899, y: 978.4848472083565 },
-        Tank_Ball: { x: -918.0480270305792, y: 1165.3460365617266 },
-        Tank_None: { x: -926.4205750582742, y: 1046.525670027134 },
-        Temperature_Trans01: { x: -607.828356494313, y: 562.8487535527242 },
-        Temperature_Trans02: { x: -796.1166124474211, y: 1445.5258186779024 },
-        VavleWay: { x: -548.7343955645046, y: 1023.9896019770438 },
-        animation_line7: { x: -726.8677999585877, y: 845.0411827415849 },
-        animation_line8: { x: -302.1278181476729, y: 845.0900138040361 },
-        animation_line9: { x: -735.8615775891575, y: 1250.0032163426715 },
-        animation_line10: { x: -302.52565055103537, y: 1250.145137738511 },
-        animation_line11: { x: -379.70039074752606, y: 845.4885740100881 },
-        animation_line12: { x: -456.7744720087678, y: 1047.6913485484115 },
-        animation_line13: { x: -471.36187766507726, y: 1047.0994790430639 },
-        animation_line14: { x: -601.6773380252566, y: 1249.8269450159223 },
-        animation_line15: { x: -300.41401361805697, y: 1249.8955661985747 },
-        borderWhite: { x: -1277.3840968192662, y: 415.6555633656558 },
-        data1: { x: -651.6400825086595, y: 713.9244953651255 },
-        data2: { x: -651.9488814472836, y: 632.5798654521193 },
-        data3: { x: -651.6999350711712, y: 551.1437463452924 },
-        data4: { x: -651.1845372665591, y: 470.1543746383694 },
-        data5: { x: -651.0957995367963, y: 1353.5548802685278 },
-        data6: { x: -651.0202138003872, y: 1434.493187346574 },
-        data7: { x: -650.5805679457492, y: 1514.910450348262 },
-        data8: { x: -650.0546506070804, y: 1595.5292310859375 },
-        line1: { x: -1219.4244277428284, y: 1045.9811290774153 },
-        line2: { x: -759.1307313177314, y: 1046.097424130381 },
-        line3: { x: -743.0134159304, y: 844.6163804041859 },
-        line4: { x: -743.9949690251686, y: 1249.172245093845 },
-        line5: { x: -300.65784806763253, y: 844.3342440262651 },
-        line6: { x: -300.98065704991916, y: 1249.1529639630187 },
-        line7: { x: -241.6382268189932, y: 1041.7359796478943 },
-        line8: { x: -178.3476951217882, y: 930.3833450683701 },
-        line9: { x: -178.37038145875272, y: 1161.2417569105805 },
-        line10: { x: 86.69745659087829, y: 930.5099856332267 },
-        line11: { x: 86.19431979613125, y: 1161.0153295862324 },
-        line12: { x: 116.83816603164496, y: 1040.345253330986 },
-        line13: { x: 557.9496069421656, y: 1041.1289059139096 },
-        lineBall_13_1: { x: 615.3267333790442, y: 1041.1289059139096 },
-        overlay_SmallVavle1: { x: -593.2918361488164, y: 1011.397327575481 },
-        overlay_SmallVavle2: { x: -1263.7593947324417, y: 1290.7025144885476 },
-        overlay_line7: { x: -234.00651420480602, y: 1043.3202658573925 },
-        overlay_line13: { x: 150.3917593807463, y: 915.3092652673095 },
-        timeUpdate3: { x: -1256.5918369525343, y: 500.00871223251704 },
+        ArrowLeft1: { x: 70.80683998601398, y: 1649.360404545284 },
+        ArrowLeft2: { x: 300.24889562316326, y: 1648.463264323256 },
+        ArrowLeft3: { x: -147.03279355441217, y: 1648.7729531105015 },
+        ArrowLeft4: { x: -348.8727941455311, y: 1648.4429695834062 },
+        ArrowLeft5: { x: -327.22357349571735, y: 983.8228432857818 },
+        ArrowLeft6: { x: -554.2449125135798, y: 1650.1074892133163 },
+        ArrowRight1: { x: -1171.3503527970543, y: 1010.838328435673 },
+        ArrowRight2: { x: -192.26630204961194, y: 959.7926698789865 },
+        ArrowRight3: { x: 63.7991308964215, y: 958.1300358305643 },
+        ArrowRight4: { x: -62.05505560659205, y: 1281.9447842181582 },
+        ArrowRight5: { x: -326.9324788630221, y: 1119.1830445243488 },
+        ArrowRight6: { x: -1170.6162034701915, y: 1281.3612068930154 },
+        ArrowRight7: { x: -936.2881839270202, y: 1011.0045689113003 },
+        ArrowRight8: { x: 815.0869792921062, y: 1115.1331389427157 },
+        ArrowRight9: { x: 626.0122546328847, y: 1114.7639455103138 },
+        ArrowRight10: { x: 310.106765359037, y: 955.5109846728951 },
+        ArrowRight11: { x: -316.6395037280155, y: 1281.1651182233984 },
+        ArrowRight12: { x: -543.9461794461627, y: 1011.2130354719432 },
+        Ball_1: { x: -1002.1540152357474, y: 1284.8967593091372 },
+        Ball_2: { x: -1001.7037249478651, y: 1015.5694424871908 },
+        Ball_3: { x: -796.1753510751475, y: 1014.5293663885575 },
+        Ball_4: { x: -594.6880627949854, y: 1015.0182627834936 },
+        Ball_5: { x: -252.34554026736518, y: 962.0520002223236 },
+        Ball_6: { x: 133.61099782167952, y: 1285.5012237071835 },
+        Ball_7: { x: -408.0778877937685, y: 1285.6030390225217 },
+        Ball_8: { x: 129.52740182364823, y: 962.730379731122 },
+        Ball_9: { x: -120.8106510011111, y: 962.126659791528 },
+        Ball_10: { x: -120.45803216451232, y: 1286.3043039274771 },
+        Ball_21: { x: 257.36756937899474, y: 959.697950483516 },
+        Ball_22: { x: 257.4712320255406, y: 1285.8217329491467 },
+        Ball_23: { x: 556.0306362594578, y: 1286.0802657671068 },
+        Ball_24: { x: 533.7286465566424, y: 959.9371373901681 },
+        Ball_Arrow: { x: -26.178705894634888, y: 1130.4368982573587 },
+        Ball_Center: { x: 32.99732812678664, y: 1121.9231851115933 },
+        Ball_Last: { x: 1083.4734961601034, y: 1118.7702967541966 },
+        Ball_PSV: { x: -277.5270503941649, y: 1060.5010724188335 },
+        Ball_SDV_1: { x: -691.117998264808, y: 1111.4501847295983 },
+        Ball_SDV_2: { x: 927.1462182321169, y: 1220.046035850855 },
+        Ball_Small_1: { x: 491.7057517753409, y: 1272.5244751518114 },
+        Ball_Small_2: { x: 486.54063790117664, y: 946.8307751670075 },
+        FIQ_1_IMG: { x: 7.426305658706411, y: 1267.878596444663 },
+        FIQ_1_NON: { x: 37.78417434386884, y: 1275.4680636159535 },
+        FIQ_2_IMG: { x: 7.424064289514547, y: 945.5844810063686 },
+        FIQ_2_NON: { x: 36.811438387391945, y: 964.0214642895583 },
+        Header: { x: -1169.5687093040035, y: 566.153076389645 },
+        PCV1: { x: 401.7562316524744, y: 1270.3587160528914 },
+        PCV1_none1: { x: 429.9846841270418, y: 969.5356388835302 },
+        PCV1_none2: { x: 431.2402274026139, y: 1295.4273827669172 },
+        PCV2: { x: 400.5731404350574, y: 944.14763536896 },
+        PCV2_none1: { x: 497.17387216109614, y: 998.0331292701401 },
+        PCV2_none2: { x: 502.42847988139124, y: 1324.4494270673638 },
+        PCV_NUM01: { x: 289.97119619395505, y: 861.9203393400161 },
+        PCV_NUM02: { x: 291.9418419587673, y: 1369.3879482099635 },
+        PT_COL_1: { x: -838.9627908268365, y: 1008.3135067445331 },
+        PT_COL_2: { x: 800.3100552386497, y: 1112.9702724849426 },
+        PT_IMG_1: { x: -871.3081669427478, y: 945.0639549314378 },
+        PT_IMG_2: { x: 767.9072344387844, y: 1049.469849982712 },
+        Pressure_Trans01: { x: -1003.9617715201172, y: 838.1272663738199 },
+        Pressure_Trans02: { x: 635.1594253277461, y: 861.2799336024309 },
+        SDV_LINE6: { x: -708.3978300391769, y: 981.5026854102861 },
+        SDV_LINE6_NAME: { x: -732.2027886390686, y: 933.8927682105026 },
+        SDV_LINE7: { x: 911.4024297672285, y: 1085.5789235413577 },
+        SDV_LINE7_NAME: { x: 884.1078897777516, y: 1040.6715493265597 },
+        SDV_NON1: { x: -673.7892272357531, y: 1143.459309338155 },
+        SDV_NON2: { x: -693.1257051668601, y: 1046.7298432790153 },
+        SDV_NON3: { x: 944.3053853115945, y: 1251.6834860447348 },
+        SDV_NON4: { x: 926.2934777345737, y: 1151.6863439792057 },
+        Station2: { x: -783.9541227461544, y: 1791.9862453748287 },
+        Station3: { x: -178.12234755043983, y: 1795.6864146659916 },
+        Station4: { x: -378.4755427822713, y: 1794.3270068177396 },
+        Station5: { x: -582.008873184103, y: 1793.5597047493632 },
+        Station6: { x: 272.6463119100941, y: 1795.9986315431704 },
+        Station7: { x: 18.521867776247575, y: 1796.4566866766143 },
+        Station8: { x: 676.730324895667, y: 1794.865496751783 },
+        Station9: { x: 477.148405991921, y: 1795.7239040075906 },
+        Tank: { x: -471.8491524556945, y: 968.8737178626768 },
+        Tank_Name: { x: -479.9774896505711, y: 903.2309862412246 },
+        borderWhite: { x: -1327.9788742383255, y: 560.1210551008136 },
+        data1: { x: -103.15423072020653, y: 861.205783524047 },
+        data2: { x: -103.41768247125054, y: 787.8261219608379 },
+        data3: { x: -103.75308584284522, y: 714.2000355637527 },
+        data4: { x: -103.4831968766506, y: 640.575122945293 },
+        data5: { x: -102.52508080991166, y: 1369.3696253484848 },
+        data6: { x: -102.47385863886143, y: 1442.3755311625578 },
+        data7: { x: -102.53147123851167, y: 1515.2601465744929 },
+        data8: { x: -102.42369687327391, y: 1588.7564082900412 },
+        line1: { x: -1213.6281398603076, y: 1046.2942677786787 },
+        line1_Name: { x: -1325.0728063162799, y: 1025.638575288994 },
+        line2: { x: -1205.804716392042, y: 1316.3700838133445 },
+        line2_Name: { x: -1322.4231580879728, y: 1295.1667307777207 },
+        line3: { x: -984.1479726009184, y: 1045.5206742603311 },
+        line4: { x: -984.7190373942689, y: 1315.5920694726296 },
+        line5: { x: -778.9438493843093, y: 1045.4703346741583 },
+        line6: { x: -676.3291796967488, y: 1045.431804839495 },
+        line7: { x: -576.5411082893928, y: 1046.3096648354242 },
+        line8: { x: -432.07080662539727, y: 1045.4419671772653 },
+        line9: { x: -389.44704906465745, y: 1315.416493669179 },
+        line10: { x: -357.2982795972111, y: 1154.4001642602998 },
+        line11: { x: -266.58007633135446, y: 1077.8736646077737 },
+        line12: { x: -361.9350364765795, y: 1018.1573346937878 },
+        line13: { x: -379.7188320425952, y: 994.0852608261773 },
+        line14: { x: -234.39340621574243, y: 994.1136348301156 },
+        line15: { x: -104.2739086089499, y: 994.1406223413721 },
+        line16: { x: -103.27429171747147, y: 1317.0068677838206 },
+        line17: { x: 147.49410807009815, y: 994.1707022117523 },
+        line18: { x: 151.4556395221927, y: 1316.9658199873434 },
+        line19: { x: 166.87892366306454, y: 1151.3174439754396 },
+        line20: { x: 257.95057449494124, y: 1151.3242663904882 },
+        line21: { x: 274.8359951164879, y: 991.6383513832209 },
+        line22: { x: 274.5973960061776, y: 1317.4869019572664 },
+        line23: { x: 573.8507489885311, y: 1317.569803409326 },
+        line24: { x: 551.227431814638, y: 991.8233854554337 },
+        line25: { x: 586.8958961875392, y: 1150.4971560041965 },
+        line26: { x: 1101.2098189017306, y: 1150.4008658316943 },
+        line27: { x: -726.6858044062238, y: 1684.016942153777 },
+        line28: { x: -588.3524710728906, y: 1684.016942153777 },
+        line29: { x: -726.6858044062238, y: 1721.6836088204439 },
+        line_center1: { x: 143.27766339452606, y: 993.5914962028294 },
+        line_center2: { x: 50.17579303327713, y: 1153.404525012583 },
+        line_center3: { x: 10.682459160556405, y: 1153.5524624404293 },
+        line_center4: { x: -101.93414189486886, y: 1317.763155000088 },
+        timeUpdate3: { x: -1287.373388294895, y: 671.2012964315752 },
     };
     const [positions, setPositions] = useState(initialPositions);
 
-    const lineColor = "#ffaa00";
+    //=============================================================================================
+
+    useEffect(() => {
+        if (
+            (exceedThresholdFC_Lithium_Battery_Status &&
+                !maintainFC_Lithium_Battery_Status) ||
+            (exceedThresholdFC_Battery_Voltage &&
+                !maintainFC_Battery_Voltage) ||
+            (exceedThresholdFC_System_Voltage && !maintainFC_System_Voltage) ||
+            (exceedThresholdFC_Charger_Voltage &&
+                !maintainFC_Charger_Voltage) ||
+            (exceedThresholdFC_Conn_STT && !maintainFC_Conn_STT) ||
+            (exceedThresholdFC_01_Accumulated_Values_Uncorrected_Volume &&
+                !maintainFC_01_Accumulated_Values_Uncorrected_Volume) ||
+            (exceedThresholdFC_01_Accumulated_Values_Volume &&
+                !maintainFC_01_Accumulated_Values_Volume) ||
+            (exceedThresholdFC_01_Current_Values_Static_Pressure &&
+                !maintainFC_01_Current_Values_Static_Pressure) ||
+            (exceedThresholdFC_01_Current_Values_Temperature &&
+                !maintainFC_01_Current_Values_Temperature) ||
+            (exceedThresholdFC_01_Current_Values_Flow_Rate &&
+                !maintainFC_01_Current_Values_Flow_Rate) ||
+            (exceedThresholdFC_01_Current_Values_Uncorrected_Flow_Rate &&
+                !maintainFC_01_Current_Values_Uncorrected_Flow_Rate) ||
+            (exceedThresholdFC_01_Today_Values_Volume &&
+                !maintainFC_01_Today_Values_Volume) ||
+            (exceedThresholdFC_01_Today_Values_Uncorrected_Volume &&
+                !maintainFC_01_Today_Values_Uncorrected_Volume) ||
+            (exceedThresholdFC_01_Yesterday_Values_Volume &&
+                !maintainFC_01_Yesterday_Values_Volume) ||
+            (exceedThresholdFC_01_Yesterday_Values_Uncorrected_Volume &&
+                !maintainFC_01_Yesterday_Values_Uncorrected_Volume) ||
+            (exceedThresholdFC_02_Accumulated_Values_Uncorrected_Volume &&
+                !maintainFC_02_Accumulated_Values_Uncorrected_Volume) ||
+            (exceedThresholdFC_02_Accumulated_Values_Volume &&
+                !maintainFC_02_Accumulated_Values_Volume) ||
+            (exceedThresholdFC_02_Current_Values_Static_Pressure &&
+                !maintainFC_02_Current_Values_Static_Pressure) ||
+            (exceedThresholdFC_02_Current_Values_Temperature &&
+                !maintainFC_02_Current_Values_Temperature) ||
+            (exceedThresholdFC_02_Current_Values_Flow_Rate &&
+                !maintainFC_02_Current_Values_Flow_Rate) ||
+            (exceedThresholdFC_02_Current_Values_Uncorrected_Flow_Rate &&
+                !maintainFC_02_Current_Values_Uncorrected_Flow_Rate) ||
+            (exceedThresholdFC_02_Today_Values_Volume &&
+                !maintainFC_02_Today_Values_Volume) ||
+            (exceedThresholdFC_02_Today_Values_Uncorrected_Volume &&
+                !maintainFC_02_Today_Values_Uncorrected_Volume) ||
+            (exceedThresholdFC_02_Yesterday_Values_Volume &&
+                !maintainFC_02_Yesterday_Values_Volume) ||
+            (exceedThresholdFC_02_Yesterday_Values_Uncorrected_Volume &&
+                !maintainFC_02_Yesterday_Values_Uncorrected_Volume) ||
+            (exceedThresholdPT_1003 && !maintainPT_1003)
+        ) {
+            setAlarmMessage("ALARM");
+        } else if (
+            maintainFC_Lithium_Battery_Status ||
+            maintainFC_Battery_Voltage ||
+            maintainFC_System_Voltage ||
+            maintainFC_Charger_Voltage ||
+            maintainFC_Conn_STT ||
+            maintainFC_01_Accumulated_Values_Uncorrected_Volume ||
+            maintainFC_01_Accumulated_Values_Volume ||
+            maintainFC_01_Current_Values_Static_Pressure ||
+            maintainFC_01_Current_Values_Temperature ||
+            maintainFC_01_Current_Values_Flow_Rate ||
+            maintainFC_01_Current_Values_Uncorrected_Flow_Rate ||
+            maintainFC_01_Today_Values_Volume ||
+            maintainFC_01_Today_Values_Uncorrected_Volume ||
+            maintainFC_01_Yesterday_Values_Volume ||
+            maintainFC_01_Yesterday_Values_Uncorrected_Volume ||
+            maintainFC_02_Accumulated_Values_Uncorrected_Volume ||
+            maintainFC_02_Accumulated_Values_Volume ||
+            maintainFC_02_Current_Values_Static_Pressure ||
+            maintainFC_02_Current_Values_Temperature ||
+            maintainFC_02_Current_Values_Flow_Rate ||
+            maintainFC_02_Current_Values_Uncorrected_Flow_Rate ||
+            maintainFC_02_Today_Values_Volume ||
+            maintainFC_02_Today_Values_Uncorrected_Volume ||
+            maintainFC_02_Yesterday_Values_Volume ||
+            maintainFC_02_Yesterday_Values_Uncorrected_Volume ||
+            maintainPT_1003
+        ) {
+            setAlarmMessage("Maintaining");
+        } else {
+            setAlarmMessage(null);
+        }
+    }, [
+        exceedThresholdFC_Lithium_Battery_Status,
+        maintainFC_Lithium_Battery_Status,
+        exceedThresholdFC_Battery_Voltage,
+        maintainFC_Battery_Voltage,
+        exceedThresholdFC_System_Voltage,
+        maintainFC_System_Voltage,
+        exceedThresholdFC_Charger_Voltage,
+        maintainFC_Charger_Voltage,
+        exceedThresholdFC_Conn_STT,
+        maintainFC_Conn_STT,
+        exceedThresholdFC_01_Accumulated_Values_Uncorrected_Volume,
+        maintainFC_01_Accumulated_Values_Uncorrected_Volume,
+        exceedThresholdFC_01_Accumulated_Values_Volume,
+        maintainFC_01_Accumulated_Values_Volume,
+        exceedThresholdFC_01_Current_Values_Static_Pressure,
+        maintainFC_01_Current_Values_Static_Pressure,
+        exceedThresholdFC_01_Current_Values_Temperature,
+        maintainFC_01_Current_Values_Temperature,
+        exceedThresholdFC_01_Current_Values_Flow_Rate,
+        maintainFC_01_Current_Values_Flow_Rate,
+        exceedThresholdFC_01_Current_Values_Uncorrected_Flow_Rate,
+        maintainFC_01_Current_Values_Uncorrected_Flow_Rate,
+        exceedThresholdFC_01_Today_Values_Volume,
+        maintainFC_01_Today_Values_Volume,
+        exceedThresholdFC_01_Today_Values_Uncorrected_Volume,
+        maintainFC_01_Today_Values_Uncorrected_Volume,
+        exceedThresholdFC_01_Yesterday_Values_Volume,
+        maintainFC_01_Yesterday_Values_Volume,
+        exceedThresholdFC_01_Yesterday_Values_Uncorrected_Volume,
+        maintainFC_01_Yesterday_Values_Uncorrected_Volume,
+        exceedThresholdFC_02_Accumulated_Values_Uncorrected_Volume,
+        maintainFC_02_Accumulated_Values_Uncorrected_Volume,
+        exceedThresholdFC_02_Accumulated_Values_Volume,
+        maintainFC_02_Accumulated_Values_Volume,
+        exceedThresholdFC_02_Current_Values_Static_Pressure,
+        maintainFC_02_Current_Values_Static_Pressure,
+        exceedThresholdFC_02_Current_Values_Temperature,
+        maintainFC_02_Current_Values_Temperature,
+        exceedThresholdFC_02_Current_Values_Flow_Rate,
+        maintainFC_02_Current_Values_Flow_Rate,
+        exceedThresholdFC_02_Current_Values_Uncorrected_Flow_Rate,
+        maintainFC_02_Current_Values_Uncorrected_Flow_Rate,
+        exceedThresholdFC_02_Today_Values_Volume,
+        maintainFC_02_Today_Values_Volume,
+        exceedThresholdFC_02_Today_Values_Uncorrected_Volume,
+        maintainFC_02_Today_Values_Uncorrected_Volume,
+        exceedThresholdFC_02_Yesterday_Values_Volume,
+        maintainFC_02_Yesterday_Values_Volume,
+        exceedThresholdFC_02_Yesterday_Values_Uncorrected_Volume,
+        maintainFC_02_Yesterday_Values_Uncorrected_Volume,
+        exceedThresholdPT_1003,
+        maintainPT_1003,
+    ]);
+
+    //=============================================================================================
+
+    const lineColor = "yellow";
 
     const [isAnimated07, setIsAnimated07] = useState<boolean>(false);
     const [isAnimated08, setIsAnimated08] = useState<boolean>(false);
@@ -4954,167 +5082,19 @@ export default function GraphicKOA() {
         },
     ];
 
+    const [OnOpLine1, setOnOpLine1] = useState<boolean>(false);
+
+    const OnLine1 = (value: boolean) => {
+        setOnOpLine1(value);
+    };
+
+    const boxShadowStyle = OnOpLine1
+        ? "0px 4px 10px rgba(0, 255, 0, 0.5)" // Example shadow when true
+        : "0px 4px 10px rgba(255, 0, 0, 0.5)"; // Example shadow when false
+
     const [edges, setEdges, onEdgesChange] = useEdgesState<any>([...edge7]);
 
     const [initialNodes, setInitialNodes] = useState([
-        //============================ animated_Line =======================================
-        //============================ animated_Line =======================================
-
-        {
-            id: "animation_line7",
-            position: positions.animation_line7,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
-
-            sourcePosition: Position.Right,
-            targetPosition: Position.Right,
-            style: {
-                border: "#333333",
-                background: background,
-                width: 10,
-                height: 1,
-            },
-        },
-        {
-            id: "animation_line8",
-            position: positions.animation_line8,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
-
-            sourcePosition: Position.Left,
-            targetPosition: Position.Left,
-            style: {
-                border: "#333333",
-                background: background,
-                width: 30,
-                height: 1,
-            },
-        },
-        {
-            id: "animation_line9",
-            position: positions.animation_line9,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
-
-            sourcePosition: Position.Right,
-            targetPosition: Position.Right,
-            style: {
-                border: "#333333",
-                background: background,
-                width: 30,
-                height: 1,
-            },
-        },
-        {
-            id: "animation_line10",
-            position: positions.animation_line10,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
-
-            sourcePosition: Position.Left,
-            targetPosition: Position.Left,
-            style: {
-                border: "#333333",
-                background: background,
-                width: 30,
-                height: 1,
-            },
-        },
-        {
-            id: "animation_line11",
-            position: positions.animation_line11,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
-
-            sourcePosition: Position.Bottom,
-            targetPosition: Position.Left,
-            style: {
-                border: "#333333",
-                background: "none",
-                width: 1,
-                height: 1,
-            },
-        },
-
-        {
-            id: "animation_line12",
-            position: positions.animation_line12,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
-
-            sourcePosition: Position.Left,
-            targetPosition: Position.Right,
-            style: {
-                border: "#333333",
-                background: background,
-                width: 1,
-                height: 1,
-            },
-        },
-        {
-            id: "animation_line13",
-            position: positions.animation_line13,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
-
-            sourcePosition: Position.Left,
-            targetPosition: Position.Right,
-            style: {
-                border: "#333333",
-                background: background,
-                width: 1,
-                height: 1,
-            },
-        },
-        {
-            id: "animation_line14",
-            position: positions.animation_line14,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
-
-            sourcePosition: Position.Right,
-            targetPosition: Position.Top,
-            style: {
-                border: "#333333",
-                background: "none",
-                width: 1,
-                height: 1,
-            },
-        },
-        {
-            id: "animation_line15",
-            position: positions.animation_line15,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
-
-            sourcePosition: Position.Left,
-            targetPosition: Position.Left,
-            style: {
-                border: "#333333",
-                background: background,
-                width: 1,
-                height: 1,
-            },
-        },
-        // ============================== line =========================================
         {
             id: "line1",
             position: positions.line1,
@@ -5129,7 +5109,8 @@ export default function GraphicKOA() {
                 border: "none",
                 width: 35,
                 height: 10,
-                background: background,
+                background: "none",
+                color: "white",
             },
         },
         {
@@ -5147,6 +5128,7 @@ export default function GraphicKOA() {
                 width: 30,
                 height: 10,
                 background: "none",
+                color: "white",
             },
         },
         {
@@ -5157,14 +5139,16 @@ export default function GraphicKOA() {
                 label: <div></div>,
             },
 
-            sourcePosition: Position.Left,
-            targetPosition: Position.Right,
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
             style: {
-                border: "#333333",
-                background: colorIMG_none,
+                border: "none",
+
+                background: "none",
                 width: 35,
                 height: 22,
-                opacity: 0.01,
+
+                color: "white",
             },
         },
         {
@@ -5172,17 +5156,19 @@ export default function GraphicKOA() {
             position: positions.line4,
             type: "custom",
             data: {
-                label: <div>4</div>,
+                label: <div></div>,
             },
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
             style: {
-                border: "#333333",
-                background: colorIMG_none,
+                border: "none",
+
+                background: "none",
                 width: 35,
                 height: 22,
-                opacity: 0.01,
+
+                color: "white",
             },
         },
         {
@@ -5190,17 +5176,19 @@ export default function GraphicKOA() {
             position: positions.line5,
             type: "custom",
             data: {
-                label: <div>5</div>,
+                label: <div></div>,
             },
 
-            sourcePosition: Position.Left,
-            targetPosition: Position.Right,
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
             style: {
-                border: "#333333",
-                background: colorIMG_none,
+                border: "none",
+
+                background: "none",
                 width: 35,
                 height: 22,
-                opacity: 0.01,
+
+                color: "white",
             },
         },
         {
@@ -5208,17 +5196,17 @@ export default function GraphicKOA() {
             position: positions.line6,
             type: "custom",
             data: {
-                label: <div>6</div>,
+                label: <div></div>,
             },
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
             style: {
-                border: "#333333",
-                background: colorIMG_none,
+                border: "none",
+
+                background: "none",
                 width: 35,
                 height: 22,
-                opacity: 0.01,
             },
         },
         {
@@ -5234,8 +5222,9 @@ export default function GraphicKOA() {
             style: {
                 border: "none",
                 width: 35,
-                height: 5,
-                background: "yellow",
+                height: 10,
+                background: "none",
+                color: "white",
             },
         },
         {
@@ -5243,17 +5232,18 @@ export default function GraphicKOA() {
             position: positions.line8,
             type: "custom",
             data: {
-                label: <div>8</div>,
+                label: <div></div>,
             },
 
-            sourcePosition: Position.Left,
-            targetPosition: Position.Right,
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
             style: {
-                border: "#333333",
-                background: colorIMG_none,
+                border: "none",
+
+                background: "none",
                 width: 35,
                 height: 22,
-                opacity: 0.01,
+                color: "white",
             },
         },
         {
@@ -5261,17 +5251,18 @@ export default function GraphicKOA() {
             position: positions.line9,
             type: "custom",
             data: {
-                label: <div>9</div>,
+                label: <div></div>,
             },
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
             style: {
-                border: "#333333",
-                background: colorIMG_none,
+                border: "none",
+
+                background: "none",
                 width: 35,
                 height: 22,
-                opacity: 0.01,
+                color: "white",
             },
         },
         {
@@ -5279,17 +5270,19 @@ export default function GraphicKOA() {
             position: positions.line10,
             type: "custom",
             data: {
-                label: <div>10</div>,
+                label: <div></div>,
             },
 
-            sourcePosition: Position.Left,
-            targetPosition: Position.Right,
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
             style: {
-                border: "#333333",
-                background: colorIMG_none,
-                width: 35,
-                height: 22,
-                opacity: 0.01,
+                border: "none",
+
+                background: "none",
+                width: 10,
+                height: 10,
+
+                color: "white",
             },
         },
         {
@@ -5297,17 +5290,19 @@ export default function GraphicKOA() {
             position: positions.line11,
             type: "custom",
             data: {
-                label: <div>11</div>,
+                label: <div></div>,
             },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
+            sourcePosition: Position.Top,
+            targetPosition: Position.Bottom,
             style: {
-                border: "#333333",
-                background: colorIMG_none,
+                border: "none",
+
+                background: "none",
                 width: 35,
-                height: 22,
-                opacity: 0.01,
+                height: 35,
+
+                color: "white",
             },
         },
         {
@@ -5319,17 +5314,74 @@ export default function GraphicKOA() {
             },
 
             sourcePosition: Position.Right,
-            targetPosition: Position.Left,
+            targetPosition: Position.Right,
             style: {
                 border: "#333333",
-                background: background,
+                background: "none",
                 width: 10,
                 height: 22,
+                color: "white",
             },
         },
         {
             id: "line13",
             position: positions.line13,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: {
+                border: "none",
+                width: 35,
+                height: 1,
+                background: background,
+                color: "white",
+            },
+        },
+
+        {
+            id: "line14",
+            position: positions.line14,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: {
+                border: "none",
+                width: 35,
+                height: 1,
+                background: background,
+                color: "white",
+            },
+        },
+        {
+            id: "line15",
+            position: positions.line15,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: {
+                border: "none",
+                width: 35,
+                height: 1,
+                background: background,
+                color: "white",
+            },
+        },
+
+        {
+            id: "line16",
+            position: positions.line16,
             type: "custom",
             data: {
                 label: <div></div>,
@@ -5342,40 +5394,12 @@ export default function GraphicKOA() {
                 width: 35,
                 height: 1,
                 background: background,
+                color: "white",
             },
         },
-
-        // ============================== line =========================================
-
         {
-            id: "SDV",
-            data: {
-                label: (
-                    <div
-                        style={{
-                            fontSize: 20,
-                            fontWeight: 500,
-                            color: "white",
-                        }}
-                    >
-                        SDV-1201
-                    </div>
-                ),
-            },
-            position: positions.SDV,
-            zIndex: 99999,
-
-            style: {
-                background: "green",
-                border: "1px solid white",
-                width: 130,
-                height: 45,
-            },
-            targetPosition: Position.Bottom,
-        },
-        {
-            id: "SDV_None",
-            position: positions.SDV_None,
+            id: "line17",
+            position: positions.line17,
             type: "custom",
             data: {
                 label: <div></div>,
@@ -5384,33 +5408,16 @@ export default function GraphicKOA() {
             sourcePosition: Position.Left,
             targetPosition: Position.Right,
             style: {
-                border: "#333333",
-                background: line,
-                width: 30,
-                height: 1,
-            },
-        },
-        {
-            id: "SDV_Ball",
-            position: positions.SDV_Ball,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
-
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: {
-                border: "#333333",
-                background: colorIMG_none,
+                border: "none",
                 width: 35,
-                height: 22,
-                opacity: 0.01,
+                height: 1,
+                background: background,
+                color: "white",
             },
         },
         {
-            id: "SDV_IMG",
-            position: positions.SDV_IMG,
+            id: "line18",
+            position: positions.line18,
             type: "custom",
             data: {
                 label: <div></div>,
@@ -5419,42 +5426,53 @@ export default function GraphicKOA() {
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
             style: {
-                border: "#333333",
+                border: "none",
+                width: 35,
+                height: 1,
                 background: background,
-                width: 0,
-                height: 0,
+                color: "white",
             },
         },
 
         {
-            id: "SDV2",
+            id: "line19",
+            position: positions.line19,
+            type: "custom",
             data: {
-                label: (
-                    <div
-                        style={{
-                            fontSize: 20,
-                            fontWeight: 500,
-                            color: "white",
-                        }}
-                    >
-                        SDV-1202
-                    </div>
-                ),
+                label: <div></div>,
             },
-            position: positions.SDV2,
-            zIndex: 99999,
 
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
             style: {
-                background: "green",
-                border: "1px solid white",
-                width: 130,
-                height: 45,
+                border: "none",
+                width: 35,
+                height: 1,
+                background: background,
+                color: "white",
             },
-            targetPosition: Position.Bottom,
         },
         {
-            id: "SDV_None2",
-            position: positions.SDV_None2,
+            id: "line20",
+            position: positions.line20,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 35,
+                height: 1,
+                background: background,
+                color: "white",
+            },
+        },
+        {
+            id: "line21",
+            position: positions.line21,
             type: "custom",
             data: {
                 label: <div></div>,
@@ -5463,33 +5481,16 @@ export default function GraphicKOA() {
             sourcePosition: Position.Left,
             targetPosition: Position.Right,
             style: {
-                border: "#333333",
-                background: line,
-                width: 30,
-                height: 1,
-            },
-        },
-        {
-            id: "SDV_Ball2",
-            position: positions.SDV_Ball2,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
-
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: {
-                border: "#333333",
-                background: colorIMG_none,
+                border: "none",
                 width: 35,
-                height: 22,
-                opacity: 0.01,
+                height: 1,
+                background: background,
+                color: "white",
             },
         },
         {
-            id: "SDV_IMG2",
-            position: positions.SDV_IMG2,
+            id: "line22",
+            position: positions.line22,
             type: "custom",
             data: {
                 label: <div></div>,
@@ -5498,17 +5499,655 @@ export default function GraphicKOA() {
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
             style: {
-                border: "#333333",
+                border: "none",
+                width: 35,
+                height: 1,
                 background: background,
-                width: 0,
-                height: 0,
+                color: "white",
+            },
+        },
+        {
+            id: "line23",
+            position: positions.line23,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 35,
+                height: 1,
+                background: background,
+                color: "white",
+            },
+        },
+        {
+            id: "line24",
+            position: positions.line24,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: {
+                border: "none",
+                width: 35,
+                height: 1,
+                background: background,
+                color: "white",
             },
         },
 
-        //=================== Ball vavle ==================================
         {
-            id: "BallValue01",
-            position: positions.BallValue01,
+            id: "line25",
+            position: positions.line25,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Right,
+            style: {
+                border: "none",
+                width: 35,
+                height: 1,
+                background: background,
+                color: "white",
+            },
+        },
+
+        {
+            id: "line26",
+            position: positions.line26,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 35,
+                height: 1,
+                background: background,
+                color: "white",
+            },
+        },
+
+        {
+            id: "line27",
+            position: positions.line27,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Bottom,
+            targetPosition: Position.Right,
+            style: {
+                border: "none",
+                width: 35,
+                height: 1,
+                background: "none",
+                color: "white",
+            },
+        },
+
+        {
+            id: "line28",
+            position: positions.line28,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: {
+                border: "none",
+                width: 35,
+                height: 1,
+                background: "none",
+                color: "white",
+            },
+        },
+
+        {
+            id: "line29",
+            position: positions.line29,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Bottom,
+            targetPosition: Position.Top,
+            style: {
+                border: "none",
+                width: 35,
+                height: 1,
+                background: "none",
+                color: "white",
+            },
+        },
+        //=================================================
+
+        {
+            id: "Station2",
+            position: positions.Station2,
+            type: "custom",
+            data: {
+                label: <div>Melaka</div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Top,
+            style: {
+                border: "none",
+                background: background,
+                color: "white",
+                fontSize: 25,
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+            },
+        },
+
+        {
+            id: "Station3",
+            position: positions.Station3,
+            type: "custom",
+            data: {
+                label: <div>Selangor</div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Right,
+            style: {
+                border: "none",
+                background: background,
+                color: "white",
+                fontSize: 25,
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+            },
+        },
+
+        {
+            id: "Station4",
+            position: positions.Station4,
+            type: "custom",
+            data: {
+                label: <div>Sabah</div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Right,
+            style: {
+                border: "none",
+
+                background: background,
+                color: "white",
+                fontSize: 25,
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+            },
+        },
+
+        {
+            id: "Station5",
+            position: positions.Station5,
+            type: "custom",
+            data: {
+                label: <div>Penang</div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Right,
+            style: {
+                border: "none",
+                fontSize: 25,
+
+                background: background,
+                color: "white",
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+            },
+        },
+
+        {
+            id: "Station6",
+            position: positions.Station6,
+            type: "custom",
+            data: {
+                label: <div>Johor</div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Right,
+            style: {
+                border: "none",
+                fontSize: 25,
+
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+
+                background: background,
+                color: "white",
+            },
+        },
+
+        {
+            id: "Station7",
+            position: positions.Station7,
+            type: "custom",
+            data: {
+                label: <div> Kota Kinabalu</div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Right,
+            style: {
+                border: "none",
+                fontSize: 25,
+                width: 200,
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+
+                background: background,
+                color: "white",
+            },
+        },
+        {
+            id: "Station8",
+            position: positions.Station8,
+            type: "custom",
+            data: {
+                label: <div>Perlis</div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Right,
+            style: {
+                border: "none",
+                fontSize: 25,
+
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+
+                background: background,
+                color: "white",
+            },
+        },
+
+        {
+            id: "Station9",
+            position: positions.Station9,
+            type: "custom",
+            data: {
+                label: <div>Pengerang</div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Right,
+            style: {
+                border: "none",
+                fontSize: 25,
+
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+
+                background: background,
+                color: "white",
+            },
+        },
+
+        {
+            id: "line1_Name",
+            position: positions.line1_Name,
+            type: "custom",
+            data: {
+                label: <div>Line 1</div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Right,
+            style: {
+                border: "none",
+                fontSize: 25,
+
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+
+                background: background,
+                color: "white",
+            },
+        },
+
+        {
+            id: "line2_Name",
+            position: positions.line2_Name,
+            type: "custom",
+            data: {
+                label: <div>Line 2</div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Right,
+            style: {
+                border: "none",
+                fontSize: 25,
+
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+
+                background: background,
+                color: "white",
+            },
+        },
+
+        //====================================================
+
+        {
+            id: "line_center1",
+            position: positions.line_center1,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: {
+                border: "none",
+                width: 35,
+                height: 1,
+                background: background,
+                color: "white",
+            },
+        },
+
+        {
+            id: "line_center2",
+            position: positions.line_center2,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: {
+                border: "none",
+                width: 35,
+                height: 1,
+                background: background,
+                color: "white",
+            },
+        },
+
+        {
+            id: "line_center3",
+            position: positions.line_center3,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 35,
+                height: 1,
+                background: background,
+                color: "white",
+            },
+        },
+
+        {
+            id: "line_center4",
+            position: positions.line_center4,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: {
+                border: "none",
+                width: 35,
+                height: 1,
+                background: background,
+                color: "white",
+            },
+        },
+        //===================================================================
+
+        {
+            id: "SDV_LINE6",
+            position: positions.SDV_LINE6,
+            type: "custom",
+            data: {
+                label: <div>{SVD_NO}</div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 30,
+                height: 10,
+                background: "none",
+                color: "white",
+            },
+        },
+
+        {
+            id: "SDV_LINE6_NAME",
+            position: positions.SDV_LINE6_NAME,
+            type: "custom",
+            data: {
+                label: <div>SDV-1001</div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                fontSize: 20,
+                border: "none",
+                fontWeight: 600,
+
+                background: "green",
+                color: "white",
+            },
+        },
+
+        {
+            id: "SDV_LINE7",
+            position: positions.SDV_LINE7,
+            type: "custom",
+            data: {
+                label: <div>{SVD_NO}</div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 30,
+                height: 10,
+                background: "none",
+                color: "white",
+            },
+        },
+
+        {
+            id: "SDV_LINE7_NAME",
+            position: positions.SDV_LINE7_NAME,
+            type: "custom",
+            data: {
+                label: <div>SDV-1002</div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                fontSize: 20,
+                border: "none",
+                fontWeight: 600,
+
+                background: "green",
+                color: "white",
+            },
+        },
+
+        {
+            id: "SDV_NON1",
+            position: positions.SDV_NON1,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: {
+                border: "none",
+                width: 35,
+                height: 10,
+                background: "none",
+                color: "white",
+            },
+        },
+        {
+            id: "SDV_NON2",
+            position: positions.SDV_NON2,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 70,
+                height: 10,
+                background: "none",
+                color: "white",
+            },
+        },
+
+        {
+            id: "SDV_NON3",
+            position: positions.SDV_NON3,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: {
+                border: "none",
+                width: 35,
+                height: 10,
+                background: "none",
+                color: "white",
+            },
+        },
+        {
+            id: "SDV_NON4",
+            position: positions.SDV_NON4,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 70,
+                height: 10,
+                background: "none",
+                color: "white",
+            },
+        },
+
+        {
+            id: "Ball_SDV_1",
+            position: positions.Ball_SDV_1,
+            type: "custom",
+            data: {
+                label: (
+                    <div>
+                        <BallValueSDV1 />
+                    </div>
+                ),
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: {
+                border: "none",
+                width: 1,
+                height: 10,
+                background: "none",
+                color: "white",
+            },
+        },
+
+        {
+            id: "Ball_SDV_2",
+            position: positions.Ball_SDV_2,
+            type: "custom",
+            data: {
+                label: (
+                    <div>
+                        <BallValueSDV1 />
+                    </div>
+                ),
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: {
+                border: "none",
+                width: 1,
+                height: 10,
+                background: "none",
+                color: "white",
+            },
+        },
+
+        {
+            id: "Ball_PSV",
+            position: positions.Ball_PSV,
+            type: "custom",
+            data: {
+                label: (
+                    <div>
+                        <BallVavlePSV />
+                    </div>
+                ),
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: {
+                border: "none",
+                width: 1,
+                height: 10,
+                background: "none",
+                color: "white",
+                zIndex: 9999999,
+            },
+        },
+
+        //================================================
+
+        {
+            id: "Ball_1",
+            position: positions.Ball_1,
             type: "custom",
             data: {
                 label: (
@@ -5518,20 +6157,20 @@ export default function GraphicKOA() {
                 ),
             },
 
-            sourcePosition: Position.Top,
-            targetPosition: Position.Top,
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
             style: {
                 border: background,
-
+                width: 0,
+                height: 0,
                 background: background,
-                width: 10,
-                height: 20,
+                color: "white",
             },
-            zIndex: 99999,
         },
+
         {
-            id: "BallValue02",
-            position: positions.BallValue02,
+            id: "Ball_2",
+            position: positions.Ball_2,
             type: "custom",
             data: {
                 label: (
@@ -5541,20 +6180,20 @@ export default function GraphicKOA() {
                 ),
             },
 
-            sourcePosition: Position.Top,
-            targetPosition: Position.Top,
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
             style: {
                 border: background,
-
+                width: 0,
+                height: 0,
                 background: background,
-                width: 10,
-                height: 20,
+                color: "white",
             },
-            zIndex: 99999,
         },
+
         {
-            id: "BallValue03",
-            position: positions.BallValue03,
+            id: "Ball_3",
+            position: positions.Ball_3,
             type: "custom",
             data: {
                 label: (
@@ -5568,15 +6207,16 @@ export default function GraphicKOA() {
             targetPosition: Position.Left,
             style: {
                 border: background,
-
+                width: 0,
+                height: 0,
                 background: background,
-                width: 1,
-                height: 1,
+                color: "white",
             },
         },
+
         {
-            id: "BallValue04",
-            position: positions.BallValue04,
+            id: "Ball_4",
+            position: positions.Ball_4,
             type: "custom",
             data: {
                 label: (
@@ -5590,14 +6230,16 @@ export default function GraphicKOA() {
             targetPosition: Position.Left,
             style: {
                 border: background,
+                width: 0,
+                height: 0,
                 background: background,
-                width: 1,
-                height: 1,
+                color: "white",
             },
         },
+
         {
-            id: "BallValue05",
-            position: positions.BallValue05,
+            id: "Ball_5",
+            position: positions.Ball_5,
             type: "custom",
             data: {
                 label: (
@@ -5611,15 +6253,17 @@ export default function GraphicKOA() {
             targetPosition: Position.Left,
             style: {
                 border: background,
-
+                width: 0,
+                height: 0,
                 background: background,
-                width: 1,
-                height: 1,
+                color: "white",
+                zIndex: 99999,
             },
         },
+
         {
-            id: "BallValue06",
-            position: positions.BallValue06,
+            id: "Ball_6",
+            position: positions.Ball_6,
             type: "custom",
             data: {
                 label: (
@@ -5633,19 +6277,21 @@ export default function GraphicKOA() {
             targetPosition: Position.Left,
             style: {
                 border: background,
+                width: 0,
+                height: 0,
                 background: background,
-                width: 1,
-                height: 1,
+                color: "white",
             },
         },
+
         {
-            id: "BallValue07",
-            position: positions.BallValue07,
+            id: "Ball_7",
+            position: positions.Ball_7,
             type: "custom",
             data: {
                 label: (
                     <div>
-                        <BallValue07 onDataLine7={animated_07} />
+                        <BallValue07 />
                     </div>
                 ),
             },
@@ -5654,20 +6300,20 @@ export default function GraphicKOA() {
             targetPosition: Position.Left,
             style: {
                 border: background,
-
+                width: 0,
+                height: 0,
                 background: background,
-                width: 1,
-                height: 1,
+                color: "white",
             },
         },
         {
-            id: "BallValue08",
-            position: positions.BallValue08,
+            id: "Ball_8",
+            position: positions.Ball_8,
             type: "custom",
             data: {
                 label: (
                     <div>
-                        <BallValue08 onDataLine8={animated_08} />
+                        <BallValue08 />
                     </div>
                 ),
             },
@@ -5676,19 +6322,20 @@ export default function GraphicKOA() {
             targetPosition: Position.Left,
             style: {
                 border: background,
+                width: 0,
+                height: 0,
                 background: background,
-                width: 1,
-                height: 1,
+                color: "white",
             },
         },
         {
-            id: "BallValue09",
-            position: positions.BallValue09,
+            id: "Ball_9",
+            position: positions.Ball_9,
             type: "custom",
             data: {
                 label: (
                     <div>
-                        <BallValue09 onDataLine09={animated_09} />
+                        <BallValue09 />
                     </div>
                 ),
             },
@@ -5697,37 +6344,16 @@ export default function GraphicKOA() {
             targetPosition: Position.Left,
             style: {
                 border: background,
-
+                width: 0,
+                height: 0,
                 background: background,
-                width: 1,
-                height: 1,
-            },
-        },
-        {
-            id: "BallValue10",
-            position: positions.BallValue10,
-            type: "custom",
-            data: {
-                label: (
-                    <div>
-                        <BallValue10 onDataLine10={animated_10} />
-                    </div>
-                ),
-            },
-
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: {
-                border: background,
-                background: background,
-                width: 1,
-                height: 1,
+                color: "white",
             },
         },
 
         {
-            id: "BallValueFirst",
-            position: positions.BallValueFirst,
+            id: "Ball_10",
+            position: positions.Ball_10,
             type: "custom",
             data: {
                 label: (
@@ -5741,15 +6367,147 @@ export default function GraphicKOA() {
             targetPosition: Position.Left,
             style: {
                 border: background,
+                width: 0,
+                height: 0,
                 background: background,
-                width: 1,
-                height: 1,
+                color: "white",
             },
         },
 
         {
-            id: "BallValueLast",
-            position: positions.BallValueLast,
+            id: "Ball_21",
+            position: positions.Ball_21,
+            type: "custom",
+            data: {
+                label: (
+                    <div>
+                        <BallValue10 />
+                    </div>
+                ),
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: {
+                border: "none",
+                width: 1,
+                height: 1,
+                background: background,
+                color: "white",
+            },
+        },
+        {
+            id: "Ball_22",
+            position: positions.Ball_22,
+            type: "custom",
+            data: {
+                label: (
+                    <div>
+                        <BallValue11 />
+                    </div>
+                ),
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 1,
+                height: 1,
+                background: background,
+                color: "white",
+            },
+        },
+        {
+            id: "Ball_23",
+            position: positions.Ball_23,
+            type: "custom",
+            data: {
+                label: (
+                    <div>
+                        <BallValue12 />
+                    </div>
+                ),
+            },
+
+            sourcePosition: Position.Right,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 1,
+                height: 1,
+                background: background,
+                color: "white",
+            },
+        },
+        {
+            id: "Ball_24",
+            position: positions.Ball_24,
+            type: "custom",
+            data: {
+                label: (
+                    <div>
+                        <BallValue13 />
+                    </div>
+                ),
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: {
+                border: "none",
+                width: 1,
+                height: 1,
+                background: background,
+                color: "white",
+            },
+        },
+
+        {
+            id: "Ball_Center",
+            position: positions.Ball_Center,
+            type: "custom",
+            data: {
+                label: (
+                    <div>
+                        <BallValueCenter />
+                    </div>
+                ),
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: {
+                border: "none",
+                width: 1,
+                height: 1,
+                background: background,
+                color: "white",
+            },
+        },
+
+        {
+            id: "Ball_Arrow",
+            position: positions.Ball_Arrow,
+            type: "custom",
+            data: {
+                label: <div>{VavleWay}</div>,
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: {
+                border: "none",
+                width: 1,
+                height: 1,
+                background: background,
+                color: "white",
+            },
+        },
+
+        {
+            id: "Ball_Last",
+            position: positions.Ball_Last,
             type: "custom",
             data: {
                 label: (
@@ -5759,38 +6517,72 @@ export default function GraphicKOA() {
                 ),
             },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
             style: {
-                border: background,
-                background: background,
+                border: "none",
                 width: 1,
                 height: 1,
+                background: background,
+                color: "white",
             },
         },
 
         {
-            id: "BallValueSDV_2",
-            position: positions.BallValueSDV_2,
+            id: "Ball_Small_1",
+            position: positions.Ball_Small_1,
             type: "custom",
             data: {
                 label: (
                     <div>
-                        <BallValueSDV_2 />
+                        <Image
+                            src="/layout/imgGraphic/BallValueRight.png"
+                            width={30}
+                            height={30}
+                            alt="Picture of the author"
+                        />
                     </div>
                 ),
             },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
             style: {
-                border: background,
-                background: background,
+                border: "none",
                 width: 1,
                 height: 1,
+                background: "none",
+                color: "white",
             },
         },
-        // ================= Tank ======================
+
+        {
+            id: "Ball_Small_2",
+            position: positions.Ball_Small_2,
+            type: "custom",
+            data: {
+                label: (
+                    <div>
+                        <Image
+                            src="/layout/imgGraphic/BallValueRight.png"
+                            width={30}
+                            height={30}
+                            alt="Picture of the author"
+                        />
+                    </div>
+                ),
+            },
+
+            sourcePosition: Position.Left,
+            targetPosition: Position.Right,
+            style: {
+                border: "none",
+                width: 1,
+                height: 1,
+                background: "none",
+                color: "white",
+            },
+        },
         {
             id: "Tank",
             position: positions.Tank,
@@ -5798,421 +6590,80 @@ export default function GraphicKOA() {
             data: {
                 label: <div>{tankGas}</div>,
             },
-            zIndex: 9999,
+
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
             style: {
-                border: "#333333",
+                border: background,
+                width: 0,
+                height: 0,
                 background: background,
-                width: 1,
-                height: 1,
+                color: "white",
             },
         },
-        {
-            id: "Tank_None",
-            position: positions.Tank_None,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
 
-            sourcePosition: Position.Left,
-            targetPosition: Position.Right,
-            style: {
-                border: "#ffaa00",
-                background: "#ffaa00",
-                width: 55,
-                height: 1,
-            },
-        },
         {
-            id: "Tank_Ball",
-            position: positions.Tank_Ball,
+            id: "Tank_Name",
+            position: positions.Tank_Name,
             type: "custom",
             data: {
-                label: <div></div>,
+                label: <div>Buffet Tank</div>,
             },
 
             sourcePosition: Position.Right,
             targetPosition: Position.Left,
             style: {
-                border: "#333333",
-                background: colorIMG_none,
-                width: 35,
-                height: 2,
-                opacity: 0.01,
-            },
-        },
-
-        // ================= PCV =============================
-
-        {
-            id: "PCV01",
-            position: positions.PCV01,
-            type: "custom",
-            data: {
-                label: (
-                    <div>
-                        {/* <Image
-                            src="/layout/imgGraphic/PVC.png"
-                            width={60}
-                            height={60}
-                            alt="Picture of the author"
-                        /> */}
-
-                        {PCV}
-                    </div>
-                ),
-            },
-
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: {
-                border: "#333333",
+                fontSize: 25,
+                border: background,
+                width: 200,
                 background: background,
-                width: 1,
-                height: 1,
-            },
-            zIndex: 9999,
-        },
-        {
-            id: "PCV02",
-            position: positions.PCV02,
-            type: "custom",
-            data: {
-                label: (
-                    <div>
-                        {/* <Image
-                            src="/layout/imgGraphic/PVC.png"
-                            width={60}
-                            height={60}
-                            alt="Picture of the author"
-                        /> */}
-                        {PCV}
-
-                    </div>
-                ),
-            },
-
-            sourcePosition: Position.Right,
-            targetPosition: Position.Left,
-            style: {
-                border: "#333333",
-                background: background,
-                width: 1,
-                height: 1,
-            },
-            zIndex: 9999,
-        },
-
-        // {
-        //     id: "PCV_ballVavle_Small1",
-        //     position: positions.PCV_ballVavle_Small1,
-        //     type: "custom",
-        //     data: {
-        //         label: (
-        //             <div>
-        //                 <Image
-        //                     src="/layout/imgGraphic/BallValueRight.png"
-        //                     width={30}
-        //                     height={30}
-        //                     alt="Picture of the author"
-        //                 />
-        //             </div>
-        //         ),
-        //     },
-
-        //     sourcePosition: Position.Right,
-        //     targetPosition: Position.Left,
-        //     style: {
-        //         border: "#333333",
-        //         background: background,
-        //         width: 1,
-        //         height: 1,
-        //     },
-        //     zIndex: 9999,
-        // },
-        // {
-        //     id: "PCV_ballVavle_Small2",
-        //     position: positions.PCV_ballVavle_Small2,
-        //     type: "custom",
-        //     data: {
-        //         label: (
-        //             <div>
-        //                 <Image
-        //                     src="/layout/imgGraphic/BallValueRight.png"
-        //                     width={30}
-        //                     height={30}
-        //                     alt="Picture of the author"
-        //                 />
-        //             </div>
-        //         ),
-        //     },
-
-        //     sourcePosition: Position.Right,
-        //     targetPosition: Position.Left,
-        //     style: {
-        //         border: "#333333",
-        //         background: background,
-        //         width: 1,
-        //         height: 1,
-        //     },
-        //     zIndex: 9999,
-        // },
-
-        // {
-        //     id: "PCV_ballVavle_Small1_none1",
-        //     position: positions.PCV_ballVavle_Small1_none1,
-        //     type: "custom",
-        //     data: {
-        //         label: <div> </div>,
-        //     },
-
-        //     sourcePosition: Position.Top,
-        //     targetPosition: Position.Right,
-        //     style: {
-        //         border: "#333333",
-        //         background: background,
-        //         width: 30,
-        //         height: 1,
-        //     },
-        // },
-        // {
-        //     id: "PCV_ballVavle_Small2_none1",
-        //     position: positions.PCV_ballVavle_Small2_none1,
-        //     type: "custom",
-        //     data: {
-        //         label: <div></div>,
-        //     },
-
-        //     sourcePosition: Position.Left,
-        //     targetPosition: Position.Top,
-        //     style: {
-        //         border: "#333333",
-        //         background: "none",
-        //         width: 30,
-        //         height: 1,
-        //     },
-        // },
-        // {
-        //     id: "PCV_ballVavle_Small1_none2",
-        //     position: positions.PCV_ballVavle_Small1_none2,
-        //     type: "custom",
-        //     data: {
-        //         label: <div></div>,
-        //     },
-
-        //     sourcePosition: Position.Top,
-        //     targetPosition: Position.Right,
-        //     style: {
-        //         border: "#333333",
-        //         background: background,
-        //         width: 30,
-        //         height: 1,
-        //     },
-        // },
-        // {
-        //     id: "PCV_ballVavle_Small2_none2",
-        //     position: positions.PCV_ballVavle_Small2_none2,
-        //     type: "custom",
-        //     data: {
-        //         label: <div> </div>,
-        //     },
-
-        //     sourcePosition: Position.Left,
-        //     targetPosition: Position.Top,
-        //     style: {
-        //         border: "#333333",
-        //         background: "none",
-        //         width: 30,
-        //         height: 1,
-        //     },
-        // },
-
-        {
-            id: "PCV_NUM01",
-            position: positions.PCV_NUM01,
-            type: "custom",
-            data: {
-                label: (
-                    <div style={{ display: "flex", marginTop: 5 }}>
-                        <PCV_01_Otsuka />
-                    </div>
-                ),
-            },
-
-            sourcePosition: Position.Right,
-            targetPosition: Position.Bottom,
-            style: {
-                border: "none",
-                width: 260,
-                background: "none",
-                // Thêm box shadow với màu (0, 255, 255)
+                color: "white",
             },
         },
 
+        //===================================================
+
         {
-            id: "PCV_NUM02",
-            position: positions.PCV_NUM02,
-            type: "custom",
-            data: {
-                label: (
-                    <div style={{ display: "flex", marginTop: 5 }}>
-                        <PCV_02_Otsuka />
-                    </div>
-                ),
-            },
-
-            sourcePosition: Position.Right,
-            targetPosition: Position.Top,
-            style: {
-                border: "none",
-                width: 260,
-
-                background: "none",
-                // Thêm box shadow với màu (0, 255, 255)
-            },
-        },
-        // {
-        //     id: "PCV_none1",
-        //     position: positions.PCV_none1,
-        //     type: "custom",
-        //     data: {
-        //         label: <div></div>,
-        //     },
-
-        //     sourcePosition: Position.Top,
-        //     targetPosition: Position.Left,
-        //     style: {
-        //         height: 1,
-        //         width: 1,
-        //     },
-        // },
-        // {
-        //     id: "PCV_none2",
-        //     position: positions.PCV_none2,
-        //     type: "custom",
-        //     data: {
-        //         label: <div></div>,
-        //     },
-
-        //     sourcePosition: Position.Bottom,
-        //     targetPosition: Position.Left,
-        //     style: {
-        //         height: 1,
-        //         width: 1,
-        //     },
-        // },
-
-        // ==================== FIQ =============================
-        {
-            id: "FIQ_1901",
-            data: {
-                label: (
-                    <div
-                        style={{
-                            fontSize: 32,
-                            fontWeight: 500,
-                        }}
-                        onClick={confirmLineDuty}
-                    >
-                        {/* FIQ-1901
-                        {lineDuty1901 && <span>1901</span>} */}
-                        Not used
-                    </div>
-                ),
-            },
-            position: positions.FIQ_1901,
-
-            style: {
-                background: "#ffffaa",
-                border: "1px solid white",
-                width: 400,
-                height: 50,
-            },
-            targetPosition: Position.Bottom,
-        },
-        {
-            id: "FIQ_1902",
-            data: {
-                label: (
-                    <div
-                        style={{
-                            fontSize: 32,
-                            fontWeight: 500,
-                        }}
-                        onClick={confirmLineDuty}
-                    >
-                        FIQ-1902
-                        {lineDuty1902 && <span>1902</span>}
-                    </div>
-                ),
-            },
-            position: positions.FIQ_1902,
-
-            style: {
-                background: "#ffffaa",
-                border: "1px solid white",
-                width: 400,
-                height: 50,
-            },
-            targetPosition: Position.Top,
-        },
-        {
-            id: "FIQ_none",
-            position: positions.FIQ_none,
+            id: "FIQ_1_IMG",
+            position: positions.FIQ_1_IMG,
             type: "custom",
             data: {
                 label: <div>{FIQ}</div>,
             },
 
-            sourcePosition: Position.Top,
+            sourcePosition: Position.Right,
             targetPosition: Position.Left,
             style: {
-                background: background,
-                height: 1,
-                width: 1,
                 border: background,
+                width: 0,
+                height: 0,
+                background: background,
+                color: "white",
             },
-            zIndex: 9999,
         },
+
         {
-            id: "FIQ_none2",
-            position: positions.FIQ_none2,
+            id: "FIQ_2_IMG",
+            position: positions.FIQ_2_IMG,
             type: "custom",
             data: {
                 label: <div>{FIQ}</div>,
             },
 
-            sourcePosition: Position.Left,
+            sourcePosition: Position.Right,
             targetPosition: Position.Left,
             style: {
-                background: background,
-                height: 1,
-                width: 1,
                 border: background,
+                width: 0,
+                height: 0,
+                background: background,
+                color: "white",
             },
-            zIndex: 9999,
         },
 
         {
-            id: "FIQ_none11",
-            position: positions.FIQ_none11,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
-
-            sourcePosition: Position.Top,
-            targetPosition: Position.Left,
-            style: {
-                height: 1,
-                width: 1,
-            },
-        },
-        {
-            id: "FIQ_none22",
-            position: positions.FIQ_none22,
+            id: "FIQ_1_NON",
+            position: positions.FIQ_1_NON,
             type: "custom",
             data: {
                 label: <div></div>,
@@ -6221,128 +6672,34 @@ export default function GraphicKOA() {
             sourcePosition: Position.Bottom,
             targetPosition: Position.Left,
             style: {
-                height: 1,
-                width: 1,
+                border: "none",
+                width: 0,
+                height: 0,
+                background: "none",
+                color: "white",
             },
-        },
-        // ==================== Ball center =============================
-        {
-            id: "BallValueCenter",
-            position: positions.BallValueCenter,
-            type: "custom",
-            data: {
-                label: (
-                    <div>
-                        <BallValueCenter onDataLineCenter={animated_center} />
-                    </div>
-                ),
-            },
-
-            sourcePosition: Position.Left,
-            targetPosition: Position.Right,
-            style: {
-                border: background,
-                background: background,
-                width: 1,
-                height: 1,
-            },
-            zIndex: 9999,
         },
 
         {
-            id: "BallValueCenter_None",
-            position: positions.BallValueCenter_None,
+            id: "FIQ_2_NON",
+            position: positions.FIQ_2_NON,
             type: "custom",
             data: {
                 label: <div></div>,
             },
 
-            sourcePosition: Position.Right,
+            sourcePosition: Position.Top,
             targetPosition: Position.Left,
             style: {
-                border: "#333333",
-                background: colorIMG_none,
-                width: 10,
-                height: 10,
-                opacity: 0.01,
+                border: "none",
+                width: 0,
+                height: 0,
+                background: "none",
+                color: "white",
             },
         },
-        {
-            id: "BallValueCenter_None2",
-            position: positions.BallValueCenter_None2,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Right,
-            style: {
-                border: "#333333",
-                background: colorIMG_none,
-                width: 10,
-                height: 10,
-                opacity: 0.01,
-            },
-        },
-        {
-            id: "BallValuePSV",
-            position: positions.BallValuePSV,
-            type: "custom",
-            data: {
-                label: (
-                    <div>
-                        <BallVavlePSV />
-                    </div>
-                ),
-            },
-
-            sourcePosition: Position.Left,
-            targetPosition: Position.Right,
-            style: {
-                border: background,
-                background: background,
-                width: 1,
-                height: 1,
-            },
-            zIndex: 9999,
-        },
-        {
-            id: "BallValuePSVNone",
-            position: positions.BallValuePSVNone,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
-
-            sourcePosition: Position.Left,
-            targetPosition: Position.Right,
-            style: {
-                border: background,
-                background: background,
-                width: 22,
-                height: 40,
-            },
-        },
-        {
-            id: "VavleWay",
-            position: positions.VavleWay,
-            type: "custom",
-            data: {
-                label: <div>{VavleWay}</div>,
-            },
-
-            sourcePosition: Position.Left,
-            targetPosition: Position.Right,
-            style: {
-                border: background,
-                background: background,
-                width: 1,
-                height: 1,
-            },
-            zIndex: 99999,
-        },
-        // =================== data ================================
+        //===================================================
 
         {
             id: "data1",
@@ -6362,12 +6719,14 @@ export default function GraphicKOA() {
             position: positions.data1,
 
             style: {
-                background: "white",
+                background: "none",
                 border: "1px solid white",
-                width: 400,
+                width: 300,
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
             },
-            targetPosition: Position.Right,
+            targetPosition: Position.Bottom,
         },
+
         {
             id: "data2",
             data: {
@@ -6386,11 +6745,12 @@ export default function GraphicKOA() {
             position: positions.data2,
 
             style: {
-                background: "white",
+                background: "none",
                 border: "1px solid white",
-                width: 400,
+                width: 300,
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
             },
-            targetPosition: Position.Right,
+            targetPosition: Position.Bottom,
         },
         {
             id: "data3",
@@ -6411,9 +6771,10 @@ export default function GraphicKOA() {
             position: positions.data3,
 
             style: {
-                background: "white",
+                background: "none",
                 border: "1px solid white",
-                width: 400,
+                width: 300,
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
             },
             targetPosition: Position.Bottom,
         },
@@ -6436,37 +6797,63 @@ export default function GraphicKOA() {
             position: positions.data4,
 
             style: {
-                background: "white",
+                background: "none",
                 border: "1px solid white",
-                width: 400,
+                width: 300,
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
             },
             targetPosition: Position.Bottom,
         },
 
         {
-            id: "data5",
+            id: "data8",
             data: {
                 label: (
                     <div
                         style={{
                             color: "green",
                             fontSize: 22,
-                            fontWeight: 600,
+                            fontWeight: 500,
                         }}
                     >
                         {" "}
                     </div>
                 ),
             },
-
-            position: positions.data5,
+            position: positions.data8,
 
             style: {
-                background: "white",
+                background: "none",
                 border: "1px solid white",
-                width: 400,
+                width: 300,
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
             },
-            targetPosition: Position.Top,
+            targetPosition: Position.Bottom,
+        },
+        {
+            id: "data7",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            color: "green",
+                            fontSize: 22,
+                            fontWeight: 500,
+                        }}
+                    >
+                        {" "}
+                    </div>
+                ),
+            },
+            position: positions.data7,
+
+            style: {
+                background: "none",
+                border: "1px solid white",
+                width: 300,
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+            },
+            targetPosition: Position.Bottom,
         },
         {
             id: "data6",
@@ -6487,175 +6874,81 @@ export default function GraphicKOA() {
             position: positions.data6,
 
             style: {
-                background: "white",
-                border: "1px solid white",
-                width: 400,
-            },
-            targetPosition: Position.Left,
-        },
-        {
-            id: "data7",
-            data: {
-                label: (
-                    <div
-                        style={{
-                            color: "green",
-                            fontSize: 22,
-                            fontWeight: 600,
-                        }}
-                    >
-                        {" "}
-                    </div>
-                ),
-            },
-
-            position: positions.data7,
-
-            style: {
-                background: "white",
-                border: "1px solid white",
-                width: 400,
-            },
-            targetPosition: Position.Top,
-        },
-        {
-            id: "data8",
-            data: {
-                label: (
-                    <div
-                        style={{
-                            color: "green",
-                            fontSize: 22,
-                            fontWeight: 600,
-                        }}
-                    >
-                        {" "}
-                    </div>
-                ),
-            },
-
-            position: positions.data8,
-
-            style: {
-                background: "white",
-                border: "1px solid white",
-                width: 400,
-            },
-            targetPosition: Position.Top,
-        },
-        // ============= PSV =====================
-
-        {
-            id: "PSV_01",
-            position: positions.PSV_01,
-            type: "custom",
-            data: {
-                label: <div>{BlackTriangle}</div>,
-            },
-
-            sourcePosition: Position.Right,
-            targetPosition: Position.Bottom,
-            zIndex: 9999,
-            style: {
-                background: background,
-                border: "none",
-                width: 1,
-                height: 1,
-            },
-        },
-
-        {
-            id: "PSV_02",
-            position: positions.PSV_02,
-            type: "custom",
-            data: {
-                label: <div>{BlackTriangleRight}</div>,
-            },
-            zIndex: 9999,
-
-            sourcePosition: Position.Right,
-            targetPosition: Position.Bottom,
-            style: {
-                background: background,
-                border: "none",
-                width: 1,
-                height: 1,
-            },
-        },
-
-        {
-            id: "PSV_03",
-            position: positions.PSV_03,
-            type: "custom",
-            data: {
-                label: <div>{WhiteTriangleRight}</div>,
-            },
-
-            zIndex: 9999,
-
-            sourcePosition: Position.Right,
-            targetPosition: Position.Bottom,
-            style: {
-                background: background,
-                border: "none",
-                width: 1,
-                height: 1,
-            },
-        },
-        {
-            id: "PSV_None01",
-            position: positions.PSV_None01,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
-
-            sourcePosition: Position.Left,
-            targetPosition: Position.Right,
-            style: {
-                border: "#333333",
                 background: "none",
-                width: 1,
-                height: 1,
+                border: "1px solid white",
+                width: 300,
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
             },
+            targetPosition: Position.Bottom,
         },
         {
-            id: "PSV_None02",
-            position: positions.PSV_None02,
-            type: "custom",
+            id: "data5",
             data: {
-                label: <div></div>,
+                label: (
+                    <div
+                        style={{
+                            color: "green",
+                            fontSize: 32,
+                            fontWeight: 600,
+                        }}
+                    >
+                        {" "}
+                    </div>
+                ),
             },
 
-            sourcePosition: Position.Left,
-            targetPosition: Position.Bottom,
+            position: positions.data5,
+
             style: {
-                border: "#333333",
-                background: background,
-                width: 1,
-                height: 1,
+                background: "none",
+                border: "1px solid white",
+                width: 300,
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
             },
+            targetPosition: Position.Top,
         },
+
+        //===================================================================
+
         {
-            id: "PSV_None03",
-            position: positions.PSV_None03,
+            id: "PT_IMG_1",
+            position: positions.PT_IMG_1,
             type: "custom",
             data: {
-                label: <div></div>,
+                label: <div>{PTV}</div>,
             },
 
-            sourcePosition: Position.Left,
-            targetPosition: Position.Bottom,
+            sourcePosition: Position.Top,
+            targetPosition: Position.Left,
             style: {
-                border: "#333333",
-                background: background,
-                width: 1,
-                height: 1,
+                border: "none",
+                width: 0,
+                height: 50,
+                background: "none",
+                color: "white",
             },
         },
         {
-            id: "PSV_None04",
-            position: positions.PSV_None04,
+            id: "PT_IMG_2",
+            position: positions.PT_IMG_2,
+            type: "custom",
+            data: {
+                label: <div>{PTV}</div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 0,
+                height: 50,
+                background: "none",
+                color: "white",
+            },
+        },
+        {
+            id: "PT_COL_1",
+            position: positions.PT_COL_1,
             type: "custom",
             data: {
                 label: <div></div>,
@@ -6664,36 +6957,34 @@ export default function GraphicKOA() {
             sourcePosition: Position.Top,
             targetPosition: Position.Left,
             style: {
-                border: "#333333",
-                background: background,
-                width: 1,
-                height: 1,
+                border: "none",
+                width: 0,
+                height: 50,
+                background: "orange",
+                color: "white",
+                zIndex: 9999,
             },
         },
-
         {
-            id: "PSV01",
-            position: positions.PSV01,
+            id: "PT_COL_2",
+            position: positions.PT_COL_2,
             type: "custom",
             data: {
-                label: (
-                    <div style={{ display: "flex", marginTop: 5 }}>
-                        <PSV01_Otsuka />
-                    </div>
-                ),
+                label: <div></div>,
             },
 
-            sourcePosition: Position.Right,
-            targetPosition: Position.Bottom,
+            sourcePosition: Position.Top,
+            targetPosition: Position.Left,
+
             style: {
                 border: "none",
-                width: 260,
-                background: "none",
-                // Thêm box shadow với màu (0, 255, 255)
+                width: 0,
+                height: 50,
+                background: "orange",
+                color: "white",
+                zIndex: 99999,
             },
         },
-
-        // =================  PT ===================================
 
         {
             id: "Pressure_Trans01",
@@ -6702,7 +6993,7 @@ export default function GraphicKOA() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 25,
+                            fontSize: 22,
                             fontWeight: 600,
                         }}
                     >
@@ -6710,13 +7001,14 @@ export default function GraphicKOA() {
                     </div>
                 ),
             },
+
             position: positions.Pressure_Trans01,
 
             style: {
-                border: background,
-                width: 330,
-                background: "white",
-                // Thêm box shadow với màu (0, 255, 255)
+                background: "none",
+                border: "1px solid white",
+                width: 350,
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
             },
             targetPosition: Position.Bottom,
         },
@@ -6727,30 +7019,7 @@ export default function GraphicKOA() {
                     <div
                         style={{
                             color: "green",
-                            fontSize: 22,
-                            fontWeight: 600,
-                        }}
-                    ></div>
-                ),
-            },
-            position: positions.Pressure_Trans02,
-
-            style: {
-                border: background,
-                width: 330,
-                background: "white",
-                // Thêm box shadow với màu (0, 255, 255)
-            },
-            targetPosition: Position.Right,
-        },
-        {
-            id: "Pressure_Trans03",
-            data: {
-                label: (
-                    <div
-                        style={{
-                            color: "green",
-                            fontSize: 25,
+                            fontSize: 32,
                             fontWeight: 600,
                         }}
                     >
@@ -6758,262 +7027,228 @@ export default function GraphicKOA() {
                     </div>
                 ),
             },
-            position: positions.Pressure_Trans03,
+
+            position: positions.Pressure_Trans02,
 
             style: {
-                border: background,
-                width: 330,
-                background: "white",
-                // Thêm box shadow với màu (0, 255, 255)
-            },
-            targetPosition: Position.Right,
-        },
-        {
-            id: "PT1",
-            data: {
-                label: <div>{PTV}</div>,
-            },
-
-            position: positions.PT1,
-            zIndex: 9999,
-            style: {
-                background: background,
-                border: "none",
-                width: "10px",
-
-                height: 10,
-            },
-            targetPosition: Position.Bottom,
-        },
-        {
-            id: "PT2",
-            data: {
-                label: <div>{PTV}</div>,
-            },
-
-            position: positions.PT2,
-            zIndex: 9999,
-
-            style: {
-                background: background,
-                border: "none",
-                width: "10px",
-
-                height: 10,
-            },
-            targetPosition: Position.Bottom,
-        },
-        {
-            id: "PT3",
-            data: {
-                label: <div>{PTV}</div>,
-            },
-            zIndex: 9999,
-
-            position: positions.PT3,
-
-            style: {
-                background: background,
-                border: "none",
-                width: "10px",
-
-                height: 10,
-            },
-            targetPosition: Position.Bottom,
-        },
-        {
-            id: "PT_none1",
-            position: positions.PT_none1,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
-
-            sourcePosition: Position.Top,
-            targetPosition: Position.Right,
-            style: {
-                border: "none",
                 background: "none",
-                width: 10,
-                height: 1,
+                border: "1px solid white",
+                width: 350,
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
             },
+            targetPosition: Position.Bottom,
         },
+        //===================================================================
+
         {
-            id: "PT_none2",
-            position: positions.PT_none2,
+            id: "PCV1",
+            position: positions.PCV1,
             type: "custom",
-            data: {
-                label: <div></div>,
-            },
-
-            sourcePosition: Position.Top,
-            targetPosition: Position.Right,
-            style: {
-                border: "#333333",
-                background: colorIMG_none,
-                width: 10,
-                height: 1,
-            },
-        },
-        {
-            id: "PT_none3",
-            position: positions.PT_none3,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
-
-            sourcePosition: Position.Bottom,
-            targetPosition: Position.Right,
-            style: {
-                border: "#333333",
-                background: colorIMG_none,
-                width: 20,
-                height: 1,
-            },
-        },
-        {
-            id: "PT_col1",
-            position: positions.PT_col1,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
-            zIndex: 999999,
-            sourcePosition: Position.Bottom,
-            targetPosition: Position.Right,
-            style: {
-                border: "yellow",
-                background: "yellow",
-                width: 0,
-                height: 25,
-
-                borderRadius: "none",
-            },
-        },
-        {
-            id: "PT_col2",
-            position: positions.PT_col2,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
-            zIndex: 999999,
-            sourcePosition: Position.Bottom,
-            targetPosition: Position.Right,
-            style: {
-                border: "yellow",
-                background: "yellow",
-                width: 10,
-                height: 25,
-
-                borderRadius: "none",
-            },
-        },
-        {
-            id: "PT_col3",
-            position: positions.PT_col3,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
-            zIndex: 999999,
-            sourcePosition: Position.Bottom,
-            targetPosition: Position.Right,
-            style: {
-                border: "yellow",
-                background: "yellow",
-                width: 10,
-                height: 25,
-
-                borderRadius: "none",
-            },
-        },
-
-        //  ================== TT ======================
-
-        // ================ header ========================
-
-        {
-            id: "Header",
             data: {
                 label: (
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            textAlign: "center",
-                            alignItems: "center",
-                        }}
-                    >
-                        <div>
-                            <p
-                                style={{
-                                    fontSize: 55,
-                                    fontWeight: 600,
-                                    color: "#ffaa00",
-                                }}
-                            >
-                               Pengerang
-                            </p>
-                        </div>
+                    <div>
+                        <Image
+                            src="/layout/imgGraphic/PVC.png"
+                            width={60}
+                            height={60}
+                            alt="Picture of the author"
+                        />
                     </div>
                 ),
             },
 
-            position: positions.Header,
-            zIndex: 9999,
+            sourcePosition: Position.Top,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 0,
+                height: 0,
+                background: "none",
+                color: "white",
+            },
+        },
+        {
+            id: "PCV2",
+            position: positions.PCV2,
+            type: "custom",
+            data: {
+                label: (
+                    <div>
+                        <Image
+                            src="/layout/imgGraphic/PVC.png"
+                            width={60}
+                            height={60}
+                            alt="Picture of the author"
+                        />
+                    </div>
+                ),
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 0,
+                height: 0,
+                background: "none",
+                color: "white",
+            },
+        },
+
+        {
+            id: "PCV1_none1",
+            position: positions.PCV1_none1,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Top,
+            style: {
+                border: "none",
+                width: 0,
+                height: 0,
+                background: "none",
+                color: "white",
+            },
+        },
+        {
+            id: "PCV2_none1",
+            position: positions.PCV2_none1,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Top,
+            style: {
+                border: "none",
+                width: 0,
+                height: 0,
+                background: "none",
+                color: "white",
+            },
+        },
+
+        {
+            id: "PCV1_none2",
+            position: positions.PCV1_none2,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Bottom,
+            style: {
+                border: "none",
+                width: 0,
+                height: 0,
+                background: "none",
+                color: "white",
+            },
+        },
+        {
+            id: "PCV2_none2",
+            position: positions.PCV2_none2,
+            type: "custom",
+            data: {
+                label: <div></div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Top,
+            style: {
+                border: "none",
+                width: 0,
+                height: 0,
+                background: "none",
+                color: "white",
+            },
+        },
+
+        {
+            id: "PCV_NUM01",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            color: "green",
+                            fontSize: 22,
+                            fontWeight: 500,
+                        }}
+                    >
+                        <PCV_01_Otsuka />
+                    </div>
+                ),
+            },
+            position: positions.PCV_NUM01,
 
             style: {
-                background: background,
-                border: background,
-                width: 10,
-
-                height: 10,
+                background: "none",
+                border: "1px solid white",
+                width: 300,
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
             },
             targetPosition: Position.Bottom,
         },
-        // {
-        //     id: "HELP",
-        //     data: {
-        //         label: (
-        //             <div>
-        //                 <div
-        //                     style={{
-        //                         textAlign: "center",
-        //                         cursor: "pointer",
-        //                     }}
-        //                 >
-        //                     <p
-        //                         style={{
-        //                             width: 50,
-        //                             height: 50,
-        //                             border: "5px solid white",
-        //                             borderRadius: 50,
-        //                             fontWeight: 600,
-        //                             color: "white",
-        //                             fontSize: 30,
-        //                         }}
-        //                         onClick={() => setVisible(true)}
-        //                     >
-        //                         ?
-        //                     </p>
-        //                 </div>
-        //             </div>
-        //         ),
-        //     },
+        {
+            id: "PCV_NUM02",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            color: "green",
+                            fontSize: 22,
+                            fontWeight: 600,
+                        }}
+                    >
+                        <PCV_02_Otsuka />
+                    </div>
+                ),
+            },
 
-        //     position: positions.HELP,
+            position: positions.PCV_NUM02,
 
-        //     style: {
-        //         background: background,
-        //         border: background,
-        //         width: 10,
-        //         height: 10,
-        //     },
-        //     targetPosition: Position.Bottom,
-        // },
-        // =============== TIME  =======================
+            style: {
+                background: "none",
+                border: "1px solid white",
+                width: 300,
+                boxShadow: "0px 0px 30px 0px  rgba(0, 255, 255, 1)", // Thêm box shadow với màu (0, 255, 255)
+            },
+            targetPosition: Position.Top,
+            sourcePosition: Position.Top,
+        },
+
+        //========================================================
+
+        {
+            id: "borderWhite",
+            data: {
+                label: (
+                    <div
+                        style={{
+                            color: "green",
+                            fontSize: 32,
+                            fontWeight: 600,
+                        }}
+                    >
+                        {" "}
+                    </div>
+                ),
+            },
+            position: positions.borderWhite,
+            style: {
+                background: background,
+                border: "1px solid white",
+                width: 580,
+                height: 250,
+                borderRadius: 50,
+            },
+            targetPosition: Position.Bottom,
+        },
 
         {
             id: "timeUpdate3",
@@ -7031,8 +7266,8 @@ export default function GraphicKOA() {
                             <p
                                 style={{
                                     fontSize: 60,
-                                    fontWeight: 500,
-                                    color: "#ffaa00",
+                                    fontWeight: 600,
+                                    color: "yellow",
                                 }}
                             ></p>
                         </div>
@@ -7053,512 +7288,387 @@ export default function GraphicKOA() {
             targetPosition: Position.Bottom,
         },
 
-        //====================== Conneted ===================
-
         {
-            id: "ConnectData",
+            id: "Header",
             data: {
-                label: <div></div>,
+                label: (
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            textAlign: "center",
+                            alignItems: "center",
+                        }}
+                    >
+                        <div>
+                            <p
+                                style={{
+                                    fontSize: 55,
+                                    fontWeight: 600,
+                                    color: "orange",
+                                }}
+                            >
+                                Sarawak
+                            </p>
+                        </div>
+                    </div>
+                ),
             },
 
-            position: positions.ConnectData,
+            position: positions.Header,
+            zIndex: 9999,
 
             style: {
                 background: background,
-                border: "none",
-                width: "10px",
+                border: background,
+                width: 10,
 
                 height: 10,
             },
             targetPosition: Position.Bottom,
         },
-        // =================== Arrow ======================
-
-        {
-            id: "ArrowRight",
-            data: {
-                label: <div>{ArrowRight}</div>,
-            },
-
-            position: positions.ArrowRight,
-
-            style: {
-                background: background,
-                border: "none",
-                width: "10px",
-
-                height: 10,
-            },
-            targetPosition: Position.Bottom,
-        },
+        //=================================================
 
         {
             id: "ArrowRight1",
-            data: {
-                label: <div>{ArrowRight}</div>,
-            },
-
             position: positions.ArrowRight1,
-
-            style: {
-                background: background,
-                border: "none",
-                width: "10px",
-
-                height: 10,
-            },
-            targetPosition: Position.Bottom,
-        },
-
-        // {
-        //     id: "Flow1",
-        //     data: {
-        //         label: <div>{ArrowRight}</div>,
-        //     },
-
-        //     position: positions.Flow1,
-
-        //     style: {
-        //         background: background,
-        //         border: "none",
-        //         width: "10px",
-
-        //         height: 10,
-        //     },
-        //     targetPosition: Position.Bottom,
-        // },
-
-        // {
-        //     id: "Flow2",
-        //     data: {
-        //         label: <div>{ArrowRight}</div>,
-        //     },
-
-        //     position: positions.Flow2,
-
-        //     style: {
-        //         background: background,
-        //         border: "none",
-        //         width: "10px",
-
-        //         height: 10,
-        //     },
-        //     targetPosition: Position.Bottom,
-        // },
-
-        // ================ PT ICONS ===================
-
-        // ============= GD =====================
-
-        {
-            id: "GD1",
-            data: {
-                label: <div>{GD}</div>,
-            },
-
-            position: positions.GD1,
-            zIndex: 9999,
-            style: {
-                background: background,
-                border: "none",
-                width: "10px",
-
-                height: 10,
-            },
-            targetPosition: Position.Top,
-        },
-        {
-            id: "GD2",
-            data: {
-                label: <div>{GD}</div>,
-            },
-
-            position: positions.GD2,
-            zIndex: 9999,
-
-            style: {
-                background: background,
-                border: "none",
-                width: "10px",
-
-                height: 10,
-            },
-            targetPosition: Position.Left,
-        },
-        // {
-        //     id: "GD3",
-        //     data: {
-        //         label: <div>{GD}</div>,
-        //     },
-
-        //     position: positions.GD3,
-        //     zIndex: 9999,
-
-        //     style: {
-        //         background: background,
-        //         border: "none",
-        //         width: "10px",
-
-        //         height: 10,
-        //     },
-        //     targetPosition: Position.Top,
-        // },
-        {
-            id: "GD1_Name1901",
-            data: {
-                label: (
-                    <div
-                        style={{
-                            fontSize: 20,
-                            fontWeight: 500,
-                            position: "relative",
-                            bottom: 5,
-                            color: "white",
-                        }}
-                    >
-                        GD-1201
-                    </div>
-                ),
-            },
-            position: positions.GD1_Name1901,
-
-            style: {
-                background: "green",
-                border: "1px solid white",
-                width: 130,
-                height: 35,
-            },
-            targetPosition: Position.Left,
-        },
-        {
-            id: "GD2_Name1902",
-            data: {
-                label: (
-                    <div
-                        style={{
-                            fontSize: 20,
-                            fontWeight: 500,
-                            position: "relative",
-                            bottom: 5,
-                            color: "white",
-                        }}
-                    >
-                        GD-1202
-                    </div>
-                ),
-            },
-            position: positions.GD2_Name1902,
-
-            style: {
-                background: "green",
-                border: "1px solid white",
-                width: 130,
-                height: 35,
-            },
-            targetPosition: Position.Left,
-        },
-        // {
-        //     id: "GD3_Name1903",
-        //     data: {
-        //         label: (
-        //             <div
-        //                 style={{
-        //                     fontSize: 20,
-        //                     fontWeight: 500,
-        //                     position: "relative",
-        //                     bottom: 5,
-        //                 }}
-        //             >
-        //                 GD-1903
-        //             </div>
-        //         ),
-        //     },
-        //     position: positions.GD3_Name1903,
-
-        //     style: {
-        //         background: "yellow",
-        //         border: "1px solid white",
-        //         width: 130,
-        //         height: 35,
-        //     },
-        //     targetPosition: Position.Left,
-        // },
-
-        {
-            id: "GD1_Value1901",
-            data: {
-                label: <div style={{}}> </div>,
-            },
-            position: positions.GD1_Value1901,
-
-            style: {
-                background: "white",
-                border: "1px solid white",
-                width: 130,
-                height: 35,
-            },
-            targetPosition: Position.Bottom,
-        },
-        {
-            id: "GD2_Value1902",
-            data: {
-                label: (
-                    <div
-                        style={{
-                            color: "green",
-                            fontSize: 18,
-                            fontWeight: 600,
-                        }}
-                    >
-                        {" "}
-                    </div>
-                ),
-            },
-            position: positions.GD2_Value1902,
-
-            style: {
-                background: "white",
-                border: "1px solid white",
-                width: 130,
-                height: 35,
-            },
-            targetPosition: Position.Bottom,
-        },
-        // {
-        //     id: "GD3_Value1903",
-        //     data: {
-        //         label: (
-        //             <div
-        //                 style={{
-        //                     color: "green",
-        //                     fontSize: 18,
-        //                     fontWeight: 600,
-        //                 }}
-        //             >
-        //                 {" "}
-        //             </div>
-        //         ),
-        //     },
-        //     position: positions.GD3_Value1903,
-
-        //     style: {
-        //         background: borderBox,
-        //         border: "1px solid white",
-        //         width: 130,
-        //         height: 35,
-        //     },
-        //     targetPosition: Position.Bottom,
-        // },
-
-        {
-            id: "GD_none1",
-            position: positions.GD_none1,
             type: "custom",
             data: {
-                label: <div></div>,
+                label: <div>{ArrowRightLGDS}</div>,
             },
 
             sourcePosition: Position.Top,
-            targetPosition: Position.Right,
+            targetPosition: Position.Left,
             style: {
-                border: "#333333",
-                background: colorIMG_none,
-                width: 10,
-                height: 1,
+                border: "none",
+                width: 0,
+                height: 0,
+                background: "none",
+                color: "white",
             },
         },
+
         {
-            id: "GD_none2",
-            position: positions.GD_none2,
+            id: "ArrowRight2",
+            position: positions.ArrowRight2,
             type: "custom",
             data: {
-                label: <div></div>,
+                label: <div>{ArrowRightLGDS}</div>,
             },
 
             sourcePosition: Position.Top,
-            targetPosition: Position.Right,
+            targetPosition: Position.Left,
             style: {
-                border: "#333333",
-                background: colorIMG_none,
-                width: 10,
-                height: 1,
-            },
-        },
-        // {
-        //     id: "GD_none3",
-        //     position: positions.GD_none3,
-        //     type: "custom",
-        //     data: {
-        //         label: <div></div>,
-        //     },
-
-        //     sourcePosition: Position.Top,
-        //     targetPosition: Position.Right,
-        //     style: {
-        //         border: "#333333",
-        //         background: colorIMG_none,
-        //         width: 10,
-        //         height: 1,
-        //     },
-        // },
-
-        // ============ border white ======================
-        {
-            id: "borderWhite",
-            data: {
-                label: (
-                    <div
-                        style={{
-                            color: "green",
-                            fontSize: 32,
-                            fontWeight: 600,
-                        }}
-                    >
-                        {" "}
-                    </div>
-                ),
-            },
-            position: positions.borderWhite,
-
-            style: {
-                background: background,
-                border: "1px solid white",
-                width: 580,
-                height: 270,
-                borderRadius: 50,
-            },
-            targetPosition: Position.Bottom,
-        },
-        // =================== overlay =================================
-
-        {
-            id: "overlay_SmallVavle1",
-            position: positions.overlay_SmallVavle1,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
-
-            sourcePosition: Position.Left,
-            targetPosition: Position.Right,
-            style: {
-                border: "#333333",
-                background: background,
-                width: 50,
-                height: 1,
-            },
-        },
-        {
-            id: "overlay_SmallVavle2",
-            position: positions.overlay_SmallVavle2,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
-
-            sourcePosition: Position.Left,
-            targetPosition: Position.Right,
-            style: {
-                border: background,
-                background: background,
-                width: 50,
-                height: 1,
-            },
-        },
-
-        //============================ T_JUNTION ==========================
-
-        // {
-        //     id: "T_juntion_11",
-        //     position: positions.T_juntion_11,
-        //     type: "custom",
-        //     data: {
-        //         label: <div>{juntionBottom}</div>,
-        //     },
-
-        //     sourcePosition: Position.Right,
-        //     targetPosition: Position.Left,
-        //     style: {
-        //         border: "#333333",
-        //         background: background,
-        //         width: 1,
-        //         height: 1,
-        //     },
-        //     zIndex: 9999,
-        // },
-
-        // {
-        //     id: "T_juntion_14",
-        //     position: positions.T_juntion_14,
-        //     type: "custom",
-        //     data: {
-        //         label: <div>{juntionTop}</div>,
-        //     },
-
-        //     sourcePosition: Position.Right,
-        //     targetPosition: Position.Left,
-        //     style: {
-        //         border: "#333333",
-        //         background: background,
-        //         width: 1,
-        //         height: 1,
-        //     },
-        //     zIndex: 9999,
-        // },
-
-        //===============================  Alarm center ===========================
-
-        {
-            id: "AlarmCenter",
-            position: positions.AlarmCenter,
-            type: "custom",
-            data: {
-                label: <div></div>,
-            },
-
-            sourcePosition: Position.Left,
-            targetPosition: Position.Right,
-            style: {
-                background: backgroundGraphic,
                 border: "none",
-                width: 200,
-                borderRadius: 5,
+                width: 0,
+                height: 0,
+                background: "none",
+                color: "white",
             },
         },
 
         {
-            id: "LineBall_1_1",
-            position: positions.LineBall_1_1,
+            id: "ArrowRight3",
+            position: positions.ArrowRight3,
             type: "custom",
             data: {
-                label: <div></div>,
+                label: <div>{ArrowRightLGDS}</div>,
             },
 
-            sourcePosition: Position.Right,
+            sourcePosition: Position.Top,
             targetPosition: Position.Left,
             style: {
-                border: "#333333",
+                border: "none",
+                width: 0,
+                height: 0,
                 background: "none",
-                width: 10,
-                height: 1,
+                color: "white",
             },
         },
 
         {
-            id: "lineBall_13_1",
-            position: positions.lineBall_13_1,
+            id: "ArrowRight4",
+            position: positions.ArrowRight4,
             type: "custom",
             data: {
-                label: <div></div>,
+                label: <div>{ArrowRightLGDS}</div>,
             },
 
-            sourcePosition: Position.Right,
+            sourcePosition: Position.Top,
             targetPosition: Position.Left,
             style: {
-                border: "#333333",
+                border: "none",
+                width: 0,
+                height: 0,
                 background: "none",
-                width: 10,
-                height: 1,
+                color: "white",
+            },
+        },
+
+        {
+            id: "ArrowRight5",
+            position: positions.ArrowRight5,
+            type: "custom",
+            data: {
+                label: <div>{ArrowRightLGDS}</div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 0,
+                height: 0,
+                background: "none",
+                color: "white",
+            },
+        },
+
+        {
+            id: "ArrowRight6",
+            position: positions.ArrowRight6,
+            type: "custom",
+            data: {
+                label: <div>{ArrowRightLGDS}</div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 0,
+                height: 0,
+                background: "none",
+                color: "white",
+            },
+        },
+
+        {
+            id: "ArrowRight7",
+            position: positions.ArrowRight7,
+            type: "custom",
+            data: {
+                label: <div>{ArrowRightLGDS}</div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 0,
+                height: 0,
+                background: "none",
+                color: "white",
+            },
+        },
+
+        {
+            id: "ArrowRight8",
+            position: positions.ArrowRight8,
+            type: "custom",
+            data: {
+                label: <div>{ArrowRightLGDS}</div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 0,
+                height: 0,
+                background: "none",
+                color: "white",
+            },
+        },
+
+        {
+            id: "ArrowRight9",
+            position: positions.ArrowRight9,
+            type: "custom",
+            data: {
+                label: <div>{ArrowRightLGDS}</div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 0,
+                height: 0,
+                background: "none",
+                color: "white",
+            },
+        },
+
+        {
+            id: "ArrowRight10",
+            position: positions.ArrowRight10,
+            type: "custom",
+            data: {
+                label: <div>{ArrowRightLGDS}</div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 0,
+                height: 0,
+                background: "none",
+                color: "white",
+            },
+        },
+
+        {
+            id: "ArrowRight11",
+            position: positions.ArrowRight11,
+            type: "custom",
+            data: {
+                label: <div>{ArrowRightLGDS}</div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 0,
+                height: 0,
+                background: "none",
+                color: "white",
+            },
+        },
+
+        {
+            id: "ArrowRight12",
+            position: positions.ArrowRight12,
+            type: "custom",
+            data: {
+                label: <div>{ArrowRightLGDS}</div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 0,
+                height: 0,
+                background: "none",
+                color: "white",
+            },
+        },
+
+        //====================================
+
+        {
+            id: "ArrowLeft1",
+            position: positions.ArrowLeft1,
+            type: "custom",
+            data: {
+                label: <div>{ArrowLeftLGDS}</div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 0,
+                height: 0,
+                background: "none",
+                color: "white",
+            },
+        },
+
+        {
+            id: "ArrowLeft2",
+            position: positions.ArrowLeft2,
+            type: "custom",
+            data: {
+                label: <div>{ArrowLeftLGDS}</div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 0,
+                height: 0,
+                background: "none",
+                color: "white",
+            },
+        },
+
+        {
+            id: "ArrowLeft3",
+            position: positions.ArrowLeft3,
+            type: "custom",
+            data: {
+                label: <div>{ArrowLeftLGDS}</div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 0,
+                height: 0,
+                background: "none",
+                color: "white",
+            },
+        },
+
+        {
+            id: "ArrowLeft4",
+            position: positions.ArrowLeft4,
+            type: "custom",
+            data: {
+                label: <div>{ArrowLeftLGDS}</div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 0,
+                height: 0,
+                background: "none",
+                color: "white",
+            },
+        },
+        {
+            id: "ArrowLeft5",
+            position: positions.ArrowLeft5,
+            type: "custom",
+            data: {
+                label: <div>{ArrowLeftLGDS}</div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 0,
+                height: 0,
+                background: "none",
+                color: "white",
+            },
+        },
+
+        {
+            id: "ArrowLeft6",
+            position: positions.ArrowLeft6,
+            type: "custom",
+            data: {
+                label: <div>{ArrowLeftLGDS}</div>,
+            },
+
+            sourcePosition: Position.Top,
+            targetPosition: Position.Left,
+            style: {
+                border: "none",
+                width: 0,
+                height: 0,
+                background: "none",
+                color: "white",
             },
         },
     ]);
@@ -7573,51 +7683,9 @@ export default function GraphicKOA() {
                         n.id === id ? { ...n, position: position } : n
                     )
                 );
-                if (id === "SDV") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        SDV: position,
-                    }));
-                } else if (id === "SDV_None") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        SDV_None: position,
-                    }));
-                } else if (id === "SDV_IMG") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        SDV_IMG: position,
-                    }));
-                } else if (id === "SDV_Ball") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        SDV_Ball: position,
-                    }));
-                } else if (id === "SDV2") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        SDV2: position,
-                    }));
-                } else if (id === "SDV_None2") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        SDV_None2: position,
-                    }));
-                } else if (id === "SDV_IMG2") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        SDV_IMG2: position,
-                    }));
-                } else if (id === "SDV_Ball2") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        SDV_Ball2: position,
-                    }));
-                }
-                // ================================== end item ==================================
 
                 // ============ line =========================
-                else if (id === "line1") {
+                if (id === "line1") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
                         line1: position,
@@ -7682,225 +7750,341 @@ export default function GraphicKOA() {
                         ...prevPositions,
                         line13: position,
                     }));
-                }
-
-                // ============ ball vavle ===========================
-                else if (id === "BallValue01") {
+                } else if (id === "line14") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        BallValue01: position,
+                        line14: position,
                     }));
-                } else if (id === "BallValue02") {
+                } else if (id === "line15") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        BallValue02: position,
+                        line15: position,
                     }));
-                } else if (id === "BallValue03") {
+                } else if (id === "line16") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        BallValue03: position,
+                        line16: position,
                     }));
-                } else if (id === "BallValue04") {
+                } else if (id === "line17") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        BallValue04: position,
+                        line17: position,
                     }));
-                } else if (id === "BallValue05") {
+                } else if (id === "line18") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        BallValue05: position,
+                        line18: position,
                     }));
-                } else if (id === "BallValue06") {
+                } else if (id === "line19") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        BallValue06: position,
+                        line19: position,
                     }));
-                } else if (id === "BallValue07") {
+                } else if (id === "line20") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        BallValue07: position,
+                        line20: position,
                     }));
-                } else if (id === "BallValue08") {
+                } else if (id === "line21") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        BallValue08: position,
+                        line21: position,
                     }));
-                } else if (id === "BallValue09") {
+                } else if (id === "line22") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        BallValue09: position,
+                        line22: position,
                     }));
-                } else if (id === "BallValue10") {
+                } else if (id === "line23") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        BallValue10: position,
+                        line23: position,
                     }));
-                } else if (id === "BallValueFirst") {
+                } else if (id === "line24") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        BallValueFirst: position,
+                        line24: position,
                     }));
-                } else if (id === "BallValueLast") {
+                } else if (id === "line26") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        BallValueLast: position,
+                        line26: position,
                     }));
-                } else if (id === "BallValueSDV_2") {
+                } else if (id === "line25") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        BallValueSDV_2: position,
+                        line25: position,
                     }));
-                }
-                // ============ ball vavle ===========================
-                else if (id === "Tank") {
+                } else if (id === "line27") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        Tank: position,
+                        line27: position,
                     }));
-                } else if (id === "Tank_None") {
+                } else if (id === "line28") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        Tank_None: position,
+                        line28: position,
                     }));
-                } else if (id === "Tank_Ball") {
+                } else if (id === "line29") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        Tank_Ball: position,
-                    }));
-                }
-                // ============ PCV ===========================
-                else if (id === "PCV01") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        PCV01: position,
-                    }));
-                } else if (id === "PCV02") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        PCV02: position,
-                    }));
-                } else if (id === "PCV_NUM01") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        PCV_NUM01: position,
-                    }));
-                } else if (id === "PCV_NUM02") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        PCV_NUM02: position,
-                    }));
-                } else if (id === "PCV_none1") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        PCV_none1: position,
-                    }));
-                } else if (id === "PCV_none2") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        PCV_none2: position,
-                    }));
-                } else if (id === "PCV_ballVavle_Small1") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        PCV_ballVavle_Small1: position,
-                    }));
-                } else if (id === "PCV_ballVavle_Small2") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        PCV_ballVavle_Small2: position,
-                    }));
-                } else if (id === "PCV_ballVavle_Small1_none1") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        PCV_ballVavle_Small1_none1: position,
-                    }));
-                } else if (id === "PCV_ballVavle_Small1_none2") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        PCV_ballVavle_Small1_none2: position,
-                    }));
-                } else if (id === "PCV_ballVavle_Small2_none1") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        PCV_ballVavle_Small2_none1: position,
-                    }));
-                } else if (id === "PCV_ballVavle_Small2_none2") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        PCV_ballVavle_Small2_none2: position,
+                        line29: position,
                     }));
                 }
 
-                // ============ FIQ ===========================
-                else if (id === "FIQ_1901") {
+                //====================================================
+                else if (id === "Station2") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        FIQ_1901: position,
+                        Station2: position,
                     }));
-                } else if (id === "FIQ_1902") {
+                } else if (id === "Station3") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        FIQ_1902: position,
+                        Station3: position,
                     }));
-                } else if (id === "FIQ_none") {
+                } else if (id === "Station4") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        FIQ_none: position,
+                        Station4: position,
                     }));
-                } else if (id === "FIQ_none2") {
+                } else if (id === "Station5") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        FIQ_none2: position,
+                        Station5: position,
                     }));
-                } else if (id === "FIQ_none11") {
+                } else if (id === "Station6") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        FIQ_none11: position,
+                        Station6: position,
                     }));
-                } else if (id === "FIQ_none22") {
+                } else if (id === "Station7") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        FIQ_none22: position,
+                        Station7: position,
                     }));
-                }
-                // ============ Ball center ===========================
-                else if (id === "BallValueCenter") {
+                } else if (id === "Station8") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        BallValueCenter: position,
+                        Station8: position,
                     }));
-                } else if (id === "BallValueCenter_Check") {
+                } else if (id === "Station9") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        BallValueCenter_Check: position,
+                        Station9: position,
                     }));
-                } else if (id === "BallValueCenter_None") {
+                } else if (id === "line1_Name") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        BallValueCenter_None: position,
+                        line1_Name: position,
                     }));
-                } else if (id === "BallValueCenter_None2") {
+                } else if (id === "line2_Name") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        BallValueCenter_None2: position,
-                    }));
-                } else if (id === "BallValuePSV") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        BallValuePSV: position,
-                    }));
-                } else if (id === "BallValuePSVNone") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        BallValuePSVNone: position,
-                    }));
-                } else if (id === "VavleWay") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        VavleWay: position,
+                        line2_Name: position,
                     }));
                 }
-                // ========================= data ==========================
+                //====================================================
+                else if (id === "line_center1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line_center1: position,
+                    }));
+                } else if (id === "line_center2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line_center2: position,
+                    }));
+                } else if (id === "line_center3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line_center3: position,
+                    }));
+                } else if (id === "line_center4") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        line_center4: position,
+                    }));
+                }
+                //===========================================
+                else if (id === "SDV_LINE6") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_LINE6: position,
+                    }));
+                } else if (id === "SDV_LINE7") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_LINE7: position,
+                    }));
+                } else if (id === "SDV_LINE6_NAME") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_LINE6_NAME: position,
+                    }));
+                } else if (id === "SDV_LINE7_NAME") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_LINE7_NAME: position,
+                    }));
+                } else if (id === "SDV_NON1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_NON1: position,
+                    }));
+                } else if (id === "SDV_NON2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_NON2: position,
+                    }));
+                } else if (id === "SDV_NON3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_NON3: position,
+                    }));
+                } else if (id === "SDV_NON4") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        SDV_NON4: position,
+                    }));
+                }
+
+                //===========================================
+                else if (id === "FIQ_1_IMG") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        FIQ_1_IMG: position,
+                    }));
+                } else if (id === "FIQ_2_IMG") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        FIQ_2_IMG: position,
+                    }));
+                } else if (id === "FIQ_1_NON") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        FIQ_1_NON: position,
+                    }));
+                } else if (id === "FIQ_2_NON") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        FIQ_2_NON: position,
+                    }));
+                }
+
+                //===========================================
+                else if (id === "Ball_1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Ball_1: position,
+                    }));
+                } else if (id === "Ball_2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Ball_2: position,
+                    }));
+                } else if (id === "Ball_3") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Ball_3: position,
+                    }));
+                } else if (id === "Ball_4") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Ball_4: position,
+                    }));
+                } else if (id === "Ball_5") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Ball_5: position,
+                    }));
+                } else if (id === "Ball_6") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Ball_6: position,
+                    }));
+                } else if (id === "Ball_7") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Ball_7: position,
+                    }));
+                } else if (id === "Ball_8") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Ball_8: position,
+                    }));
+                } else if (id === "Ball_9") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Ball_9: position,
+                    }));
+                } else if (id === "Ball_10") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Ball_10: position,
+                    }));
+                } else if (id === "Ball_21") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Ball_21: position,
+                    }));
+                } else if (id === "Ball_22") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Ball_22: position,
+                    }));
+                } else if (id === "Ball_23") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Ball_23: position,
+                    }));
+                } else if (id === "Ball_24") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Ball_24: position,
+                    }));
+                } else if (id === "Ball_SDV_1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Ball_SDV_1: position,
+                    }));
+                } else if (id === "Ball_SDV_2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Ball_SDV_2: position,
+                    }));
+                } else if (id === "Ball_Center") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Ball_Center: position,
+                    }));
+                } else if (id === "Ball_Arrow") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Ball_Arrow: position,
+                    }));
+                } else if (id === "Ball_PSV") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Ball_PSV: position,
+                    }));
+                } else if (id === "Ball_Last") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Ball_Last: position,
+                    }));
+                } else if (id === "Ball_Small_1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Ball_Small_1: position,
+                    }));
+                } else if (id === "Ball_Small_2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        Ball_Small_2: position,
+                    }));
+                }
+                //===========================================
                 else if (id === "data1") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
@@ -7942,50 +8126,40 @@ export default function GraphicKOA() {
                         data8: position,
                     }));
                 }
-                // ========================= PSV ==========================
-                else if (id === "PSV_01") {
+                //===========================================
+                else if (id === "Tank") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        PSV_01: position,
+                        Tank: position,
                     }));
-                } else if (id === "PSV_02") {
+                } else if (id === "Tank_Name") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        PSV_02: position,
-                    }));
-                } else if (id === "PSV_03") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        PSV_03: position,
-                    }));
-                } else if (id === "PSV_None01") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        PSV_None01: position,
-                    }));
-                } else if (id === "PSV_None02") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        PSV_None02: position,
-                    }));
-                } else if (id === "PSV_None03") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        PSV_None03: position,
-                    }));
-                } else if (id === "PSV_None04") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        PSV_None04: position,
-                    }));
-                } else if (id === "PSV01") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        PSV01: position,
+                        Tank_Name: position,
                     }));
                 }
-                //  ================ PT ===================
-                else if (id === "Pressure_Trans01") {
+                //===========================================
+                else if (id === "PT_COL_1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT_COL_1: position,
+                    }));
+                } else if (id === "PT_COL_2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT_COL_2: position,
+                    }));
+                } else if (id === "PT_IMG_1") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT_IMG_1: position,
+                    }));
+                } else if (id === "PT_IMG_2") {
+                    setPositions((prevPositions: any) => ({
+                        ...prevPositions,
+                        PT_IMG_2: position,
+                    }));
+                } else if (id === "Pressure_Trans01") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
                         Pressure_Trans01: position,
@@ -7995,296 +8169,172 @@ export default function GraphicKOA() {
                         ...prevPositions,
                         Pressure_Trans02: position,
                     }));
-                } else if (id === "Pressure_Trans03") {
+                }
+                //===========================================
+                else if (id === "PCV1") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        Pressure_Trans03: position,
+                        PCV1: position,
                     }));
-                } else if (id === "PT1") {
+                } else if (id === "PCV2") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        PT1: position,
+                        PCV2: position,
                     }));
-                } else if (id === "PT2") {
+                } else if (id === "PCV1_none1") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        PT2: position,
+                        PCV1_none1: position,
                     }));
-                } else if (id === "PT3") {
+                } else if (id === "PCV2_none1") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        PT3: position,
+                        PCV2_none1: position,
                     }));
-                } else if (id === "PT_none1") {
+                } else if (id === "PCV1_none2") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        PT_none1: position,
+                        PCV1_none2: position,
                     }));
-                } else if (id === "PT_none2") {
+                } else if (id === "PCV2_none2") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        PT_none2: position,
+                        PCV2_none2: position,
                     }));
-                } else if (id === "PT_none3") {
+                } else if (id === "PCV_NUM01") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        PT_none3: position,
+                        PCV_NUM01: position,
                     }));
-                } else if (id === "PT_col1") {
+                } else if (id === "PCV_NUM02") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        PT_col1: position,
-                    }));
-                } else if (id === "PT_col2") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        PT_col2: position,
-                    }));
-                } else if (id === "PT_col3") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        PT_col3: position,
+                        PCV_NUM02: position,
                     }));
                 }
-
-                // ================ TT =================
-                else if (id === "Temperature_Trans01") {
+                //==============================================================
+                else if (id === "borderWhite") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        Temperature_Trans01: position,
-                    }));
-                } else if (id === "Temperature_Trans02") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        Temperature_Trans02: position,
-                    }));
-                }
-                // ============= header ===============
-                else if (id === "Header") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        Header: position,
-                    }));
-                } else if (id === "HELP") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        HELP: position,
-                    }));
-                }
-                // ============= Time Update ==================
-                else if (id === "timeUpdate") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        timeUpdate: position,
-                    }));
-                } else if (id === "timeUpdate2") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        timeUpdate2: position,
+                        borderWhite: position,
                     }));
                 } else if (id === "timeUpdate3") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
                         timeUpdate3: position,
                     }));
-                }
-                // ============= Connected ===================
-                else if (id === "ConnectData") {
+                } else if (id === "Header") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        ConnectData: position,
+                        Header: position,
                     }));
                 }
-                // ============= Arrow ======================
-                else if (id === "ArrowRight") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        ArrowRight: position,
-                    }));
-                } else if (id === "ArrowRight1") {
+
+                //==============================================================
+                else if (id === "ArrowRight1") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
                         ArrowRight1: position,
                     }));
-                } else if (id === "Flow1") {
+                } else if (id === "ArrowRight2") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        Flow1: position,
+                        ArrowRight2: position,
                     }));
-                } else if (id === "Flow2") {
+                } else if (id === "ArrowRight3") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        Flow2: position,
+                        ArrowRight3: position,
                     }));
-                }
-                // =========== PT ICONS1 ==================
-
-                //================ GD ====================
-                else if (id === "GD1") {
+                } else if (id === "ArrowRight4") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        GD1: position,
+                        ArrowRight4: position,
                     }));
-                } else if (id === "GD2") {
+                } else if (id === "ArrowRight5") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        GD2: position,
+                        ArrowRight5: position,
                     }));
-                } else if (id === "GD3") {
+                } else if (id === "ArrowRight6") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        GD3: position,
+                        ArrowRight6: position,
                     }));
-                } else if (id === "GD1_Name1901") {
+                } else if (id === "ArrowRight7") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        GD1_Name1901: position,
+                        ArrowRight7: position,
                     }));
-                } else if (id === "GD2_Name1902") {
+                } else if (id === "ArrowRight8") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        GD2_Name1902: position,
+                        ArrowRight8: position,
                     }));
-                } else if (id === "GD3_Name1903") {
+                } else if (id === "ArrowRight9") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        GD3_Name1903: position,
+                        ArrowRight9: position,
                     }));
-                } else if (id === "GD1_Value1901") {
+                } else if (id === "ArrowRight10") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        GD1_Value1901: position,
+                        ArrowRight10: position,
                     }));
-                } else if (id === "GD2_Value1902") {
+                } else if (id === "ArrowRight11") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        GD2_Value1902: position,
+                        ArrowRight11: position,
                     }));
-                } else if (id === "GD3_Value1903") {
+                } else if (id === "ArrowRight12") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        GD3_Value1903: position,
-                    }));
-                } else if (id === "GD_none1") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        GD_none1: position,
-                    }));
-                } else if (id === "GD_none2") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        GD_none2: position,
-                    }));
-                } else if (id === "GD_none3") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        GD_none3: position,
+                        ArrowRight12: position,
                     }));
                 }
-                // ===================== border white ==================
-                else if (id === "borderWhite") {
+                //==============================================
+                else if (id === "ArrowLeft1") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        borderWhite: position,
+                        ArrowLeft1: position,
                     }));
-                }
-                // ==================== overlay ========================
-                else if (id === "overlay_SmallVavle1") {
+                } else if (id === "ArrowLeft2") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        overlay_SmallVavle1: position,
+                        ArrowLeft2: position,
                     }));
-                } else if (id === "overlay_SmallVavle2") {
+                } else if (id === "ArrowLeft3") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        overlay_SmallVavle2: position,
+                        ArrowLeft3: position,
                     }));
-                }
-                //========================== animation line =======================
-                else if (id === "animation_line7") {
+                } else if (id === "ArrowLeft4") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        animation_line7: position,
+                        ArrowLeft4: position,
                     }));
-                } else if (id === "animation_line8") {
+                } else if (id === "ArrowLeft5") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        animation_line8: position,
+                        ArrowLeft5: position,
                     }));
-                } else if (id === "animation_line9") {
+                } else if (id === "ArrowLeft6") {
                     setPositions((prevPositions: any) => ({
                         ...prevPositions,
-                        animation_line9: position,
-                    }));
-                } else if (id === "animation_line10") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        animation_line10: position,
-                    }));
-                } else if (id === "animation_line11") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        animation_line11: position,
-                    }));
-                } else if (id === "animation_line12") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        animation_line12: position,
-                    }));
-                } else if (id === "animation_line13") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        animation_line13: position,
-                    }));
-                } else if (id === "animation_line14") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        animation_line14: position,
-                    }));
-                } else if (id === "animation_line15") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        animation_line15: position,
-                    }));
-                }
-                //========================== T juntion icon  =======================
-                else if (id === "T_juntion_11") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        T_juntion_11: position,
-                    }));
-                } else if (id === "T_juntion_14") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        T_juntion_14: position,
-                    }));
-                }
-                //========================== AlarmCenter  =======================
-                else if (id === "AlarmCenter") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        AlarmCenter: position,
-                    }));
-                } else if (id === "LineBall_1_1") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        LineBall_1_1: position,
-                    }));
-                } else if (id === "lineBall_13_1") {
-                    setPositions((prevPositions: any) => ({
-                        ...prevPositions,
-                        lineBall_13_1: position,
+                        ArrowLeft6: position,
                     }));
                 }
             }
         },
+
         [setNodes, setPositions, editingEnabled]
     );
-    const toggleEditing = () => {
-        setEditingEnabled(!editingEnabled);
-    };
+
+    // const toggleEditing = () => {
+    //     setEditingEnabled(!editingEnabled);
+    // };
     // useEffect(() => {
-    //     localStorage.setItem("positionsKOA", JSON.stringify(positions));
+    //     localStorage.setItem("positionsStation1", JSON.stringify(positions));
     // }, [positions]);
 
     return (
@@ -8292,11 +8342,12 @@ export default function GraphicKOA() {
             {/* <Button onClick={toggleEditing}>
                 {editingEnabled ? <span>SAVE</span> : <span>EDIT</span>}
             </Button> */}
+            {/* <p>Trạng thái kết nối: {isOnline ? 'Online' : 'Offline'}</p> */}
 
             <Toast ref={toast} />
             <ConfirmDialog />
 
-            <Dialog
+            {/* <Dialog
                 visible={visible}
                 onHide={() => setVisible(false)}
                 style={{
@@ -8312,9 +8363,9 @@ export default function GraphicKOA() {
                         </p>
                     )
                 )}
-            </Dialog>
+            </Dialog> */}
             <div
-            key={resetKey}
+                key={resetKey}
                 style={{
                     borderRadius: 5,
                     //width: "auto",

@@ -1,4 +1,4 @@
-@media (max-width : 1023px) {
+@media (min-width : 0px) and (max-width : 1023px) {
     .responsive{
         display: flex;
       flex-direction: column;
@@ -6,13 +6,23 @@
     }
 }
 
-@media (min-width : 1024px) {
+@media (min-width : 1024px) and (max-width : 1600px) {
     .responsive{
         display: grid;
         grid-template-columns: auto auto;
          gap: 0.5rem;
     }
 }
+@media (min-width : 1601px)  {
+    .responsive{
+        display: grid;
+        grid-template-columns: auto auto auto;
+         gap: 0.5rem;
+    }
+}
+
+
+
 .p-tabview .p-tabview-panels{
     padding: 0.5rem 0px;
 }

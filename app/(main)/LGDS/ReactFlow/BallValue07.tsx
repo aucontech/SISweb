@@ -5,7 +5,7 @@ import {  BallVavleOff, BallVavleOn } from "../GraphicLGDS/iconSVG";
 import { id_LGDS } from "../../data-table-device/ID-DEVICE/IdDevice";
 import { GetTelemetry_ZOVC, PostTelemetry_ZOVC } from "../GraphicLGDS/Api_ZOVC";
 
-export default function BallValue07({ onDataLine7 }: { onDataLine7: (data: any) => void }) {
+export default function BallValue07() {
     const [sensorData, setSensorData] = useState<any>([]);
 
     const [upData, setUpData] = useState<any>([]);
@@ -107,7 +107,6 @@ export default function BallValue07({ onDataLine7 }: { onDataLine7: (data: any) 
                         dataReceived.data.data[0].latest.ATTRIBUTE.BallValue_07
                             .ts;
                     setUpTS(ballTS);
-                    onDataLine7({ value: ballValue});
 
                 } else if (
                     dataReceived.update &&
@@ -120,7 +119,6 @@ export default function BallValue07({ onDataLine7 }: { onDataLine7: (data: any) 
                         dataReceived.update[0].latest.ATTRIBUTE.BallValue_07.ts;
 
                     setUpData(updatedData);
-                    onDataLine7({ value: updatedData});
 
                 }
         fetchData();
@@ -147,7 +145,6 @@ export default function BallValue07({ onDataLine7 }: { onDataLine7: (data: any) 
                 );
                 setData(res.data);
                 const ballValue = res.data.find((item: any) => item.key === "BallValue_07")?.value;
-                onDataLine7(ballValue);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -156,7 +153,7 @@ export default function BallValue07({ onDataLine7 }: { onDataLine7: (data: any) 
 
         fetchData();
 
-    }, [onDataLine7]);
+    }, []);
 
 
     return (

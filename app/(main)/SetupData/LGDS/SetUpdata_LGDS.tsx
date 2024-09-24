@@ -3875,7 +3875,8 @@ const ChangeMaintainFC_02_Current_Values_Static_Pressure = async () => {
             setFC_02_Today_Values_Uncorrected_Volume_Low(inputValue2FC_02_Today_Values_Uncorrected_Volume);
 
 
-          
+            setFC_02_Current_Values_Static_Pressure_High(inputValueFC_02_Current_Values_Static_Pressure);
+            setFC_02_Current_Values_Static_Pressure_Low(inputValue2FC_02_Current_Values_Static_Pressure);
 
     
 
@@ -5724,7 +5725,7 @@ checked={maintainFC_02_Today_Values_Uncorrected_Volume}
 
     <ConfirmDialog />
 
-<h2>LGDS</h2>
+<h2>Sarawak</h2>
 
 <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
 <div style={{ width: '100%' }}>

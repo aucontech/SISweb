@@ -26,6 +26,7 @@ import Graphic_SNG_HUNGYEN from "../SNG/SNG_HUNGYEN/Graphic_SNG_HUNGYEN/Graphic_
 import TestGraphicSogec from "./TestGraphicSogec";
 import BallVavle_Line2_Bottom from "../CNG_HUNGYEN/BallVavlePRU/BallVavle_Line2_Bottom";
 import VrecTest from "../VREC/GraphicVREC/VrecTest";
+import GraphicStaion1 from "../LGDS/GraphicStation1/graphicStaion1";
 
 export default function GraphicSogec() {
     const [isFullscreen, setIsFullscreen] = useState(false);
@@ -53,9 +54,9 @@ export default function GraphicSogec() {
     }, [isFullscreen]);
 
     const [activeComponent, setActiveComponent] = useState<React.ReactNode>(
-        <GraphicLGDS />
+        <GraphicStaion1 />
     );
-    const [NG, setNG] = useState<string>("LGDS");
+    const [NG, setNG] = useState<string>("Sarawak");
     const [SNG, setSNG] = useState<string>("SNG");
 
     const [CNG, setCNG] = useState<string>("CNG");
@@ -137,61 +138,57 @@ export default function GraphicSogec() {
                     {
                         label: stationList.stationList,
                         items: [
-                            // { label: 'Test', command: () => handleItemClick(<AlarmOTSUKA />, 'Test') },
+                            { label: 'Sarawak', command: () => NG_Click(<GraphicStaion1 />, 'Sarawak') },
+                        
+                            {
+                                label: "Pasir Gudang CG",
+                                command: () =>
+                                    NG_Click(<GraphicLGDS />, "Pasir Gudang CG"),
+                            },
+                            {
+                                label: "Melaka",
+                                command: () =>
+                                    NG_Click(<GraphicZOCV />, "Melaka "),
+                            },
+                            {
+                                label: "Pengerang",
+                                command: () => NG_Click(<GraphicKOA />, "Pengerang"),
+                            },
+                            {
+                                label: "Kota Kinabalu",
+                                command: () =>
+                                    NG_Click(<GraphicNITORI />, "	Kota Kinabalu"),
+                            },
+                            {
+                                label: "Selangor",
+                                command: () =>
+                                    NG_Click(<GraphicYOSHINO />, "Selangor"),
+                            },
+                            {
+                                label: "Sabah",
+                                command: () =>
+                                    NG_Click(<GraphicIGUACU />, "Sabah"),
+                            },
+                            {
+                                label: "Penang",
+                                command: () =>
+                                    NG_Click(<GraphicARAKAWA />, "Penang"),
+                            },
+                            {
+                                label: "Johor",
+                                command: () =>
+                                    NG_Click(<GraphicSPMCV />, "Johor"),
+                            },
+                            {
+                                label: "Perlis",
+                                command: () =>
+                                    NG_Click(<GraphicVREC />, "Perlis"),
+                            },
                             // {
-                            //     label: "Test111",
+                            //     label: "Melaka",
                             //     command: () =>
-                            //         NG_Click(<VrecTest />, "Test111"),
+                            //         NG_Click(<DemoFlowOTS />, "Melaka"),
                             // },
-                            {
-                                label: "LGDS",
-                                command: () =>
-                                    NG_Click(<GraphicLGDS />, "LGDS"),
-                            },
-                            {
-                                label: "ZOCV",
-                                command: () =>
-                                    NG_Click(<GraphicZOCV />, "ZOCV "),
-                            },
-                            {
-                                label: "KOA",
-                                command: () => NG_Click(<GraphicKOA />, "KOA"),
-                            },
-                            {
-                                label: "NITORI",
-                                command: () =>
-                                    NG_Click(<GraphicNITORI />, "NITORI"),
-                            },
-                            {
-                                label: "YOSHINO",
-                                command: () =>
-                                    NG_Click(<GraphicYOSHINO />, "YOSHINO"),
-                            },
-                            {
-                                label: "IGUACU",
-                                command: () =>
-                                    NG_Click(<GraphicIGUACU />, "IGUACU"),
-                            },
-                            {
-                                label: "ARAKAWA",
-                                command: () =>
-                                    NG_Click(<GraphicARAKAWA />, "ARAKAWA"),
-                            },
-                            {
-                                label: "SPMCV",
-                                command: () =>
-                                    NG_Click(<GraphicSPMCV />, "SPMCV"),
-                            },
-                            {
-                                label: "VREC",
-                                command: () =>
-                                    NG_Click(<GraphicVREC />, "VREC"),
-                            },
-                            {
-                                label: "OTSUKA",
-                                command: () =>
-                                    NG_Click(<DemoFlowOTS />, "OTSUKA"),
-                            },
                             // {
                             //     label: "TestMEIKO",
                             //     command: () =>
@@ -203,94 +200,94 @@ export default function GraphicSogec() {
                 ],
             ],
         },
-        {
-            label: SNG,
-            icon: "pi pi-box",
-            items: [
-                [
-                    {
-                        label: stationList.stationList,
-                        items: [
-                            {
-                                label: " SNG BINH DUONG",
-                                command: () =>
-                                    SNG_Click(
-                                        <Graphic_SNG_BINHDUONG />,
-                                        " SNG BINH DUONG"
-                                    ),
-                            },
-                            {
-                                label: " SNG HUNG YEN",
-                                command: () =>
-                                    SNG_Click(
-                                        <Graphic_SNG_HUNGYEN />,
-                                        " SNG HUNG YEN"
-                                    ),
-                            },
-                        ],
-                    },
-                ],
-            ],
-        },
+        // {
+        //     label: SNG,
+        //     icon: "pi pi-box",
+        //     items: [
+        //         [
+        //             {
+        //                 label: stationList.stationList,
+        //                 items: [
+        //                     {
+        //                         label: " SNG BINH DUONG",
+        //                         command: () =>
+        //                             SNG_Click(
+        //                                 <Graphic_SNG_BINHDUONG />,
+        //                                 " SNG BINH DUONG"
+        //                             ),
+        //                     },
+        //                     {
+        //                         label: " SNG HUNG YEN",
+        //                         command: () =>
+        //                             SNG_Click(
+        //                                 <Graphic_SNG_HUNGYEN />,
+        //                                 " SNG HUNG YEN"
+        //                             ),
+        //                     },
+        //                 ],
+        //             },
+        //         ],
+        //     ],
+        // },
 
-        {
-            label: CNG,
-            icon: "pi pi-box",
-            items: [
-                [
-                    {
-                        label: stationList.stationList,
-                        items: [
-                            {
-                                label: "CNG PHU MY 3",
-                                command: () =>
-                                    CNG_CLICK(<GraphicPRU />, "CNG PHU MY 3 "),
-                            },
+        // {
+        //     label: CNG,
+        //     icon: "pi pi-box",
+        //     items: [
+        //         [
+        //             {
+        //                 label: stationList.stationList,
+        //                 items: [
+        //                     {
+        //                         label: "CNG PHU MY 3",
+        //                         command: () =>
+        //                             CNG_CLICK(<GraphicPRU />, "CNG PHU MY 3 "),
+        //                     },
 
-                            {
-                                label: "CNG BINH DUONG",
-                                command: () =>
-                                    CNG_CLICK(
-                                        <Graphic_CNG_BINHDUONG />,
-                                        "CNG BINH DUONG "
-                                    ),
-                            },
-                            {
-                                label: "CNG HUNG YEN",
-                                command: () =>
-                                    CNG_CLICK(
-                                        <Graphic_CNG_HUNGYEN />,
-                                        "CNG HUNG YEN "
-                                    ),
-                            },
-                        ],
-                    },
-                ],
-            ],
-        },
+        //                     {
+        //                         label: "CNG BINH DUONG",
+        //                         command: () =>
+        //                             CNG_CLICK(
+        //                                 <Graphic_CNG_BINHDUONG />,
+        //                                 "CNG BINH DUONG "
+        //                             ),
+        //                     },
+        //                     {
+        //                         label: "CNG HUNG YEN",
+        //                         command: () =>
+        //                             CNG_CLICK(
+        //                                 <Graphic_CNG_HUNGYEN />,
+        //                                 "CNG HUNG YEN "
+        //                             ),
+        //                     },
+        //                 ],
+        //             },
+        //         ],
+        //     ],
+        // },
 
-        {
-            label: LPG,
-            icon: "pi pi-box",
-            items: [
-                [
-                    {
-                        label: stationList.stationList,
-                        items: [
-                            {
-                                label: "MEIKO",
-                                command: () =>
-                                    LPG_Click(<Graphic_MEIKO />, "MEIKO "),
-                            },
+        // {
+        //     label: LPG,
+        //     icon: "pi pi-box",
+        //     items: [
+        //         [
+        //             {
+        //                 label: stationList.stationList,
+        //                 items: [
+        //                     {
+        //                         label: "MEIKO",
+        //                         command: () =>
+        //                             LPG_Click(<Graphic_MEIKO />, "MEIKO "),
+        //                     },
 
-                            // { label: 'Test', command: () => LPG_Click(<AlarmOTSUKA/>, 'Test ') },
+        //                     // { label: 'Test', command: () => LPG_Click(<AlarmOTSUKA/>, 'Test ') },
 
-                            // { label: 'Test', command: () => LPG_Click(<TestGraphicSogec/>, 'Test ') },
-                        ],
-                    },
-                ],
-            ],
-        },
+        //                     // { label: 'Test', command: () => LPG_Click(<TestGraphicSogec/>, 'Test ') },
+        //                 ],
+        //             },
+        //         ],
+        //     ],
+        // },
     ];
 
     return (

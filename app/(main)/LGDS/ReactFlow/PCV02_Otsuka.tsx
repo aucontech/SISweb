@@ -146,7 +146,7 @@ export default function PCV_02_Otsuka() {
             <div
                 style={{
                     border: "none",
-                    fontSize: 22,
+                    fontSize: 23,
                     color: "white",
                     display: "flex",
                     cursor: "pointer",
@@ -155,9 +155,9 @@ export default function PCV_02_Otsuka() {
                 }}
                 onClick={handleButtonToggle}
             >
-                <p style={{ color: colorNameValue }}>PCV-1002:</p>
-                <p style={{ marginLeft: 20, color: colorNameValue }}> {upData} </p>
-                <p style={{ marginLeft: 10, color: colorNameValue }}>BarG</p>
+                <p style={{ color: 'orange' }}>PCV-1002:</p>
+                <p style={{ marginLeft: 20, color: 'white' }}> {upData} </p>
+                <p style={{ marginLeft: 10, color: 'white' }}>BarG</p>
             </div>
 
             {/* <OverlayPanel ref={op}>

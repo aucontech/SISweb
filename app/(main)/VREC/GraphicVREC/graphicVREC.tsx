@@ -5438,7 +5438,7 @@ const FC_02_Yesterday_Values_Uncorrected_Volume_Maintain = res.data.find(
                                     color: "orange",
                                 }}
                             >
-                                VREC
+                                Perlis
                             </p>
                         </div>
                     </div>

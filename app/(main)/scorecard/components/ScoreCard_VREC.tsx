@@ -1794,7 +1794,7 @@ useEffect(() => {
     };
 
     const tagNamePLC = {
-        PT01: "Output Pressure PT-1803 (BarG)",
+        PT01: "Output Pressure  (BarG)",
         GD1: "Gas Detector GD-1801 (%LEL)",
         GD2: "Gas Detector GD-1802 (%LEL)",
         ZSC: "SDV-1801 ZSC (0: ON - 1: OFF)",
@@ -2656,6 +2656,10 @@ const dataFC = [
         FC1902: <span style={combineCss.CSSFC_02_Current_Values_Static_Pressure}>{formatValue(FC_02_Current_Values_Static_Pressure)}</span>,
     },
     {
+        name: <span>{tagNamePLC.PT01}</span>,
+        FC1902: <span style={combineCss.CSSPT1}>{formatValue(PT1)}</span>,
+    },
+    {
         name: <span>{tagNameFC.Temperature}</span>,
         FC1901: <span style={combineCss.CSSFC_01_Current_Values_Temperature}>{formatValue(FC_01_Current_Values_Temperature)}</span>,
         FC1902: <span style={combineCss.CSSFC_02_Current_Values_Temperature}>{formatValue(FC_02_Current_Values_Temperature)}</span>,
@@ -2665,41 +2669,25 @@ const dataFC = [
         FC1901: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate}>{formatValue(FC_01_Current_Values_Flow_Rate)}</span>,
         FC1902: <span style={combineCss.CSSFC_02_Current_Values_Flow_Rate}>{formatValue(FC_02_Current_Values_Flow_Rate)}</span>,
     },
-    {
-        name: <span>{tagNameFC.GVF}</span>,
-        FC1901: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>{formatValue(FC_01_Current_Values_Uncorrected_Flow_Rate)}</span>,
-        FC1902: <span style={combineCss.CSSFC_02_Current_Values_Uncorrected_Flow_Rate}>{formatValue(FC_02_Current_Values_Uncorrected_Flow_Rate)}</span>,
-    },
+   
     {
         name: <span>{tagNameFC.SVA}</span>,
         FC1901: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>{formatValue(FC_01_Accumulated_Values_Uncorrected_Volume)}</span>,
         FC1902: <span style={combineCss.CSSFC_02_Accumulated_Values_Uncorrected_Volume}>{formatValue(FC_02_Accumulated_Values_Uncorrected_Volume)}</span>,
     },
-    {
-        name: <span>{tagNameFC.GVA}</span>,
-        FC1901: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume}>{formatValue(FC_01_Accumulated_Values_Volume)}</span>,
-        FC1902: <span style={combineCss.CSSFC_02_Accumulated_Values_Volume}>{formatValue(FC_02_Accumulated_Values_Volume)}</span>,
-    },
+   
     {
         name: <span>{tagNameFC.VbToday}</span>,
         FC1901: <span style={combineCss.CSSFC_01_Today_Values_Volume}>{formatValue(FC_01_Today_Values_Volume)}</span>,
         FC1902: <span style={combineCss.CSSFC_02_Today_Values_Volume}>{formatValue(FC_02_Today_Values_Volume)}</span>,
     },
-    {
-        name: <span>{tagNameFC.VmToday}</span>,
-        FC1901: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}>{formatValue(FC_01_Today_Values_Uncorrected_Volume)}</span>,
-        FC1902: <span style={combineCss.CSSFC_02_Today_Values_Uncorrected_Volume}>{formatValue(FC_02_Today_Values_Uncorrected_Volume)}</span>,
-    },
+    
     {
         name: <span>{tagNameFC.VbLastDay}</span>,
         FC1901: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume}>{formatValue(FC_01_Yesterday_Values_Volume)}</span>,
         FC1902: <span style={combineCss.CSSFC_02_Yesterday_Values_Volume}>{formatValue(FC_02_Yesterday_Values_Volume)}</span>,
     },
-    {
-        name: <span>{tagNameFC.VmLastDay}</span>,
-        FC1901: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}>{formatValue(FC_01_Yesterday_Values_Uncorrected_Volume)}</span>,
-        FC1902: <span style={combineCss.CSSFC_02_Yesterday_Values_Uncorrected_Volume}>{formatValue(FC_02_Yesterday_Values_Uncorrected_Volume)}</span>,
-    },
+   
 ];
 
 const dataPLC = [
@@ -2777,7 +2765,7 @@ const dataPLC = [
               <div className="Container_Scorecard1" >
                    <div className="Container_Scorecard2" >
                         <div className="Container_Name" >
-                            VREC
+                        Perlis
                         </div>
                     </div>
                     <div
@@ -2809,21 +2797,6 @@ const dataPLC = [
 
      
                     <Column
-                            field="FC1901"
-                            header={FC_Conn_STT === "1" ? (
-
-                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center',  position:'relative', right:30}}>
-                                {DotGreen} <p style={{marginLeft:5}}>FC-1801</p>
-   
-                               </div>
-                               
-                            ) : (
-                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center' , position:'relative', right:30}}>
-                                {DotRed}  <p style={{marginLeft:5}}>FC-1801</p>
-                             </div>
-                            )}
-                        ></Column>
-                    <Column
                         style={{display:'flex', justifyContent:'flex-end'}}
 
                             field="FC1902"
@@ -2841,49 +2814,8 @@ const dataPLC = [
                         ></Column>
 
                 </DataTable>
-                    <DataTable value={dataPLC} size="small" selectionMode="single">
-                        <Column  field="name" header={<span className="id556" > PLC Parameter</span>}></Column>
-                        <Column
-                        style={{display:'flex', justifyContent:'flex-end'}}
-
-                            field="PLC"
-                            header={PLC_Conn_STT === "1" ? (
-
-                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                 {DotGreen} <p style={{marginLeft:5}}>PLC</p>
-    
-                                </div>
-                               
-                            ) : (
-                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
-                                {DotRed}  <p style={{marginLeft:5}}>PLC</p>
-                             </div>
-                            )}
-                        ></Column>
-                    </DataTable>
-                
-                    <DataTable value={dataFC1} size="small" selectionMode="single">
-                        <Column  field="name" header={<span className="id556" > FC Parameter</span>}></Column>
-                        <Column
-                        style={{display:'flex', justifyContent:'flex-end'}}
-
-                            field="FC1"
-                            header={FC_Conn_STT === "1" ? (
-
-                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                {DotGreen} <p style={{marginLeft:5}}>FC</p>
-   
-                               </div>
-                                
-                            ) : (
-                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center',justifyContent:'center',  }}>
-                                {DotRed}  <p style={{marginLeft:5}}>FC</p>
-                             </div>
-                            )}
-                        ></Column>
-
                     
-                    </DataTable>
+                
 
 
                     <DataTable value={STT} size="small" selectionMode="single">
@@ -2914,21 +2846,7 @@ const dataPLC = [
                     <Column field="name" header="FC Parameter"></Column>
 
      
-                    <Column
-                            field="FC1901"
-                            header={FC_Conn_STT === "1" ? (
-
-                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center',  position:'relative', right:30}}>
-                                {DotGreen} <p style={{marginLeft:5}}>FC-1801</p>
-   
-                               </div>
-                               
-                            ) : (
-                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center' , position:'relative', right:30}}>
-                                {DotRed}  <p style={{marginLeft:5}}>FC-1801</p>
-                             </div>
-                            )}
-                        ></Column>
+                    
                     <Column
                         style={{display:'flex', justifyContent:'flex-end'}}
 

@@ -51,7 +51,6 @@ import { httpApi } from "@/api/http.api";
 import BallVavlePSV from "../ReactFlow/BallVavlePSV";
 import { Toast } from "primereact/toast";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
-import AlarmOTSUKA from "@/layout/AlarmBell/AlarmOTSUKA";
 import BallValueFirst from "../ReactFlow/BallValueFirst";
 import BallValueLast from "../ReactFlow/BallValueLast";
 import { DemoPRU } from "./edgePRU";
@@ -5478,7 +5477,7 @@ export default function GraphicPRU() {
             data: {
                 label: (
                     <div>
-                        <AlarmOTSUKA />
+                        {/* <AlarmOTSUKA /> */}
                     </div>
                 ),
             },

@@ -29,7 +29,7 @@ export default function NG_Scorecard() {
         <ScoreCard_SPMCV/>
 
         <ScoreCard_VREC/>
-        <ScoreCard_Otsuka/>
+        {/* <ScoreCard_Otsuka/> */}
         <br />
         <br />
     </div>

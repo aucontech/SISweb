@@ -10,7 +10,7 @@ import { LayoutContext } from "@/layout/context/layoutcontext";
 import { login } from "@/api/auth.api";
 import { Toast } from "primereact/toast";
 import { getDeviceByCustomer } from "@/api/device.api";
-
+import "./login.css"
 import { UIUtils } from "@/service/Utils";
 import { AuthContext } from "@/context/AuthProvider";
 import {
@@ -29,6 +29,7 @@ import {
     SNGHY_DEVICE_ID,
     SNG_ACECOOK_DEVICE_ID,
 } from "@/constants/constans";
+import { logoLogin } from "./SVF_LOGIN";
 
 const Login: Page = () => {
     const authContext = useContext(AuthContext);
@@ -158,7 +159,7 @@ const Login: Page = () => {
     return (
         <>
             <Toast ref={toast} />
-            <svg
+            {/* <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 1600 800"
                 className="fixed left-0 top-0 min-h-screen min-w-screen"
@@ -185,9 +186,13 @@ const Login: Page = () => {
                     fill={dark ? "var(--primary-500)" : "var(--primary-100)"}
                     d="M1397.5 154.8c47.2-10.6 93.6-25.3 138.6-43.8c21.7-8.9 43-18.8 63.9-29.5V0H643.4c62.9 41.7 129.7 78.2 202.1 107.4C1020.4 178.1 1214.2 196.1 1397.5 154.8z"
                 />
-            </svg>
-            <div className="px-5 min-h-screen flex justify-content-center align-items-center">
-                <div className="border-1 surface-border surface-card border-round py-7 px-4 md:px-7 z-1">
+            </svg> */}
+
+            <div className="backGroundLogin">
+
+
+            <div style={{justifyContent:'right', marginRight:'20%'}} className="px-5 min-h-screen flex  align-items-center">
+                <div className="border-1 surface-border surface-card border-round py-7 px-4 md:px-7 z-1 ">
                     <div
                         className="mb-4"
                         style={{
@@ -196,41 +201,59 @@ const Login: Page = () => {
                             justifyContent: "center",
                         }}
                     >
-                        <Image
+
+                        {/* <Image
                             src={`/layout/imgGas/logoLogin.png`}
                             width={300}
                             height={100}
                             alt="Picture of the author"
-                        />
+                        /> */}
+
+                        {logoLogin}
                     </div>
-                    <div className="flex flex-column">
-                        <span className="p-input-icon-left w-full mb-4">
+                         <div className="flex flex-column align-items-center" >
+                       
+                       
+                        <div>
+
+                        <span className="p-input-icon-left w-full mb-4 align-items-center">
                             <i className="pi pi-envelope"></i>
                             <InputText
                                 id="email"
                                 type="text"
                                 value={username}
-                                className="w-full md:w-25rem"
+                                className="w-full md:w-20rem"
                                 placeholder="Email"
                                 onChange={(e) => {
                                     setUsername(e.target.value);
                                 }}
                             />
                         </span>
-                        <span className="p-input-icon-left w-full mb-4">
+                        </div>
+
+                        <div>
+                        <span className="p-input-icon-left w-full mb-4 align-items-center">
                             <i className="pi pi-lock"></i>
                             <InputText
                                 id="password"
                                 type="password"
                                 value={password}
-                                className="w-full md:w-25rem"
+                                className="w-full md:w-20rem"
                                 placeholder="Password"
                                 onChange={(e) => {
                                     setPassword(e.target.value);
                                 }}
                             />
                         </span>
-                        <div className="mb-4 flex flex-wrap gap-3">
+                        </div>
+                        <Button
+                            label="Log In"
+                            className="w-full md:w-20rem"
+                            onClick={_onLogin}
+                        ></Button>
+                    </div>
+                    <br />
+                    <div className="mb-4 flex flex-wrap gap-3">
                             <div>
                                 <Checkbox
                                     name="checkbox"
@@ -242,7 +265,7 @@ const Login: Page = () => {
                                 ></Checkbox>
                                 <label
                                     htmlFor="checkbox"
-                                    className="text-900 font-medium mr-8"
+                                    className="text-900 font-medium mr-5"
                                 >
                                     Remember Me
                                 </label>
@@ -254,13 +277,8 @@ const Login: Page = () => {
                                 Reset password
                             </Link>
                         </div>
-                        <Button
-                            label="Log In"
-                            className="w-full"
-                            onClick={_onLogin}
-                        ></Button>
-                    </div>
                 </div>
+            </div>
             </div>
         </>
     );

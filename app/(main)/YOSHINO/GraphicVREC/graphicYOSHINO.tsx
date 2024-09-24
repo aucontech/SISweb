@@ -5446,7 +5446,7 @@ const confirmLineDuty = () => {
                                     color: "#ffaa00",
                                 }}
                             >
-                                YOSHINO
+                                Selangor
                             </p>
                         </div>
                     </div>

@@ -1877,59 +1877,38 @@ const formatValue = (value:any) => {
 const dataFC = [
     {
         name: <span>{tagNameFC.InputPressure}</span>,
-        FC1901: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure}>{formatValue(FC_01_Current_Values_Static_Pressure)}</span>,
         FC1902: <span style={combineCss.CSSEVC_02_Pressure}>{formatValue(EVC_02_Pressure)}</span>,
     },
     {
+        name: <span>Output Pressure PT-1103 (BarG)</span>,
+        FC1902: <span style={combineCss.CSSPT_1103}>{formatValue(PT_1103)}</span>,
+    },
+    {
         name: <span>{tagNameFC.Temperature}</span>,
-        FC1901: <span style={combineCss.CSSFC_01_Current_Values_Temperature}>{formatValue(FC_01_Current_Values_Temperature)}</span>,
         FC1902: <span style={combineCss.CSSEVC_02_Temperature}>{formatValue(EVC_02_Temperature)}</span>,
     },
     {
         name: <span>{tagNameFC.SVF}</span>,
-        FC1901: <span style={combineCss.CSSFC_01_Current_Values_Flow_Rate}>{formatValue(FC_01_Current_Values_Flow_Rate)}</span>,
         FC1902: <span style={combineCss.CSSEVC_02_Flow_at_Base_Condition}>{formatValue(EVC_02_Flow_at_Base_Condition)}</span>,
     },
     {
-        name: <span>{tagNameFC.GVF}</span>,
-        FC1901: <span style={combineCss.CSSFC_01_Current_Values_Uncorrected_Flow_Rate}>{formatValue(FC_01_Current_Values_Uncorrected_Flow_Rate)}</span>,
-        FC1902: <span style={combineCss.CSSEVC_02_Flow_at_Measurement_Condition}>{formatValue(EVC_02_Flow_at_Measurement_Condition)}</span>,
-    },
-    {
         name: <span>{tagNameFC.SVA}</span>,
-        FC1901: <span style={combineCss.CSSFC_01_Accumulated_Values_Volume}>{formatValue(FC_01_Accumulated_Values_Volume)}</span>,
         FC1902: <span style={combineCss.CSSEVC_02_Volume_at_Base_Condition}>{formatValue(EVC_02_Volume_at_Base_Condition)}</span>,
     },
     {
-        name: <span>{tagNameFC.GVA}</span>,
-        FC1901: <span style={combineCss.CSSFC_01_Accumulated_Values_Uncorrected_Volume}>{formatValue(FC_01_Accumulated_Values_Uncorrected_Volume)}</span>,
-        FC1902: <span style={combineCss.CSSEVC_02_Volume_at_Measurement_Condition}>{formatValue(EVC_02_Volume_at_Measurement_Condition)}</span>,
-    },
-    {
         name: <span>{tagNameFC.VbToday}</span>,
-        FC1901: <span style={combineCss.CSSFC_01_Today_Values_Volume}>{formatValue(FC_01_Today_Values_Volume)}</span>,
-        FC1902: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day}>{formatValue(EVC_02_Vb_of_Current_Day)}</span>,
-    },
-    {
-        name: <span>{tagNameFC.VmToday}</span>,
-        FC1901: <span style={combineCss.CSSFC_01_Today_Values_Uncorrected_Volume}>{formatValue(FC_01_Today_Values_Uncorrected_Volume)}</span>,
         FC1902: <span style={combineCss.CSSEVC_02_Vb_of_Current_Day}>{formatValue(EVC_02_Vb_of_Current_Day)}</span>,
     },
     {
         name: <span>{tagNameFC.VbLastDay}</span>,
-        FC1901: <span style={combineCss.CSSFC_01_Yesterday_Values_Volume}>{formatValue(FC_01_Yesterday_Values_Volume)}</span>,
         FC1902: <span style={combineCss.CSSEVC_02_Vb_of_Last_Day}>{formatValue(EVC_02_Vb_of_Last_Day)}</span>,
-    },
-    {
-        name: <span>{tagNameFC.VmLastDay}</span>,
-        FC1901: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}>{formatValue(FC_01_Yesterday_Values_Uncorrected_Volume)}</span>,
-        FC1902: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day}>{formatValue(EVC_02_Vm_of_Last_Day)}</span>,
     },
 ];
 
-    const dataFC_EVC = [
 
-      
+
+
+    const dataFC_EVC = [
         {
             name: <span>{tagNameFC.InputPressure}</span>,
             FC1901: <span style={combineCss.CSSFC_01_Current_Values_Static_Pressure}>{formatValue(FC_01_Current_Values_Static_Pressure)}</span>,
@@ -1980,20 +1959,12 @@ const dataFC = [
             FC1901: <span style={combineCss.CSSFC_01_Yesterday_Values_Uncorrected_Volume}>{formatValue(FC_01_Yesterday_Values_Uncorrected_Volume)}</span>,
             FC1902: <span style={combineCss.CSSEVC_02_Vm_of_Last_Day}>{formatValue(EVC_02_Vm_of_Last_Day)}</span>,
         },
-
-            {
+         {
                 name: <span>{tagNameFC.EVC_02_Remain_Battery_Service_Life}</span>,
                 FC1902: <span style={combineCss.CSSEVC_02_Remain_Battery_Service_Life}>{EVC_02_Remain_Battery_Service_Life}</span>,
-    
             },
-         
         ];
     
-
-    
-
-
-
     const FC0 = [
         {
             name: <span>{tagNameFC.FC_01_Lithium_Battery_Status}</span>,
@@ -2073,7 +2044,7 @@ const dataFC = [
               <div className="Container_Scorecard1" >
                    <div className="Container_Scorecard2" >
                         <div className="Container_Name" >
-                            ZOCV
+                        Pasir Gudang CG
                         </div>
                     </div>
                     <div
@@ -2102,25 +2073,10 @@ const dataFC = [
 
 
 
-                <DataTable value={dataFC_EVC} size="small" selectionMode="single"> 
-                    <Column field="name" header="FC & EVC Parameter"></Column>
+                <DataTable value={dataFC} size="small" selectionMode="single"> 
+                    <Column field="name" header="EVC Parameter"></Column>
 
      
-                    <Column
-                            field="FC1901"
-                            header={FC_01_Conn_STT === "1" ? (
-
-                                <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center',  position:'relative', right:30}}>
-                                {DotGreen} <p style={{marginLeft:5}}>FC-1101</p>
-   
-                               </div>
-                               
-                            ) : (
-                                <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center' , position:'relative', right:30}}>
-                                {DotRed}  <p style={{marginLeft:5}}>FC-1101</p>
-                             </div>
-                            )}
-                        ></Column>
                     <Column
                         style={{display:'flex', justifyContent:'flex-end'}}
 
@@ -2162,71 +2118,10 @@ const dataFC = [
                             )}
                         ></Column>
                     </DataTable>
-                    <DataTable value={dataPT} size="small" selectionMode="single">
-                        <Column  field="name" header={<span className="id556" > PT Parameter</span>}></Column>
-                        <Column
-                        style={{display:'flex', justifyContent:'flex-end'}}
-
-                            field="FC1901"
-                            header={PLC_Conn_STT === "1" ? (
-
-                                <div style={{ padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                <p style={{marginLeft:5}}>PT-1103 </p>
-   
-                               </div>
-                               
-                            ) : (
-                                <div style={{ padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                <p style={{marginLeft:5}}>PT-1103 </p>
-   
-                               </div>
-                            )}
-                        ></Column>
-                    </DataTable>
-                    <DataTable value={dataUPS} size="small" selectionMode="single">
-                        <Column  field="name" header={<span className="id556" > UPS Parameter</span>}></Column>
-                        <Column
-                        style={{display:'flex', justifyContent:'flex-end'}}
-
-                            field="FC1901"
-                            header={PLC_Conn_STT === "1" ? (
-
-                                <div style={{ padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                <p style={{marginLeft:5}}>UPS</p>
-   
-                               </div>
-                               
-                            ) : (
-                                <div style={{ padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                <p style={{marginLeft:5}}>UPS</p>
-   
-                               </div>
-                            )}
-                        ></Column>
-                    </DataTable>
+                   
+                   
 
 
-                    <DataTable value={STT} size="small" selectionMode="single">
-                        <Column  field="name" header={<span className="id556" > Status</span>}></Column>
-                        <Column
-                        style={{display:'flex', justifyContent:'flex-end'}}
-
-                            field="STT"
-                            header={PLC_Conn_STT === "1" ? (
-
-                                <div style={{ padding:11,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                <p style={{marginLeft:5}}></p>
-   
-                               </div>
-                               
-                            ) : (
-                                <div style={{ padding:11,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center', justifyContent:'center', }}>
-                                <p style={{marginLeft:5}}></p>
-   
-                               </div>
-                            )}
-                        ></Column>
-                    </DataTable>
 
 
                             
@@ -2236,24 +2131,10 @@ const dataFC = [
                 <div>
                 
                 <DataTable value={dataFC} size="small" selectionMode="single"> 
-                <Column field="name" header="FC Parameter"></Column>
+                <Column field="name" header="EVC Parameter"></Column>
 
  
-                <Column
-                        field="FC1901"
-                        header={FC_01_Conn_STT === "1" ? (
-
-                            <div style={{ border:`2px solid #31D454`, padding:5,borderRadius:15, display:'flex', textAlign:'center', alignItems:'center',  position:'relative', right:30}}>
-                            {DotGreen} <p style={{marginLeft:5}}>FC-1101</p>
-
-                           </div>
-                           
-                        ) : (
-                            <div style={{ border:`2px solid red` , padding:5, borderRadius:15,display:'flex', textAlign:'center', alignItems:'center' , position:'relative', right:30}}>
-                            {DotRed}  <p style={{marginLeft:5}}>FC-1101</p>
-                         </div>
-                        )}
-                    ></Column>
+               
                 <Column
                     style={{display:'flex', justifyContent:'flex-end'}}
 

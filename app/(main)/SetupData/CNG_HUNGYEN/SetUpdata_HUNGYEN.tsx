@@ -3065,7 +3065,6 @@ const ChangemaintainEVC_02_Vb_of_Current_Day = async () => {
               };
      
     
-     
          
               // =================================================================================================================== 
               const [EVC_01_Conn_STT, setEVC_01_Conn_STT] = useState<string | null>(null);
@@ -3194,15 +3193,10 @@ const ChangemaintainEVC_02_Vb_of_Current_Day = async () => {
          // =================================================================================================================== 
          
 
-
-
-
     const handleButtonClick = async () => {
         try {
             await httpApi.post(
                 `/plugins/telemetry/DEVICE/${id_CNG_HungYen}/SERVER_SCOPE`,
-
-
 
                 {
                     
