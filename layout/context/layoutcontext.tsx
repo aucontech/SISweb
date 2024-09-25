@@ -112,7 +112,7 @@ export const LayoutProvider = (props: ChildContainerProps) => {
         <LayoutContext.Provider value={value}>
             <>
                 <Head>
-                    <title>SOGEC</title>
+                    <title>ISI Control</title>
                     <meta charSet="UTF-8" />
                     <meta
                         name="description"
