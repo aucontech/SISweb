@@ -206,13 +206,14 @@ const ChartReport: React.FC<Props> = ({ filters }) => {
                     <ProgressSpinner />
                 </div>
             ) : (
-                <Card>
+                <Card style={{ height: '100%' }}>
                     <Chart
                         type="line"
                         data={data}
                         plugins={pluginZoom}
                         options={options}
-                    ></Chart>
+                        style={{ width: '100%', height: '100%' }}
+                    />
                 </Card>
             )}
         </div>
