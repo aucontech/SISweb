@@ -254,7 +254,8 @@ export default function Alarmbell() {
                 if (alarm.severity === "MAJOR") {
                     return { ...alarm };
                 }
-                let tag = alarm?.details?.data?.split(",")[0];
+                let tag = alarm?.details?.data?.split(",")[0]?.replace(/{|}/g, '');
+                console.log(tag)
                 if (tag !== null && tag !== undefined) {
                     try {
                         const maintained = await fetchWithRetry(
