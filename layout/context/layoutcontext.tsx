@@ -143,7 +143,7 @@ export const LayoutProvider = (props: ChildContainerProps) => {
                     <meta property="og:ttl" content="604800"></meta>
                     <link
                         rel="icon"
-                        href={`/favicon.ico`}
+                        href={`/favicon2.ico`}
                         type="image/x-icon"
                     ></link>
                 </Head>
