@@ -7,7 +7,7 @@ interface MainLayoutProps {
 }
 
 export const metadata: Metadata = {
-    title: "ISI Control Sdn. Bhd.",
+    title: "Automation Control Sdn. Bhd.",
     description: "Dashboard IOT Application",
     robots: { index: false, follow: false },
     viewport: { initialScale: 1, width: "device-width" },
