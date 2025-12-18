@@ -50,9 +50,9 @@ const AppSidebar = () => {
             <div style={{zIndex:99999999}} className="sidebar-header">
                 <Link href="/Graphic" className="app-logo">
                     <img
-                        src="/layout/imgGas/image2.png"
-                        width={200}
-                        height={83}
+                        src="/layout/imgGas/Automation-Control-Systems-Sdn-B.png"
+                        width={150}
+                        height={70}
                         alt="Picture of the author"   
                     />
                 </Link>
