@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     viewport: { initialScale: 1, width: "device-width" },
     openGraph: {
         type: "website",
-        title: "ISI Control Sdn. Bhd.",
+        title: "Automation Control Sdn. Bhd.",
         url: "https://www.primefaces.org/apollo-react",
         description:
             "The ultimate collection of design-agnostic, flexible and accessible React UI Components.",
